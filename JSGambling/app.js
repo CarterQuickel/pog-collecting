@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+app.use('/static', express.static('static'));
+
 app.use(express.static('static'));
 
 app.listen(3000, () => {
