@@ -270,7 +270,7 @@ crates = [
         },
         {
             name: "GODLY",
-            chance: 0.9
+            chance: 1e-28
         }
         ]
     }
