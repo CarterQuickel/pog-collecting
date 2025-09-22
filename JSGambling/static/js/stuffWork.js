@@ -26,6 +26,9 @@ let sortStyle = "none";
 //bonus multiplier
 let bonusMulti = 1.5;
 
+//abbreviation num
+let abbreviatedMoney = 0;
+
 // cost multiplier
 function getTotalIncome() {
     const rarityCounts = {};
@@ -45,7 +48,8 @@ function getTotalIncome() {
 // initial money display
 setInterval(updateMoney, 100);
 function updateMoney() {
-    document.getElementById("money").innerText = `$${money}`;
+    abbreviatedMoney = abbreviateNumber(money);
+    document.getElementById("money").innerText = `$${abbreviatedMoney}`;
 }
 
 // sell item
@@ -272,3 +276,8 @@ document.getElementById("topSort").addEventListener("click", () => {
     });
     refreshInventory();
 });
+//number abbreviation function
+function abbreviateNumber (value) {
+const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
+return formatter.format(value);
+}
