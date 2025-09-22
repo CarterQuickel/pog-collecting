@@ -200,7 +200,7 @@ function levelup() {
     while (xp >= maxXP) {
         xp -= maxXP;
         level++;
-        maxXP = Math.floor(maxXP * 3);
+        maxXP = Math.floor(maxXP * 2.3);
         Isize += 3;
     }
 }
