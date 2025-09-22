@@ -2,9 +2,6 @@
 console.log(rarities);
 console.log(crates);
 
-// cost of upgrade
-inventoryCost = 300;
-
 // money upgrade
 let moneyTick = 1000;
 
@@ -13,6 +10,11 @@ let inventory = [];
 
 // money
 let money = 200;
+
+// XP
+let xp = 0;
+let maxXP = 15;
+let level = 1;
 
 // inventory size
 let Isize = 3;
@@ -66,14 +68,11 @@ function sellItem(index) {
 setInterval(update, 100);
 function update() {
 
-    // update upgrade button text
-    document.getElementById("upgradeinventory").innerText = `Upgrade Inventory + 3 ($${inventoryCost})`;
-
     // update mode text
     document.getElementById("modeTxt").innerHTML = lightMode ? "Light Mode" : "Dark Mode"
 
     // update inventory size text
-    document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize}`
+    document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize} Slots`
 
     //update sort text
     if (sortStyle === "top") {
@@ -84,6 +83,9 @@ function update() {
         document.getElementById("sortTxt").innerHTML = `Sort`
     }
 
+    // update XP Txt
+    document.getElementById("XPTxt").innerText = `Level ${level} (${xp}/${maxXP} XP)`;
+
     // update income Txt
     document.getElementById("income").innerText = `($${getTotalIncome()}/s)`;
 
@@ -93,8 +95,10 @@ function update() {
     } else {
         if (lightMode) {
             document.getElementById("invTxt").style.color = "black";
+            document.getElementById("XPTxt").style.color = "rgb(70, 70, 206)"
         } else {
             document.getElementById("invTxt").style.color = "white";
+            document.getElementById("XPTxt").style.color = "white";
         }
     }
 }
@@ -138,9 +142,9 @@ function refreshInventory() {
 //update progress bar
 setInterval(updatePB, 100)
 function updatePB() {
-    const invPB = document.getElementById("invPB")
-    invPB.value = inventory.length;
-    invPB.max = Isize;
+    const XPPB = document.getElementById("XPPB")
+    XPPB.value = xp;
+    XPPB.max = maxXP;
 }
 
 // passive money income
@@ -165,6 +169,9 @@ function openCrate(cost, index) {
                 if (rand < cumulativeChance) {
                     // Add result to inventory
                     inventory.push({ name: rarity.name, color: rarity.color, income: rarity.income, value: rarity.value });
+                    // XP gain
+                    xp += Math.floor(rarity.value / 10);
+                    levelup();
                     // Deduct cost
                     money -= cost;
                     console.log(rarity.chance);
@@ -184,20 +191,16 @@ document.getElementById("crate4").addEventListener("click", () => openCrate(crat
 document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[5]].price, 5));
 document.getElementById("crate6").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
 
-//upgrade event
-document.getElementById("upgradeinventory").addEventListener("click", (
-    () => {
-        if (money >= inventoryCost) {
-            costMultiplier = 1.5;
-            money -= inventoryCost;
-            Isize += 3;
-            inventoryCost = Math.floor(inventoryCost * costMultiplier);
-            if (costMultiplier > 0.2) {
-                costMultiplier -= 0.1;
-            }
-        }
+// level up
+function levelup() {
+    while (xp >= maxXP) {
+        xp -= maxXP;
+        level++;
+        maxXP = Math.floor(maxXP * 3);
+        Isize += 3;
     }
-));
+}
+
 
 // save game
 document.getElementById("save").addEventListener("click", () => {
@@ -205,7 +208,9 @@ document.getElementById("save").addEventListener("click", () => {
         money: money,
         inventory: inventory,
         Isize: Isize,
-        inventoryCost: inventoryCost,
+        xp: xp,
+        maxXP: maxXP,
+        level: level
     };
     localStorage.setItem("gameState", JSON.stringify(saveState));
     alert("Game Saved!");
@@ -218,7 +223,9 @@ document.getElementById("load").addEventListener("click", () => {
         money = savedState.money;
         inventory = savedState.inventory;
         Isize = savedState.Isize;
-        inventoryCost = savedState.inventoryCost;
+        xp = savedState.xp;
+        maxXP = savedState.maxXP;
+        level = savedState.level;
         refreshInventory();
     } else {
         alert("No saved game found.");
@@ -231,8 +238,9 @@ document.getElementById("reset").addEventListener("click", () => {
         money = 200;
         inventory = [];
         Isize = 3;
-        inventoryCost = 300;
-        costMultiplier = 1.5;
+        xp = 0;
+        maxXP = 15;
+        level = 1;
         localStorage.removeItem("gameState");
         refreshInventory();
     }
