@@ -76,6 +76,17 @@ app.get('/', isAuthenticated, (req, res) => {
 		res.send(error.message)
 	}
 });
+<<<<<<< HEAD:JSGambling/app.js
+
+
+app.listen(3000, () => {
+    console.log('Server started on port 3000');
+});
+app.get('/index', (req, res) => {
+    res.render('index');
+});
+=======
+>>>>>>> aa8108fb6c1afe363ca6982df6e44a971e7db4fe:pog_collecting/app.js
 
 // patch notes page
 app.get('/patch', (req, res) => {
