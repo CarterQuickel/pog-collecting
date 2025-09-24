@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const sqlite3 = require('sqlite3').verbose();
+app.set('view engine', 'ejs');
+app.set('trust proxy', true);
+app.use('/static', express.static('static'));
+app.use(express.urlencoded({ extended: true }));
 
 const db = new sqlite3.Database('./db/scores.db', (err) => {
     if (err) {
@@ -10,18 +14,20 @@ const db = new sqlite3.Database('./db/scores.db', (err) => {
     }
 });
 
-app.use('/static', express.static('static'));
-
-app.listen(3000, () => {
-    console.log('Server started on port 3000');
-});
-
-app.set('view engine', 'ejs');
-app.set('trust proxy', true);
-
-app.use(express.urlencoded({ extended: true }));
-
 // home page
 app.get('/', (req, res) => {
     res.render('index');
+});
+<<<<<<< Updated upstream
+
+app.listen(3000, () => {
+    console.log('Server started on port 3000');
+=======
+app.get('/index', (req, res) => {
+    res.render('index');
+});
+
+app.get('/patch', (req, res) => {
+    res.render('patch');
+>>>>>>> Stashed changes
 });
