@@ -14,10 +14,15 @@ const db = new sqlite3.Database('./db/scores.db', (err) => {
     }
 });
 
+app.listen(3000, () => {
+    console.log('Server started on port 3000');
+});
+
 // home page
 app.get('/', (req, res) => {
     res.render('index');
 });
+<<<<<<< HEAD:JSGambling/app.js
 
 
 app.listen(3000, () => {
@@ -26,7 +31,10 @@ app.listen(3000, () => {
 app.get('/index', (req, res) => {
     res.render('index');
 });
+=======
+>>>>>>> aa8108fb6c1afe363ca6982df6e44a971e7db4fe:pog_collecting/app.js
 
+// patch notes page
 app.get('/patch', (req, res) => {
     res.render('patch');
 });
