@@ -68,7 +68,7 @@ app.get('/', (req, res) => {
 });
 
 // login route
-/*app.get('/', isAuthenticated, (req, res) => {
+app.get('/', isAuthenticated, (req, res) => {
 	try {
         console.log("Authenticated")
 		res.render('collection.ejs', { user: req.session.user, token: req.session.token} );
@@ -77,7 +77,6 @@ app.get('/', (req, res) => {
 		res.send(error.message)
 	}
 });
-*/
 
 // patch notes page
 app.get('/patch', (req, res) => {
@@ -85,7 +84,6 @@ app.get('/patch', (req, res) => {
 });
 
 // login page
-/*
 app.get('/login', (req, res) => {
     if (req.query.token) {
          let tokenData = jwt.decode(req.query.token);
@@ -96,7 +94,6 @@ app.get('/login', (req, res) => {
          res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
     };
 });
-*/
 
 //listens
 app.listen(3000, () => {
