@@ -62,12 +62,13 @@ const db = new sqlite3.Database('./db/scores.db', (err) => {
 });
 
 // home page
-app.get('/collection', (req, res) => {
+// change / to /collection when using formbar authentication
+app.get('/', (req, res) => {
     res.render('collection');
 });
 
 // login route
-app.get('/', isAuthenticated, (req, res) => {
+/*app.get('/', isAuthenticated, (req, res) => {
 	try {
         console.log("Authenticated")
 		res.render('collection.ejs', { user: req.session.user, token: req.session.token} );
@@ -76,6 +77,7 @@ app.get('/', isAuthenticated, (req, res) => {
 		res.send(error.message)
 	}
 });
+*/
 
 // patch notes page
 app.get('/patch', (req, res) => {
@@ -83,6 +85,7 @@ app.get('/patch', (req, res) => {
 });
 
 // login page
+/*
 app.get('/login', (req, res) => {
     if (req.query.token) {
          let tokenData = jwt.decode(req.query.token);
@@ -93,6 +96,7 @@ app.get('/login', (req, res) => {
          res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
     };
 });
+*/
 
 //listens
 app.listen(3000, () => {
