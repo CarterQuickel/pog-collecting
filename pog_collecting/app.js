@@ -63,7 +63,7 @@ const db = new sqlite3.Database('./db/scores.db', (err) => {
 
 // home page
 // change / to /collection when using formbar authentication
-app.get('/collections', (req, res) => {
+app.get('/collection', (req, res) => {
     res.render('collection');
 });
 
