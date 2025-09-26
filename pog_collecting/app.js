@@ -5,6 +5,9 @@ const sqlite3 = require('sqlite3').verbose();
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
 
+// let
+let version = "0.0.2";
+
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
 
@@ -70,7 +73,8 @@ app.get('/collection', (req, res) => {
 app.get('/', isAuthenticated, (req, res) => {
 	try {
         console.log("Authenticated")
-		res.render('collection.ejs', { user: req.session.user, token: req.session.token} );
+        // add variable references here
+		res.render('collection.ejs', { user: req.session.user, token: req.session.token, version: version} );
 	}
 	catch (error) {
 		res.send(error.message)

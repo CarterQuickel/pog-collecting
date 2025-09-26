@@ -72,9 +72,6 @@ function sellItem(index) {
 setInterval(update, 100);
 function update() {
 
-    // update mode text
-    document.getElementById("modeTxt").innerHTML = lightMode ? "Light Mode" : "Dark Mode"
-
     // update inventory size text
     document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize} Slots`
 
