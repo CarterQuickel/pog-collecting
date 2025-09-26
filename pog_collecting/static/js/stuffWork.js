@@ -22,9 +22,6 @@ let Isize = 3;
 //mode
 let lightMode = true;
 
-//sort style
-let sortStyle = "none";
-
 //bonus multiplier
 let bonusMulti = 1.5;
 
@@ -74,15 +71,6 @@ function update() {
 
     // update inventory size text
     document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize} Slots`
-
-    //update sort text
-    if (sortStyle === "top") {
-        document.getElementById("sortTxt").innerHTML = `Sort \u2191`
-    } else if (sortStyle === "bottom") {
-        document.getElementById("sortTxt").innerHTML = `Sort \u2193`
-    } else {
-        document.getElementById("sortTxt").innerHTML = `Sort`
-    }
 
     // update XP Txt
     document.getElementById("XPTxt").innerText = `Level ${level} (${xp}/${maxXP} XP)`;
@@ -260,27 +248,6 @@ document.getElementById("darkmode").addEventListener("click", () => {
     }
 });
 
-// sort inventory from least to most valuable
-document.getElementById("bottomSort").addEventListener("click", () => {
-    inventory.sort((a, b) => {
-        const rarityA = rarities.find(r => r.name === a.name);
-        const rarityB = rarities.find(r => r.name === b.name);
-        sortStyle = "bottom";
-        return rarityA.value - rarityB.value; // sort by value descending
-    });
-    refreshInventory();
-});
-
-// sort inventory from most to least valuable
-document.getElementById("topSort").addEventListener("click", () => {
-    inventory.sort((a, b) => {
-        const rarityA = rarities.find(r => r.name === a.name);
-        const rarityB = rarities.find(r => r.name === b.name);
-        sortStyle = "top";
-        return rarityB.value - rarityA.value; // sort by value descending
-    });
-    refreshInventory();
-});
 //number abbreviation function
 function abbreviateNumber (value) {
 const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
