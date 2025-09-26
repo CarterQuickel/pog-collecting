@@ -38,19 +38,29 @@ ul {
     padding: 0px;
 }
 
-#gamblingBanner {
+#collectBanner {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: rgb(158, 84, 158);
+}
+
+.leftstuff {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 20px;
 }
 
 #money {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
     font-size: 35px;
-    padding-top: 10px;
+    padding-top: 20px;
     color: green;
 }
 
@@ -378,6 +388,7 @@ progress::-webkit-progress-value {
 .switch {
     position: relative;
     display: inline-block;
+    margin-right: 10px;
     width: 60px;
     height: 34px;
 }
