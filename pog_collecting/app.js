@@ -5,7 +5,10 @@ const sqlite3 = require('sqlite3').verbose();
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
 
+<<<<<<< Updated upstream
 // let
+=======
+>>>>>>> Stashed changes
 let version = "0.0.2";
 
 // API key for Formbar API access
@@ -73,7 +76,10 @@ app.get('/collection', (req, res) => {
 app.get('/', isAuthenticated, (req, res) => {
 	try {
         console.log("Authenticated")
+<<<<<<< Updated upstream
         // add variable references here
+=======
+>>>>>>> Stashed changes
 		res.render('collection.ejs', { user: req.session.user, token: req.session.token, version: version} );
 	}
 	catch (error) {
