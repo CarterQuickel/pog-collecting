@@ -1,0 +1,67 @@
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    margin-top: 120px;
+    background-color: #f4f4f9; 
+    color: #333; 
+}
+
+#banner {
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #9e549e; 
+    text-align: center;
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    color: #fff; 
+    line-height: 80px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.weeks {
+    font-size: 1.25rem; 
+    background-color: #7d6381;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px; 
+    margin: 20px auto;
+    max-width: 1750px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.weeks h2 {
+    margin-top: 0;
+    font-size: 1.5rem; 
+    color: #f4f4f9; 
+}
+
+.weeks ul {
+    padding-left: 20px; 
+}
+
+.weeks li {
+    margin-bottom: 10px; 
+    line-height: 1.6; 
+}
+#circleButton {
+    position: absolute;
+    top: 17.5%; /* Adjust to vertically center the button */
+    right: 20px; /* Adjust to position the button on the right */
+    width: 50px; /* Slightly larger for better visibility */
+    height: 50px;
+    border: none; /* Remove border */
+    border-radius: 50%; /* Makes the button circular */
+    text-align: center;
+    line-height: 50px; /* Centers the text vertically */
+    font-size: 1.5rem; /* Larger font size */
+    font-weight: bold;
+    color: #fff; /* White text for contrast */
+    text-decoration: none;
+    background-color: white;
+    border: 2px solid black;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
