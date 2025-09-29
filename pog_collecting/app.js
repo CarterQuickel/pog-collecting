@@ -73,6 +73,7 @@ app.get('/collection', (req, res) => {
 app.get('/', isAuthenticated, (req, res) => {
 	try {
         console.log("Authenticated")
+        // add variable references here
 		res.render('collection.ejs', { user: req.session.user, token: req.session.token, version: version} );
 	}
 	catch (error) {
