@@ -5,6 +5,7 @@ const sqlite3 = require('sqlite3').verbose();
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
 
+//let
 let version = "0.0.2";
 
 // API key for Formbar API access
