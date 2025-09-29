@@ -56,11 +56,21 @@ app.set('trust proxy', true);
 app.use('/static', express.static('static'));
 app.use(express.urlencoded({ extended: true }));
 
-const db = new sqlite3.Database('./db/scores.db', (err) => {
+// high score database
+const hsdb = new sqlite3.Database('./db/scores.db', (err) => {
     if (err) {
-        console.error('Could not connect to database', err);
+        console.error('Could not connect to scores database', err);
     } else {
-        console.log('Connected to database');
+        console.log('Connected to scores database');
+    }
+});
+
+// user settings database
+const usdb = new sqlite3.Database('./db/usersettings.db', (err) => {
+    if (err) {
+        console.error('Could not connect to settings database', err);
+    } else {
+        console.log('Connected to settings database');
     }
 });
 
@@ -69,10 +79,24 @@ app.get('/collection', (req, res) => {
     res.render('collection');
 });
 
+// Initialize user session with default values if not already set
+function initializeUserSession(session) {
+    session.user = session.user || {};
+    session.user.theme = session.user.theme || 'light';
+    session.user.score = session.user.score || 0;
+    session.user.inventory = session.user.inventory || [];
+    session.user.Isize = session.user.Isize || 3;
+    session.user.xp = session.user.xp || 0;
+    session.user.maxxp = session.user.maxxp || 100;
+    session.user.level = session.user.level || 1;
+}
+
 // login route
 app.get('/', isAuthenticated, (req, res) => {
 	try {
         console.log("Authenticated")
+        //set user
+        initializeUserSession(req.session);
         // add variable references here
 		res.render('collection.ejs', { user: req.session.user, token: req.session.token, version: version} );
 	}
