@@ -479,3 +479,13 @@ input:checked + .slider:before {
 .sort:hover {
     background-color: gray;
 }
+
+#achievementsButton {
+    margin-top: 10px;
+    background-color: #5f4b63;
+    border-radius:12px;
+    padding: 10px;
+    width: 360px;
+    height: 50px;
+    border: 3px solid black;
+}
