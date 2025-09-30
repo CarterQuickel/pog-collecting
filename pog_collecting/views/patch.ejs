@@ -7,7 +7,40 @@
     <link rel="stylesheet" href="../static/css/patch.css">
 </head>
 <body>
-    <h1>Patch Notes! (V 0.0.2 Week 6)</h1>
-    <p></p>
+    <div id="patchBanner">
+        <div class="leftstuff">
+            <h1 style="margin-left: 10px;">Patch Notes!</h1>
+            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= user %></h4>
+        </div>
+            <div class="rightstuff">
+            <a href="/collection" id="circleButton"> < </a>
+        </div>
+    </div>
+    <div class="weeks">
+    <h2>(V 0.0.2 Week 2)</h2>
+    <ul>
+        <li>Added XP and Leveling system; each crate opened gives XP</li>
+        <li>Gave patch logs a seperate page</li>
+        <li>Moved the save, load, and reset button to the top right</li>
+        <li>Starting hosting the game on formbar.js and node</li>
+        <li>Removed the rarity sorting</li>
+    </ul>
+</div>
+<div class="weeks">
+    <h2>(V 0.0.1 Week 1)</h2>
+    <ul>
+        <li>Added stack bonuses; 3+ of one rarity increases income of that rarity by 1.5x [indicated by a white glow outline]; 
+            all items will round to the nearest whole number</li>
+        <li>Added sorting system from least to most rare</li>
+        <li>Added cards for each rarity, including income and sell value</li>
+        <li>Added scrollbar for the inventory rather than the website page</li>
+        <li>Removed JSONS of rarities and crates to eliminate unnecessary redundancy</li>
+        <li>Removed the dropdown for deleting items in the inventory; now each card has its own sell button</li>
+        <li>Removed page scrolling; all data is stored on the single screen</li>
+        <li>Added a failsafe that if all items are sold, then money will equal 200</li>
+        <li>Edited the names of the crates to match their higher rarity chances</li>
+        <li>Added Github functionality for collaboration</li>
+    </ul>
+</div>
 </body>
 </html>

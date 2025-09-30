@@ -66,15 +66,14 @@ const db = new sqlite3.Database('./db/scores.db', (err) => {
 
 // home page
 app.get('/collection', (req, res) => {
-    res.render('collection');
+    res.render('collection', { user: req.session.user });
 });
 
 // login route
 app.get('/', isAuthenticated, (req, res) => {
 	try {
         console.log("Authenticated")
-        // add variable references here
-		res.render('collection.ejs', { user: req.session.user, token: req.session.token, version: version} );
+		res.render('collection.ejs', { user: req.session.user, token: req.session.token} );
 	}
 	catch (error) {
 		res.send(error.message)
@@ -83,7 +82,7 @@ app.get('/', isAuthenticated, (req, res) => {
 
 // patch notes page
 app.get('/patch', (req, res) => {
-    res.render('patch');
+    res.render('patch', { user: req.session.user });
 });
 
 // login page

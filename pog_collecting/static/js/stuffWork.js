@@ -205,6 +205,18 @@ document.getElementById("save").addEventListener("click", () => {
     alert("Game Saved!");
 });
 
+document.getElementById("patchNotesButton").addEventListener("click", () => {
+    const saveState = {
+        money: money,
+        inventory: inventory,
+        Isize: Isize,
+        xp: xp,
+        maxXP: maxXP,
+        level: level
+    };
+    localStorage.setItem("gameState", JSON.stringify(saveState));
+});
+
 // load game
 document.getElementById("load").addEventListener("click", () => {
     const savedState = JSON.parse(localStorage.getItem("gameState"));
