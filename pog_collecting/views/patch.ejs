@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="../static/css/patch.css">
 </head>
 <body>
-    <h1 id="banner">Patch Notes!
-        <a href="/collection" id="circleButton"> < </a>
-    </h1>
+    <div id="patchBanner">
+        <div class="leftstuff">
+            <h1 style="margin-left: 10px;">Patch Notes!</h1>
+            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= user %></h4>
+        </div>
+            <div class="rightstuff">
+            <a href="/collection" id="circleButton"> < </a>
+        </div>
+    </div>
     <div class="weeks">
     <h2>(V 0.0.2 Week 2)</h2>
     <ul>
