@@ -64,7 +64,7 @@ const usdb = new sqlite3.Database('./db/usersettings.db', (err) => {
 
 // home page
 app.get('/collection', (req, res) => {
-    res.render('collection', { user: req.session.user });
+    res.render('collection', { userdata: req.session.user });
 });
 
 // login route
@@ -129,7 +129,7 @@ app.get('/', isAuthenticated, (req, res) => {
 
 // patch notes page
 app.get('/patch', (req, res) => {
-    res.render('patch', { user: req.session.user });
+    res.render('patch', { userdata: req.session.user });
 });
 
 // login page
