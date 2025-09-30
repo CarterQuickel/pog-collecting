@@ -5,9 +5,6 @@ const sqlite3 = require('sqlite3').verbose();
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
 
-// let
-let version = "0.0.2";
-
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
 
@@ -56,11 +53,12 @@ app.set('trust proxy', true);
 app.use('/static', express.static('static'));
 app.use(express.urlencoded({ extended: true }));
 
-const db = new sqlite3.Database('./db/scores.db', (err) => {
+// user settings database
+const usdb = new sqlite3.Database('./db/usersettings.db', (err) => {
     if (err) {
-        console.error('Could not connect to database', err);
+        console.error('Could not connect to settings database', err);
     } else {
-        console.log('Connected to database');
+        console.log('Connected to settings database');
     }
 });
 
@@ -72,11 +70,59 @@ app.get('/collection', (req, res) => {
 // login route
 app.get('/', isAuthenticated, (req, res) => {
 	try {
-        console.log("Authenticated")
         // add variable references here
-		res.render('collection.ejs', { user: req.session.user, token: req.session.token, version: version} );
-	}
-	catch (error) {
+        req.session.user = {
+            displayName: req.session.token?.displayName || "guest",
+            theme: req.session.user.theme || 'light',
+            score: req.session.user.score || 0,
+            inventory: req.session.user.inventory || [],
+            Isize: req.session.user.Isize || 3,
+            xp: req.session.user.xp || 0,
+            maxxp: req.session.user.maxxp || 100,
+            level: req.session.user.level || 1
+        };
+        console.log("Authenticated, hello " + req.session.user.displayName);
+
+        //insert table
+        function insertUser() {
+            
+            const displayName = req.session.user.displayName;
+            console.log(displayName);
+
+            usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
+                if (err) {
+                    return console.error("Error querying user:", err.message);
+                }
+                if (row) {
+                    console.log(`User '${displayName}' already exists with uid ${row.uid}`);
+                    return;
+                } else {
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [
+                            req.session.user.theme,
+                            req.session.user.score,
+                            JSON.stringify(req.session.user.inventory),
+                            req.session.user.Isize,
+                            req.session.user.xp,
+                            req.session.user.maxxp,
+                            req.session.user.level,
+                            displayName
+                        ], 
+                        function (err) {
+                        if (err) {
+                            return console.error("Error inserting user:", err.message);
+                        }
+                        console.log(`User '${displayName}' inserted with rowid ${this.lastID}`);
+                    });
+                }
+            });
+        }
+
+        // Call insertUser and handle callback
+        insertUser();
+        res.render('collection.ejs', { userdata: req.session.user, token: req.session.token });
+
+	} catch (error) {
 		res.send(error.message)
 	}
 });
@@ -91,7 +137,7 @@ app.get('/login', (req, res) => {
     if (req.query.token) {
          let tokenData = jwt.decode(req.query.token);
          req.session.token = tokenData;
-         req.session.user = tokenData.displayName;
+         req.session.user = { displayName: tokenData.displayName };
          res.redirect('/');
     } else {
          res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
