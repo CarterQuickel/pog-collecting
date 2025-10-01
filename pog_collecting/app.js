@@ -67,6 +67,7 @@ app.get('/collection', (req, res) => {
     res.render('collection', { userdata: req.session.user });
 });
 
+
 // login route
 app.get('/', isAuthenticated, (req, res) => {
 	try {
@@ -133,7 +134,7 @@ app.get('/patch', (req, res) => {
 });
 
 app.get('/achievements', (req, res) => {
-    res.render('achievements', { user: req.session.user });
+    res.render('achievements', { userdata: req.session.user });
 });
 
 // login page

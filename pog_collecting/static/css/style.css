@@ -11,14 +11,6 @@ h3 {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-#patchNotesButton {
-    background-color: #5f4b63;
-    border-radius:12px;
-    padding: 10px;
-    width: 360px;
-    border: 3px solid black;
-}
-
 #income {
     margin-top: 0;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -480,7 +472,8 @@ input:checked + .slider:before {
     background-color: gray;
 }
 
-#achievementsButton {
+.pageButtons {
+    font-size: large;
     margin-top: 10px;
     background-color: #5f4b63;
     border-radius:12px;
@@ -488,4 +481,8 @@ input:checked + .slider:before {
     width: 360px;
     height: 50px;
     border: 3px solid black;
+}
+
+.pageButtons:hover {
+    background-color: #7d6381;
 }
