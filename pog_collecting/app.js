@@ -135,6 +135,10 @@ app.get('/patch', (req, res) => {
     res.render('patch', { userdata: req.session.user });
 });
 
+app.get('/achievements', (req, res) => {
+    res.render('achievements', { user: req.session.user });
+});
+
 // login page
 app.get('/login', (req, res) => {
     if (req.query.token) {
