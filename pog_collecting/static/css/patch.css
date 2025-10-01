@@ -112,7 +112,6 @@ button:hover {
 #circleButton:hover {
     background-color: #9e549e; /* Change background on hover */
     color: white; /* Change text color on hover */
-    transform: scale(1.1); /* Slightly enlarge the button */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }
 
