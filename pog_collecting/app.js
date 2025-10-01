@@ -52,6 +52,7 @@ app.set('view engine', 'ejs');
 app.set('trust proxy', true);
 app.use('/static', express.static('static'));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // user settings database
 const usdb = new sqlite3.Database('./db/usersettings.db', (err) => {
@@ -64,31 +65,20 @@ const usdb = new sqlite3.Database('./db/usersettings.db', (err) => {
 
 // home page
 app.get('/collection', (req, res) => {
+    if (!req.session.user) {
+        res.redirect('/');
+    }
     res.render('collection', { userdata: req.session.user });
 });
 
 // login route
 app.get('/', isAuthenticated, (req, res) => {
 	try {
-        // add variable references here
-        req.session.user = {
-            displayName: req.session.token?.displayName || "guest",
-            theme: req.session.user.theme || 'light',
-            score: req.session.user.score || 0,
-            inventory: req.session.user.inventory || [],
-            Isize: req.session.user.Isize || 3,
-            xp: req.session.user.xp || 0,
-            maxxp: req.session.user.maxxp || 100,
-            level: req.session.user.level || 1
-        };
-        console.log("Authenticated, hello " + req.session.user.displayName);
-
-        //insert table
         function insertUser() {
             
             const displayName = req.session.user.displayName;
             console.log(displayName);
-
+        
             usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
                 if (err) {
                     return console.error("Error querying user:", err.message);
@@ -117,9 +107,22 @@ app.get('/', isAuthenticated, (req, res) => {
                 }
             });
         }
+        // add variable references here
+        req.session.user = {
+            displayName: req.session.token?.displayName || "guest",
+            theme: req.session.user.theme || 'light',
+            score: req.session.user.score || 0,
+            inventory: req.session.user.inventory || [],
+            Isize: req.session.user.Isize || 3,
+            xp: req.session.user.xp || 0,
+            maxxp: req.session.user.maxxp || 100,
+            level: req.session.user.level || 1
+        };
+        console.log("Authenticated, hello " + req.session.user.displayName);
 
         // Call insertUser and handle callback
         insertUser();
+        console.log(req.session.user);
         res.render('collection.ejs', { userdata: req.session.user, token: req.session.token });
 
 	} catch (error) {
