@@ -47,7 +47,7 @@ function getTotalIncome() {
 // initial money display
 setInterval(updateMoney, 100);
 function updateMoney() {
-    abbreviatedMoney = abbreviateNumber(money);
+    const abbreviatedMoney = abbreviateNumber(money);
     document.getElementById("money").innerText = `$${abbreviatedMoney}`;
 }
 
@@ -68,12 +68,14 @@ function sellItem(index) {
 // update loop
 setInterval(update, 100);
 function update() {
-
+//abbrevs
+    const abbreviatedXP = abbreviateNumber(xp);
+    const abbreviatedMaxXP = abbreviateNumber(maxXP);
     // update inventory size text
     document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize} Slots`
 
     // update XP Txt
-    document.getElementById("XPTxt").innerText = `Level ${level} (${xp}/${maxXP} XP)`;
+    document.getElementById("XPTxt").innerText = `Level ${level} (${abbreviatedXP}/${abbreviatedMaxXP} XP)`;
 
     // update income Txt
     document.getElementById("income").innerText = `($${getTotalIncome()}/s)`;
