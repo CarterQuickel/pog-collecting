@@ -206,6 +206,8 @@ document.getElementById("save").addEventListener("click", () => {
 });
 
 document.getElementById("patchNotesButton").addEventListener("click", () => {
+const pnb = confirm("Save data before going to patch notes?");
+if (pnb) {
     const saveState = {
         money: money,
         inventory: inventory,
@@ -215,6 +217,9 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
         level: level
     };
     localStorage.setItem("gameState", JSON.stringify(saveState));
+    alert("Game Saved!");
+    window.location.href = "/patchNotes";
+}
 });
 
 // load game
