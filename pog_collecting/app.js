@@ -73,12 +73,12 @@ app.get('/collection', (req, res) => {
 
 // login route
 app.get('/', isAuthenticated, (req, res) => {
-	try {
+    try {
         function insertUser() {
-            
+
             const displayName = req.session.user.displayName;
             console.log(displayName);
-        
+
             usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
                 if (err) {
                     return console.error("Error querying user:", err.message);
@@ -97,13 +97,13 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.maxxp,
                             req.session.user.level,
                             displayName
-                        ], 
+                        ],
                         function (err) {
-                        if (err) {
-                            return console.error("Error inserting user:", err.message);
-                        }
-                        console.log(`User '${displayName}' inserted with rowid ${this.lastID}`);
-                    });
+                            if (err) {
+                                return console.error("Error inserting user:", err.message);
+                            }
+                            console.log(`User '${displayName}' inserted with rowid ${this.lastID}`);
+                        });
                 }
             });
         }
@@ -122,12 +122,11 @@ app.get('/', isAuthenticated, (req, res) => {
 
         // Call insertUser and handle callback
         insertUser();
-        console.log(req.session.user);
         res.render('collection.ejs', { userdata: req.session.user, token: req.session.token });
 
-	} catch (error) {
-		res.send(error.message)
-	}
+    } catch (error) {
+        res.send(error.message)
+    }
 });
 
 // patch notes page
@@ -139,19 +138,39 @@ app.get('/achievements', (req, res) => {
     res.render('achievements', { user: req.session.user });
 });
 
+// save data route
+app.post('/datasave', (req, res) => {
+    console.log(req.body);
+    const userSave = {
+        theme: req.body.lightMode ? 'light' : 'dark',
+        score: req.body.money,
+        inventory: req.body.inventory,
+        Isize: req.body.Isize,
+        xp: req.body.xp,
+        maxxp: req.body.maxXP,
+        level: req.body.level
+    }
+    req.session.save(err => {
+        if (err) {
+            console.error('Error saving session:', err);
+            return res.status(500).json({ message: 'Error saving session' });
+        }
+    });
+});
+
 // login page
 app.get('/login', (req, res) => {
     if (req.query.token) {
-         let tokenData = jwt.decode(req.query.token);
-         req.session.token = tokenData;
-         req.session.user = { displayName: tokenData.displayName };
-         res.redirect('/');
+        let tokenData = jwt.decode(req.query.token);
+        req.session.token = tokenData;
+        req.session.user = { displayName: tokenData.displayName };
+        res.redirect('/');
     } else {
-         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
+        res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
     };
 });
 
 //listens
 app.listen(3000, () => {
-    console.log('Server started on port 3000');
+    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆');
 });

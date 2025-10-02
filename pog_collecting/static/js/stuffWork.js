@@ -9,7 +9,7 @@ let moneyTick = 1000;
 let inventory = [];
 
 // money
-let money = 200;
+let money = 20000;
 
 // XP
 let xp = 0;
@@ -17,7 +17,7 @@ let maxXP = 15;
 let level = 1;
 
 // inventory size
-let Isize = 3;
+let Isize = 45;
 
 //mode
 let lightMode = true;
@@ -84,14 +84,8 @@ function update() {
     if (inventory.length >= Isize) {
         document.getElementById("invTxt").style.color = "red";
     } else {
-        if (lightMode) {
-            document.getElementById("invTxt").style.color = "black";
-            document.getElementById("XPTxt").style.color = "rgb(70, 70, 206)"
-        } else {
-            document.getElementById("invTxt").style.color = "white";
-            document.getElementById("XPTxt").style.color = "white";
-        }
-    }
+        document.getElementById("invTxt").style.color = lightMode ? "black" : "white";
+    } 
 }
 
 //update inventory
@@ -179,8 +173,8 @@ document.getElementById("crate1").addEventListener("click", () => openCrate(crat
 document.getElementById("crate2").addEventListener("click", () => openCrate(crates[Object.keys(crates)[1]].price, 1));
 document.getElementById("crate3").addEventListener("click", () => openCrate(crates[Object.keys(crates)[2]].price, 2));
 document.getElementById("crate4").addEventListener("click", () => openCrate(crates[Object.keys(crates)[3]].price, 3));
-document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[5]].price, 5));
-document.getElementById("crate6").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
+document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
+document.getElementById("crate6").addEventListener("click", () => openCrate(crates[Object.keys(crates)[5]].price, 5));
 
 // level up
 function levelup() {
@@ -195,6 +189,30 @@ function levelup() {
 
 // save game
 document.getElementById("save").addEventListener("click", () => {
+    // fetch to /datasave
+        fetch('/datasave', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                lightMode: lightMode,
+                money: money,
+                inventory: inventory,
+                Isize: Isize,
+                xp: xp,
+                maxXP: maxXP,
+                level: level
+             })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data saved successfully:", data);
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
     const saveState = {
         money: money,
         inventory: inventory,
@@ -220,7 +238,7 @@ if (pnb) {
     };
     localStorage.setItem("gameState", JSON.stringify(saveState));
     alert("Game Saved!");
-    window.location.href = "/patchNotes";
+    window.location.href = "/patch";
 }
 });
 
@@ -272,3 +290,5 @@ function abbreviateNumber (value) {
 const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
 return formatter.format(value);
 }
+
+const buttons = document.getElementsByTagName("button");
