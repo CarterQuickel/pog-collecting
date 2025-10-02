@@ -9,7 +9,7 @@ let moneyTick = 1000;
 let inventory = [];
 
 // money
-let money = 200;
+let money = 20000;
 
 // XP
 let xp = 0;
@@ -272,3 +272,28 @@ function abbreviateNumber (value) {
 const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
 return formatter.format(value);
 }
+
+const buttons = document.getElementsByTagName("button");
+
+//global button event
+Array.from(buttons).forEach(button => {
+    button.addEventListener("click", function() {
+        fetch('/datasave', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                lightMode: lightMode,
+                money: money,
+                inventory: inventory,
+                Isize: Isize,
+                xp: xp,
+                maxXP: maxXP,
+                level: level
+             })
+        }).catch(err => {
+            console.error("Error saving data:", err);
+        });
+    });
+});
