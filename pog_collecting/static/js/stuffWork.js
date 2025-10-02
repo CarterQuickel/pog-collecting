@@ -212,6 +212,15 @@ document.getElementById("save").addEventListener("click", () => {
         .catch(err => {
             console.error("Error saving data:", err);
         });
+    const saveState = {
+        money: money,
+        inventory: inventory,
+        Isize: Isize,
+        xp: xp,
+        maxXP: maxXP,
+        level: level
+    };
+    localStorage.setItem("gameState", JSON.stringify(saveState));
     alert("Game Saved!");
 });
 
