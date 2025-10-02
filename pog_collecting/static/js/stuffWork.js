@@ -84,14 +84,8 @@ function update() {
     if (inventory.length >= Isize) {
         document.getElementById("invTxt").style.color = "red";
     } else {
-        if (lightMode) {
-            document.getElementById("invTxt").style.color = "black";
-            document.getElementById("XPTxt").style.color = "rgb(70, 70, 206)"
-        } else {
-            document.getElementById("invTxt").style.color = "white";
-            document.getElementById("XPTxt").style.color = "white";
-        }
-    }
+        document.getElementById("invTxt").style.color = lightMode ? "black" : "white";
+    } 
 }
 
 //update inventory
@@ -176,11 +170,6 @@ function openCrate(cost, index) {
 
 // button click event
 document.getElementById("crate1").addEventListener("click", () => openCrate(crates[Object.keys(crates)[0]].price, 0));
-document.getElementById("crate2").addEventListener("click", () => openCrate(crates[Object.keys(crates)[1]].price, 1));
-document.getElementById("crate3").addEventListener("click", () => openCrate(crates[Object.keys(crates)[2]].price, 2));
-document.getElementById("crate4").addEventListener("click", () => openCrate(crates[Object.keys(crates)[3]].price, 3));
-document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[5]].price, 5));
-document.getElementById("crate6").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
 
 // level up
 function levelup() {
@@ -235,7 +224,7 @@ if (pnb) {
     };
     localStorage.setItem("gameState", JSON.stringify(saveState));
     alert("Game Saved!");
-    window.location.href = "/patchNotes";
+    window.location.href = "/patch";
 }
 });
 
