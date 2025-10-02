@@ -56,14 +56,6 @@ body {
     margin-left: 20px; /* Add spacing from the left edge */
 }
 
-/* Left Section of the Banner */
-.leftstuff {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 20px; /* Add spacing from the left edge */
-}
-
 .rightstuff {
     display: flex;
     align-items: center;
@@ -106,16 +98,8 @@ button:hover {
     background-color: white; /* White background */
     border: 2px solid black; /* Add a border for definition */
     cursor: pointer;
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
 
 #circleButton:hover {
-    background-color: #9e549e; /* Change background on hover */
-    color: white; /* Change text color on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
-}
-
-#circleButton:active {
-    transform: scale(0.95); /* Slightly shrink the button when clicked */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduce shadow on click */
+    background-color: #e0e0e0; /* Slightly darker on hover */
 }
