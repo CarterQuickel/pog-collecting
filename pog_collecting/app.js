@@ -122,7 +122,6 @@ app.get('/', isAuthenticated, (req, res) => {
 
         // Call insertUser and handle callback
         insertUser();
-        console.log(req.session.user);
         res.render('collection.ejs', { userdata: req.session.user, token: req.session.token });
 
     } catch (error) {
@@ -151,6 +150,12 @@ app.post('/datasave', (req, res) => {
         maxxp: req.body.maxXP,
         level: req.body.level
     }
+    req.session.save(err => {
+        if (err) {
+            console.error('Error saving session:', err);
+            return res.status(500).json({ message: 'Error saving session' });
+        }
+    });
 });
 
 // login page

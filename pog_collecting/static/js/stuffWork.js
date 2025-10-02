@@ -195,15 +195,30 @@ function levelup() {
 
 // save game
 document.getElementById("save").addEventListener("click", () => {
-    const saveState = {
-        money: money,
-        inventory: inventory,
-        Isize: Isize,
-        xp: xp,
-        maxXP: maxXP,
-        level: level
-    };
-    localStorage.setItem("gameState", JSON.stringify(saveState));
+    // fetch to /datasave
+        fetch('/datasave', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                lightMode: lightMode,
+                money: money,
+                inventory: inventory,
+                Isize: Isize,
+                xp: xp,
+                maxXP: maxXP,
+                level: level
+             })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data saved successfully:", data);
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
     alert("Game Saved!");
 });
 
@@ -274,26 +289,3 @@ return formatter.format(value);
 }
 
 const buttons = document.getElementsByTagName("button");
-
-//global button event
-Array.from(buttons).forEach(button => {
-    button.addEventListener("click", function() {
-        fetch('/datasave', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                lightMode: lightMode,
-                money: money,
-                inventory: inventory,
-                Isize: Isize,
-                xp: xp,
-                maxXP: maxXP,
-                level: level
-             })
-        }).catch(err => {
-            console.error("Error saving data:", err);
-        });
-    });
-});
