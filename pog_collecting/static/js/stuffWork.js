@@ -17,7 +17,7 @@ let maxXP = 15;
 let level = 1;
 
 // inventory size
-let Isize = 3;
+let Isize = 45;
 
 //mode
 let lightMode = true;
@@ -170,6 +170,10 @@ function openCrate(cost, index) {
 
 // button click event
 document.getElementById("crate1").addEventListener("click", () => openCrate(crates[Object.keys(crates)[0]].price, 0));
+document.getElementById("crate2").addEventListener("click", () => openCrate(crates[Object.keys(crates)[1]].price, 1));
+document.getElementById("crate3").addEventListener("click", () => openCrate(crates[Object.keys(crates)[2]].price, 2));
+document.getElementById("crate4").addEventListener("click", () => openCrate(crates[Object.keys(crates)[3]].price, 3));
+document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
 
 // level up
 function levelup() {
