@@ -174,6 +174,7 @@ document.getElementById("crate2").addEventListener("click", () => openCrate(crat
 document.getElementById("crate3").addEventListener("click", () => openCrate(crates[Object.keys(crates)[2]].price, 2));
 document.getElementById("crate4").addEventListener("click", () => openCrate(crates[Object.keys(crates)[3]].price, 3));
 document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
+document.getElementById("crate6").addEventListener("click", () => openCrate(crates[Object.keys(crates)[5]].price, 5));
 
 // level up
 function levelup() {
