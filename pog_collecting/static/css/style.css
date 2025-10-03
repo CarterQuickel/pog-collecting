@@ -106,7 +106,7 @@ ul {
     background-color: #7d6381;
     width: 400px;
     min-height: 870px;
-    height: auto;
+    height: 90vh;
     border-radius: 10px;
     text-align: center;
     position: static;
@@ -215,7 +215,7 @@ ul {
     gap: 10px;
     overflow-y: auto;
     min-height: 175px;
-    max-height: 775px;
+    max-height: 90vh;
     position: static;
     flex: 1;
 }

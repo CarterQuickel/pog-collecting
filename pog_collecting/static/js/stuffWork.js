@@ -78,7 +78,7 @@ function update() {
     document.getElementById("XPTxt").innerText = `Level ${level} (${abbreviatedXP}/${abbreviatedMaxXP} XP)`;
 
     // update income Txt
-    document.getElementById("income").innerText = `($${getTotalIncome()}/s)`;
+    document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;
 
     // change inventory text color if full
     if (inventory.length >= Isize) {
