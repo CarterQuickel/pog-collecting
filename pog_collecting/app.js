@@ -71,6 +71,7 @@ app.get('/collection', (req, res) => {
     res.render('collection', { userdata: req.session.user });
 });
 
+
 // login route
 app.get('/', isAuthenticated, (req, res) => {
     try {
@@ -135,7 +136,7 @@ app.get('/patch', (req, res) => {
 });
 
 app.get('/achievements', (req, res) => {
-    res.render('achievements', { user: req.session.user });
+    res.render('achievements', { userdata: req.session.user });
 });
 
 // save data route
@@ -172,5 +173,5 @@ app.get('/login', (req, res) => {
 
 //listens
 app.listen(3000, () => {
-    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆');
+    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆'); console.log("Vamy was here");
 });

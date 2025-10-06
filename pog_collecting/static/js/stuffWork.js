@@ -78,7 +78,7 @@ function update() {
     document.getElementById("XPTxt").innerText = `Level ${level} (${abbreviatedXP}/${abbreviatedMaxXP} XP)`;
 
     // update income Txt
-    document.getElementById("income").innerText = `($${getTotalIncome()}/s)`;
+    document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;
 
     // change inventory text color if full
     if (inventory.length >= Isize) {
@@ -238,9 +238,26 @@ if (pnb) {
     };
     localStorage.setItem("gameState", JSON.stringify(saveState));
     alert("Game Saved!");
-    window.location.href = "/patch";
 }
+    window.location.href = "/patch";
 });
+
+document.getElementById("achievementsButton").addEventListener("click", () => {
+    const pnb = confirm("Save data before viewing achievements?");
+    if (pnb) {
+        const saveState = {
+            money: money,
+            inventory: inventory,
+            Isize: Isize,
+            xp: xp,
+            maxXP: maxXP,
+            level: level
+        };
+        localStorage.setItem("gameState", JSON.stringify(saveState));
+        alert("Game Saved!");
+    }
+    window.location.href = "/achievements";
+    });
 
 // load game
 document.getElementById("load").addEventListener("click", () => {

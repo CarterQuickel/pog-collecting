@@ -12,6 +12,12 @@ h3 {
 }
 
 #achievementsButton {
+    margin-top: 10px;
+    background-color: #5f4b63;
+    border-radius:12px;
+    padding: 10px;
+    width: 360px;
+    border: 3px solid black;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: larger;
 }
@@ -100,7 +106,7 @@ ul {
     background-color: #7d6381;
     width: 400px;
     min-height: 870px;
-    height: auto;
+    height: 90vh;
     border-radius: 10px;
     text-align: center;
     position: static;
@@ -209,7 +215,7 @@ ul {
     gap: 10px;
     overflow-y: auto;
     min-height: 175px;
-    max-height: 775px;
+    max-height: 90vh;
     position: static;
     flex: 1;
 }
@@ -458,7 +464,8 @@ input:checked + .slider:before {
     background-color: gray;
 }
 
-#achievementsButton {
+.pageButtons {
+    font-size: large;
     margin-top: 10px;
     background-color: #5f4b63;
     border-radius:12px;
@@ -466,4 +473,8 @@ input:checked + .slider:before {
     width: 360px;
     height: 50px;
     border: 3px solid black;
+}
+
+.pageButtons:hover {
+    background-color: #7d6381;
 }
