@@ -157,11 +157,11 @@ const achievements = [
         description: "Unlock all secret achievements.",
         icon: "🤫🧏‍♂️",
         reward: "None",
-        status: true,
+        status: false,
         hidden: true
     }
 ];
-
+/*
 // Get the achievements list container
 const achievementsList = document.getElementById("achievementsList");
 
