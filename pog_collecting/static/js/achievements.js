@@ -9,6 +9,14 @@ const achievements = [
         hidden: false
     },
     {
+        name: "Pogger",
+        description: "Open 100 crates.",
+        icon: "😲",
+        reward: "None",
+        status: false,
+        hidden: false
+    },
+    {
         name: "Nerdy Inspector",
         description: "Go to the patch notes page.",
         icon: "🤓",
@@ -65,9 +73,17 @@ const achievements = [
         hidden: false
     },
     {
+        name: "Exquisite",
+        description: "Have a copper, silver, gold, and diamond pog all at once.",
+        icon: "💎",
+        reward: "None",
+        status: false,
+        hidden: false
+    },
+    {
         name: "Mythical",
         description: "Have a copper, silver, gold, diamond, and astral pog all at once.",
-        icon: "💎",
+        icon: "🌌",
         reward: "XP Boost III",
         status: false,
         hidden: false
@@ -87,6 +103,22 @@ const achievements = [
         reward: "Inventory Expansion",
         status: false,
         hidden: true
+    },
+    {
+        name: "An Ender Pearl",
+        description: "Get an endermen combo.",
+        icon: "🟢",
+        reward: "Sorting System",
+        status: false,
+        hidden: false
+    },
+    {
+        name: "Soda Pop",
+        description: "Get a soda pog combo.",
+        icon: "🥤",
+        reward: "None",
+        status: false,
+        hidden: false
     },
     {
         name: "Merge Maniac",
@@ -165,7 +197,15 @@ const achievements = [
         description: "Unlock all secret achievements.",
         icon: "🤫🧏‍♂️",
         reward: "None",
-        status: true,
+        status: false,
+        hidden: true
+    },
+    {
+        name: "Platinum Trophy",
+        description: "Unlock all achievements.",
+        icon: "💯",
+        reward: "None",
+        status: false,
         hidden: true
     }
 ];
