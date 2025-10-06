@@ -1,3 +1,5 @@
+var userdata = JSON.parse(document.getElementById("userdata").textContent);
+
 // debug rarity list
 console.log(rarities);
 console.log(crates);
@@ -6,21 +8,21 @@ console.log(crates);
 let moneyTick = 1000;
 
 // items
-let inventory = [];
+let inventory = userdata.inventory || [];
 
 // money
-let money = 20000;
+let money = userdata.score || 20000;
 
 // XP
-let xp = 0;
-let maxXP = 15;
-let level = 1;
+let xp = userdata.xp || 0;
+let maxXP = userdata.maxxp || 15;
+let level = userdata.level || 1;
 
 // inventory size
-let Isize = 45;
+let Isize = userdata.Isize || 45;
 
 //mode
-let lightMode = true;
+let lightMode = (userdata.theme === "light");
 
 //bonus multiplier
 let bonusMulti = 1.5;
@@ -123,6 +125,8 @@ function refreshInventory() {
         </div>
     `}).join("");
 }
+//first time call
+refreshInventory();
 
 //update progress bar
 setInterval(updatePB, 100)
@@ -224,40 +228,6 @@ document.getElementById("save").addEventListener("click", () => {
     localStorage.setItem("gameState", JSON.stringify(saveState));
     alert("Game Saved!");
 });
-
-document.getElementById("patchNotesButton").addEventListener("click", () => {
-const pnb = confirm("Save data before going to patch notes?");
-if (pnb) {
-    const saveState = {
-        money: money,
-        inventory: inventory,
-        Isize: Isize,
-        xp: xp,
-        maxXP: maxXP,
-        level: level
-    };
-    localStorage.setItem("gameState", JSON.stringify(saveState));
-    alert("Game Saved!");
-}
-    window.location.href = "/patch";
-});
-
-document.getElementById("achievementsButton").addEventListener("click", () => {
-    const pnb = confirm("Save data before viewing achievements?");
-    if (pnb) {
-        const saveState = {
-            money: money,
-            inventory: inventory,
-            Isize: Isize,
-            xp: xp,
-            maxXP: maxXP,
-            level: level
-        };
-        localStorage.setItem("gameState", JSON.stringify(saveState));
-        alert("Game Saved!");
-    }
-    window.location.href = "/achievements";
-    });
 
 // load game
 document.getElementById("load").addEventListener("click", () => {
