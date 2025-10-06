@@ -55,6 +55,11 @@ achievements = [
     icon: "📦"
 },
 {
+    name: "Glorious King",
+    description: "Be on the Top 5 leaderboard.",
+    icon: "👑"
+},
+{
     name: "Completionist",
     description: "Unlock all other achievements.",
     icon: "🌟"
