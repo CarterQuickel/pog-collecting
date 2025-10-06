@@ -79,7 +79,7 @@ li {
 }
 
 .achievement {
-    background-color: #8e6fa9;
+    background-color: #594769;
     border-radius: 8px;
     padding: 15px;
     text-align: center;
@@ -100,13 +100,12 @@ li {
 }
 
 .achievement .description {
+    color: e0e0e0;
     font-size: 1.7rem;
-    color: #e0e0e0;
 }
 
 .achievement .reward {
     font-size: 1.5rem;
-    color: #b4b4b4;
     margin-top: 10px;
 }
 
@@ -114,9 +113,4 @@ li {
     font-size: 1.5rem;
     margin-top: 10px;
     font-weight: bold;
-}
-
-.achievement:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
