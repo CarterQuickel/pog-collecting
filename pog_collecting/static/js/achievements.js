@@ -101,10 +101,22 @@ if (achievementsList) {
             <span class="name">${achievement.name}</span><br>
             <span class="description">${achievement.description}</span><br>
             <span class="reward">Reward: ${achievement.reward}</span><br>
-            <span class="status">${achievement.status ? "Unlocked" : "Locked"}</span>
         `;
         achievementsList.appendChild(achievementElement);
     });
 } else {
     console.error("Element with ID 'achievementsList' not found in the DOM.");
 }
+
+
+
+for (let i = 0; i < achievements.length; i++) {
+if (achievements[i].status === true) {
+    document.getElementById(`achievement-${i}`).style.backgroundColor = "#8e6fa9";
+    document.getElementById(`achievement-${i}`).style.border = "4px solid white";
+
+}
+}
+
+
+// #8e6fa9 (carter dont worry abt ts)
