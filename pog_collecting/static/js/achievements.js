@@ -101,7 +101,7 @@ if (achievementsList) {
             <span class="name">${achievement.name}</span><br>
             <span class="description">${achievement.description}</span><br>
             <span class="reward">Reward: ${achievement.reward}</span><br>
-            <span class="status">Status: ${achievement.status ? "Unlocked" : "Locked"}</span>
+            <span class="status">${achievement.status ? "Unlocked" : "Locked"}</span>
         `;
         achievementsList.appendChild(achievementElement);
     });
