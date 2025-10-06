@@ -9,6 +9,14 @@ const achievements = [
         hidden: false
     },
     {
+        name: "Nerdy Inspector",
+        description: "Go to the patch notes page.",
+        icon: "🤓",
+        reward: "None",
+        status: false,
+        hidden: true
+    },
+    {
         name: "Elon",
         description: "Have 100 million dollars at once.",
         icon: "💰",
