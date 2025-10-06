@@ -42,7 +42,7 @@ const achievements = [
     },
     {
         name: "420",
-        description: "Sell enough pogs to earn back 420 digipogs.",
+        description: "Sell enough pogs to gain back a TOTAL of 420 digipogs.",
         icon: "🗣️",
         reward: "Throwaway II",
         status: false,
@@ -154,11 +154,19 @@ const achievements = [
     },
     {
         name: "Completionist",
-        description: "Unlock all other achievements.",
+        description: "Unlock all main achievements.",
         icon: "🌟",
         reward: "None",
         status: false,
         hidden: false
+    },
+    {
+        name: "Secret Achiever",
+        description: "Unlock all secret achievements.",
+        icon: "🤫🧏‍♂️",
+        reward: "None",
+        status: true,
+        hidden: true
     }
 ];
 
@@ -187,11 +195,21 @@ if (achievementsList) {
 
 
 for (let i = 0; i < achievements.length; i++) {
-if (achievements[i].status === true) {
-    document.getElementById(`achievement-${i}`).style.backgroundColor = "#8e6fa9";
-    document.getElementById(`achievement-${i}`).style.border = "4px solid white";
-
-}
+    if (achievements[i].status === true) {
+        document.getElementById(`achievement-${i}`).style.backgroundColor = "#8e6fa9";
+        document.getElementById(`achievement-${i}`).style.border = "4px solid white";
+    } else {
+        if (achievements[i].hidden === true) {
+            document.getElementById(`achievement-${i}`).style.backgroundColor = "#4a4a4a";
+            document.getElementById(`achievement-${i}`).style.border = "4px solid #2a2a2a";
+            document.getElementById(`achievement-${i}`).innerHTML = `
+                <span class="icon">❓</span><br>
+                <span class="name">${achievements[i].name}</span><br>
+                <span class="description">???</span><br>
+                <span class="reward">Reward: ???</span><br>
+            `;
+        }
+    }
 }
 
 
