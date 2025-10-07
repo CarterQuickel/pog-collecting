@@ -244,14 +244,21 @@ const achievements = [
             reward: "None",
             status: false,
             hidden: false
-        }, {
+        }, 
+        {
             name: "Sus",
             description: "Have 10 dingus pogs at once.",
             icon: "👽",
-            reward: "TBD",
+            reward: "None",
             status: false,
             hidden: false
         },
+        {
+            name: "Elden Lord",
+            description: "Get an Elden Ring pog combo.",
+            icon: "⚔️",
+            reward: "None",
+        }
     ]
 ];
 
