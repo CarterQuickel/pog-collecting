@@ -198,7 +198,6 @@ function levelup() {
     }
 }
 
-
 // save game
 document.getElementById("save").addEventListener("click", () => {
     // fetch to /datasave
@@ -234,7 +233,7 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
 
 document.getElementById("achievementsButton").addEventListener("click", () => {
     window.location.href = "/achievements";
-    });
+});
 
 // mode toggle
 document.getElementById("darkmode").addEventListener("click", () => {
