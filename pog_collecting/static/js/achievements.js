@@ -195,6 +195,22 @@ const achievements = [
             status: false,
             hidden: false
         },
+        {
+            name: "Wealthy",
+            description: "Make your first 1000 dollars.",
+            icon: "💵",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Entrepreneur",
+            description: "Make 2000 cash a second.",
+            icon: "🏦",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
     ],
     unique = [
         {
@@ -228,6 +244,13 @@ const achievements = [
             reward: "None",
             status: false,
             hidden: false
+        }, {
+            name: "Sus",
+            description: "Have 10 dingus pogs at once.",
+            icon: "👽",
+            reward: "TBD",
+            status: false,
+            hidden: false
         },
     ]
 ];
@@ -239,12 +262,37 @@ function renderCollection () {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-        achievementElement.innerHTML = `
-            <span class="icon">${achievement.icon}</span><br>
-            <span class="name">${achievement.name}</span><br>
-            <span class="description">${achievement.description}</span><br>
-            <span class="reward">Reward: ${achievement.reward}</span><br>
-        `;
+
+        if (achievement.hidden && !achievement.status) {
+            // Darken and replace content for hidden achievements
+            achievementElement.style.backgroundColor = "#333";
+            achievementElement.innerHTML = `
+                <span class="icon">❓</span><br>
+                <span class="name">???</span><br>
+                <span class="description">???</span><br>
+                <span class="reward">Reward: ???</span><br>
+            `;
+        } else if (achievement.status) {
+            // Render unlocked achievements with glowing effect
+            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
+            achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        } else {
+            // Render normal visible achievements
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        }
+
         achievementContainer.appendChild(achievementElement);
     });
 }
@@ -254,12 +302,37 @@ function renderLevel () {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-        achievementElement.innerHTML = `
-            <span class="icon">${achievement.icon}</span><br>
-            <span class="name">${achievement.name}</span><br>
-            <span class="description">${achievement.description}</span><br>
-            <span class="reward">Reward: ${achievement.reward}</span><br>
-        `;
+
+        if (achievement.hidden && !achievement.status) {
+            // Darken and replace content for hidden achievements
+            achievementElement.style.backgroundColor = "#333";
+            achievementElement.innerHTML = `
+                <span class="icon">❓</span><br>
+                <span class="name">???</span><br>
+                <span class="description">???</span><br>
+                <span class="reward">Reward: ???</span><br>
+            `;
+        } else if (achievement.status) {
+            // Render unlocked achievements with glowing effect
+            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
+            achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        } else {
+            // Render normal visible achievements
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        }
+
         achievementContainer.appendChild(achievementElement);
     });
 }
@@ -269,14 +342,39 @@ function renderProgression () {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-        achievementElement.innerHTML = `
-            <span class="icon">${achievement.icon}</span><br>
-            <span class="name">${achievement.name}</span><br>
-            <span class="description">${achievement.description}</span><br>
-            <span class="reward">Reward: ${achievement.reward}</span><br>
-        `;
+
+        if (achievement.hidden && !achievement.status) {
+            // Darken and replace content for hidden achievements
+            achievementElement.style.backgroundColor = "#333";
+            achievementElement.innerHTML = `
+                <span class="icon">❓</span><br>
+                <span class="name">???</span><br>
+                <span class="description">???</span><br>
+                <span class="reward">Reward: ???</span><br>
+            `;
+        } else if (achievement.status) {
+            // Render unlocked achievements with glowing effect
+            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
+            achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        } else {
+            // Render normal visible achievements
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        }
+
         achievementContainer.appendChild(achievementElement);
-    });    
+    });  
 }
 function renderEconomy () {
     achievementContainer.innerHTML = "";
@@ -284,27 +382,77 @@ function renderEconomy () {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-        achievementElement.innerHTML = `
-            <span class="icon">${achievement.icon}</span><br>
-            <span class="name">${achievement.name}</span><br>
-            <span class="description">${achievement.description}</span><br>
-            <span class="reward">Reward: ${achievement.reward}</span><br>
-        `;
+
+        if (achievement.hidden && !achievement.status) {
+            // Darken and replace content for hidden achievements
+            achievementElement.style.backgroundColor = "#333";
+            achievementElement.innerHTML = `
+                <span class="icon">❓</span><br>
+                <span class="name">???</span><br>
+                <span class="description">???</span><br>
+                <span class="reward">Reward: ???</span><br>
+            `;
+        } else if (achievement.status) {
+            // Render unlocked achievements with glowing effect
+            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
+            achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        } else {
+            // Render normal visible achievements
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        }
+
         achievementContainer.appendChild(achievementElement);
     });
 }
-function renderUnique () {
+function renderUnique() {
     achievementContainer.innerHTML = "";
     achievements[4].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-        achievementElement.innerHTML = `
-            <span class="icon">${achievement.icon}</span><br>
-            <span class="name">${achievement.name}</span><br>
-            <span class="description">${achievement.description}</span><br>
-            <span class="reward">Reward: ${achievement.reward}</span><br>
-        `;
+
+        if (achievement.hidden && !achievement.status) {
+            // Darken and replace content for hidden achievements
+            achievementElement.style.backgroundColor = "#333";
+            achievementElement.innerHTML = `
+                <span class="icon">❓</span><br>
+                <span class="name">???</span><br>
+                <span class="description">???</span><br>
+                <span class="reward">Reward: ???</span><br>
+            `;
+        } else if (achievement.status) {
+            // Render unlocked achievements with glowing effect
+            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
+            achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        } else {
+            // Render normal visible achievements
+            achievementElement.innerHTML = `
+                <span class="icon">${achievement.icon}</span><br>
+                <span class="name">${achievement.name}</span><br>
+                <span class="description">${achievement.description}</span><br>
+                <span class="reward">Reward: ${achievement.reward}</span><br>
+            `;
+        }
+
         achievementContainer.appendChild(achievementElement);
     });
 }
