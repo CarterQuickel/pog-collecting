@@ -340,6 +340,16 @@ progress::-webkit-progress-value {
     background-color: gray;
 }
 
+#patchNotesButton:hover {
+    background-color: #7d6381;
+    cursor: pointer;
+}
+
+#achievementsButton:hover {
+    background-color: #7d6381;
+    cursor: pointer;
+}
+
 /* light and dark mode btn */
 .switch {
     position: relative;
