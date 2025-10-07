@@ -1,3 +1,5 @@
+const { Script } = require("vm");
+
 // Define the achievements array
 const achievements = [
     collection = [
@@ -447,6 +449,6 @@ function renderUnique() {
 }
 
 
-
+<script src="../static/js/achievementFunc"></script>
 
 // #8e6fa9 (carter dont worry abt ts)
