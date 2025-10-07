@@ -78,7 +78,6 @@ app.get('/', isAuthenticated, (req, res) => {
         function insertUser() {
 
             const displayName = req.session.user.displayName;
-            console.log(displayName);
 
             usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
                 if (err) {
@@ -108,6 +107,7 @@ app.get('/', isAuthenticated, (req, res) => {
                 }
             });
         }
+
         // add variable references here
         req.session.user = {
             displayName: req.session.token?.displayName || "guest",
@@ -119,12 +119,31 @@ app.get('/', isAuthenticated, (req, res) => {
             maxxp: req.session.user.maxxp || 100,
             level: req.session.user.level || 1
         };
-        console.log("Authenticated, hello " + req.session.user.displayName);
 
-        // Call insertUser and handle callback
-        insertUser();
-        res.render('collection.ejs', { userdata: req.session.user, token: req.session.token });
-
+        // load user data from database
+        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [req.session.user.displayName], (err, row) => {
+            if (err) {
+                return console.error("Error querying user:", err.message);
+            }
+            if (row) {
+                req.session.user = {
+                    displayName: req.session.user.displayName,
+                    theme: row.theme,
+                    score: row.score,
+                    inventory: JSON.parse(row.inventory),
+                    Isize: row.Isize,
+                    xp: row.xp,
+                    maxxp: row.maxxp,
+                    level: row.level
+                };
+                console.log(`User data loaded for '${req.session.user.displayName}'`);
+            } else {
+                console.log(`No existing user data for '${req.session.user.displayName}', using defaults.`);
+            }
+            // Call insertUser and handle callback
+            insertUser();
+            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token });
+        });
     } catch (error) {
         res.send(error.message)
     }
@@ -151,10 +170,32 @@ app.post('/datasave', (req, res) => {
         maxxp: req.body.maxXP,
         level: req.body.level
     }
+    console.log(userSave.theme);
+    // save to session
     req.session.save(err => {
         if (err) {
             console.error('Error saving session:', err);
             return res.status(500).json({ message: 'Error saving session' });
+        } else {
+            params = [
+                userSave.theme,
+                userSave.score,
+                JSON.stringify(userSave.inventory),
+                userSave.Isize,
+                userSave.xp,
+                userSave.maxxp,
+                userSave.level,
+                req.session.user.displayName
+            ]
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ? WHERE displayname = ?`, params, function (err) {
+                if (err) {
+                    console.error('Error updating user settings:', err);
+                    return res.status(500).json({ message: 'Error updating user settings' });
+                }
+                console.log(`User settings updated for ${req.session.user.displayName}`);
+                req.session.user = { ...req.session.user, ...userSave };
+                return res.json({ message: 'Data saved successfully' });
+            });
         }
     });
 });
