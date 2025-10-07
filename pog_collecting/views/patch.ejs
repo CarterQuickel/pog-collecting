@@ -9,6 +9,7 @@
 <body>
     <div id="patchBanner">
         <div class="leftstuff">
+            <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
             <h1 style="margin-left: 10px;">Patch Notes!</h1>
             <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %></h4>
         </div>
@@ -17,15 +18,27 @@
         </div>
     </div>
     <div class="weeks">
+        <h2>(V 0.0.4 Week 4) 🐞</h2>
+        <ul>
+            <li>Added first achievements!</li>
+            <li>Added user data saves</li>
+            <li>Removed the left bar and moved all crates to the right</li>
+            <li>Added css improvements when the screen is small</li>
+            <li>Fixed a bug where the XP wasn't displayed correctly</li>
+            <li>Removed load and reset functionality</li>
+            <li>Added user theme across pages</li>
+        </ul>
+    </div>
+    <div class="weeks">
         <h2>(V 0.0.3 Week 3) 🏆</h2>
         <ul>
             <li>Added a patch notes page!</li>
-            <li>added an achievements page (not working yet).</li>
+            <li>Added an achievements page (not working yet).</li>
             <li>Reformatted the main game to look less empty.</li>
-            <li>fixed inventory and side bar not scaling in height when the window size changed.</li>
-            <li>fixed some bugs with the income calculation.</li>
+            <li>Fixed inventory and side bar not scaling in height when the window size changed.</li>
+            <li>Fixed some bugs with the income calculation.</li>
             <li>Changed your start value to make testing easier **-FOR NOW-**</li>
-            <li>changed a lot of the css as a whole.</li>
+            <li>Changed a lot of the css as a whole.</li>
             <li>Saved user data on a database to make saving and loading easier (and leaderboard soon 🤑🤑🤑).</li>
         </ul>
     </div>
@@ -56,4 +69,5 @@
     </ul>
 </div>
 </body>
+<script src="../static/js/patch.js"></script>
 </html>
