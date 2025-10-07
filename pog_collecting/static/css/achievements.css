@@ -114,3 +114,28 @@ li {
     margin-top: 10px;
     font-weight: bold;
 }
+
+#buttonBar button {
+    background-color: #594769; /* Dark purple background */
+    color: #fff; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px 20px; /* Add padding for better spacing */
+    font-size: 1.2rem; /* Slightly larger font size */
+    font-weight: bold; /* Make the text bold */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth hover effects */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+#buttonBar button:hover {
+    background-color: #7d6381; /* Slightly lighter purple on hover */
+    transform: translateY(-3px); /* Lift the button on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+
+#buttonBar button:active {
+    background-color: #4a4a4a; /* Darker shade when clicked */
+    transform: translateY(0); /* Reset lift effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}

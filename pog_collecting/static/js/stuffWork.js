@@ -228,6 +228,14 @@ document.getElementById("save").addEventListener("click", () => {
     alert("Game Saved!");
 });
 
+document.getElementById("patchNotesButton").addEventListener("click", () => {
+    window.location.href = "/patch";
+});
+
+document.getElementById("achievementsButton").addEventListener("click", () => {
+    window.location.href = "/achievements";
+    });
+
 // mode toggle
 document.getElementById("darkmode").addEventListener("click", () => {
     console.log("toggled");
