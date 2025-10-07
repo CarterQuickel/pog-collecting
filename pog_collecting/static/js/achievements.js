@@ -257,7 +257,7 @@ function renderCollection () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">???</span><br>
+                <span class="name">${achievement.name}</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -297,7 +297,7 @@ function renderLevel () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">???</span><br>
+                <span class="name">${achievement.name}</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -337,7 +337,7 @@ function renderProgression () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">???</span><br>
+                <span class="name">${achievement.name}</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -377,7 +377,7 @@ function renderEconomy () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">???</span><br>
+                <span class="name">${achievement.name}</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
