@@ -263,11 +263,115 @@ const achievements = [
         },
         {
             name: "1% of My Power",
-            description: "Get a Goku pog combo.",
+            description: "Get a Super Saiyan Shaggy pog combo.",
             icon: "🟠",
             reward: "None",
             status: false,
             hidden: false
+        },
+        {
+            name: "Ultimate Despair",
+            description: "Get 13 DR (danganronpa) pogs",
+            icon: "🔪",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Shaw!",
+            description: "Get a Hornet pog.",
+            icon: "🕷️",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Uhhh",
+            description: "Get an I Heart CP pog combo.",
+            icon: "💖",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Reflection",
+            description: "Get a Fallout Vault pog combo.",
+            icon: "🛖",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Mog Pog",
+            description: "Get a Handsome Squidward pog combo.",
+            icon: "🦑",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Granter",
+            description: "Get a 1-star dragon pog.",
+            icon: "I",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Achiever",
+            description: "Get a 2-star dragon pog.",
+            icon: "II",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Successor",
+            description: "Get a 3-star dragon pog.",
+            icon: "III",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Victor",
+            description: "Get a 4-star dragon pog.",
+            icon: "IV",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Conqueror",
+            description: "Get a 5-star dragon pog.",
+            icon: "V",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Dragon Lord",
+            description: "Get a 6-star dragon pog.",
+            icon: "VI",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Above All",
+            description: "Get a 7-star dragon pog.",
+            icon: "VII",
+            reward: "God Pog",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Zeno",
+            description: "Have one of each-star dragon pog.",
+            icon: "X",
+            reward: "None",
+            status: false,
+            hidden: true
         }
     ]
 ];
