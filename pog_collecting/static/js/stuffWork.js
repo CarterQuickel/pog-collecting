@@ -22,7 +22,15 @@ let level = userdata.level || 1;
 let Isize = userdata.Isize || 45;
 
 //mode
-let lightMode = (userdata.theme === "light");
+if (userdata.theme === "light") {
+    document.body.style.backgroundColor = "white";
+    document.body.style.color = "black";
+    lightMode = true;
+} else if (userdata.theme === "dark") {
+    document.body.style.backgroundColor = "black";
+    document.body.style.color = "white";
+    lightMode = false;
+}
 
 //bonus multiplier
 let bonusMulti = 1.5;
@@ -217,46 +225,7 @@ document.getElementById("save").addEventListener("click", () => {
         .catch(err => {
             console.error("Error saving data:", err);
         });
-    const saveState = {
-        money: money,
-        inventory: inventory,
-        Isize: Isize,
-        xp: xp,
-        maxXP: maxXP,
-        level: level
-    };
-    localStorage.setItem("gameState", JSON.stringify(saveState));
     alert("Game Saved!");
-});
-
-// load game
-document.getElementById("load").addEventListener("click", () => {
-    const savedState = JSON.parse(localStorage.getItem("gameState"));
-    if (savedState) {
-        money = savedState.money;
-        inventory = savedState.inventory;
-        Isize = savedState.Isize;
-        xp = savedState.xp;
-        maxXP = savedState.maxXP;
-        level = savedState.level;
-        refreshInventory();
-    } else {
-        alert("No saved game found.");
-    }
-});
-
-// reset game
-document.getElementById("reset").addEventListener("click", () => {
-    if (confirm("Are you sure you want to reset the game?")) {
-        money = 200;
-        inventory = [];
-        Isize = 3;
-        xp = 0;
-        maxXP = 15;
-        level = 1;
-        localStorage.removeItem("gameState");
-        refreshInventory();
-    }
 });
 
 // mode toggle

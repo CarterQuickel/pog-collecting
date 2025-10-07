@@ -78,7 +78,6 @@ app.get('/', isAuthenticated, (req, res) => {
         function insertUser() {
 
             const displayName = req.session.user.displayName;
-            console.log(displayName);
 
             usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
                 if (err) {
@@ -137,7 +136,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     maxxp: row.maxxp,
                     level: row.level
                 };
-                console.log(`User data loaded for '${req.session.user.displayName} with data ${JSON.stringify(req.session.user)}'`);
+                console.log(`User data loaded for '${req.session.user.displayName}'`);
             } else {
                 console.log(`No existing user data for '${req.session.user.displayName}', using defaults.`);
             }
