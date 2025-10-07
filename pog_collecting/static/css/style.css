@@ -340,42 +340,6 @@ progress::-webkit-progress-value {
     background-color: gray;
 }
 
-#load {
-    background-color: #a1a1a1;
-    border: 4px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    width: 100px;
-    margin: 0px 10px 0px 0px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-style: bold;
-    font-size: 22px;
-    cursor: pointer;
-}
-    
-#load:hover {
-    background-color: gray;
-}
-
-/* reset btn */
-#reset {
-    background-color: #a1a1a1;
-    border: 4px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    width: 100px;
-    margin: 0px 10px 0px 0px;
-    text-align: center;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-style: bold;
-    font-size: 22px;
-    cursor: pointer;
-}
-    
-#reset:hover {
-    background-color: gray;
-}
-
 /* light and dark mode btn */
 .switch {
     position: relative;
