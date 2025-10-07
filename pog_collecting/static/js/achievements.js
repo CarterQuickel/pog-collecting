@@ -258,6 +258,8 @@ const achievements = [
             description: "Get an Elden Ring pog combo.",
             icon: "⚔️",
             reward: "None",
+            status: false,
+            hidden: true
         }
     ]
 ];
