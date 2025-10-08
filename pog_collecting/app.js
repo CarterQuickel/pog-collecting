@@ -55,7 +55,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // user settings database
-const usdb = new sqlite3.Database('db/usersettings.sqlite');
+const usdb = new sqlite3.Database('usersettings.sqlite');
 usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     uid INTEGER PRIMARY KEY AUTOINCREMENT,
     theme TEXT,
