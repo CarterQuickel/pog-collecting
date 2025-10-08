@@ -77,11 +77,14 @@ const pogs = new sqlite3.Database("pogipedia/db/pog.db", (err) => {
     }
 });
 
+let pogCount = 0;
+//show many pogs there are
 pogs.get(`SELECT COUNT(*) AS count FROM pogs`, (err, row) => {
     if (err) {
         console.error("Error counting pogs:", err.message);
     } else {
         console.log(`Pog database contains ${row.count} pogs.`);
+        pogCount = row.count;
     }
 });
 
@@ -164,7 +167,7 @@ app.get('/', isAuthenticated, (req, res) => {
             }
             // Call insertUser and handle callback
             insertUser();
-            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token });
+            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token, maxPogs: pogCount });
         });
     } catch (error) {
         res.send(error.message)
