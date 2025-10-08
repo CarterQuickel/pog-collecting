@@ -9,9 +9,11 @@ if (userdata.theme === "light") {
     document.body.style.color = "white";
 }
 
+
 // Define the achievements array
 const achievements = [
-    collection = [
+    //start of collections list
+    [
         {
             name: "Full Combo!",
             description: "Get a 3-item combo.",
@@ -93,7 +95,8 @@ const achievements = [
             hidden: true
         },
     ],
-    level = [
+    // start of level list
+    [
         {
             name: "Merge Maniac",
             description: "Merge your first pog.",
@@ -175,7 +178,8 @@ const achievements = [
             hidden: true
         }
     ],
-    progression = [
+    // start of progression list
+    [
         {
             name: "First Steps",
             description: "Open your first crate.",
@@ -281,7 +285,8 @@ const achievements = [
             hidden: true
         }
     ],
-    economy = [
+    // start of economy list
+    [
         {
             name: "69",
             description: "Have exactly 69 digipogs at once.",
@@ -347,7 +352,8 @@ const achievements = [
             hidden: false
         }
     ],
-    unique = [
+    // start of unique list
+    [
         {
             name: "Nerdy Inspector",
             description: "Go to the patch notes page.",
@@ -447,8 +453,12 @@ const achievements = [
     ]
 ];
 
+window.achievements = achievements; 
+
 const achievementContainer = document.getElementById("achievementsList");
+
 function renderCollection () {
+    console.log("renderCollection called");
     achievementContainer.innerHTML = "";
     achievements[0].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
@@ -460,7 +470,7 @@ function renderCollection () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">???</span><br>
+                <span class="name">${achievement.name}</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -500,7 +510,7 @@ function renderLevel () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">???</span><br>
+                <span class="name">${achievement.name}</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -540,7 +550,7 @@ function renderProgression () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">???</span><br>
+                <span class="name">${achievement.name}</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -568,7 +578,7 @@ function renderProgression () {
         achievementContainer.appendChild(achievementElement);
     });  
 }
-function renderEconomy () {
+function renderEconomy() {
     achievementContainer.innerHTML = "";
     achievements[3].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
@@ -580,7 +590,7 @@ function renderEconomy () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">???</span><br>
+                <span class="name">${achievement.name}</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -649,7 +659,23 @@ function renderUnique() {
     });
 }
 
+window.renderCollection = renderCollection;
+window.renderLevel = renderLevel;
+window.renderProgression = renderProgression;
+window.renderEconomy = renderEconomy;
+window.renderUnique = renderUnique;
 
 
 
 // #8e6fa9 (carter dont worry abt ts)
+
+function checkMillionaireAchievement() {
+    const achievement = achievements[3].find(a => a.name === "Elon");
+    if (!achievement.status && money >= 100000000) {
+        achievement.status = true;
+        // Grant the reward here, e.g., unlock a theme
+        renderEconomy(); // Re-render to show updated status
+    }
+}
+
+setInterval(checkMillionaireAchievement, 5000); // Check every 5 seconds
