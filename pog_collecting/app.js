@@ -68,6 +68,23 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     displayname TEXT UNIQUE
 )`);
 
+// pog database
+const pogs = new sqlite3.Database("pogipedia/db/pog.db", (err) => {
+    if (err) {
+        console.error("Error connecting to pog database:", err.message);
+    } else {
+        console.log("Connected to pog database.");
+    }
+});
+
+pogs.get(`SELECT COUNT(*) AS count FROM pogs`, (err, row) => {
+    if (err) {
+        console.error("Error counting pogs:", err.message);
+    } else {
+        console.log(`Pog database contains ${row.count} pogs.`);
+    }
+});
+
 // home page
 app.get('/collection', (req, res) => {
     if (!req.session.user) {
