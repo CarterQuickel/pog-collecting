@@ -663,4 +663,28 @@ function elonFunc() {
     }
 }
 
+function levelFuncs() {
+    for (let i = 0; i < achievements[1].length; i++) {
+        if (achievements[1][i].name === "Experienced") {
+            achievements[1][i].status = userdata.level >= 5;
+        }
+        if (achievements[1][i].name === "Veteran") {
+            achievements[1][i].status = userdata.level >= 10;
+        }
+        if (achievements[1][i].name === "Legendary") {
+            achievements[1][i].status = userdata.level >= 15;
+        }
+        if (achievements[1][i].name === "Itsumi!") {
+            achievements[1][i].status = userdata.level >= 64;
+        }
+        if (achievements[1][i].name === "No-Life") {
+            achievements[1][i].status = userdata.level >= 100;
+        }
+        if (achievements[1][i].name === "Prestigious") {
+            achievements[1][i].status = userdata.level >= 101;
+        }
+    }
+}
+
 setInterval(elonFunc, 1000);
+setInterval(levelFuncs, 1000);
