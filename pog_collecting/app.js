@@ -55,13 +55,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // user settings database
-const usdb = new sqlite3.Database('./db/usersettings.db', (err) => {
-    if (err) {
-        console.error('Could not connect to settings database', err);
-    } else {
-        console.log('Connected to settings database');
-    }
-});
+const usdb = new sqlite3.Database('usersettings.sqlite');
+usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
+    uid INTEGER PRIMARY KEY AUTOINCREMENT,
+    theme TEXT,
+    score INTEGER,
+    inventory TEXT,
+    Isize INTEGER,
+    xp INTEGER,
+    maxxp INTEGER,
+    level INTEGER,
+    displayname TEXT UNIQUE
+)`);
 
 // home page
 app.get('/collection', (req, res) => {
