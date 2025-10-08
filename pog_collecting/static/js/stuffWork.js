@@ -195,7 +195,7 @@ function levelup() {
         }
         xp -= maxXP;
         level++;
-        maxXP = Math.floor(maxXP * 2.3);
+        maxXP = Math.floor(maxXP * 1.67);
         Isize += 3;
     }
 }
