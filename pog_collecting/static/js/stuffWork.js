@@ -12,12 +12,11 @@ let inventory = userdata.inventory || [];
 
 // money
 let money = userdata.score || 20000;
-window.money = money; // Make money globally available
 
 // XP
 let xp = userdata.xp || 0;
 let maxXP = userdata.maxxp || 15;
-let level = userdata.level || 1;
+let level = userdata.level || 101;
 
 // inventory size
 let Isize = userdata.Isize || 45;
@@ -50,7 +49,6 @@ function getTotalIncome() {
 
     return inventory.reduce((sum, item) => {
         const hasBonus = bonusRarities.includes(item.name);
-        console.log(sum);
         return sum + (hasBonus ? Math.round(item.income * bonusMulti) : item.income);
     }, 0);
 }
@@ -64,7 +62,6 @@ function updateMoney() {
 
 // sell item
 function sellItem(index) {
-    console.log("Selling item at index:", index);
     if (index >= 0 && index < inventory.length) {
         const item = inventory[index];
         const rarity = rarities.find(r => r.name === item.name);
@@ -162,7 +159,6 @@ function openCrate(cost, index) {
     for (let item of crates[Object.keys(crates)[index]].rarities) {
         for (let rarity of rarities) {
             if (item.name === rarity.name) {
-                console.log(item.name);
                 cumulativeChance += item.chance;
                 if (rand < cumulativeChance) {
                     // Add result to inventory
@@ -172,7 +168,6 @@ function openCrate(cost, index) {
                     levelup();
                     // Deduct cost
                     money -= cost;
-                    console.log(rarity.chance);
                     refreshInventory();
                     return;
                 }
@@ -192,13 +187,17 @@ document.getElementById("crate6").addEventListener("click", () => openCrate(crat
 // level up
 function levelup() {
     while (xp >= maxXP) {
+        // max level
+        if (level >= 101) {
+            xp = maxXP;
+            return;
+        }
         xp -= maxXP;
         level++;
         maxXP = Math.floor(maxXP * 2.3);
         Isize += 3;
     }
 }
-
 
 // save game
 document.getElementById("save").addEventListener("click", () => {
@@ -235,7 +234,7 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
 
 document.getElementById("achievementsButton").addEventListener("click", () => {
     window.location.href = "/achievements";
-    });
+});
 
 // mode toggle
 document.getElementById("darkmode").addEventListener("click", () => {

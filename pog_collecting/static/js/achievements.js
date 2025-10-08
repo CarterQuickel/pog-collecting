@@ -1,8 +1,17 @@
+var userdata = JSON.parse(document.getElementById("userdata").textContent);
+
+//mode
+if (userdata.theme === "light") {
+    document.body.style.backgroundColor = "white";
+    document.body.style.color = "black";
+} else if (userdata.theme === "dark") {
+    document.body.style.backgroundColor = "black";
+    document.body.style.color = "white";
+}
 
 // Define the achievements array
 const achievements = [
-    //start of collections list
-    [
+    collection = [
         {
             name: "Full Combo!",
             description: "Get a 3-item combo.",
@@ -10,6 +19,22 @@ const achievements = [
             reward: "Pileup I",
             status: false,
             hidden: false
+        },
+        {
+            name: "Coneisseur",
+            description: "Have 6 3-item combos.",
+            icon: "6️⃣",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Candid Coiner",
+            description: "Have 60 3-item combos.",
+            icon: "6️⃣0️⃣",
+            reward: "None",
+            status: false,
+            hidden: true
         },
         {
             name: "6-7",
@@ -68,8 +93,7 @@ const achievements = [
             hidden: true
         },
     ],
-    // start of level list
-    [
+    level = [
         {
             name: "Merge Maniac",
             description: "Merge your first pog.",
@@ -78,7 +102,30 @@ const achievements = [
             status: false,
             hidden: false
         },
-    
+        {
+            name: "Merge Monster",
+            description: "Merge 30 pogs.",
+            icon: "👹",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Merge Master",
+            description: "Merge 80 pogs.",
+            icon: "👺",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "God",
+            description: "Merge into a God pog.",
+            icon: "🪙",
+            reward: "Fast Cash II",
+            status: false,
+            hidden: true
+        },
         {
             name: "Experienced",
             description: "Reach level 5.",
@@ -104,6 +151,14 @@ const achievements = [
             hidden: false
         },
         {
+            name: "Itsumi!",
+            description: "Reach level 64.",
+            icon: "🍄",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
             name: "No-Life",
             description: "Reach level 100.",
             icon: "💀",
@@ -111,9 +166,16 @@ const achievements = [
             status: false,
             hidden: true
         },
+        {
+            name: "Prestigious",
+            description: "Reach the max level.",
+            icon: "👑",
+            reward: "None",
+            status: false,
+            hidden: true
+        }
     ],
-    // start of progression list
-    [
+    progression = [
         {
             name: "First Steps",
             description: "Open your first crate.",
@@ -131,12 +193,68 @@ const achievements = [
             hidden: false
         },
         {
-            name: "God",
-            description: "Merge into a God pog.",
-            icon: "🪙",
-            reward: "Fast Cash II",
+            name: "Granter",
+            description: "Get a 1-star dragon pog.",
+            icon: "I",
+            reward: "None",
             status: false,
             hidden: false
+        },
+        {
+            name: "Achiever",
+            description: "Get a 2-star dragon pog.",
+            icon: "II",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Successor",
+            description: "Get a 3-star dragon pog.",
+            icon: "III",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Victor",
+            description: "Get a 4-star dragon pog.",
+            icon: "IV",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Conqueror",
+            description: "Get a 5-star dragon pog.",
+            icon: "V",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Dragon Lord",
+            description: "Get a 6-star dragon pog.",
+            icon: "VI",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Above All",
+            description: "Get a 7-star dragon pog.",
+            icon: "VII",
+            reward: "God Pog",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Zeno",
+            description: "Have one of each-star dragon pog.",
+            icon: "X",
+            reward: "None",
+            status: false,
+            hidden: true
         },
         {
             name: "Completionist",
@@ -163,8 +281,7 @@ const achievements = [
             hidden: true
         }
     ],
-    // start of economy list
-    [
+    economy = [
         {
             name: "69",
             description: "Have exactly 69 digipogs at once.",
@@ -182,18 +299,26 @@ const achievements = [
             hidden: true
         },
         {
-            name: "Elon",
-            description: "Have 100 million dollars at once.",
-            icon: "💰",
-            reward: "Winter is Coming Theme",
-            status: false,
-            hidden: false
-        },
-        {
             name: "Wealthy",
             description: "Make your first 1000 dollars.",
             icon: "💵",
             reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Rich",
+            description: "Have 1 million dollars at once.",
+            icon: "💴",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Elon",
+            description: "Have 100 million dollars at once.",
+            icon: "💰",
+            reward: "Winter is Coming Theme",
             status: false,
             hidden: false
         },
@@ -205,9 +330,24 @@ const achievements = [
             status: false,
             hidden: false
         },
+        {
+            name: "Tycoon",
+            description: "Make 10000 cash a second.",
+            icon: "🤑",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Pawn Broker",
+            description: "Make 50000 cash a second.",
+            icon: "💸",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        }
     ],
-    // start of unique list
-    [
+    unique = [
         {
             name: "Nerdy Inspector",
             description: "Go to the patch notes page.",
@@ -239,23 +379,76 @@ const achievements = [
             reward: "None",
             status: false,
             hidden: false
-        }, {
+        }, 
+        {
             name: "Sus",
             description: "Have 10 dingus pogs at once.",
             icon: "👽",
-            reward: "TBD",
+            reward: "None",
             status: false,
             hidden: false
         },
+        {
+            name: "Elden Lord",
+            description: "Get an Elden Ring pog combo.",
+            icon: "⚔️",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "1% of My Power",
+            description: "Get a Super Saiyan Shaggy pog combo.",
+            icon: "🟠",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Ultimate Despair",
+            description: "Get 13 DR (danganronpa) pogs",
+            icon: "🔪",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Shaw!",
+            description: "Get a Hornet pog.",
+            icon: "🕷️",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Uhhh",
+            description: "Get an I Heart CP pog combo.",
+            icon: "💖",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Reflection",
+            description: "Get a Fallout Vault pog combo.",
+            icon: "🛖",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Mog Pog",
+            description: "Get a Handsome Squidward pog combo.",
+            icon: "🦑",
+            reward: "None",
+            status: false,
+            hidden: false
+        }
     ]
 ];
 
-window.achievements = achievements; 
-
 const achievementContainer = document.getElementById("achievementsList");
-
 function renderCollection () {
-    console.log("renderCollection called");
     achievementContainer.innerHTML = "";
     achievements[0].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
@@ -267,7 +460,7 @@ function renderCollection () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">${achievement.name}</span><br>
+                <span class="name">???</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -307,7 +500,7 @@ function renderLevel () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">${achievement.name}</span><br>
+                <span class="name">???</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -347,7 +540,7 @@ function renderProgression () {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">${achievement.name}</span><br>
+                <span class="name">???</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -375,7 +568,7 @@ function renderProgression () {
         achievementContainer.appendChild(achievementElement);
     });  
 }
-function renderEconomy() {
+function renderEconomy () {
     achievementContainer.innerHTML = "";
     achievements[3].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
@@ -387,7 +580,7 @@ function renderEconomy() {
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
                 <span class="icon">❓</span><br>
-                <span class="name">${achievement.name}</span><br>
+                <span class="name">???</span><br>
                 <span class="description">???</span><br>
                 <span class="reward">Reward: ???</span><br>
             `;
@@ -456,23 +649,7 @@ function renderUnique() {
     });
 }
 
-window.renderCollection = renderCollection;
-window.renderLevel = renderLevel;
-window.renderProgression = renderProgression;
-window.renderEconomy = renderEconomy;
-window.renderUnique = renderUnique;
 
 
 
 // #8e6fa9 (carter dont worry abt ts)
-
-function checkMillionaireAchievement() {
-    const achievement = achievements[3].find(a => a.name === "Elon");
-    if (!achievement.status && money >= 100000000) {
-        achievement.status = true;
-        // Grant the reward here, e.g., unlock a theme
-        renderEconomy(); // Re-render to show updated status
-    }
-}
-
-setInterval(checkMillionaireAchievement, 5000); // Check every 5 seconds

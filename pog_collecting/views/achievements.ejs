@@ -9,6 +9,7 @@
 <body>
     <div id="achievementsBanner">
         <div class="leftstuff">
+            <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
             <h1 style="margin-left: 10px;">Achievements</h1>
             <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %></h4>
         </div>
@@ -26,6 +27,6 @@
     <div id="achievementsList">
 
     </div>
-    <script type="module" src="../static/js/achievements.js"></script>
+    <script src="../static/js/achievements.js"></script>
 </body>
 </html>
