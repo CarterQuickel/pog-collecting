@@ -394,9 +394,6 @@ const achievements = [
             icon: "⚔️",
             reward: "None",
             status: false,
-<<<<<<< HEAD
-            hidden: true
-=======
             hidden: false
         },
         {
@@ -446,7 +443,6 @@ const achievements = [
             reward: "None",
             status: false,
             hidden: false
->>>>>>> Carter's-Branch
         }
     ]
 ];
