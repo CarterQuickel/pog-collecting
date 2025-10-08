@@ -1,2 +1,7 @@
 /node_modules
+<<<<<<< HEAD
 /.env
+=======
+/.env
+/.usersettings.db
+>>>>>>> ca84fc4bd868c74730d00531805d0cdaa1995b71
