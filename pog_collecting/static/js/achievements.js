@@ -21,6 +21,22 @@ const achievements = [
             hidden: false
         },
         {
+            name: "Coneisseur",
+            description: "Have 6 3-item combos.",
+            icon: "6️⃣",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Candid Coiner",
+            description: "Have 60 3-item combos.",
+            icon: "6️⃣0️⃣",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
             name: "6-7",
             description: "Have 6, then 7, items in your inventory.",
             icon: "🔥",
@@ -86,7 +102,30 @@ const achievements = [
             status: false,
             hidden: false
         },
-    
+        {
+            name: "Merge Monster",
+            description: "Merge 30 pogs.",
+            icon: "👹",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Merge Master",
+            description: "Merge 80 pogs.",
+            icon: "👺",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "God",
+            description: "Merge into a God pog.",
+            icon: "🪙",
+            reward: "Fast Cash II",
+            status: false,
+            hidden: true
+        },
         {
             name: "Experienced",
             description: "Reach level 5.",
@@ -112,6 +151,14 @@ const achievements = [
             hidden: false
         },
         {
+            name: "Itsumi!",
+            description: "Reach level 64.",
+            icon: "🍄",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
             name: "No-Life",
             description: "Reach level 100.",
             icon: "💀",
@@ -119,6 +166,14 @@ const achievements = [
             status: false,
             hidden: true
         },
+        {
+            name: "Prestigious",
+            description: "Reach the max level.",
+            icon: "👑",
+            reward: "None",
+            status: false,
+            hidden: true
+        }
     ],
     progression = [
         {
@@ -138,12 +193,68 @@ const achievements = [
             hidden: false
         },
         {
-            name: "God",
-            description: "Merge into a God pog.",
-            icon: "🪙",
-            reward: "Fast Cash II",
+            name: "Granter",
+            description: "Get a 1-star dragon pog.",
+            icon: "I",
+            reward: "None",
             status: false,
             hidden: false
+        },
+        {
+            name: "Achiever",
+            description: "Get a 2-star dragon pog.",
+            icon: "II",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Successor",
+            description: "Get a 3-star dragon pog.",
+            icon: "III",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Victor",
+            description: "Get a 4-star dragon pog.",
+            icon: "IV",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Conqueror",
+            description: "Get a 5-star dragon pog.",
+            icon: "V",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Dragon Lord",
+            description: "Get a 6-star dragon pog.",
+            icon: "VI",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Above All",
+            description: "Get a 7-star dragon pog.",
+            icon: "VII",
+            reward: "God Pog",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Zeno",
+            description: "Have one of each-star dragon pog.",
+            icon: "X",
+            reward: "None",
+            status: false,
+            hidden: true
         },
         {
             name: "Completionist",
@@ -188,18 +299,26 @@ const achievements = [
             hidden: true
         },
         {
-            name: "Elon",
-            description: "Have 100 million dollars at once.",
-            icon: "💰",
-            reward: "Winter is Coming Theme",
-            status: false,
-            hidden: false
-        },
-        {
             name: "Wealthy",
             description: "Make your first 1000 dollars.",
             icon: "💵",
             reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Rich",
+            description: "Have 1 million dollars at once.",
+            icon: "💴",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Elon",
+            description: "Have 100 million dollars at once.",
+            icon: "💰",
+            reward: "Winter is Coming Theme",
             status: false,
             hidden: false
         },
@@ -211,6 +330,22 @@ const achievements = [
             status: false,
             hidden: false
         },
+        {
+            name: "Tycoon",
+            description: "Make 10000 cash a second.",
+            icon: "🤑",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Pawn Broker",
+            description: "Make 50000 cash a second.",
+            icon: "💸",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        }
     ],
     unique = [
         {
@@ -308,70 +443,6 @@ const achievements = [
             reward: "None",
             status: false,
             hidden: false
-        },
-        {
-            name: "Granter",
-            description: "Get a 1-star dragon pog.",
-            icon: "I",
-            reward: "None",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Achiever",
-            description: "Get a 2-star dragon pog.",
-            icon: "II",
-            reward: "None",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Successor",
-            description: "Get a 3-star dragon pog.",
-            icon: "III",
-            reward: "None",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Victor",
-            description: "Get a 4-star dragon pog.",
-            icon: "IV",
-            reward: "None",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Conqueror",
-            description: "Get a 5-star dragon pog.",
-            icon: "V",
-            reward: "None",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Dragon Lord",
-            description: "Get a 6-star dragon pog.",
-            icon: "VI",
-            reward: "None",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Above All",
-            description: "Get a 7-star dragon pog.",
-            icon: "VII",
-            reward: "God Pog",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Zeno",
-            description: "Have one of each-star dragon pog.",
-            icon: "X",
-            reward: "None",
-            status: false,
-            hidden: true
         }
     ]
 ];
