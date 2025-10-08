@@ -16,7 +16,7 @@ let money = userdata.score || 20000;
 // XP
 let xp = userdata.xp || 0;
 let maxXP = userdata.maxxp || 15;
-let level = userdata.level || 1;
+let level = userdata.level || 101;
 
 // inventory size
 let Isize = userdata.Isize || 45;
@@ -191,6 +191,11 @@ document.getElementById("crate6").addEventListener("click", () => openCrate(crat
 // level up
 function levelup() {
     while (xp >= maxXP) {
+        // max level
+        if (level >= 101) {
+            xp = maxXP;
+            return;
+        }
         xp -= maxXP;
         level++;
         maxXP = Math.floor(maxXP * 2.3);
