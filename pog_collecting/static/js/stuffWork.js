@@ -13,6 +13,7 @@ let inventory = userdata.inventory || [];
 // money
 let money = userdata.score || 20000;
 
+
 // XP
 let xp = userdata.xp || 0;
 let maxXP = userdata.maxxp || 15;
