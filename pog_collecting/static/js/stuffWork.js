@@ -12,6 +12,7 @@ let inventory = userdata.inventory || [];
 
 // money
 let money = userdata.score || 20000;
+window.money = money; // Make money globally available
 
 // XP
 let xp = userdata.xp || 0;
