@@ -93,7 +93,7 @@ app.get('/collection', (req, res) => {
     if (!req.session.user) {
         res.redirect('/');
     }
-    res.render('collection', { userdata: req.session.user });
+    res.render('collection', { userdata: req.session.user, maxPogs: pogCount });
 });
 
 
@@ -176,11 +176,11 @@ app.get('/', isAuthenticated, (req, res) => {
 
 // patch notes page
 app.get('/patch', (req, res) => {
-    res.render('patch', { userdata: req.session.user });
+    res.render('patch', { userdata: req.session.user, maxPogs: pogCount });
 });
 
 app.get('/achievements', (req, res) => {
-    res.render('achievements', { userdata: req.session.user });
+    res.render('achievements', { userdata: req.session.user, maxPogs: pogCount });
 });
 
 // save data route
