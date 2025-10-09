@@ -5,9 +5,6 @@ const sqlite3 = require('sqlite3').verbose();
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
 
-//let
-let version = "0.0.2";
-
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
 
@@ -55,50 +52,192 @@ app.set('view engine', 'ejs');
 app.set('trust proxy', true);
 app.use('/static', express.static('static'));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-const db = new sqlite3.Database('./db/scores.db', (err) => {
+// user settings database
+const usdb = new sqlite3.Database('usersettings.sqlite');
+usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
+    uid INTEGER PRIMARY KEY AUTOINCREMENT,
+    theme TEXT,
+    score INTEGER,
+    inventory TEXT,
+    Isize INTEGER,
+    xp INTEGER,
+    maxxp INTEGER,
+    level INTEGER,
+    displayname TEXT UNIQUE
+)`);
+
+// pog database
+const pogs = new sqlite3.Database("pogipedia/db/pog.db", (err) => {
     if (err) {
-        console.error('Could not connect to database', err);
+        console.error("Error connecting to pog database:", err.message);
     } else {
-        console.log('Connected to database');
+        console.log("Connected to pog database.");
+    }
+});
+
+let pogCount = 0;
+//show many pogs there are
+pogs.get(`SELECT COUNT(*) AS count FROM pogs`, (err, row) => {
+    if (err) {
+        console.error("Error counting pogs:", err.message);
+    } else {
+        console.log(`Pog database contains ${row.count} pogs.`);
+        pogCount = row.count;
     }
 });
 
 // home page
 app.get('/collection', (req, res) => {
-    res.render('collection');
+    if (!req.session.user) {
+        res.redirect('/');
+    }
+    res.render('collection', { userdata: req.session.user, maxPogs: pogCount });
 });
+
 
 // login route
 app.get('/', isAuthenticated, (req, res) => {
-	try {
-        console.log("Authenticated")
+    try {
+        function insertUser() {
+
+            const displayName = req.session.user.displayName;
+
+            usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
+                if (err) {
+                    return console.error("Error querying user:", err.message);
+                }
+                if (row) {
+                    console.log(`User '${displayName}' already exists with uid ${row.uid}`);
+                    return;
+                } else {
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [
+                            req.session.user.theme,
+                            req.session.user.score,
+                            JSON.stringify(req.session.user.inventory),
+                            req.session.user.Isize,
+                            req.session.user.xp,
+                            req.session.user.maxxp,
+                            req.session.user.level,
+                            displayName
+                        ],
+                        function (err) {
+                            if (err) {
+                                return console.error("Error inserting user:", err.message);
+                            }
+                            console.log(`User '${displayName}' inserted with rowid ${this.lastID}`);
+                        });
+                }
+            });
+        }
+
         // add variable references here
-		res.render('collection.ejs', { user: req.session.user, token: req.session.token, version: version} );
-	}
-	catch (error) {
-		res.send(error.message)
-	}
+        req.session.user = {
+            displayName: req.session.token?.displayName || "guest",
+            theme: req.session.user.theme || 'light',
+            score: req.session.user.score || 0,
+            inventory: req.session.user.inventory || [],
+            Isize: req.session.user.Isize || 3,
+            xp: req.session.user.xp || 0,
+            maxxp: req.session.user.maxxp || 100,
+            level: req.session.user.level || 1
+        };
+
+        // load user data from database
+        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [req.session.user.displayName], (err, row) => {
+            if (err) {
+                return console.error("Error querying user:", err.message);
+            }
+            if (row) {
+                req.session.user = {
+                    displayName: req.session.user.displayName,
+                    theme: row.theme,
+                    score: row.score,
+                    inventory: JSON.parse(row.inventory),
+                    Isize: row.Isize,
+                    xp: row.xp,
+                    maxxp: row.maxxp,
+                    level: row.level
+                };
+                console.log(`User data loaded for '${req.session.user.displayName}'`);
+            } else {
+                console.log(`No existing user data for '${req.session.user.displayName}', using defaults.`);
+            }
+            // Call insertUser and handle callback
+            insertUser();
+            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token, maxPogs: pogCount });
+        });
+    } catch (error) {
+        res.send(error.message)
+    }
 });
 
 // patch notes page
 app.get('/patch', (req, res) => {
-    res.render('patch');
+    res.render('patch', { userdata: req.session.user, maxPogs: pogCount });
+});
+
+app.get('/achievements', (req, res) => {
+    res.render('achievements', { userdata: req.session.user, maxPogs: pogCount });
+});
+
+// save data route
+app.post('/datasave', (req, res) => {
+    console.log(req.body);
+    const userSave = {
+        theme: req.body.lightMode ? 'light' : 'dark',
+        score: req.body.money,
+        inventory: req.body.inventory,
+        Isize: req.body.Isize,
+        xp: req.body.xp,
+        maxxp: req.body.maxXP,
+        level: req.body.level
+    }
+    console.log(userSave.theme);
+    // save to session
+    req.session.save(err => {
+        if (err) {
+            console.error('Error saving session:', err);
+            return res.status(500).json({ message: 'Error saving session' });
+        } else {
+            params = [
+                userSave.theme,
+                userSave.score,
+                JSON.stringify(userSave.inventory),
+                userSave.Isize,
+                userSave.xp,
+                userSave.maxxp,
+                userSave.level,
+                req.session.user.displayName
+            ]
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ? WHERE displayname = ?`, params, function (err) {
+                if (err) {
+                    console.error('Error updating user settings:', err);
+                    return res.status(500).json({ message: 'Error updating user settings' });
+                }
+                console.log(`User settings updated for ${req.session.user.displayName}`);
+                req.session.user = { ...req.session.user, ...userSave };
+                return res.json({ message: 'Data saved successfully' });
+            });
+        }
+    });
 });
 
 // login page
 app.get('/login', (req, res) => {
     if (req.query.token) {
-         let tokenData = jwt.decode(req.query.token);
-         req.session.token = tokenData;
-         req.session.user = tokenData.displayName;
-         res.redirect('/');
+        let tokenData = jwt.decode(req.query.token);
+        req.session.token = tokenData;
+        req.session.user = { displayName: tokenData.displayName };
+        res.redirect('/');
     } else {
-         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
+        res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
     };
 });
 
 //listens
 app.listen(3000, () => {
-    console.log('Server started on port 3000');
+    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆'); console.log("Vamy was here");
 });

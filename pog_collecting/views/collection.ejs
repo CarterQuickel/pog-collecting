@@ -3,63 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POG CRATES</title>
+    <title>Pog Crates</title>
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
     <div id="collectBanner">
         <div class="leftstuff">
-            <h1 style="margin-left: 10px;">POG CRATES v<%= version %></h1>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= user %></h4>
+            <h1 style="margin-left: 10px;">POG CRATES v0.0.2</h1>
+            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %></h4>
+            <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
+            <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
             <button id="save">Save</button>
-            <button id="load">Load</button>
-            <button id="reset">Reset</button>
             <label class="switch">
                 <input type="checkbox" id="darkmode">
                 <span class="slider round"></span>
             </label>
         </div>
     </div>
-    <div style="text-align: center;">  
-        <div id="buttonList">
-            <h3>CRATES</h3>
-            <button id="crate1" class="crate">Common Crate - $100</button>
-            <button id="crate2" class="crate">Rare Crate - $500</button>
-            <button id="crate3" class="crate">Epic Crate - $1K</button>
-            <button id="crate4" class="crate">Legendary Crate - $5K</button>
-            <button id="crate6" class="crate">Mythical Crate- $10K</button>
-            <button id="crate5" class="crate">Godly Crate - $100K</button>
-        </div>
-        <div id="money">Money: $1000</div>
-        <h3 id="income"></h3>
-        <h4 id="invTxt"></h4>
-        <h4 id="XPTxt"></h4>
-        <progress id="XPPB" value="0" max="100"></progress>
+    <div id="centerlayout" style="text-align: center;">  
         <div id="inventory"></div>
-        </div>
         <div id="settings">
             <h3>INFO</h3>
-            <button id="patchNotesButton">
-                <a href="/patch" style="text-decoration: none; color: black;">
-            <p>Patch 0.0.1 - Week 5: 
-                <ul style="text-align: left; margin-left: 5px; margin-right: 5px">
-                    <li>-Added stack bonuses; 3+ of one rarity increases income of that rarity by 1.5x [indicated by a white glow outline]; 
-                        all items will round to the nearest whole number</li>
-                    <li>-Added sorting system from least to most rare</li>
-                    <li>-Added cards for each rarity, including income and sell value</li>
-                    <li>-Added scrollbar for the inventory rather than the website page</li>
-                    <li>-Removed JSONS of rarities and crates to eliminate unnecessary redundancy</li>
-                    <li>-Removed the dropdown for deleting items in the inventory; now each card has its own sell button</li>
-                    <li>-Removed page scrolling; all data is stored on the single screen</li>
-                    <li>-Added a failsafe that if all items are sold, then money will equal 200</li>
-                    <li>-Edited the names of the crates to match their higher rarity chances</li>
-                    <li>-Added Github functionality for collaboration</li>
-                </ul>
-                </a>
+            <button id="patchNotesButton" class="pageButtons">
+                <a href="/patch" style="text-decoration: none; color: black;">Patch Notes</a>
             </button>
-            
+            <button id="achievementsButton">
+                <a href="/achievements" style="text-decoration: none; color: black;">Achievements</a>
+            </button>
+            <div id="stats">
+                <div id="money">Money: $1000</div>
+                <h3 id="income"></h3>
+                <h4 id="invTxt"></h4>
+                <h4 id="XPTxt"></h4>
+                <progress id="XPPB" value="0" max="100"></progress>
+            </div>
+            <h3>Pogs: 0 / <%= maxPogs %></h3>
+            <button id="crate1" class="crate">Common Crate - $100</button>
+            <button id="crate2" class="crate">Rare Crate - $500</button>
+            <button id="crate3" class="crate">Epic Crate - $1000</button>
+            <button id="crate4" class="crate">Legendary Crate - $5000</button>
+            <button id="crate5" class="crate">Mythical Crate - $10000</button>
+            <button id="crate6" class="crate">Godly Crate - $100000</button>
         </div>
     </div>
 </body>

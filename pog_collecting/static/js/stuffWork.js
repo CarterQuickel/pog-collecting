@@ -1,3 +1,8 @@
+// reference userdata from ejs
+var userdata = JSON.parse(document.getElementById("userdata").textContent);
+// reference pogs from ejs
+var maxPogs = JSON.parse(document.getElementById("maxPogs").textContent);
+
 // debug rarity list
 console.log(rarities);
 console.log(crates);
@@ -6,21 +11,30 @@ console.log(crates);
 let moneyTick = 1000;
 
 // items
-let inventory = [];
+let inventory = userdata.inventory || [];
 
 // money
-let money = 200;
+let money = userdata.score || 20000;
+
 
 // XP
-let xp = 0;
-let maxXP = 15;
-let level = 1;
+let xp = userdata.xp || 0;
+let maxXP = userdata.maxxp || 15;
+let level = userdata.level || 101;
 
 // inventory size
-let Isize = 3;
+let Isize = userdata.Isize || 45;
 
 //mode
-let lightMode = true;
+if (userdata.theme === "light") {
+    document.body.style.backgroundColor = "white";
+    document.body.style.color = "black";
+    lightMode = true;
+} else if (userdata.theme === "dark") {
+    document.body.style.backgroundColor = "black";
+    document.body.style.color = "white";
+    lightMode = false;
+}
 
 //bonus multiplier
 let bonusMulti = 1.5;
@@ -39,7 +53,6 @@ function getTotalIncome() {
 
     return inventory.reduce((sum, item) => {
         const hasBonus = bonusRarities.includes(item.name);
-        console.log(sum);
         return sum + (hasBonus ? Math.round(item.income * bonusMulti) : item.income);
     }, 0);
 }
@@ -47,13 +60,12 @@ function getTotalIncome() {
 // initial money display
 setInterval(updateMoney, 100);
 function updateMoney() {
-    abbreviatedMoney = abbreviateNumber(money);
+    const abbreviatedMoney = abbreviateNumber(money);
     document.getElementById("money").innerText = `$${abbreviatedMoney}`;
 }
 
 // sell item
 function sellItem(index) {
-    console.log("Selling item at index:", index);
     if (index >= 0 && index < inventory.length) {
         const item = inventory[index];
         const rarity = rarities.find(r => r.name === item.name);
@@ -68,28 +80,24 @@ function sellItem(index) {
 // update loop
 setInterval(update, 100);
 function update() {
-
+//abbrevs
+    const abbreviatedXP = abbreviateNumber(xp);
+    const abbreviatedMaxXP = abbreviateNumber(maxXP);
     // update inventory size text
     document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize} Slots`
 
     // update XP Txt
-    document.getElementById("XPTxt").innerText = `Level ${level} (${xp}/${maxXP} XP)`;
+    document.getElementById("XPTxt").innerText = `Level ${level} (${abbreviatedXP}/${abbreviatedMaxXP} XP)`;
 
     // update income Txt
-    document.getElementById("income").innerText = `($${getTotalIncome()}/s)`;
+    document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;
 
     // change inventory text color if full
     if (inventory.length >= Isize) {
         document.getElementById("invTxt").style.color = "red";
     } else {
-        if (lightMode) {
-            document.getElementById("invTxt").style.color = "black";
-            document.getElementById("XPTxt").style.color = "rgb(70, 70, 206)"
-        } else {
-            document.getElementById("invTxt").style.color = "white";
-            document.getElementById("XPTxt").style.color = "white";
-        }
-    }
+        document.getElementById("invTxt").style.color = lightMode ? "black" : "white";
+    } 
 }
 
 //update inventory
@@ -127,6 +135,8 @@ function refreshInventory() {
         </div>
     `}).join("");
 }
+//first time call
+refreshInventory();
 
 //update progress bar
 setInterval(updatePB, 100)
@@ -153,7 +163,6 @@ function openCrate(cost, index) {
     for (let item of crates[Object.keys(crates)[index]].rarities) {
         for (let rarity of rarities) {
             if (item.name === rarity.name) {
-                console.log(item.name);
                 cumulativeChance += item.chance;
                 if (rand < cumulativeChance) {
                     // Add result to inventory
@@ -163,7 +172,6 @@ function openCrate(cost, index) {
                     levelup();
                     // Deduct cost
                     money -= cost;
-                    console.log(rarity.chance);
                     refreshInventory();
                     return;
                 }
@@ -177,62 +185,59 @@ document.getElementById("crate1").addEventListener("click", () => openCrate(crat
 document.getElementById("crate2").addEventListener("click", () => openCrate(crates[Object.keys(crates)[1]].price, 1));
 document.getElementById("crate3").addEventListener("click", () => openCrate(crates[Object.keys(crates)[2]].price, 2));
 document.getElementById("crate4").addEventListener("click", () => openCrate(crates[Object.keys(crates)[3]].price, 3));
-document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[5]].price, 5));
-document.getElementById("crate6").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
+document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
+document.getElementById("crate6").addEventListener("click", () => openCrate(crates[Object.keys(crates)[5]].price, 5));
 
 // level up
 function levelup() {
     while (xp >= maxXP) {
+        // max level
+        if (level >= 101) {
+            xp = maxXP;
+            return;
+        }
         xp -= maxXP;
         level++;
-        maxXP = Math.floor(maxXP * 2.3);
+        maxXP = Math.floor(maxXP * 1.67);
         Isize += 3;
     }
 }
 
-
 // save game
 document.getElementById("save").addEventListener("click", () => {
-    const saveState = {
-        money: money,
-        inventory: inventory,
-        Isize: Isize,
-        xp: xp,
-        maxXP: maxXP,
-        level: level
-    };
-    localStorage.setItem("gameState", JSON.stringify(saveState));
+    // fetch to /datasave
+        fetch('/datasave', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                lightMode: lightMode,
+                money: money,
+                inventory: inventory,
+                Isize: Isize,
+                xp: xp,
+                maxXP: maxXP,
+                level: level
+             })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data saved successfully:", data);
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
     alert("Game Saved!");
 });
 
-// load game
-document.getElementById("load").addEventListener("click", () => {
-    const savedState = JSON.parse(localStorage.getItem("gameState"));
-    if (savedState) {
-        money = savedState.money;
-        inventory = savedState.inventory;
-        Isize = savedState.Isize;
-        xp = savedState.xp;
-        maxXP = savedState.maxXP;
-        level = savedState.level;
-        refreshInventory();
-    } else {
-        alert("No saved game found.");
-    }
+document.getElementById("patchNotesButton").addEventListener("click", () => {
+    window.location.href = "/patch";
 });
 
-// reset game
-document.getElementById("reset").addEventListener("click", () => {
-    if (confirm("Are you sure you want to reset the game?")) {
-        money = 200;
-        inventory = [];
-        Isize = 3;
-        xp = 0;
-        maxXP = 15;
-        level = 1;
-        localStorage.removeItem("gameState");
-        refreshInventory();
-    }
+document.getElementById("achievementsButton").addEventListener("click", () => {
+    window.location.href = "/achievements";
 });
 
 // mode toggle
@@ -253,3 +258,5 @@ function abbreviateNumber (value) {
 const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
 return formatter.format(value);
 }
+
+const buttons = document.getElementsByTagName("button");
