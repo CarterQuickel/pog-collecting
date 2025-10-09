@@ -68,12 +68,32 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     displayname TEXT UNIQUE
 )`);
 
+// pog database
+const pogs = new sqlite3.Database("pogipedia/db/pog.db", (err) => {
+    if (err) {
+        console.error("Error connecting to pog database:", err.message);
+    } else {
+        console.log("Connected to pog database.");
+    }
+});
+
+let pogCount = 0;
+//show many pogs there are
+pogs.get(`SELECT COUNT(*) AS count FROM pogs`, (err, row) => {
+    if (err) {
+        console.error("Error counting pogs:", err.message);
+    } else {
+        console.log(`Pog database contains ${row.count} pogs.`);
+        pogCount = row.count;
+    }
+});
+
 // home page
 app.get('/collection', (req, res) => {
     if (!req.session.user) {
         res.redirect('/');
     }
-    res.render('collection', { userdata: req.session.user });
+    res.render('collection', { userdata: req.session.user, maxPogs: pogCount });
 });
 
 
@@ -147,7 +167,7 @@ app.get('/', isAuthenticated, (req, res) => {
             }
             // Call insertUser and handle callback
             insertUser();
-            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token });
+            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token, maxPogs: pogCount });
         });
     } catch (error) {
         res.send(error.message)
@@ -156,11 +176,11 @@ app.get('/', isAuthenticated, (req, res) => {
 
 // patch notes page
 app.get('/patch', (req, res) => {
-    res.render('patch', { userdata: req.session.user });
+    res.render('patch', { userdata: req.session.user, maxPogs: pogCount });
 });
 
 app.get('/achievements', (req, res) => {
-    res.render('achievements', { userdata: req.session.user });
+    res.render('achievements', { userdata: req.session.user, maxPogs: pogCount });
 });
 
 // save data route

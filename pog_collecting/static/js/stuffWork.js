@@ -1,4 +1,7 @@
+// reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
+// reference pogs from ejs
+var maxPogs = JSON.parse(document.getElementById("maxPogs").textContent);
 
 // debug rarity list
 console.log(rarities);
