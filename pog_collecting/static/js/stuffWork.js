@@ -1,3 +1,5 @@
+const { get } = require("http");
+
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 
 // debug rarity list
@@ -12,6 +14,7 @@ let inventory = userdata.inventory || [];
 
 // money
 let money = userdata.score || 20000;
+window.income = getTotalIncome();
 
 
 // XP

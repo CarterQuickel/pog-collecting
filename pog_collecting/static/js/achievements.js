@@ -97,38 +97,6 @@ const achievements = [
     //start of level achievements
     [
         {
-            name: "Merge Maniac",
-            description: "Merge your first pog.",
-            icon: "🌀",
-            reward: "Fast Cash I",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Merge Monster",
-            description: "Merge 30 pogs.",
-            icon: "👹",
-            reward: "None",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Merge Master",
-            description: "Merge 80 pogs.",
-            icon: "👺",
-            reward: "None",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "God",
-            description: "Merge into a God pog.",
-            icon: "🪙",
-            reward: "Fast Cash II",
-            status: false,
-            hidden: true
-        },
-        {
             name: "Experienced",
             description: "Reach level 5.",
             icon: "🎖️",
@@ -196,6 +164,38 @@ const achievements = [
             hidden: false
         },
         {
+            name: "Merge Maniac",
+            description: "Merge your first pog.",
+            icon: "🌀",
+            reward: "Fast Cash I",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Merge Monster",
+            description: "Merge 30 pogs.",
+            icon: "👹",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Merge Master",
+            description: "Merge 80 pogs.",
+            icon: "👺",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "God",
+            description: "Merge into a God pog.",
+            icon: "🪙",
+            reward: "Fast Cash II",
+            status: false,
+            hidden: true
+        },
+        {
             name: "Granter",
             description: "Get a 1-star dragon pog.",
             icon: "I",
@@ -259,6 +259,7 @@ const achievements = [
             status: false,
             hidden: true
         },
+        
         {
             name: "Completionist",
             description: "Unlock all main achievements.",
@@ -659,11 +660,60 @@ function renderUnique() {
 
 // #8e6fa9 (carter dont worry abt ts)
 
-function econFunc() {
-    for (let i = 0; i < achievements[3].length; i++) {
-        if (achievements[3][i].name === "Elon") {
-            achievements[3][i].status = false && userdata.score >= 100000000;
-            achievements[3][i].status = true;
+function collectFunc() {
+    for (let i = 0; i < achievements[0].length; i++) {
+        if (achievements[0][i].name === "Full Combo!") {
+            // no tracking for 3-item combos yet
+            achievements[0][i].status = false;
+            achievements[0][i].status = true;
+        }
+        if (achievements[0][i].name === "Coneisseur") {
+            // no tracking for 3-item combos yet
+            achievements[0][i].status = false;
+            achievements[0][i].status = true;
+        }
+        if (achievements[0][i].name === "Candid Coiner") {
+            // no tracking for 3-item combos yet
+            achievements[0][i].status = false;
+            achievements[0][i].status = true;
+        }
+        if (achievements[0][i].name === "6-7") {
+            achievements[0][i].status = inventory.length >= 7;
+        }
+        if (achievements[0][i].name === "Pristine") {
+            const hasCopper = inventory.some(pog => pog.name === "Copper");
+            const hasSilver = inventory.some(pog => pog.name === "Silver");
+            const hasGold = inventory.some(pog => pog.name === "Gold");
+            achievements[0][i].status = hasCopper && hasSilver && hasGold;
+            achievements[0][i].status = true;
+        }
+        if (achievements[0][i].name === "Exquisite") {
+            const hasCopper = inventory.some(pog => pog.name === "Copper");
+            const hasSilver = inventory.some(pog => pog.name === "Silver");
+            const hasGold = inventory.some(pog => pog.name === "Gold");
+            const hasDiamond = inventory.some(pog => pog.name === "Diamond");
+            achievements[0][i].status = hasCopper && hasSilver && hasGold && hasDiamond;
+            achievements[0][i].status = true;
+        }
+        if (achievements[0][i].name === "Mythical") {
+            const hasCopper = inventory.some(pog => pog.name === "Copper");
+            const hasSilver = inventory.some(pog => pog.name === "Silver");
+            const hasGold = inventory.some(pog => pog.name === "Gold");
+            const hasDiamond = inventory.some(pog => pog.name === "Diamond");
+            const hasGod = inventory.some(pog => pog.name === "God");
+            achievements[0][i].status = hasCopper && hasSilver && hasGold && hasDiamond && hasGod;
+            achievements[0][i].status = true;
+        }
+        if (achievements[0][i].name === "Mr. Smith") {
+            const tiers = ["Copper", "Silver", "Gold", "Diamond", "God", "Astral", "Dragon"];
+            const hasAllTiers = tiers.every(tier => inventory.some(pog => pog.name === tier));
+            achievements[0][i].status = hasAllTiers;
+        }
+        if (achievements[0][i].name === "Hoarder") {
+            achievements[0][i].status = inventory.length >= Isize && Isize > 60;
+        }
+        if (achievements[0][i].name === "Insane Hoarder") {
+            achievements[0][i].status = inventory.length >= 100;
         }
     }
 }
@@ -691,5 +741,44 @@ function levelFuncs() {
     }
 }
 
-setInterval(elonFunc, 1000);
+function econFunc() {
+    for (let i = 0; i < achievements[3].length; i++) {
+        if (achievements[3][i].name === "69") {
+            achievements[3][i].status = false && userdata.score === 69;
+            achievements[3][i].status = true;
+        }
+        if (achievements[3][i].name === "420") {
+            //selling pogs to gain back a total of 420 digipogs is not tracked yet
+            achievements[3][i].status = false;
+            achievements[3][i].status = true;
+        }
+        if (achievements[3][i].name === "Wealthy") {
+            achievements[3][i].status = userdata.score >= 1000;
+        }
+        if (achievements[3][i].name === "Rich") {
+            achievements[3][i].status = userdata.score >= 1000000;
+        }
+        if (achievements[3][i].name === "Elon") {
+            achievements[3][i].status = false && userdata.score >= 100000000;
+            achievements[3][i].status = true;
+        }
+        if (achievements[3][i].name === "Entrepreneur") {
+            achievements[3][i].status = false && window.income >= 2000;
+            achievements[3][i].status = true;
+        }
+        if (achievements[3][i].name === "Tycoon") {
+            achievements[3][i].status = false && window.income >= 10000;
+            achievements[3][i].status = true;
+        }
+        if (achievements[3][i].name === "Pawn Broker") {
+            achievements[3][i].status = false && window.income >= 50000;
+            achievements[3][i].status = true;
+        }
+
+    }
+}
+setInterval(collectFunc, 1000);
 setInterval(levelFuncs, 1000);
+setInterval(progFunc, 1000);
+setInterval(econFunc, 1000);
+setInterval(uniqueFunc, 1000);
