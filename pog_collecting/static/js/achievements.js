@@ -654,7 +654,7 @@ function renderUnique() {
 
 // #8e6fa9 (carter dont worry abt ts)
 
-function elonFunc() {
+function econFunc() {
     for (let i = 0; i < achievements[3].length; i++) {
         if (achievements[3][i].name === "Elon") {
             achievements[3][i].status = false && userdata.score >= 100000000;
