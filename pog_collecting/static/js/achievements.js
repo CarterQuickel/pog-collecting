@@ -11,7 +11,8 @@ if (userdata.theme === "light") {
 
 // Define the achievements array
 const achievements = [
-    collection = [
+    //start of collection achievements
+    [
         {
             name: "Full Combo!",
             description: "Get a 3-item combo.",
@@ -93,7 +94,8 @@ const achievements = [
             hidden: true
         },
     ],
-    level = [
+    //start of level achievements
+    [
         {
             name: "Merge Maniac",
             description: "Merge your first pog.",
@@ -175,7 +177,8 @@ const achievements = [
             hidden: true
         }
     ],
-    progression = [
+    //start of progression achievements
+    [
         {
             name: "First Steps",
             description: "Open your first crate.",
@@ -281,7 +284,8 @@ const achievements = [
             hidden: true
         }
     ],
-    economy = [
+    //start of economy achievements
+    [
         {
             name: "69",
             description: "Have exactly 69 digipogs at once.",
@@ -347,7 +351,8 @@ const achievements = [
             hidden: false
         }
     ],
-    unique = [
+    //start of unique achievements
+    [
         {
             name: "Nerdy Inspector",
             description: "Go to the patch notes page.",
