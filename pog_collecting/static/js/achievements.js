@@ -379,7 +379,15 @@ const achievements = [
             reward: "None",
             status: false,
             hidden: false
-        }, 
+        },
+        {
+            name: "SODA!",
+            description: "Get one of each color soda pog.",
+            icon: "🫧",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
         {
             name: "Sus",
             description: "Have 10 dingus pogs at once.",
@@ -440,6 +448,46 @@ const achievements = [
             name: "Mog Pog",
             description: "Get a Handsome Squidward pog combo.",
             icon: "🦑",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Goon",
+            description: "Get an anime girl pog combo.",
+            icon: "👧",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Margot Robbie",
+            description: "Get a Barbie pog combo.",
+            icon: "🎀",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "I am Vengeance",
+            description: "Get 4 Batman Robin pog combos.",
+            icon: "🦇",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Nuke Kaboom",
+            description: "Collect a Thomas Nuke pog.",
+            icon: "🚂",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Hiding in your WiFi",
+            description: "Get a Hatsune Miku pog combo.",
+            icon: "🎤",
             reward: "None",
             status: false,
             hidden: false
