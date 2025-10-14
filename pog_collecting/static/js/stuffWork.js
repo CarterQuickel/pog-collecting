@@ -1,6 +1,7 @@
-const { get } = require("http");
-
+// reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
+// reference pogs from ejs
+var maxPogs = JSON.parse(document.getElementById("maxPogs").textContent);
 
 // debug rarity list
 console.log(rarities);
@@ -198,7 +199,7 @@ function levelup() {
         xp -= maxXP;
         level++;
         maxXP = Math.floor(maxXP * 1.67);
-        Isize += 3;
+        Isize += level % 5 === 0 ? 10 : 5; // increase inventory size by 10 every 5 levels, otherwise by 5
     }
 }
 

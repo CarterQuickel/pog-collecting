@@ -453,8 +453,13 @@ const achievements = [
     ]
 ];
 
+// category variable
+let cate = "";
 const achievementContainer = document.getElementById("achievementsList");
+
+// initial render
 function renderCollection () {
+    cate = "collection";
     achievementContainer.innerHTML = "";
     achievements[0].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
@@ -495,6 +500,7 @@ function renderCollection () {
     });
 }
 function renderLevel () {
+    cate = "level";
     achievementContainer.innerHTML = "";
     achievements[1].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
@@ -535,6 +541,7 @@ function renderLevel () {
     });
 }
 function renderProgression () {
+    cate = "progression";
     achievementContainer.innerHTML = "";
     achievements[2].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
@@ -575,6 +582,7 @@ function renderProgression () {
     });  
 }
 function renderEconomy () {
+    cate = "economy";
     achievementContainer.innerHTML = "";
     achievements[3].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
@@ -615,6 +623,7 @@ function renderEconomy () {
     });
 }
 function renderUnique() {
+    cate = "unique";
     achievementContainer.innerHTML = "";
     achievements[4].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
@@ -655,8 +664,34 @@ function renderUnique() {
     });
 }
 
-
-
+// highlight selected category button
+setInterval(() => {
+    if (cate == "collection") {
+        document.getElementById("collection").style = "border: 2px solid white;";
+    } else {
+        document.getElementById("collection").style = "border: none;";
+    }
+    if (cate == "level") {
+        document.getElementById("level").style = "border: 2px solid white;";
+    } else {
+        document.getElementById("level").style = "border: none;";
+    }
+    if (cate == "progression") {
+        document.getElementById("progression").style = "border: 2px solid white;";
+    } else {
+        document.getElementById("progression").style = "border: none;";
+    }
+    if (cate == "economy") {
+        document.getElementById("economy").style = "border: 2px solid white;";
+    } else {
+        document.getElementById("economy").style = "border: none;";
+    }
+    if (cate == "unique") {
+        document.getElementById("unique").style = "border: 2px solid white;";
+    } else {
+        document.getElementById("unique").style = "border: none;";
+    }
+}, 100);
 
 // #8e6fa9 (carter dont worry abt ts)
 
