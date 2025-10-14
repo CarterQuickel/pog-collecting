@@ -2,6 +2,17 @@
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 // reference pogs from ejs
 var maxPogs = JSON.parse(document.getElementById("maxPogs").textContent);
+// reference pogs from ejs
+var pogList = JSON.parse(document.getElementById("pogList").textContent);
+
+rarityColor = [
+    {name: "Trash", color: "red",}, //trash
+    {name: "Common", color: "yellow",}, //common
+    {name: "Uncommon", color: "lime",}, //uncommon
+    {name: "Rare", color: "aqua",}, //rare
+    {name: "Mythic", color: "fuchsia",}, //mythic
+    {name: "Unknown", color: "grey",}, //unknown
+]
 
 // debug rarity list
 console.log(rarities);
@@ -125,11 +136,11 @@ function refreshInventory() {
     inventoryDiv.innerHTML = inventory.map((item, index) => {
         return hasBonus = highlightColors.includes(item.name),
         `<div class="item ${hasBonus ? 'highlight' : ''}">
-        <strong class ="name" style="color: ${item.color}">${item.name}</strong><br>
+        <strong class ="name" style="color: white">${item.name}</strong><br>
         <hr>
         <ul>
-            <li class='list'>$${hasBonus ? Math.round(item.income * bonusMulti) : item.income}/s</li>
-            <li class='list'>$${item.value}</li>
+            <li class='list' style="color: ${item.color}">${item.value}</li>
+            <li class='list' style="color: green">$${hasBonus ? Math.round(item.income * bonusMulti) : item.income}/s</li>
         </ul>
         <button id="sellbtn" onclick="sellItem(${index})">Sell</button>
         </div>
@@ -161,20 +172,21 @@ function openCrate(cost, index) {
     let cumulativeChance = 0;
 
     for (let item of crates[Object.keys(crates)[index]].rarities) {
-        for (let rarity of rarities) {
-            if (item.name === rarity.name) {
+        let color = "white";
+        for (let rarity of pogList) {
+                const match = rarityColor.find(r => r.name === rarity.rarity);
+                color = match ? match.color : "white";
                 cumulativeChance += item.chance;
                 if (rand < cumulativeChance) {
                     // Add result to inventory
-                    inventory.push({ name: rarity.name, color: rarity.color, income: rarity.income, value: rarity.value });
+                    inventory.push({ name: rarity.name, color: color, income: 50, value: rarity.rarity });
                     // XP gain
-                    xp += Math.floor(rarity.value / 10);
+                    xp += Math.floor(55);
                     levelup();
                     // Deduct cost
                     money -= cost;
                     refreshInventory();
                     return;
-                }
             }
         }
     }

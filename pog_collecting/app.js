@@ -4,6 +4,25 @@ const app = express();
 const sqlite3 = require('sqlite3').verbose();
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
+const fs = require('fs');
+const csv = require('csv-parser');
+
+const headers = [
+    'id', 'name', 'color', 'code', 'number', 'code2',
+    'description', 'type', 'rarity', 'creator'
+  ];
+
+const results = [];
+  
+fs.createReadStream('pogipedia/db/pogs.csv')
+.pipe(csv({ headers }))
+.on('data', (row) => {
+    const { name, rarity } = row;
+    results.push({ name, rarity });
+})
+.on('end', () => {
+    console.log('Extracted Pogs:', results);
+});
 
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
@@ -93,7 +112,7 @@ app.get('/collection', (req, res) => {
     if (!req.session.user) {
         res.redirect('/');
     }
-    res.render('collection', { userdata: req.session.user, maxPogs: pogCount });
+    res.render('collection', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
 
 
@@ -167,7 +186,7 @@ app.get('/', isAuthenticated, (req, res) => {
             }
             // Call insertUser and handle callback
             insertUser();
-            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token, maxPogs: pogCount });
+            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token, maxPogs: pogCount, pogList: results });
         });
     } catch (error) {
         res.send(error.message)
@@ -176,11 +195,11 @@ app.get('/', isAuthenticated, (req, res) => {
 
 // patch notes page
 app.get('/patch', (req, res) => {
-    res.render('patch', { userdata: req.session.user, maxPogs: pogCount });
+    res.render('patch', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
 
 app.get('/achievements', (req, res) => {
-    res.render('achievements', { userdata: req.session.user, maxPogs: pogCount });
+    res.render('achievements', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
 
 // save data route
@@ -239,5 +258,5 @@ app.get('/login', (req, res) => {
 
 //listens
 app.listen(3000, () => {
-    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆'); console.log("Vamy was here");
+    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆');
 });

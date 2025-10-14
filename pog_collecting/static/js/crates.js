@@ -4,44 +4,28 @@ crates = [
         price: 100,
         rarities: [
         {
+            rarity: "Trash",
+            chance: 0.01
+        },
+        {
             name: "Common",
-            chance: 0.5
+            chance: 0.75
         },
         {
             name: "Uncommon",
-            chance: 0.3
-        },
-        {
-            name: "Rare",
             chance: 0.15
         },
         {
-            name: "SR",
+            name: "Rare",
             chance: 0.1
         },
         {
-            name: "Epic",
+            name: "Mythic",
             chance: 0.06
         },
         {
-            name: "SSR",
-            chance: 0.0
-        },
-        {
-            name: "SSSR",
-            chance: 0.0
-        },
-        {
-            name: "Legendary",
-            chance: 0.0
-        },
-        {
-            name: "Mythical",
-            chance: 0.0
-        },
-        {
-            name: "GODLY",
-            chance: 0.0
+            name: "Unknown",
+            chance: 0.01
         }
         ]
     },

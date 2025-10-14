@@ -9,10 +9,11 @@
 <body>
     <div id="collectBanner">
         <div class="leftstuff">
-            <h1 style="margin-left: 10px;">POG CRATES v0.0.2</h1>
+            <h1 style="margin-left: 10px;">POG CRATES v0.0.5</h1>
             <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %></h4>
             <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
             <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
+            <div style="display: none" id="pogList"><%= JSON.stringify(pogList) %></div>
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
             <button id="save">Save</button>
