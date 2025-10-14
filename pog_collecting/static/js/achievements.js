@@ -681,39 +681,24 @@ function collectFunc() {
             achievements[0][i].status = inventory.length >= 7;
         }
         if (achievements[0][i].name === "Pristine") {
-            const hasCopper = inventory.some(pog => pog.name === "Copper");
-            const hasSilver = inventory.some(pog => pog.name === "Silver");
-            const hasGold = inventory.some(pog => pog.name === "Gold");
-            achievements[0][i].status = hasCopper && hasSilver && hasGold;
+    //no way to track
+            achievements[0][i].status = false
             achievements[0][i].status = true;
         }
         if (achievements[0][i].name === "Exquisite") {
-            const hasCopper = inventory.some(pog => pog.name === "Copper");
-            const hasSilver = inventory.some(pog => pog.name === "Silver");
-            const hasGold = inventory.some(pog => pog.name === "Gold");
-            const hasDiamond = inventory.some(pog => pog.name === "Diamond");
-            achievements[0][i].status = hasCopper && hasSilver && hasGold && hasDiamond;
+           //no way to track
+            achievements[0][i].status = false
             achievements[0][i].status = true;
         }
         if (achievements[0][i].name === "Mythical") {
-            const hasCopper = inventory.some(pog => pog.name === "Copper");
-            const hasSilver = inventory.some(pog => pog.name === "Silver");
-            const hasGold = inventory.some(pog => pog.name === "Gold");
-            const hasDiamond = inventory.some(pog => pog.name === "Diamond");
-            const hasGod = inventory.some(pog => pog.name === "God");
-            achievements[0][i].status = hasCopper && hasSilver && hasGold && hasDiamond && hasGod;
+              //no way to track
+            achievements[0][i].status = false
             achievements[0][i].status = true;
         }
         if (achievements[0][i].name === "Mr. Smith") {
-            const tiers = ["Copper", "Silver", "Gold", "Diamond", "God", "Astral", "Dragon"];
-            const hasAllTiers = tiers.every(tier => inventory.some(pog => pog.name === tier));
-            achievements[0][i].status = hasAllTiers;
-        }
-        if (achievements[0][i].name === "Hoarder") {
-            achievements[0][i].status = inventory.length >= Isize && Isize > 60;
-        }
-        if (achievements[0][i].name === "Insane Hoarder") {
-            achievements[0][i].status = inventory.length >= 100;
+            //no way to track
+            achievements[0][i].status = false
+            achievements[0][i].status = true;
         }
     }
 }
@@ -767,11 +752,13 @@ function econFunc() {
             achievements[3][i].status = true;
         }
         if (achievements[3][i].name === "Tycoon") {
-            achievements[3][i].status = false && window.income >= 10000;
+            // not tracked yet
+            achievements[3][i].status = false
             achievements[3][i].status = true;
         }
         if (achievements[3][i].name === "Pawn Broker") {
-            achievements[3][i].status = false && window.income >= 50000;
+            // not tracked yet
+            achievements[3][i].status = false
             achievements[3][i].status = true;
         }
 

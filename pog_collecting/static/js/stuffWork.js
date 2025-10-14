@@ -14,7 +14,6 @@ let inventory = userdata.inventory || [];
 
 // money
 let money = userdata.score || 20000;
-window.income = getTotalIncome();
 
 
 // XP
