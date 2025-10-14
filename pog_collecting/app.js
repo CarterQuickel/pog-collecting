@@ -65,7 +65,10 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     xp INTEGER,
     maxxp INTEGER,
     level INTEGER,
+    income INTEGER DEFAULT 0,
+    totalSold INTEGER DEFAULT 0,
     displayname TEXT UNIQUE
+
 )`);
 
 // pog database
@@ -112,7 +115,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -121,6 +124,8 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.xp,
                             req.session.user.maxxp,
                             req.session.user.level,
+                            req.session.user.income,
+                            req.session.user.totalSold,
                             displayName
                         ],
                         function (err) {
@@ -142,7 +147,9 @@ app.get('/', isAuthenticated, (req, res) => {
             Isize: req.session.user.Isize || 3,
             xp: req.session.user.xp || 0,
             maxxp: req.session.user.maxxp || 100,
-            level: req.session.user.level || 1
+            level: req.session.user.level || 1,
+            income: req.session.user.income || 0,
+            totalSold: req.session.user.totalSold || 0
         };
 
         // load user data from database
@@ -159,7 +166,9 @@ app.get('/', isAuthenticated, (req, res) => {
                     Isize: row.Isize,
                     xp: row.xp,
                     maxxp: row.maxxp,
-                    level: row.level
+                    level: row.level,
+                    income: row.income,
+                    totalSold: row.totalSold
                 };
                 console.log(`User data loaded for '${req.session.user.displayName}'`);
             } else {
@@ -193,7 +202,9 @@ app.post('/datasave', (req, res) => {
         Isize: req.body.Isize,
         xp: req.body.xp,
         maxxp: req.body.maxXP,
-        level: req.body.level
+        level: req.body.level,                          
+        income: req.body.income,
+        totalSold: req.body.totalSold
     }
     console.log(userSave.theme);
     // save to session
@@ -210,9 +221,11 @@ app.post('/datasave', (req, res) => {
                 userSave.xp,
                 userSave.maxxp,
                 userSave.level,
+                userSave.income,
+                userSave.totalSold,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
