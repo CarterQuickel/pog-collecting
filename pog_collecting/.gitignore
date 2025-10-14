@@ -2,3 +2,4 @@
 /.env
 /usersettings.sqlite
 /pogipedia
+/.sqlite
