@@ -16,8 +16,8 @@ let inventory = userdata.inventory || [];
 
 // money
 let money = userdata.score || 20000;
-let totalSold = 0;
-let income = 0;
+let totalSold = userdata.totalSold || 0;
+let income = userdata.income || 0;
 
 
 
@@ -57,10 +57,11 @@ function getTotalIncome() {
 
     return inventory.reduce((sum, item) => {
         const hasBonus = bonusRarities.includes(item.name);
-        income = hasBonus ? Math.round(item.income * bonusMulti) : item.income;
         return sum + (hasBonus ? Math.round(item.income * bonusMulti) : item.income);
     }, 0);
 }
+
+income = getTotalIncome();
 
 // initial money display
 setInterval(updateMoney, 100);
@@ -246,6 +247,7 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
 
 document.getElementById("achievementsButton").addEventListener("click", () => {
     window.location.href = "/achievements";
+    console.log(userdata.totalSold);
 });
 
 // mode toggle

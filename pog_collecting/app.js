@@ -65,8 +65,8 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     xp INTEGER,
     maxxp INTEGER,
     level INTEGER,
-    income INTEGER DEFAULT 0,
-    totalSold INTEGER DEFAULT 0,
+    income INTEGER,
+    totalSold INTEGER,
     displayname TEXT UNIQUE
 
 )`);
