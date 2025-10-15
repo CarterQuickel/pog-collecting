@@ -5,11 +5,11 @@ crates = [
         rarities: [
         {
             rarity: "Trash",
-            chance: 0.01
+            chance: 0.0
         },
         {
             name: "Common",
-            chance: 0.75
+            chance: 0.9
         },
         {
             name: "Uncommon",
@@ -25,7 +25,7 @@ crates = [
         },
         {
             name: "Unknown",
-            chance: 0.01
+            chance: 0.4
         }
         ]
     },

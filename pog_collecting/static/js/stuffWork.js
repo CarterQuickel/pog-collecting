@@ -6,12 +6,12 @@ var maxPogs = JSON.parse(document.getElementById("maxPogs").textContent);
 var pogList = JSON.parse(document.getElementById("pogList").textContent);
 
 rarityColor = [
-    {name: "Trash", color: "red",}, //trash
-    {name: "Common", color: "yellow",}, //common
-    {name: "Uncommon", color: "lime",}, //uncommon
-    {name: "Rare", color: "aqua",}, //rare
-    {name: "Mythic", color: "fuchsia",}, //mythic
-    {name: "Unknown", color: "grey",}, //unknown
+    {name: "Trash", color: "red", income: 6}, //trash
+    {name: "Common", color: "yellow", income: 17}, //common
+    {name: "Uncommon", color: "lime", income: 35}, //uncommon
+    {name: "Rare", color: "aqua", income: 66}, //rare
+    {name: "Mythic", color: "fuchsia", income: 205}, //mythic
+    {name: "Unknown", color: "grey", income: 16}, //unknown
 ]
 
 // debug rarity list
@@ -173,13 +173,17 @@ function openCrate(cost, index) {
 
     for (let item of crates[Object.keys(crates)[index]].rarities) {
         let color = "white";
+        let income = 5;
         for (let rarity of pogList) {
                 const match = rarityColor.find(r => r.name === rarity.rarity);
+                // rarity color
                 color = match ? match.color : "white";
+                // rarity income
+                income = match ? match.income : 5;
                 cumulativeChance += item.chance;
                 if (rand < cumulativeChance) {
                     // Add result to inventory
-                    inventory.push({ name: rarity.name, color: color, income: 50, value: rarity.rarity });
+                    inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity });
                     // XP gain
                     xp += Math.floor(55);
                     levelup();
