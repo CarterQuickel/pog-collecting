@@ -105,7 +105,7 @@ ul {
     right: 20px;
     background-color: #7d6381;
     width: 400px;
-    min-height: 930px;
+    min-height: 800px;
     height: 90vh;
     border-radius: 10px;
     text-align: center;
@@ -166,20 +166,11 @@ ul {
 
 /* crate 5 */
 #crate5 {
-    background-color: #ffa600;
+    background-color: #b11b1b;
 }
 
 #crate5:hover {
-    background-color: orangered;
-}
-
-/* crate 6 */
-#crate6 {
-    background-color: #df2e2e;
-}
-
-#crate6:hover {
-    background-color: red;
+    background-color: rgb(100, 19, 19);
 }
 
 

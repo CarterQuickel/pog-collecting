@@ -34,6 +34,13 @@ const achievements = [
             hidden: true
         },
         {
+            name: "Programming Prodigy",
+            description: "Have 1100100 CP pogs.",
+            icon: "💻",
+            status: false,
+            hidden: false
+        },
+        {
             name: "6-7",
             description: "Have 6, then 7, items in your inventory.",
             icon: "🔥",

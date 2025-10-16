@@ -6,12 +6,12 @@ var maxPogs = JSON.parse(document.getElementById("maxPogs").textContent);
 var pogList = JSON.parse(document.getElementById("pogList").textContent);
 
 rarityColor = [
-    {name: "Trash", color: "red", income: 6}, //trash
-    {name: "Common", color: "yellow", income: 17}, //common
-    {name: "Uncommon", color: "lime", income: 35}, //uncommon
-    {name: "Rare", color: "aqua", income: 66}, //rare
-    {name: "Mythic", color: "fuchsia", income: 205}, //mythic
-    {name: "Unknown", color: "grey", income: 16}, //unknown
+    { name: "Trash", color: "red", income: 6 }, //trash
+    { name: "Common", color: "yellow", income: 17 }, //common
+    { name: "Uncommon", color: "lime", income: 35 }, //uncommon
+    { name: "Rare", color: "aqua", income: 66 }, //rare
+    { name: "Mythic", color: "fuchsia", income: 205 }, //mythic
+    { name: "Unknown", color: "grey", income: 16 }, //unknown
 ]
 
 // debug rarity list
@@ -91,7 +91,7 @@ function sellItem(index) {
 // update loop
 setInterval(update, 100);
 function update() {
-//abbrevs
+    //abbrevs
     const abbreviatedXP = abbreviateNumber(xp);
     const abbreviatedMaxXP = abbreviateNumber(maxXP);
     // update inventory size text
@@ -108,7 +108,7 @@ function update() {
         document.getElementById("invTxt").style.color = "red";
     } else {
         document.getElementById("invTxt").style.color = lightMode ? "black" : "white";
-    } 
+    }
 }
 
 //update inventory
@@ -135,7 +135,7 @@ function refreshInventory() {
     // set inventory html
     inventoryDiv.innerHTML = inventory.map((item, index) => {
         return hasBonus = highlightColors.includes(item.name),
-        `<div class="item ${hasBonus ? 'highlight' : ''}">
+            `<div class="item ${hasBonus ? 'highlight' : ''}">
         <strong class ="name" style="color: white">${item.name}</strong><br>
         <hr>
         <ul>
@@ -168,41 +168,55 @@ function openCrate(cost, index) {
         return;
     }
 
-    let rand = Math.random();
-    let cumulativeChance = 0;
-
-    for (let item of crates[Object.keys(crates)[index]].rarities) {
+        // variables
+        let rand = Math.random();
+        let cumulativeChance = 0;
         let color = "white";
         let income = 5;
-        for (let rarity of pogList) {
+
+        for (let item of crates[Object.keys(crates)[index]].rarities) {
+
+            // check if random number is within the chance range
+            cumulativeChance += item.chance;
+            if (rand < cumulativeChance) {
+
+                // find all pogs with that rarity
+                const matchingRarities = pogList.filter(r => r.rarity === item.name);
+                if (matchingRarities.length === 0) continue;
+
+                // Pick one at random
+                const rarity = matchingRarities[Math.floor(Math.random() * matchingRarities.length)];
+
+                // find rarity color details
                 const match = rarityColor.find(r => r.name === rarity.rarity);
+
                 // rarity color
                 color = match ? match.color : "white";
+
                 // rarity income
                 income = match ? match.income : 5;
-                cumulativeChance += item.chance;
-                if (rand < cumulativeChance) {
-                    // Add result to inventory
-                    inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity });
-                    // XP gain
-                    xp += Math.floor(55);
-                    levelup();
-                    // Deduct cost
-                    money -= cost;
-                    refreshInventory();
-                    return;
+
+                // Add result to inventory
+                inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity });
+
+                // XP gain
+                xp += Math.floor(55);
+                levelup();
+
+                // Deduct cost
+                money -= cost;
+                refreshInventory();
+                break;
             }
         }
-    }
 }
 
-// button click event
+// crate open events
 document.getElementById("crate1").addEventListener("click", () => openCrate(crates[Object.keys(crates)[0]].price, 0));
 document.getElementById("crate2").addEventListener("click", () => openCrate(crates[Object.keys(crates)[1]].price, 1));
 document.getElementById("crate3").addEventListener("click", () => openCrate(crates[Object.keys(crates)[2]].price, 2));
 document.getElementById("crate4").addEventListener("click", () => openCrate(crates[Object.keys(crates)[3]].price, 3));
 document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
-document.getElementById("crate6").addEventListener("click", () => openCrate(crates[Object.keys(crates)[5]].price, 5));
 
 // level up
 function levelup() {
@@ -222,22 +236,22 @@ function levelup() {
 // save game
 document.getElementById("save").addEventListener("click", () => {
     // fetch to /datasave
-        fetch('/datasave', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                lightMode: lightMode,
-                money: money,
-                inventory: inventory,
-                Isize: Isize,
-                xp: xp,
-                maxXP: maxXP,
-                level: level
-             })
+    fetch('/datasave', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            lightMode: lightMode,
+            money: money,
+            inventory: inventory,
+            Isize: Isize,
+            xp: xp,
+            maxXP: maxXP,
+            level: level
         })
+    })
         .then(response => response.json())
         .then(data => {
             console.log("Data saved successfully:", data);
@@ -270,9 +284,9 @@ document.getElementById("darkmode").addEventListener("click", () => {
 });
 
 //number abbreviation function
-function abbreviateNumber (value) {
-const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
-return formatter.format(value);
+function abbreviateNumber(value) {
+    const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
+    return formatter.format(value);
 }
 
 const buttons = document.getElementsByTagName("button");
