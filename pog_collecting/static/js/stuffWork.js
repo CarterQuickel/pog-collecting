@@ -27,7 +27,8 @@ let inventory = userdata.inventory || [];
 // money
 let money = userdata.score || 20000;
 
-let pogAmount = 0;
+let pogAmount = userdata.pogamount || 0;
+console.log(pogAmount);
 
 // XP
 let xp = userdata.xp || 0;
@@ -105,7 +106,7 @@ function update() {
     document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;
 
     //update pog / pog
-    document.getElementById("pogCount").innerText = `Pogs: ${pogAmount} / ${maxPogs}`;
+    document.getElementById("pogCount").innerText = `Pogs Discovered: ${pogAmount} / ${maxPogs}`;
 
     // change inventory text color if full
     if (inventory.length >= Isize) {
@@ -260,7 +261,8 @@ document.getElementById("save").addEventListener("click", () => {
             Isize: Isize,
             xp: xp,
             maxXP: maxXP,
-            level: level
+            level: level,
+            pogAmount: pogAmount
         })
     })
         .then(response => response.json())
