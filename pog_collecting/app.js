@@ -162,7 +162,7 @@ app.get('/', isAuthenticated, (req, res) => {
             inventory: req.session.user.inventory || [],
             Isize: req.session.user.Isize || 3,
             xp: req.session.user.xp || 0,
-            maxxp: req.session.user.maxxp || 100,
+            maxxp: req.session.user.maxxp || 15,
             level: req.session.user.level || 1,
             pogamount: req.session.user.pogamount || 0
         };
@@ -217,7 +217,7 @@ app.post('/datasave', (req, res) => {
         xp: req.body.xp,
         maxxp: req.body.maxXP,
         level: req.body.level,
-        pogamount: req.body.pogamount
+        pogamount: req.body.pogAmount
     }
     console.log(userSave.theme);
     // save to session

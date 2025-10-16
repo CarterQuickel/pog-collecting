@@ -25,7 +25,7 @@ let moneyTick = 1000;
 let inventory = userdata.inventory || [];
 
 // money
-let money = userdata.score || 20000;
+let money = userdata.score || 200000000;
 
 let pogAmount = userdata.pogamount || 0;
 console.log(pogAmount);

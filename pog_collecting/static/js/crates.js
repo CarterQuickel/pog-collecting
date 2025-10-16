@@ -91,7 +91,7 @@ crates = [
     },
     {
         name: "risky crate",
-        price: 10000,
+        price: 5000,
         rarities: [
             {
                 name: "Trash",
@@ -121,7 +121,7 @@ crates = [
     },
     {
         name: "godly crate",
-        price: 100000,
+        price: 10000,
         rarities: [
             {
                 name: "Trash",
