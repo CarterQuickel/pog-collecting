@@ -27,11 +27,12 @@ let inventory = userdata.inventory || [];
 // money
 let money = userdata.score || 20000;
 
+let pogAmount = 0;
 
 // XP
 let xp = userdata.xp || 0;
 let maxXP = userdata.maxxp || 15;
-let level = userdata.level || 101;
+let level =  userdata.level || 1;
 
 // inventory size
 let Isize = userdata.Isize || 45;
@@ -81,7 +82,7 @@ function sellItem(index) {
         const item = inventory[index];
         const rarity = rarities.find(r => r.name === item.name);
         if (rarity) {
-            money += rarity.value; // add money based on rarity value
+            money += rarity.income * 1000000; // add money based on rarity value
         }
         inventory.splice(index, 1); // remove item from inventory
         refreshInventory(); // update inventory display
@@ -102,6 +103,9 @@ function update() {
 
     // update income Txt
     document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;
+
+    //update pog / pog
+    document.getElementById("pogCount").innerText = `Pogs: ${pogAmount} / ${maxPogs}`;
 
     // change inventory text color if full
     if (inventory.length >= Isize) {
@@ -196,11 +200,18 @@ function openCrate(cost, index) {
                 // rarity income
                 income = match ? match.income : 5;
 
+                // add to pog amount if new pog
+                let added = { name: rarity.name}
+                const exists = inventory.find(i => i.name === added.name);
+                if (!exists) {
+                    pogAmount++;
+                }
+
                 // Add result to inventory
                 inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity });
 
                 // XP gain
-                xp += Math.floor(55);
+                xp += Math.floor(income * (3 * level/15)); // gain XP based on income and level
                 levelup();
 
                 // Deduct cost
