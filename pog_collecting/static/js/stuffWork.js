@@ -15,7 +15,6 @@ rarityColor = [
 ]
 
 // debug rarity list
-console.log(rarities);
 console.log(crates);
 
 // money upgrade

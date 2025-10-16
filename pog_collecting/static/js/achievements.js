@@ -495,6 +495,13 @@ const achievements = [
             icon: "🧈",
             status: false,
             hidden: false
+        },
+        {
+            name: "OUATH",
+            description: "Get a Formbar pog combo.",
+            icon: "📊",
+            status: false,
+            hidden: false
         }
     ]
 ];
