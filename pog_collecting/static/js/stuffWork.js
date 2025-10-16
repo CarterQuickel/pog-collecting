@@ -28,7 +28,6 @@ let inventory = userdata.inventory || [];
 let money = userdata.score || 200000000;
 
 let pogAmount = userdata.pogamount || 0;
-console.log(pogAmount);
 
 // XP
 let xp = userdata.xp || 0;
