@@ -228,7 +228,8 @@ document.getElementById("save").addEventListener("click", () => {
                 maxXP: maxXP,
                 level: level,
                 totalSold: totalSold,
-                income: income
+                income: income,
+                achievements: window.achievements
              })
         })
         .then(response => response.json())
