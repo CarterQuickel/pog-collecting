@@ -34,7 +34,7 @@ let maxXP = userdata.maxxp || 15;
 let level =  userdata.level || 1;
 
 //merge amount 
-const mergeAmount = 3;
+const mergeAmount = 10;
 
 // inventory size
 let Isize = userdata.Isize || 45;
