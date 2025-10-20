@@ -33,6 +33,9 @@ let xp = userdata.xp || 0;
 let maxXP = userdata.maxxp || 15;
 let level =  userdata.level || 1;
 
+//merge amount 
+const mergeAmount = 3;
+
 // inventory size
 let Isize = userdata.Isize || 45;
 
@@ -79,12 +82,14 @@ function updateMoney() {
 function sellItem(index) {
     if (index >= 0 && index < inventory.length) {
         const item = inventory[index];
-        const rarity = rarities.find(r => r.name === item.name);
+        const rarity = pogList.find(r => r.rarity === item.value);
         if (rarity) {
-            money += rarity.income * 1000000; // add money based on rarity value
+             // add money based on income (1M is placeholder value for now)
+            money += item.income * 1000000;
         }
-        inventory.splice(index, 1); // remove item from inventory
-        refreshInventory(); // update inventory display
+        // remove item from inventory (splice removes 1 item at the specified index)
+        inventory.splice(index, 1); 
+        refreshInventory();
     }
 }
 
@@ -114,6 +119,24 @@ function update() {
     }
 }
 
+function merge(bronze, silver) {
+    let sold = 0;
+    // add new  pog to inventory
+    if (bronze) {
+        inventory.push({ name: "Silver Pog", color: "lime", income: 35, value: "Uncommon" });
+    } else if (silver) {
+        inventory.push({ name: "Gold Pog", color: "lime", income: 35, value: "Uncommon" });
+    }
+    // only sell the amount needed
+    for (let i = 0; i < inventory.length && sold < mergeAmount; i++) {
+        if (inventory[i].name === "Bronze Pog") {
+            sellItem(i);
+            sold++;
+            i--;
+        }
+    }
+}
+
 //update inventory
 function refreshInventory() {
     // get inventory div
@@ -135,9 +158,25 @@ function refreshInventory() {
     // Object.keys get the KEY (rarity name) of the rarityCounts object ; filter to only get rarities with 3 or more items
     const highlightColors = Object.keys(rarityCounts).filter(rarity => rarityCounts[rarity] >= 3);
 
+    //see if there is mergeAmount bronze pogs for merge button
+    const bronzeCount = inventory.filter(item => item.name === "Bronze Pog").length;
+    // see if there is mergeAmount silver pogs for merge button
+    const silverCount = inventory.filter(item => item.name === "Silver Pog").length;
+
     // set inventory html
     inventoryDiv.innerHTML = inventory.map((item, index) => {
-        return hasBonus = highlightColors.includes(item.name),
+        return hasBonus = highlightColors.includes(item.name), 
+        // refernce this inside the map function, for item is only defined in here
+        isBronze = item.name === "Bronze Pog",
+        isSilver = item.name === "Silver Pog",
+        // how many bronze pogs are there? (mergAmount)
+        //bronze
+        bronze = isBronze && bronzeCount >= mergeAmount,
+        //silver
+        silver = isSilver && silverCount >= mergeAmount,
+        // show merge button
+        canMerge = bronze || silver,
+        // return html
             `<div class="item ${hasBonus ? 'highlight' : ''}">
         <strong class ="name" style="color: white">${item.name}</strong><br>
         <hr>
@@ -146,9 +185,11 @@ function refreshInventory() {
             <li class='list' style="color: green">$${hasBonus ? Math.round(item.income * bonusMulti) : item.income}/s</li>
         </ul>
         <button id="sellbtn" onclick="sellItem(${index})">Sell</button>
+        ${canMerge ? `<button class="mergebtn" onclick="merge(bronze, silver)" style="display:inline-block;">Merge</button>` : ""}
         </div>
     `}).join("");
 }
+
 //first time call
 refreshInventory();
 
