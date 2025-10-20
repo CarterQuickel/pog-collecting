@@ -718,8 +718,12 @@ function collectFunc() {
                 //cant be tracked yet || ? true : achievement.status;
                 break;
             case "6-7":
+                if (achievement.status = true) {
+                    break;
+                } else {
                 achievement.status = userdata.Isize >= 7 ? true : achievement.status;
                 break;
+            }
             case "Pristine":
                 //cant be tracked yet || ? true : achievement.status;
                 break;
