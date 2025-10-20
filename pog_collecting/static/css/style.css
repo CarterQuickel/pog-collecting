@@ -201,7 +201,7 @@ ul {
 }
 
 .mergebtn {
-    background-color: red;
+    background-color: rgb(230, 230, 124);
     border: 4px solid black;
     border-radius: 45px;
     padding: 8px;
@@ -215,7 +215,7 @@ ul {
 }
 
 .mergebtn:hover {
-    background-color: darkred;
+    background-color: rgb(134, 132, 17);
 }
 
 #sellbtn {
@@ -223,8 +223,8 @@ ul {
     border: 4px solid black;
     margin-top: 0px;
     border-radius: 45px;
-    padding: 8px;
     width: 100px;
+    padding: 8px;
     text-align: center;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;

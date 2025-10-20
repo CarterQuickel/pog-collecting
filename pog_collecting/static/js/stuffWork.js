@@ -79,13 +79,12 @@ function updateMoney() {
 }
 
 // sell item
-function sellItem(index) {
+function sellItem(index, sellvalue) {
     if (index >= 0 && index < inventory.length) {
         const item = inventory[index];
         const rarity = pogList.find(r => r.rarity === item.value);
         if (rarity) {
-             // add money based on income (1M is placeholder value for now)
-            money += item.income * 1000000;
+            money += sellvalue;
         }
         // remove item from inventory (splice removes 1 item at the specified index)
         inventory.splice(index, 1); 
@@ -119,18 +118,28 @@ function update() {
     }
 }
 
-function merge(bronze, silver) {
+function merge(bronze, silver, gold) {
     let sold = 0;
     // add new  pog to inventory
     if (bronze) {
-        inventory.push({ name: "Silver Pog", color: "lime", income: 35, value: "Uncommon" });
+        inventory.push({ name: "Silver Pog", color: "orange", income: 200, value: "UNIQUE" });
     } else if (silver) {
-        inventory.push({ name: "Gold Pog", color: "lime", income: 35, value: "Uncommon" });
+        inventory.push({ name: "Gold Pog", color: "orange", income: 15000, value: "UNIQUE" });
+    } else if (gold) {
+        inventory.push({ name: "Diamond Pog", color: "orange", income: 700000, value: "UNIQUE" });
     }
     // only sell the amount needed
     for (let i = 0; i < inventory.length && sold < mergeAmount; i++) {
         if (inventory[i].name === "Bronze Pog") {
-            sellItem(i);
+            sellItem(i, 0);
+            sold++;
+            i--;
+        } else if (inventory[i].name === "Silver Pog") {
+            sellItem(i, 0);
+            sold++;
+            i--;
+        } else if (inventory[i].name === "Gold Pog") {
+            sellItem(i, 0);
             sold++;
             i--;
         }
@@ -162,30 +171,39 @@ function refreshInventory() {
     const bronzeCount = inventory.filter(item => item.name === "Bronze Pog").length;
     // see if there is mergeAmount silver pogs for merge button
     const silverCount = inventory.filter(item => item.name === "Silver Pog").length;
+    // see if there is mergeAmount gold pogs for merge button
+    const goldCount = inventory.filter(item => item.name === "Gold Pog").length;
 
     // set inventory html
     inventoryDiv.innerHTML = inventory.map((item, index) => {
         return hasBonus = highlightColors.includes(item.name), 
+        namelength = item.name.length,
+        nameFontSize = namelength >= 19 ? '9px' : namelength >= 12 ? '12px' : '16px',
+        sellvalue = item.income * 105,
         // refernce this inside the map function, for item is only defined in here
         isBronze = item.name === "Bronze Pog",
         isSilver = item.name === "Silver Pog",
+        isGold = item.name === "Gold Pog",
         // how many bronze pogs are there? (mergAmount)
         //bronze
         bronze = isBronze && bronzeCount >= mergeAmount,
         //silver
         silver = isSilver && silverCount >= mergeAmount,
+        //gold 
+        gold = isGold && goldCount >= mergeAmount,
         // show merge button
-        canMerge = bronze || silver,
+        canMerge = bronze || silver || gold,
         // return html
-            `<div class="item ${hasBonus ? 'highlight' : ''}">
-        <strong class ="name" style="color: white">${item.name}</strong><br>
+        `<div class="item ${hasBonus ? 'highlight' : ''}">
+        <strong class ="name" style="color: ${isBronze ? 'brown' : isSilver ? 'grey' : isGold ? 'gold' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
+        <br>
         <hr>
         <ul>
             <li class='list' style="color: ${item.color}">${item.value}</li>
             <li class='list' style="color: green">$${hasBonus ? Math.round(item.income * bonusMulti) : item.income}/s</li>
         </ul>
-        <button id="sellbtn" onclick="sellItem(${index})">Sell</button>
-        ${canMerge ? `<button class="mergebtn" onclick="merge(bronze, silver)" style="display:inline-block;">Merge</button>` : ""}
+        <button id="sellbtn" onclick="sellItem(${index}, sellvalue)">Sell for $${sellvalue}</button>
+        ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold})">Merge (${mergeAmount})</button>` : ""}
         </div>
     `}).join("");
 }
