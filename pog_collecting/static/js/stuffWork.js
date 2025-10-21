@@ -122,23 +122,23 @@ function merge(bronze, silver, gold) {
     let sold = 0;
     // add new  pog to inventory
     if (bronze) {
-        inventory.push({ name: "Silver Pog", color: "orange", income: 200, value: "UNIQUE" });
+        inventory.push({ name: "Silver Pog", color: "orange", income: 620, value: "UNIQUE" });
     } else if (silver) {
-        inventory.push({ name: "Gold Pog", color: "orange", income: 15000, value: "UNIQUE" });
+        inventory.push({ name: "Gold Pog", color: "orange", income: 7400, value: "UNIQUE" });
     } else if (gold) {
-        inventory.push({ name: "Diamond Pog", color: "orange", income: 700000, value: "UNIQUE" });
+        inventory.push({ name: "Diamond Pog", color: "orange", income: 83000, value: "UNIQUE" });
     }
     // only sell the amount needed
     for (let i = 0; i < inventory.length && sold < mergeAmount; i++) {
-        if (inventory[i].name === "Bronze Pog") {
+        if (inventory[i].name === "Bronze Pog" && bronze) {
             sellItem(i, 0);
             sold++;
             i--;
-        } else if (inventory[i].name === "Silver Pog") {
+        } else if (inventory[i].name === "Silver Pog" && silver) {
             sellItem(i, 0);
             sold++;
             i--;
-        } else if (inventory[i].name === "Gold Pog") {
+        } else if (inventory[i].name === "Gold Pog" && gold) {
             sellItem(i, 0);
             sold++;
             i--;
@@ -173,6 +173,8 @@ function refreshInventory() {
     const silverCount = inventory.filter(item => item.name === "Silver Pog").length;
     // see if there is mergeAmount gold pogs for merge button
     const goldCount = inventory.filter(item => item.name === "Gold Pog").length;
+    // see if there is mergeAmount diamond pogs for merge button
+    const diamondCount = inventory.filter(item => item.name === "Diamond Pog").length;
 
     // set inventory html
     inventoryDiv.innerHTML = inventory.map((item, index) => {
@@ -184,6 +186,7 @@ function refreshInventory() {
         isBronze = item.name === "Bronze Pog",
         isSilver = item.name === "Silver Pog",
         isGold = item.name === "Gold Pog",
+        isDiamond = item.name === "Diamond Pog",
         // how many bronze pogs are there? (mergAmount)
         //bronze
         bronze = isBronze && bronzeCount >= mergeAmount,
@@ -191,11 +194,13 @@ function refreshInventory() {
         silver = isSilver && silverCount >= mergeAmount,
         //gold 
         gold = isGold && goldCount >= mergeAmount,
+        //diamond
+        diamond = isDiamond && diamondCount >= mergeAmount,
         // show merge button
-        canMerge = bronze || silver || gold,
+        canMerge = bronze || silver || gold || diamond,
         // return html
         `<div class="item ${hasBonus ? 'highlight' : ''}">
-        <strong class ="name" style="color: ${isBronze ? 'brown' : isSilver ? 'grey' : isGold ? 'gold' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
+        <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
         <br>
         <hr>
         <ul>
