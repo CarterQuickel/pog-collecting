@@ -19,7 +19,11 @@ let money = userdata.score || 20000;
 let totalSold = userdata.totalSold || 0;
 let income = userdata.income || 0;
 
-
+//achievements
+achievements = userdata.achievements;
+if (!achievements == 0) {
+    achievements = window.achievements
+}
 
 // XP
 let xp = userdata.xp || 0;
@@ -229,7 +233,7 @@ document.getElementById("save").addEventListener("click", () => {
                 level: level,
                 totalSold: totalSold,
                 income: income,
-                achievements: window.achievements
+                achievements: achievements
              })
         })
         .then(response => response.json())
