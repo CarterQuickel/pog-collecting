@@ -1,3 +1,4 @@
+const { render } = require("ejs");
 
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 
@@ -1034,6 +1035,36 @@ function econFunc() {
                 achievementNotify(achievement);
                 break;
             }
+            case "Bank Breaker":
+                if (!achievement.status) {
+                achievement.status = userdata.income >= 100000 ? true : achievement.status;
+                achievementNotify(achievement);
+                break;
+            }
+            case "Industrialist":
+                if (!achievement.status) {
+                //untracked ? true : achievement.status;
+                achievementNotify(achievement);
+                break;
+            }
+            case "Capitalist":
+                if (!achievement.status) {
+                //untracked ? true : achievement.status;
+                achievementNotify(achievement);
+                break;
+            }
+            case "Monopoly":
+                if (!achievement.status) {
+                //untracked ? true : achievement.status;
+                achievementNotify(achievement);
+                break;
+            }
+            case "Oligarch":
+                if (!achievement.status) {
+                //untracked ? true : achievement.status;
+                achievementNotify(achievement);
+                break;
+            }
             default:
                 achievement.status = false; //set to false if no match
         }
@@ -1055,24 +1086,76 @@ function uniqueFunc() {
 }
 
 //notify when unique achievement is earned
+const achievementQueue = [];
+let sliderBusy = false;
+const SLIDE_IN = "20px";
+const SLIDE_OUT = "-320px";
+const DISPLAY_MS = 3000;
+const TRANSITION_MS = 400;
+
 function achievementNotify(achievement) {
+    // queue achievements instead of showing immediately
     if (achievement.status && !achievement.notified) {
-        achievement.notified = true;
-       const slider = document.getElementById("slider");
-       slider.innerHTML = 
-       `
+        achievement.notified = true; // prevent duplicate queueing
+        achievementQueue.push(achievement);
+        processAchievementQueue();
+        refreshAchievementsView();
+    }
+}
+
+
+function refreshAchievementsView() {
+    try {
+        switch (cate) {
+            case "collection": renderCollection(); break;
+            case "level": renderLevel(); break;
+            case "progression": renderProgression(); break;
+            case "economy": renderEconomy(); break;
+            case "unique": renderUnique(); break;
+            default: renderCollection(); break;
+        }
+    } catch (e) {
+        console.error("Error refreshing achievements view:", e);
+    }
+}
+
+
+function processAchievementQueue() {
+    if (sliderBusy) return;
+    if (achievementQueue.length === 0) return;
+
+    sliderBusy = true;
+    const achievement = achievementQueue.shift();
+    const slider = document.getElementById("slider");
+    if (!slider) {
+        sliderBusy = false;
+        return;
+    }
+
+    slider.innerHTML = `
        <span class="title">Achievement Unlocked!</span><br>
        <span class="icon">${achievement.icon}</span><br>
-        <span class="name">${achievement.name}</span><br>
-        <span class="description">${achievement.description}</span><br></br>`;
+       <span class="name">${achievement.name}</span><br>
+       <span class="description">${achievement.description}</span><br>
+    `;
 
-       //animate slider in and out 
-       slider.style.left = "20px";
+    // ensure a transition is present
+    if (!slider.style.transition) slider.style.transition = `left ${TRANSITION_MS}ms ease`;
 
-       setTimeout(() => {
-           slider.style.left = "-320px";
-       }, 3000);
-    }
+    // slide in (use RAF so the transition applies)
+    requestAnimationFrame(() => {
+        slider.style.left = SLIDE_IN;
+    });
+
+    // wait DISPLAY_MS, then slide out, then show next
+    setTimeout(() => {
+        slider.style.left = SLIDE_OUT;
+        setTimeout(() => {
+            sliderBusy = false;
+            // slight delay before processing next to avoid overlap
+            setTimeout(processAchievementQueue, 100);
+        }, TRANSITION_MS);
+    }, DISPLAY_MS);
 }
 
 setInterval(collectFunc, 1000);

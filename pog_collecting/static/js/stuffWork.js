@@ -30,6 +30,7 @@ let inventory = userdata.inventory || [];
 
 // money
 let money = userdata.score || 200000000;
+totalSold = userdata.totalSold || 0;
 
 let pogAmount = userdata.pogamount || 0;
 
@@ -39,10 +40,15 @@ let maxXP = userdata.maxxp || 15;
 let level =  userdata.level || 1;
 
 //merge amount 
+const totalMerges = 0;
 const mergeAmount = 10;
 
 // inventory size
 let Isize = userdata.Isize || 45;
+
+//misc
+let totalCrates = 0;
+let comboCounter = 0;
 
 //mode
 if (userdata.theme === "light") {
@@ -92,6 +98,7 @@ function sellItem(index, sellvalue) {
         const rarity = pogList.find(r => r.rarity === item.value);
         if (rarity) {
             money += sellvalue; // add money based on rarity value
+            totalSold += sellvalue;
         }
         // remove item from inventory (splice removes 1 item at the specified index)
         inventory.splice(index, 1); 
@@ -332,6 +339,8 @@ document.getElementById("save").addEventListener("click", () => {
             xp: xp,
             maxXP: maxXP,
             level: level,
+            income: income,
+            totalSold: totalSold,
             pogAmount: pogAmount
         })
     })
