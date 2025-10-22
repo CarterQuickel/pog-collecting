@@ -9,10 +9,11 @@
 <body>
     <div id="collectBanner">
         <div class="leftstuff">
-            <h1 style="margin-left: 10px;">POG CRATES v0.0.2</h1>
+            <h1 style="margin-left: 10px;">POG CRATES v0.0.6</h1>
             <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %></h4>
             <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
             <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
+            <div style="display: none" id="pogList"><%= JSON.stringify(pogList) %></div>
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
             <button id="save">Save</button>
@@ -25,7 +26,9 @@
     <div id="centerlayout" style="text-align: center;">  
         <div id="inventory"></div>
         <div id="settings">
-            <h3>INFO</h3>
+            <div id="searchbar">
+                <input id="searchbox" type="text" placeholder="Search Pogs..."> <button id="searchbtn">Search</button>
+            </div>
             <button id="patchNotesButton" class="pageButtons">
                 <a href="/patch" style="text-decoration: none; color: black;">Patch Notes</a>
             </button>
@@ -39,17 +42,15 @@
                 <h4 id="XPTxt"></h4>
                 <progress id="XPPB" value="0" max="100"></progress>
             </div>
-            <h3>Pogs: 0 / <%= maxPogs %></h3>
+            <h3 id="pogCount">Pogs: 0 / 0</h3>
             <button id="crate1" class="crate">Common Crate - $100</button>
             <button id="crate2" class="crate">Rare Crate - $500</button>
             <button id="crate3" class="crate">Epic Crate - $1000</button>
             <button id="crate4" class="crate">Legendary Crate - $5000</button>
             <button id="crate5" class="crate">Mythical Crate - $10000</button>
-            <button id="crate6" class="crate">Godly Crate - $100000</button>
         </div>
     </div>
 </body>
-<script src="../static/js/rarities.js"></script>
 <script src="../static/js/crates.js"></script>
 <script src="../static/js/stuffWork.js"></script>
 </html>
