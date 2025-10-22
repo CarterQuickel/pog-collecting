@@ -20,8 +20,8 @@ let totalSold = userdata.totalSold || 0;
 let income = userdata.income || 0;
 
 //achievements
-achievements = userdata.achievements;
-if (!achievements == 0) {
+achievements = userdata.achievements || [];
+if (achievements.length === 0) {
     achievements = window.achievements
 }
 
