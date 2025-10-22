@@ -1,3 +1,4 @@
+
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 
 //mode
@@ -11,7 +12,8 @@ if (userdata.theme === "light") {
 
 // Define the achievements array
 const achievements = [
-    collection = [
+    //start of collection achievements
+    [
         {
             name: "Full Combo!",
             description: "Get a 3-item combo.",
@@ -90,7 +92,98 @@ const achievements = [
             hidden: true
         },
     ],
-    level = [
+    //start of level achievements
+    [
+        {
+            name: "Rookie",
+            description: "Reach level 5.",
+            icon: "🎖️",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Getting Better",
+            description: "Reach level 10.",
+            icon: "🎗️",
+            reward: "Combo Multiplier II",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Experienced",
+            description: "Reach level 15.",
+            icon: "🏅",
+            reward: "Combo Multiplier III",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Veteran",
+            description: "Reach level 25.",
+            icon: "🥇",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Professional",
+            description: "Reach level 40.",
+            icon: "🕶️",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Halfway There",
+            description: "Reach level 50.",
+            icon: "🥈",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Itsumi!",
+            description: "Reach level 64.",
+            icon: "🍄",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Prestigious",
+            description: "Reach level 75.",
+            icon: "👑",
+            status: false,
+            hidden: false,
+        },
+        {
+            name: "No-Life",
+            description: "Reach level 100.",
+            icon: "💀",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "What color is grass?",
+            description: "Reach the max level.",
+            icon: "🔵",
+            status: false,
+            hidden: true
+        }
+    ],
+    //start of progression achievements
+    [
+        {
+            name: "First Steps",
+            description: "Open your first crate.",
+            icon: "🏆",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Pogger",
+            description: "Open 100 crates.",
+            icon: "😲",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
         {
             name: "Merge Maniac",
             description: "Merge your first pog.",
@@ -118,64 +211,6 @@ const achievements = [
             icon: "🪙",
             status: false,
             hidden: true
-        },
-        {
-            name: "Experienced",
-            description: "Reach level 5.",
-            icon: "🎖️",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Veteran",
-            description: "Reach level 10.",
-            icon: "🎗️",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Legendary",
-            description: "Reach level 15.",
-            icon: "🏅",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Itsumi!",
-            description: "Reach level 64.",
-            icon: "🍄",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "No-Life",
-            description: "Reach level 100.",
-            icon: "💀",
-            status: false,
-            hidden: true
-        },
-        {
-            name: "Prestigious",
-            description: "Reach the max level.",
-            icon: "👑",
-            status: false,
-            hidden: true
-        }
-    ],
-    progression = [
-        {
-            name: "First Steps",
-            description: "Open your first crate.",
-            icon: "🏆",
-            status: false,
-            hidden: false
-        },
-        {
-            name: "Pogger",
-            description: "Open 100 crates.",
-            icon: "😲",
-            status: false,
-            hidden: false
         },
         {
             name: "Granter",
@@ -233,6 +268,7 @@ const achievements = [
             status: false,
             hidden: true
         },
+        
         {
             name: "Completionist",
             description: "Unlock all main achievements.",
@@ -255,10 +291,11 @@ const achievements = [
             hidden: true
         }
     ],
-    economy = [
+    //start of economy achievements
+    [
         {
             name: "69",
-            description: "Have exactly 69 digipogs at once.",
+            description: "Have exactly 69 pogs at once.",
             icon: "🌈",
             status: false,
             hidden: true
@@ -348,7 +385,8 @@ const achievements = [
             hidden: false
         }
     ],
-    unique = [
+    //start of unique achievements
+    [
         {
             name: "Nerdy Inspector",
             description: "Go to the patch notes page.",
@@ -505,6 +543,8 @@ const achievements = [
         }
     ]
 ];
+
+window.achievements = achievements;
 
 // category variable
 let cate = "";
@@ -733,37 +773,125 @@ setInterval(() => {
 
 // #8e6fa9 (carter dont worry abt ts)
 
-function elonFunc() {
-    for (let i = 0; i < achievements[3].length; i++) {
-        if (achievements[3][i].name === "Elon") {
-            achievements[3][i].status = false && userdata.score >= 100000000;
-            achievements[3][i].status = true;
+function collectFunc() {
+    for (let i = 0; i < achievements[0].length; i++) {
+        const achievement = achievements[0][i];
+        switch (achievement.name) {
+            case "Full Combo!":
+               //cant be tracked yet || ? true : achievement.status;
+                break;
+            case "Coneisseur":
+                //cant be tracked yet || ? true : achievement.status;
+                break;
+            case "Candid Coiner":
+                //cant be tracked yet || ? true : achievement.status;
+                break;
+            case "6-7":
+                if (achievement.status = true) {
+                    break;
+                } else {
+                achievement.status = userdata.Isize >= 7 ? true : achievement.status;
+                break;
+            }
+            case "Pristine":
+                //cant be tracked yet || ? true : achievement.status;
+                break;
+            case "Exquisite":
+                 //cant be tracked yet || ? true : achievement.status;
+                break;
+            case "Mythical":
+                //cant be tracked yet || ? true : achievement.status;
+                break;
+            case "Mr. Smith":
+                 //cant be tracked yet || ? true : achievement.status;
+                break;
+            case "Hoarder":
+                achievement.status = userdata.Isize >= 60 && userdata.inventory.length >= userdata.Isize ? true : achievement.status;
+                break;
+            case "Insane Hoarder":
+                achievement.status = userdata.Isize >= 100 && userdata.inventory.length >= userdata.Isize ? true : achievement.status;
+                break;
+            default:
+                achievement.status = false; //set to false if no match
         }
     }
 }
 
 function levelFuncs() {
     for (let i = 0; i < achievements[1].length; i++) {
-        if (achievements[1][i].name === "Experienced") {
-            achievements[1][i].status = userdata.level >= 5;
-        }
-        if (achievements[1][i].name === "Veteran") {
-            achievements[1][i].status = userdata.level >= 10;
-        }
-        if (achievements[1][i].name === "Legendary") {
-            achievements[1][i].status = userdata.level >= 15;
-        }
-        if (achievements[1][i].name === "Itsumi!") {
-            achievements[1][i].status = userdata.level >= 64;
-        }
-        if (achievements[1][i].name === "No-Life") {
-            achievements[1][i].status = userdata.level >= 100;
-        }
-        if (achievements[1][i].name === "Prestigious") {
-            achievements[1][i].status = userdata.level >= 101;
+        const achievement = achievements[1][i];
+        switch (achievement.name) {
+            case "Rookie":
+                achievement.status = userdata.level >= 5 ? true : achievement.status;
+                break;
+            case "Getting Better":
+                achievement.status = userdata.level >= 10 ? true : achievement.status;
+                break;
+            case "Experienced":
+                achievement.status = userdata.level >= 15 ? true : achievement.status;
+                break;
+            case "Veteran":
+                achievement.status = userdata.level >= 25 ? true : achievement.status;
+                break;
+            case "Professional":
+                achievement.status = userdata.level >= 40 ? true : achievement.status;
+                break;
+            case "Halfway There":
+                achievement.status = userdata.level >= 50 ? true : achievement.status;
+                break;
+            case "Itsumi!":
+                achievement.status = userdata.level >= 64 ? true : achievement.status;
+                break;
+            case "Prestigious":
+                achievement.status = userdata.level >= 75 ? true : achievement.status;
+                break;
+            case "No-Life":
+                achievement.status = userdata.level >= 100 ? true : achievement.status;
+                break;
+            case "What color is grass?":
+                achievement.status = userdata.level >= 101 ? true : achievement.status;
+                break;
+            default:
+                achievement.status = false; // Optional: set to false if no match
         }
     }
 }
 
-setInterval(elonFunc, 1000);
+function econFunc() {
+    for (let i = 0; i < achievements[3].length; i++) {
+        const achievement = achievements[3][i];
+        switch (achievement.name) {
+            case "69":
+                achievement.status = userdata.inventory.length == 69 ? true : achievement.status;
+                break;
+            case "420":
+                achievement.status = userdata.totalSold >= 420 ? true : achievement.status;
+                break;
+            case "Wealthy":
+                achievement.status = userdata.score >= 1000 ? true : achievement.status;
+                break;
+            case "Rich":
+                achievement.status = userdata.score >= 1000000 ? true : achievement.status;
+                break;
+            case "Elon":
+                achievement.status = userdata.score >= 100000000 ? true : achievement.status;
+                break;
+            case "Entrepreneur":
+                achievement.status = userdata.income >= 2000 ? true : achievement.status;
+                break;
+            case "Tycoon":
+                achievement.status = userdata.income >= 10000 ? true : achievement.status;
+                break;
+            case "Pawn Broker":
+                achievement.status = userdata.income >= 50000 ? true : achievement.status;
+                break;
+            default:
+                achievement.status = false; //set to false if no match
+        }
+    }
+}
+setInterval(collectFunc, 1000);
 setInterval(levelFuncs, 1000);
+setInterval(progFunc, 1000);
+setInterval(econFunc, 1000);
+setInterval(uniqueFunc, 1000);

@@ -1,3 +1,4 @@
+
 // reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 // reference pogs from ejs
@@ -75,6 +76,8 @@ function getTotalIncome() {
     }, 0);
 }
 
+income = getTotalIncome();
+
 // initial money display
 setInterval(updateMoney, 100);
 function updateMoney() {
@@ -88,7 +91,8 @@ function sellItem(index, sellvalue) {
         const item = inventory[index];
         const rarity = pogList.find(r => r.rarity === item.value);
         if (rarity) {
-            money += sellvalue;
+            money += rarity.value; // add money based on rarity value
+            totalSold += rarity.value; // track total money earned from selling
         }
         // remove item from inventory (splice removes 1 item at the specified index)
         inventory.splice(index, 1); 
@@ -348,6 +352,7 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
 
 document.getElementById("achievementsButton").addEventListener("click", () => {
     window.location.href = "/achievements";
+    console.log(userdata.totalSold);
 });
 
 // mode toggle

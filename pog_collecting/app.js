@@ -86,6 +86,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     level INTEGER,
     pogamount INTEGER,
     displayname TEXT UNIQUE
+
 )`);
 
 // pog database
@@ -168,13 +169,14 @@ app.get('/', isAuthenticated, (req, res) => {
         };
 
         // load user data from database
-        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [req.session.user.displayName], (err, row) => {
+        const displayName = req.session.token?.displayName || "guest";
+        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
             if (err) {
                 return console.error("Error querying user:", err.message);
             }
             if (row) {
                 req.session.user = {
-                    displayName: req.session.user.displayName,
+                    displayName: displayName,
                     theme: row.theme,
                     score: row.score,
                     inventory: JSON.parse(row.inventory),
@@ -184,9 +186,22 @@ app.get('/', isAuthenticated, (req, res) => {
                     level: row.level,
                     pogamount: row.pogamount
                 };
-                console.log(`User data loaded for '${req.session.user.displayName}'`);
+                console.log(`User data loaded for '${displayName}'`);
             } else {
-                console.log(`No existing user data for '${req.session.user.displayName}', using defaults.`);
+                req.session.user = {
+                    displayName: displayName,
+                    theme: 'light',
+                    score: 0,
+                    inventory: [],
+                    Isize: 3,
+                    xp: 0,
+                    maxxp: 100,
+                    level: 1,
+                    income: 0,
+                    totalSold: 0,
+                    achievements: []
+                };
+                console.log(`No existing user data for '${displayName}', using defaults.`);
             }
             // Call insertUser and handle callback
             insertUser();
@@ -219,6 +234,9 @@ app.post('/datasave', (req, res) => {
         level: req.body.level,
         pogamount: req.body.pogAmount
     }
+    console.log('Achievements type:', typeof req.body.achievements);
+console.log('Achievements value:', req.body.achievements);
+
     console.log(userSave.theme);
     // save to session
     req.session.save(err => {
@@ -226,7 +244,7 @@ app.post('/datasave', (req, res) => {
             console.error('Error saving session:', err);
             return res.status(500).json({ message: 'Error saving session' });
         } else {
-            params = [
+            const params = [
                 userSave.theme,
                 userSave.score,
                 JSON.stringify(userSave.inventory),
@@ -255,7 +273,19 @@ app.get('/login', (req, res) => {
     if (req.query.token) {
         let tokenData = jwt.decode(req.query.token);
         req.session.token = tokenData;
-        req.session.user = { displayName: tokenData.displayName };
+        req.session.user = {
+            displayName: tokenData.displayName,
+            theme: tokenData.theme || 'light',
+            score: tokenData.score || 0,
+            inventory: tokenData.inventory || [],
+            Isize: tokenData.Isize || 3,
+            xp: tokenData.xp || 0,
+            maxxp: tokenData.maxxp || 100,
+            level: tokenData.level || 1,
+            income: tokenData.income || 0,
+            totalSold: tokenData.totalSold || 0,
+            achievements: tokenData.achievements || []
+        };
         res.redirect('/');
     } else {
         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
