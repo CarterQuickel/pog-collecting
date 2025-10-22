@@ -4,6 +4,25 @@ const app = express();
 const sqlite3 = require('sqlite3').verbose();
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
+const fs = require('fs');
+const csv = require('csv-parser');
+
+const headers = [
+    'id', 'name', 'color', 'code', 'number', 'code2',
+    'description', 'type', 'rarity', 'creator'
+  ];
+
+const results = [];
+  
+fs.createReadStream('pogipedia/db/pogs.csv')
+.pipe(csv({ headers }))
+.on('data', (row) => {
+    const { name, rarity } = row;
+    results.push({ name, rarity });
+})
+.on('end', () => {
+    console.log('Extracted Pogs:', results);
+});
 
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
@@ -65,8 +84,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     xp INTEGER,
     maxxp INTEGER,
     level INTEGER,
-    income INTEGER,
-    totalSold INTEGER,
+    pogamount INTEGER,
     displayname TEXT UNIQUE
 
 )`);
@@ -96,7 +114,7 @@ app.get('/collection', (req, res) => {
     if (!req.session.user) {
         res.redirect('/');
     }
-    res.render('collection', { userdata: req.session.user, maxPogs: pogCount });
+    res.render('collection', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
 
 
@@ -115,7 +133,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, displayname, achievements ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, pogamount, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -124,9 +142,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.xp,
                             req.session.user.maxxp,
                             req.session.user.level,
-                            req.session.user.income,
-                            req.session.user.totalSold,
-                            JSON.stringify(req.session.user.achievements),
+                            req.session.user.pogamount,
                             displayName
                         ],
                         function (err) {
@@ -138,6 +154,19 @@ app.get('/', isAuthenticated, (req, res) => {
                 }
             });
         }
+
+        // add variable references here
+        req.session.user = {
+            displayName: req.session.token?.displayName || "guest",
+            theme: req.session.user.theme || 'light',
+            score: req.session.user.score || 0,
+            inventory: req.session.user.inventory || [],
+            Isize: req.session.user.Isize || 3,
+            xp: req.session.user.xp || 0,
+            maxxp: req.session.user.maxxp || 15,
+            level: req.session.user.level || 1,
+            pogamount: req.session.user.pogamount || 0
+        };
 
         // load user data from database
         const displayName = req.session.token?.displayName || "guest";
@@ -155,9 +184,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     xp: row.xp,
                     maxxp: row.maxxp,
                     level: row.level,
-                    income: row.income,
-                    totalSold: row.totalSold,
-                    achievements: JSON.parse(row.achievements)
+                    pogamount: row.pogamount
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
@@ -178,7 +205,7 @@ app.get('/', isAuthenticated, (req, res) => {
             }
             // Call insertUser and handle callback
             insertUser();
-            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token, maxPogs: pogCount });
+            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token, maxPogs: pogCount, pogList: results });
         });
     } catch (error) {
         res.send(error.message)
@@ -187,11 +214,11 @@ app.get('/', isAuthenticated, (req, res) => {
 
 // patch notes page
 app.get('/patch', (req, res) => {
-    res.render('patch', { userdata: req.session.user, maxPogs: pogCount });
+    res.render('patch', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
 
 app.get('/achievements', (req, res) => {
-    res.render('achievements', { userdata: req.session.user, maxPogs: pogCount });
+    res.render('achievements', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
 
 // save data route
@@ -204,9 +231,8 @@ app.post('/datasave', (req, res) => {
         Isize: req.body.Isize,
         xp: req.body.xp,
         maxxp: req.body.maxXP,
-        level: req.body.level,                          
-        income: req.body.income,
-        totalSold: req.body.totalSold
+        level: req.body.level,
+        pogamount: req.body.pogAmount
     }
     console.log('Achievements type:', typeof req.body.achievements);
 console.log('Achievements value:', req.body.achievements);
@@ -226,24 +252,10 @@ console.log('Achievements value:', req.body.achievements);
                 userSave.xp,
                 userSave.maxxp,
                 userSave.level,
-                userSave.income,
-                userSave.totalSold,
+                userSave.pogamount,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, displayname = ?, achievements = ? WHERE displayname = ?`, [
-                userSave.theme,
-                userSave.score,
-                JSON.stringify(userSave.inventory),
-                userSave.Isize,
-                userSave.xp,
-                userSave.maxxp,
-                userSave.level,
-                userSave.income,
-                userSave.totalSold,
-                req.session.user.displayName,
-                JSON.stringify(userSave.achievements),
-                req.session.user.displayName
-            ], function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, pogamount = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -282,5 +294,5 @@ app.get('/login', (req, res) => {
 
 //listens
 app.listen(3000, () => {
-    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆'); console.log("Vamy was here");
+    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆');
 });
