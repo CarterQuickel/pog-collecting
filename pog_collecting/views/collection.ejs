@@ -35,17 +35,21 @@
     <div id="centerlayout" style="text-align: center;">
         <div id="inventory"></div>
         <div id="settings">
-            <div id="searchbar">
-                <input id="searchbox" type="text" placeholder="Search Pogs..."> <button id="searchbtn">Search</button>
+            <div id="sortcont">
+                <h4>Sorting</h4>
+                <div id="searchbar">
+                    <input id="searchbox" type="text" placeholder="Search Pogs..."> 
+                    <button id="searchbtn">Search</button>
+                </div>
+                <select id="selectSort">
+                    <option value="rarityAZ">Sort by Rarity (a-z)</option>
+                    <option value="rarityZA">Sort by Rarity (z-a)</option>
+                    <option value="nameAZ">Sort by Name (a-z)</option>
+                    <option value="nameZA">Sort by Name (z-a)</option>
+                    <option value="incomeHf">Sort by Income (high to low)</option>
+                    <option value="incomeLf">Sort by Income (low to high)</option>
+                </select>
             </div>
-            <select id="selectSort">
-                <option value="rarityAZ">Sort by Rarity (a-z)</option>
-                <option value="rarityZA">Sort by Rarity (z-a)</option>
-                <option value="nameAZ">Sort by Name (a-z)</option>
-                <option value="nameZA">Sort by Name (z-a)</option>
-                <option value="incomeHf">Sort by Income (high to low)</option>
-                <option value="incomeLf">Sort by Income (low to high)</option>
-            </select>
             <div id="locators">
                 <button id="patchNotesButton" class="pageButtons">
                     <a href="/patch" style="text-decoration: none; color: black;">Patch Notes</a>
