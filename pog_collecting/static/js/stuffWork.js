@@ -17,6 +17,10 @@ rarityColor = [
 // debug rarity list
 console.log(crates);
 
+// search variables
+let searching = false;
+let itemSearched = "";
+
 // money upgrade
 let moneyTick = 1000;
 
@@ -177,7 +181,8 @@ function refreshInventory() {
     const diamondCount = inventory.filter(item => item.name === "Diamond Pog").length;
 
     // set inventory html
-    inventoryDiv.innerHTML = inventory.map((item, index) => {
+    // .filter is used to get the search and .includes to check if the item name includes the searched text
+    inventoryDiv.innerHTML = inventory.filter(item => item.name.toLowerCase().includes(itemSearched)).map((item, index) => {
         return hasBonus = highlightColors.includes(item.name), 
         namelength = item.name.length,
         nameFontSize = namelength >= 19 ? '9px' : namelength >= 12 ? '12px' : '16px',
@@ -355,6 +360,17 @@ document.getElementById("darkmode").addEventListener("click", () => {
     } else {
         document.body.style.backgroundColor = "black";
         document.body.style.color = "white";
+    }
+});
+
+//search functionality
+document.getElementById("searchbtn").addEventListener("click", () => {
+    box = document.getElementById("searchbox")
+    inv = document.getElementById("inventory")
+    searching = true;
+    if (searching) {
+        itemSearched = box.value.toLowerCase();
+        refreshInventory();
     }
 });
 
