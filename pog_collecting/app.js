@@ -65,7 +65,10 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     xp INTEGER,
     maxxp INTEGER,
     level INTEGER,
+    income INTEGER,
+    totalSold INTEGER,
     displayname TEXT UNIQUE
+
 )`);
 
 // pog database
@@ -112,7 +115,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, displayname, achievements ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -121,6 +124,9 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.xp,
                             req.session.user.maxxp,
                             req.session.user.level,
+                            req.session.user.income,
+                            req.session.user.totalSold,
+                            JSON.stringify(req.session.user.achievements),
                             displayName
                         ],
                         function (err) {
@@ -133,37 +139,42 @@ app.get('/', isAuthenticated, (req, res) => {
             });
         }
 
-        // add variable references here
-        req.session.user = {
-            displayName: req.session.token?.displayName || "guest",
-            theme: req.session.user.theme || 'light',
-            score: req.session.user.score || 0,
-            inventory: req.session.user.inventory || [],
-            Isize: req.session.user.Isize || 3,
-            xp: req.session.user.xp || 0,
-            maxxp: req.session.user.maxxp || 100,
-            level: req.session.user.level || 1
-        };
-
         // load user data from database
-        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [req.session.user.displayName], (err, row) => {
+        const displayName = req.session.token?.displayName || "guest";
+        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
             if (err) {
                 return console.error("Error querying user:", err.message);
             }
             if (row) {
                 req.session.user = {
-                    displayName: req.session.user.displayName,
+                    displayName: displayName,
                     theme: row.theme,
                     score: row.score,
                     inventory: JSON.parse(row.inventory),
                     Isize: row.Isize,
                     xp: row.xp,
                     maxxp: row.maxxp,
-                    level: row.level
+                    level: row.level,
+                    income: row.income,
+                    totalSold: row.totalSold,
+                    achievements: JSON.parse(row.achievements)
                 };
-                console.log(`User data loaded for '${req.session.user.displayName}'`);
+                console.log(`User data loaded for '${displayName}'`);
             } else {
-                console.log(`No existing user data for '${req.session.user.displayName}', using defaults.`);
+                req.session.user = {
+                    displayName: displayName,
+                    theme: 'light',
+                    score: 0,
+                    inventory: [],
+                    Isize: 3,
+                    xp: 0,
+                    maxxp: 100,
+                    level: 1,
+                    income: 0,
+                    totalSold: 0,
+                    achievements: []
+                };
+                console.log(`No existing user data for '${displayName}', using defaults.`);
             }
             // Call insertUser and handle callback
             insertUser();
@@ -193,8 +204,13 @@ app.post('/datasave', (req, res) => {
         Isize: req.body.Isize,
         xp: req.body.xp,
         maxxp: req.body.maxXP,
-        level: req.body.level
+        level: req.body.level,                          
+        income: req.body.income,
+        totalSold: req.body.totalSold
     }
+    console.log('Achievements type:', typeof req.body.achievements);
+console.log('Achievements value:', req.body.achievements);
+
     console.log(userSave.theme);
     // save to session
     req.session.save(err => {
@@ -202,7 +218,7 @@ app.post('/datasave', (req, res) => {
             console.error('Error saving session:', err);
             return res.status(500).json({ message: 'Error saving session' });
         } else {
-            params = [
+            const params = [
                 userSave.theme,
                 userSave.score,
                 JSON.stringify(userSave.inventory),
@@ -210,9 +226,24 @@ app.post('/datasave', (req, res) => {
                 userSave.xp,
                 userSave.maxxp,
                 userSave.level,
+                userSave.income,
+                userSave.totalSold,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, displayname = ?, achievements = ? WHERE displayname = ?`, [
+                userSave.theme,
+                userSave.score,
+                JSON.stringify(userSave.inventory),
+                userSave.Isize,
+                userSave.xp,
+                userSave.maxxp,
+                userSave.level,
+                userSave.income,
+                userSave.totalSold,
+                req.session.user.displayName,
+                JSON.stringify(userSave.achievements),
+                req.session.user.displayName
+            ], function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -230,7 +261,19 @@ app.get('/login', (req, res) => {
     if (req.query.token) {
         let tokenData = jwt.decode(req.query.token);
         req.session.token = tokenData;
-        req.session.user = { displayName: tokenData.displayName };
+        req.session.user = {
+            displayName: tokenData.displayName,
+            theme: tokenData.theme || 'light',
+            score: tokenData.score || 0,
+            inventory: tokenData.inventory || [],
+            Isize: tokenData.Isize || 3,
+            xp: tokenData.xp || 0,
+            maxxp: tokenData.maxxp || 100,
+            level: tokenData.level || 1,
+            income: tokenData.income || 0,
+            totalSold: tokenData.totalSold || 0,
+            achievements: tokenData.achievements || []
+        };
         res.redirect('/');
     } else {
         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);

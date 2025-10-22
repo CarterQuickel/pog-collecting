@@ -1,3 +1,4 @@
+
 // reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 // reference pogs from ejs
@@ -15,7 +16,14 @@ let inventory = userdata.inventory || [];
 
 // money
 let money = userdata.score || 20000;
+let totalSold = userdata.totalSold || 0;
+let income = userdata.income || 0;
 
+//achievements
+achievements = userdata.achievements || [];
+if (achievements.length === 0) {
+    achievements = window.achievements
+}
 
 // XP
 let xp = userdata.xp || 0;
@@ -57,6 +65,8 @@ function getTotalIncome() {
     }, 0);
 }
 
+income = getTotalIncome();
+
 // initial money display
 setInterval(updateMoney, 100);
 function updateMoney() {
@@ -71,6 +81,7 @@ function sellItem(index) {
         const rarity = rarities.find(r => r.name === item.name);
         if (rarity) {
             money += rarity.value; // add money based on rarity value
+            totalSold += rarity.value; // track total money earned from selling
         }
         inventory.splice(index, 1); // remove item from inventory
         refreshInventory(); // update inventory display
@@ -219,7 +230,10 @@ document.getElementById("save").addEventListener("click", () => {
                 Isize: Isize,
                 xp: xp,
                 maxXP: maxXP,
-                level: level
+                level: level,
+                totalSold: totalSold,
+                income: income,
+                achievements: window.achievements
              })
         })
         .then(response => response.json())
@@ -238,6 +252,7 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
 
 document.getElementById("achievementsButton").addEventListener("click", () => {
     window.location.href = "/achievements";
+    console.log(userdata.totalSold);
 });
 
 // mode toggle
