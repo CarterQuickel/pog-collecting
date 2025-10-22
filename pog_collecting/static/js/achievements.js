@@ -34,6 +34,13 @@ const achievements = [
             hidden: true
         },
         {
+            name: "Programming Prodigy",
+            description: "Have 1100100 CP pogs.",
+            icon: "💻",
+            status: false,
+            hidden: false
+        },
+        {
             name: "6-7",
             description: "Have 6, then 7, items in your inventory.",
             icon: "🔥",
@@ -304,6 +311,41 @@ const achievements = [
             icon: "💸",
             status: false,
             hidden: false
+        },
+        {
+            name: "Bank Breaker",
+            description: "Make 100000 cash a second.",
+            icon: "💳",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Industrialist",
+            description: "Own a Robux pog.",
+            icon: "R$",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Capitalist",
+            description: "Own a V-Bucks pog.",
+            icon: "V$",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Monopoly",
+            description: "Be on the Top 5 leaderboard.",
+            icon: "💹",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Oligarch",
+            description: "Be the Top 1 on the leaderboard.",
+            icon: "€£¥",
+            status: false,
+            hidden: false
         }
     ],
     unique = [
@@ -392,6 +434,13 @@ const achievements = [
             hidden: false
         },
         {
+            name: "Pineapple Under the Sea",
+            description: "Get a SpongeBob pog combo.",
+            icon: "🍍",
+            status: false,
+            hidden: false
+        },
+        {
             name: "Mog Pog",
             description: "Get a Handsome Squidward pog combo.",
             icon: "🦑",
@@ -430,6 +479,27 @@ const achievements = [
             name: "Hiding in your WiFi",
             description: "Get a Hatsune Miku pog combo.",
             icon: "🎤",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Strange Man's Game",
+            description: "Get a Elf Biker pog combo.",
+            icon: "🏍️",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "buttr",
+            description: "Get a Butter Pog combo.",
+            icon: "🧈",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "OUATH",
+            description: "Get a Formbar pog combo.",
+            icon: "📊",
             status: false,
             hidden: false
         }
