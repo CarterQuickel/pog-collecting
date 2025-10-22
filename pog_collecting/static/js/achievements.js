@@ -43,7 +43,8 @@ const achievements = [
             description: "Have 1100100 CP pogs.",
             icon: "💻",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "6-7",
@@ -391,35 +392,40 @@ const achievements = [
             description: "Make 50000 cash a second.",
             icon: "💸",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Bank Breaker",
             description: "Make 100000 cash a second.",
             icon: "💳",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Industrialist",
             description: "Own a Robux pog.",
             icon: "R$",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Capitalist",
             description: "Own a V-Bucks pog.",
             icon: "V$",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Monopoly",
             description: "Be on the Top 5 leaderboard.",
             icon: "💹",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Oligarch",
@@ -525,7 +531,8 @@ const achievements = [
             description: "Get a Fallout Vault pog combo.",
             icon: "🛖",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Pineapple Under the Sea",
@@ -540,56 +547,64 @@ const achievements = [
             description: "Get a Handsome Squidward pog combo.",
             icon: "🦑",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Goon",
             description: "Get an anime girl pog combo.",
             icon: "👧",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "Margot Robbie",
             description: "Get a Barbie pog combo.",
             icon: "🎀",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "I am Vengeance",
             description: "Get 4 Batman Robin pog combos.",
             icon: "🦇",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Nuke Kaboom",
             description: "Collect a Thomas Nuke pog.",
             icon: "🚂",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Hiding in your WiFi",
             description: "Get a Hatsune Miku pog combo.",
             icon: "🎤",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Strange Man's Game",
             description: "Get a Elf Biker pog combo.",
             icon: "🏍️",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "buttr",
             description: "Get a Butter Pog combo.",
             icon: "🧈",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "OUATH",
