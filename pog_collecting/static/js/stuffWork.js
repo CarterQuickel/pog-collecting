@@ -347,58 +347,10 @@ document.getElementById("save").addEventListener("click", () => {
 
 document.getElementById("patchNotesButton").addEventListener("click", () => {
     window.location.href = "/patch";
-    fetch('/datasave', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            lightMode: lightMode,
-            money: money,
-            inventory: inventory,
-            Isize: Isize,
-            xp: xp,
-            maxXP: maxXP,
-            level: level,
-            pogAmount: pogAmount
-        })
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Data saved successfully:", data);
-        })
-        .catch(err => {
-            console.error("Error saving data:", err);
-        });
 });
 
 document.getElementById("achievementsButton").addEventListener("click", () => {
     window.location.href = "/achievements";
-    fetch('/datasave', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            lightMode: lightMode,
-            money: money,
-            inventory: inventory,
-            Isize: Isize,
-            xp: xp,
-            maxXP: maxXP,
-            level: level,
-            pogAmount: pogAmount
-        })
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Data saved successfully:", data);
-        })
-        .catch(err => {
-            console.error("Error saving data:", err);
-        });
     console.log(userdata.totalSold);
 });
 
