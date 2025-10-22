@@ -67,8 +67,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     level INTEGER,
     income INTEGER,
     totalSold INTEGER,
-    displayname TEXT UNIQUE,
-    achievements TEXT
+    displayname TEXT UNIQUE
 
 )`);
 
@@ -207,8 +206,7 @@ app.post('/datasave', (req, res) => {
         maxxp: req.body.maxXP,
         level: req.body.level,                          
         income: req.body.income,
-        totalSold: req.body.totalSold,
-        achievements: req.body.achievements
+        totalSold: req.body.totalSold
     }
     console.log('Achievements type:', typeof req.body.achievements);
 console.log('Achievements value:', req.body.achievements);
@@ -230,8 +228,7 @@ console.log('Achievements value:', req.body.achievements);
                 userSave.level,
                 userSave.income,
                 userSave.totalSold,
-                req.session.user.displayName,
-                JSON.stringify(userSave.achievements)
+                req.session.user.displayName
             ]
             usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, displayname = ?, achievements = ? WHERE displayname = ?`, [
                 userSave.theme,

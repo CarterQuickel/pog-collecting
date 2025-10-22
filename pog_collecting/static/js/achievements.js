@@ -10,7 +10,474 @@ if (userdata.theme === "light") {
     document.body.style.color = "white";
 }
 
-achievements = userdata.achievements || [[], [], [], [], []];
+// Define the achievements array
+const achievements = [
+    //start of collection achievements
+    [
+        {
+            name: "Full Combo!",
+            description: "Get a 3-item combo.",
+            icon: "3️⃣",
+            reward: "Pileup I",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Coneisseur",
+            description: "Have 6 3-item combos.",
+            icon: "6️⃣",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Candid Coiner",
+            description: "Have 60 3-item combos.",
+            icon: "6️⃣0️⃣",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "6-7",
+            description: "Have 6, then 7, items in your inventory.",
+            icon: "🔥",
+            reward: "Throwaway I",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Pristine",
+            description: "Have a copper, silver, and gold pog all at once.",
+            icon: "✨",
+            reward: "XP Boost II",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Exquisite",
+            description: "Have a copper, silver, gold, and diamond pog all at once.",
+            icon: "💎",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Mythical",
+            description: "Have a copper, silver, gold, diamond, and astral pog all at once.",
+            icon: "🌌",
+            reward: "XP Boost III",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Mr. Smith",
+            description: "Have one of each tier pog at once.",
+            icon: "🎮",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Hoarder",
+            description: "Fill your inventory to max when your inventory is greater than 60.",
+            icon: "📦",
+            reward: "Pileup II",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Insane Hoarder",
+            description: "Own 100 pogs.",
+            icon: "🎁",
+            reward: "Pileup III",
+            status: false,
+            hidden: true
+        },
+    ],
+    //start of level achievements
+    [
+        {
+            name: "Rookie",
+            description: "Reach level 5.",
+            icon: "🎖️",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Getting Better",
+            description: "Reach level 10.",
+            icon: "🎗️",
+            reward: "Combo Multiplier II",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Experienced",
+            description: "Reach level 15.",
+            icon: "🏅",
+            reward: "Combo Multiplier III",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Veteran",
+            description: "Reach level 25.",
+            icon: "🥇",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Professional",
+            description: "Reach level 40.",
+            icon: "🕶️",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Halfway There",
+            description: "Reach level 50.",
+            icon: "🥈",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Itsumi!",
+            description: "Reach level 64.",
+            icon: "🍄",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Prestigious",
+            description: "Reach level 75.",
+            icon: "👑",
+            status: false,
+            hidden: false,
+        },
+        {
+            name: "No-Life",
+            description: "Reach level 100.",
+            icon: "💀",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "What color is grass?",
+            description: "Reach the max level.",
+            icon: "🔵",
+            status: false,
+            hidden: true
+        }
+    ],
+    //start of progression achievements
+    [
+        {
+            name: "First Steps",
+            description: "Open your first crate.",
+            icon: "🏆",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Pogger",
+            description: "Open 100 crates.",
+            icon: "😲",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Merge Maniac",
+            description: "Merge your first pog.",
+            icon: "🌀",
+            reward: "Fast Cash I",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Merge Monster",
+            description: "Merge 30 pogs.",
+            icon: "👹",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Merge Master",
+            description: "Merge 80 pogs.",
+            icon: "👺",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "God",
+            description: "Merge into a God pog.",
+            icon: "🪙",
+            reward: "Fast Cash II",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Granter",
+            description: "Get a 1-star dragon pog.",
+            icon: "I",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Achiever",
+            description: "Get a 2-star dragon pog.",
+            icon: "II",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Successor",
+            description: "Get a 3-star dragon pog.",
+            icon: "III",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Victor",
+            description: "Get a 4-star dragon pog.",
+            icon: "IV",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Conqueror",
+            description: "Get a 5-star dragon pog.",
+            icon: "V",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Dragon Lord",
+            description: "Get a 6-star dragon pog.",
+            icon: "VI",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Above All",
+            description: "Get a 7-star dragon pog.",
+            icon: "VII",
+            reward: "God Pog",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Zeno",
+            description: "Have one of each-star dragon pog.",
+            icon: "X",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        
+        {
+            name: "Completionist",
+            description: "Unlock all main achievements.",
+            icon: "🌟",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Secret Achiever",
+            description: "Unlock all secret achievements.",
+            icon: "🤫🧏‍♂️",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Platinum Trophy",
+            description: "Unlock all achievements.",
+            icon: "💯",
+            reward: "None",
+            status: false,
+            hidden: true
+        }
+    ],
+    //start of economy achievements
+    [
+        {
+            name: "69",
+            description: "Have exactly 69 pogs at once.",
+            icon: "🌈",
+            reward: "Throwaway III",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "420",
+            description: "Sell enough pogs to gain back a TOTAL of 420 digipogs.",
+            icon: "🗣️",
+            reward: "Throwaway II",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Wealthy",
+            description: "Make your first 1000 dollars.",
+            icon: "💵",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Rich",
+            description: "Have 1 million dollars at once.",
+            icon: "💴",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Elon",
+            description: "Have 100 million dollars at once.",
+            icon: "💰",
+            reward: "Winter is Coming Theme",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Entrepreneur",
+            description: "Make 2000 cash a second.",
+            icon: "🏦",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Tycoon",
+            description: "Make 10000 cash a second.",
+            icon: "🤑",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Pawn Broker",
+            description: "Make 50000 cash a second.",
+            icon: "💸",
+            reward: "TBD",
+            status: false,
+            hidden: false
+        }
+    ],
+    //start of unique achievements
+    [
+        {
+            name: "Nerdy Inspector",
+            description: "Go to the patch notes page.",
+            icon: "🤓",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Chicken Jockey!",
+            description: "Get a chicken jockey combo.",
+            icon: "🐔",
+            reward: "Inventory Expansion",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "An Ender Pearl",
+            description: "Get an endermen combo.",
+            icon: "🟢",
+            reward: "Sorting System",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Soda Pop",
+            description: "Get a soda pog combo.",
+            icon: "🥤",
+            reward: "None",
+            status: false,
+            hidden: false
+        }, 
+        {
+            name: "Sus",
+            description: "Have 10 dingus pogs at once.",
+            icon: "👽",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Elden Lord",
+            description: "Get an Elden Ring pog combo.",
+            icon: "⚔️",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "1% of My Power",
+            description: "Get a Super Saiyan Shaggy pog combo.",
+            icon: "🟠",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Ultimate Despair",
+            description: "Get 13 DR (danganronpa) pogs",
+            icon: "🔪",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Shaw!",
+            description: "Get a Hornet pog.",
+            icon: "🕷️",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Uhhh",
+            description: "Get an I Heart CP pog combo.",
+            icon: "💖",
+            reward: "None",
+            status: false,
+            hidden: true
+        },
+        {
+            name: "Reflection",
+            description: "Get a Fallout Vault pog combo.",
+            icon: "🛖",
+            reward: "None",
+            status: false,
+            hidden: false
+        },
+        {
+            name: "Mog Pog",
+            description: "Get a Handsome Squidward pog combo.",
+            icon: "🦑",
+            reward: "None",
+            status: false,
+            hidden: false
+        }
+    ]
+];
+
+window.achievements = achievements;
 
 // category variable
 let cate = "";
@@ -244,75 +711,39 @@ function collectFunc() {
         const achievement = achievements[0][i];
         switch (achievement.name) {
             case "Full Combo!":
-                if (achievement.status == true) {
-                    break;
-                } else {
                //cant be tracked yet || ? true : achievement.status;
                 break;
-            }
             case "Coneisseur":
-                if (achievement.status == true) {
-                    break;
-                } else {
                 //cant be tracked yet || ? true : achievement.status;
                 break;
-            }
             case "Candid Coiner":
-                if (achievement.status == true) {
-                    break;
-                } else {
                 //cant be tracked yet || ? true : achievement.status;
                 break;
-                }
             case "6-7":
-                if (achievement.status == true) {
+                if (achievement.status = true) {
                     break;
                 } else {
                 achievement.status = userdata.Isize >= 7 ? true : achievement.status;
                 break;
             }
             case "Pristine":
-                if (achievement.status == true) {
-                    break;
-                } else {
                 //cant be tracked yet || ? true : achievement.status;
                 break;
-                }
             case "Exquisite":
-                if (achievement.status == true) {
-                    break;
-                } else {
                  //cant be tracked yet || ? true : achievement.status;
                 break;
-                }
             case "Mythical":
-                if (achievement.status == true) {
-                    break;
-                } else {
                 //cant be tracked yet || ? true : achievement.status;
                 break;
-                }
             case "Mr. Smith":
-                if (achievement.status == true) {
-                    break;
-                } else {
                  //cant be tracked yet || ? true : achievement.status;
                 break;
-                }
             case "Hoarder":
-                if (achievement.status == true) {
-                    break;
-                } else {
                 achievement.status = userdata.Isize >= 60 && userdata.inventory.length >= userdata.Isize ? true : achievement.status;
                 break;
-                }
             case "Insane Hoarder":
-                if (achievement.status == true) {
-                    break;
-                } else {
                 achievement.status = userdata.Isize >= 100 && userdata.inventory.length >= userdata.Isize ? true : achievement.status;
                 break;
-                }
             default:
                 achievement.status = false; //set to false if no match
         }
@@ -324,206 +755,37 @@ function levelFuncs() {
         const achievement = achievements[1][i];
         switch (achievement.name) {
             case "Rookie":
-                if (achievement.status == true) {
-                    break;
-                } else {
                 achievement.status = userdata.level >= 5 ? true : achievement.status;
                 break;
-                }
             case "Getting Better":
-                if (achievement.status == true) {
-                    break;
-                } else {
                 achievement.status = userdata.level >= 10 ? true : achievement.status;
                 break;
-                }
             case "Experienced":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.level >= 15 ? true : achievement.status;
+                achievement.status = userdata.level >= 15 ? true : achievement.status;
                 break;
-            }
             case "Veteran":
-            if (achievement.status == true) {
-                    break;
-                } else {
-            achievement.status = userdata.level >= 25 ? true : achievement.status;
+                achievement.status = userdata.level >= 25 ? true : achievement.status;
                 break;
-                }
             case "Professional":
-            if (achievement.status == true) {
-                    break;
-                } else {
                 achievement.status = userdata.level >= 40 ? true : achievement.status;
                 break;
-                }
             case "Halfway There":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.level >= 50 ? true : achievement.status;
+                achievement.status = userdata.level >= 50 ? true : achievement.status;
                 break;
-                }
             case "Itsumi!":
-            if (achievement.status == true) {
-                    break;
-                } else {
                 achievement.status = userdata.level >= 64 ? true : achievement.status;
                 break;
-                }
             case "Prestigious":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.level >= 75 ? true : achievement.status;
+                achievement.status = userdata.level >= 75 ? true : achievement.status;
                 break;
-                }
             case "No-Life":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.level >= 100 ? true : achievement.status;
+                achievement.status = userdata.level >= 100 ? true : achievement.status;
                 break;
-                }
             case "What color is grass?":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.level >= 101 ? true : achievement.status;
+                achievement.status = userdata.level >= 101 ? true : achievement.status;
                 break;
-                }
             default:
-                achievement.status = false; // false if no match
-        }
-    }
-}
-
-function progFunc() {
-    for (let i = 0; i < achievements[2].length; i++) {
-        const achievement = achievements[2][i];
-        switch (achievement.name) {
-            case "First Steps":
-                if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Pogger":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Merge Maniac":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Merge Monster":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Merge Master":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "God":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Granter":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Achiever":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Successor":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Victor":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Conqueror":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Dragon Lord":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Above All":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Zeno":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Completionist":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Secret Achiever":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            case "Platinum Trophy":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            // untracked ? true : achievement.status;
-                break;
-                }
-            default:
-                achievement.status = false; // false if no match
+                achievement.status = false; // Optional: set to false if no match
         }
     }
 }
@@ -533,161 +795,34 @@ function econFunc() {
         const achievement = achievements[3][i];
         switch (achievement.name) {
             case "69":
-                if (achievement.status == true) {
-                    break;
-                } else {
-                achievement.status = userdata.score == 69 ? true : achievement.status;
+                achievement.status = userdata.inventory.length == 69 ? true : achievement.status;
                 break;
-                }
             case "420":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.totalSold >= 420 ? true : achievement.status;
+                achievement.status = userdata.totalSold >= 420 ? true : achievement.status;
                 break;
-                }
             case "Wealthy":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.score >= 1000 ? true : achievement.status;
+                achievement.status = userdata.score >= 1000 ? true : achievement.status;
                 break;
-                }
             case "Rich":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.score >= 1000000 ? true : achievement.status;
+                achievement.status = userdata.score >= 1000000 ? true : achievement.status;
                 break;
-                }
             case "Elon":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.score >= 100000000 ? true : achievement.status;
+                achievement.status = userdata.score >= 100000000 ? true : achievement.status;
                 break;
-                }
             case "Entrepreneur":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.income >= 2000 ? true : achievement.status;
+                achievement.status = userdata.income >= 2000 ? true : achievement.status;
                 break;
-            }
             case "Tycoon":
-            if (achievement.status == true) {
-                    break;
-                } else {
                 achievement.status = userdata.income >= 10000 ? true : achievement.status;
                 break;
-                }
             case "Pawn Broker":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            achievement.status = userdata.income >= 50000 ? true : achievement.status;
+                achievement.status = userdata.income >= 50000 ? true : achievement.status;
                 break;
-                }
             default:
                 achievement.status = false; //set to false if no match
         }
     }
 }
-
-function uniqueFunc() {
-    for (let i = 0; i < achievements[4].length; i++) {
-        const achievement = achievements[4][i];
-        switch (achievement.name) {
-            case "Nerdy Inspector":
-                if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "Chicken Jockey!":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "An Ender Pearl":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "Soda Pop":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "Sus":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "Elden Lord":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "1% of My Power":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "Ultimate Despair":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "Shaw!":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "Uhhh":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "Reflection":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-            case "Mog Pog":
-            if (achievement.status == true) {
-                    break;
-                } else {    
-            //untracked ? true : achievement.status;
-                break;
-                }
-                default:
-                achievement.status = false; //set to false if no match
-        }
-    }
-}
-
 setInterval(collectFunc, 1000);
 setInterval(levelFuncs, 1000);
 setInterval(progFunc, 1000);

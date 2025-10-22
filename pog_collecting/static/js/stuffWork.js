@@ -233,7 +233,7 @@ document.getElementById("save").addEventListener("click", () => {
                 level: level,
                 totalSold: totalSold,
                 income: income,
-                achievements: achievements
+                achievements: window.achievements
              })
         })
         .then(response => response.json())
