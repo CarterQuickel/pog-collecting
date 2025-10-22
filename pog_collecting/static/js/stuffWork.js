@@ -92,7 +92,6 @@ function sellItem(index, sellvalue) {
         const rarity = pogList.find(r => r.rarity === item.value);
         if (rarity) {
             money += sellvalue; // add money based on rarity value
-            totalSold += sellvalue; // track total money earned from selling
         }
         // remove item from inventory (splice removes 1 item at the specified index)
         inventory.splice(index, 1); 
