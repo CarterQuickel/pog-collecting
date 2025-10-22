@@ -29,6 +29,14 @@
             <div id="searchbar">
                 <input id="searchbox" type="text" placeholder="Search Pogs..."> <button id="searchbtn">Search</button>
             </div>
+            <select id="selectSort">
+                <option value="rarityAZ" style="background-color: rgb(224, 224, 224)">Sort by Rarity (a-z)</option>
+                <option value="rarityZA" style="background-color: rgb(224, 224, 224)">Sort by Rarity (z-a)</option>
+                <option value="nameAZ" style="background-color: rgb(201, 175, 175)">Sort by Name (a-z)</option>
+                <option value="nameZA" style="background-color: rgb(201, 175, 175)">Sort by Name (z-a)</option>
+                <option value="incomeHf" style="background-color: rgb(216, 218, 190)">Sort by Income (high to low)</option>
+                <option value="incomeLf" style="background-color: rgb(216, 218, 190)">Sort by Income (low to high)</option>
+            </select>
             <button id="patchNotesButton" class="pageButtons">
                 <a href="/patch" style="text-decoration: none; color: black;">Patch Notes</a>
             </button>
@@ -43,11 +51,13 @@
                 <progress id="XPPB" value="0" max="100"></progress>
             </div>
             <h3 id="pogCount">Pogs: 0 / 0</h3>
-            <button id="crate1" class="crate">Common Crate - $100</button>
-            <button id="crate2" class="crate">Rare Crate - $500</button>
-            <button id="crate3" class="crate">Epic Crate - $1000</button>
-            <button id="crate4" class="crate">Legendary Crate - $5000</button>
-            <button id="crate5" class="crate">Mythical Crate - $10000</button>
+            <div id="crateBtns">
+                <button id="crate1" class="crate">Common Crate - $100</button>
+                <button id="crate2" class="crate">Rare Crate - $500</button>
+                <button id="crate3" class="crate">Epic Crate - $1000</button>
+                <button id="crate4" class="crate">Legendary Crate - $5000</button>
+                <button id="crate5" class="crate">Mythical Crate - $10000</button>
+            </div>
         </div>
     </div>
 </body>

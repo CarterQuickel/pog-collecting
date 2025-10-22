@@ -428,6 +428,25 @@ document.getElementById("searchbtn").addEventListener("click", () => {
     }
 });
 
+//categorize functionality
+document.getElementById("selectSort").addEventListener("change", () => {
+    const sortBy = document.getElementById("selectSort").value;
+    if (sortBy === "rarityAZ") {
+        inventory.sort((a, b) => a.value.localeCompare(b.value));
+    } else if (sortBy === "rarityZA") {
+        inventory.sort((a, b) => b.value.localeCompare(a.value));
+    } else if (sortBy === "incomeHf") {
+        inventory.sort((a, b) => b.income - a.income);
+    } else if (sortBy === "incomeLf") {
+        inventory.sort((a, b) => a.income - b.income);
+    } else if (sortBy === "nameAZ") {
+        inventory.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "nameZA") {
+        inventory.sort((a, b) => b.name.localeCompare(a.name));
+    }
+    refreshInventory();
+});
+
 //number abbreviation function
 function abbreviateNumber(value) {
     const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
