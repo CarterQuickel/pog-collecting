@@ -720,12 +720,8 @@ function collectFunc() {
                 //cant be tracked yet || ? true : achievement.status;
                 break;
             case "6-7":
-                if (achievement.status = true) {
-                    break;
-                } else {
                 achievement.status = userdata.Isize >= 7 ? true : achievement.status;
                 break;
-            }
             case "Pristine":
                 //cant be tracked yet || ? true : achievement.status;
                 break;
@@ -755,35 +751,55 @@ function levelFuncs() {
         const achievement = achievements[1][i];
         switch (achievement.name) {
             case "Rookie":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 5 ? true : achievement.status;
                 break;
+                }
             case "Getting Better":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 10 ? true : achievement.status;
                 break;
+                }
             case "Experienced":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 15 ? true : achievement.status;
                 break;
+                }
             case "Veteran":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 25 ? true : achievement.status;
                 break;
+                }
             case "Professional":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 40 ? true : achievement.status;
                 break;
+                }
             case "Halfway There":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 50 ? true : achievement.status;
                 break;
+                }
             case "Itsumi!":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 64 ? true : achievement.status;
                 break;
+                }
             case "Prestigious":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 75 ? true : achievement.status;
                 break;
+                }
             case "No-Life":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 100 ? true : achievement.status;
                 break;
+                }
             case "What color is grass?":
+                if (!achievement.status) {
                 achievement.status = userdata.level >= 101 ? true : achievement.status;
                 break;
+                }
             default:
                 achievement.status = false; // Optional: set to false if no match
         }
@@ -795,29 +811,45 @@ function econFunc() {
         const achievement = achievements[3][i];
         switch (achievement.name) {
             case "69":
+                if (!achievement.status) {
                 achievement.status = userdata.inventory.length == 69 ? true : achievement.status;
                 break;
+                }
             case "420":
+                if (!achievement.status) {
                 achievement.status = userdata.totalSold >= 420 ? true : achievement.status;
                 break;
+                }
             case "Wealthy":
+                if (!achievement.status) {
                 achievement.status = userdata.score >= 1000 ? true : achievement.status;
                 break;
+                }
             case "Rich":
+                if (!achievement.status) {
                 achievement.status = userdata.score >= 1000000 ? true : achievement.status;
                 break;
+                }
             case "Elon":
+                if (!achievement.status) {
                 achievement.status = userdata.score >= 100000000 ? true : achievement.status;
                 break;
+                }
             case "Entrepreneur":
+                if (!achievement.status) {
                 achievement.status = userdata.income >= 2000 ? true : achievement.status;
                 break;
+                }
             case "Tycoon":
+                if (!achievement.status) {
                 achievement.status = userdata.income >= 10000 ? true : achievement.status;
                 break;
+                }
             case "Pawn Broker":
+                if (!achievement.status) {
                 achievement.status = userdata.income >= 50000 ? true : achievement.status;
                 break;
+            }
             default:
                 achievement.status = false; //set to false if no match
         }
