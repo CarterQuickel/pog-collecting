@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pog Crates</title>
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
+
 <body>
     <div id="collectBanner">
         <div class="leftstuff">
             <h1 style="margin-left: 10px;">POG CRATES v0.0.6</h1>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %></h4>
-            <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
-            <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
-            <div style="display: none" id="pogList"><%= JSON.stringify(pogList) %></div>
+            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %>
+            </h4>
+            <div style="display: none" id="userdata">
+                <%= JSON.stringify(userdata) %>
+            </div>
+            <div style="display: none" id="maxPogs">
+                <%= JSON.stringify(maxPogs) %>
+            </div>
+            <div style="display: none" id="pogList">
+                <%= JSON.stringify(pogList) %>
+            </div>
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
             <button id="save">Save</button>
@@ -23,26 +32,28 @@
             </label>
         </div>
     </div>
-    <div id="centerlayout" style="text-align: center;">  
+    <div id="centerlayout" style="text-align: center;">
         <div id="inventory"></div>
         <div id="settings">
             <div id="searchbar">
                 <input id="searchbox" type="text" placeholder="Search Pogs..."> <button id="searchbtn">Search</button>
             </div>
             <select id="selectSort">
-                <option value="rarityAZ" style="background-color: rgb(224, 224, 224)">Sort by Rarity (a-z)</option>
-                <option value="rarityZA" style="background-color: rgb(224, 224, 224)">Sort by Rarity (z-a)</option>
-                <option value="nameAZ" style="background-color: rgb(201, 175, 175)">Sort by Name (a-z)</option>
-                <option value="nameZA" style="background-color: rgb(201, 175, 175)">Sort by Name (z-a)</option>
-                <option value="incomeHf" style="background-color: rgb(216, 218, 190)">Sort by Income (high to low)</option>
-                <option value="incomeLf" style="background-color: rgb(216, 218, 190)">Sort by Income (low to high)</option>
+                <option value="rarityAZ">Sort by Rarity (a-z)</option>
+                <option value="rarityZA">Sort by Rarity (z-a)</option>
+                <option value="nameAZ">Sort by Name (a-z)</option>
+                <option value="nameZA">Sort by Name (z-a)</option>
+                <option value="incomeHf">Sort by Income (high to low)</option>
+                <option value="incomeLf">Sort by Income (low to high)</option>
             </select>
-            <button id="patchNotesButton" class="pageButtons">
-                <a href="/patch" style="text-decoration: none; color: black;">Patch Notes</a>
-            </button>
-            <button id="achievementsButton">
-                <a href="/achievements" style="text-decoration: none; color: black;">Achievements</a>
-            </button>
+            <div id="locators">
+                <button id="patchNotesButton" class="pageButtons">
+                    <a href="/patch" style="text-decoration: none; color: black;">Patch Notes</a>
+                </button>
+                <button id="achievementsButton">
+                    <a href="/achievements" style="text-decoration: none; color: black;">Achievements</a>
+                </button>
+            </div>
             <div id="stats">
                 <div id="money">Money: $1000</div>
                 <h3 id="income"></h3>
@@ -63,4 +74,5 @@
 </body>
 <script src="../static/js/crates.js"></script>
 <script src="../static/js/stuffWork.js"></script>
+
 </html>
