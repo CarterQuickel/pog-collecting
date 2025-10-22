@@ -91,8 +91,7 @@ function sellItem(index, sellvalue) {
         const item = inventory[index];
         const rarity = pogList.find(r => r.rarity === item.value);
         if (rarity) {
-            money += rarity.value; // add money based on rarity value
-            totalSold += rarity.value; // track total money earned from selling
+            money += sellvalue; // add money based on rarity value
         }
         // remove item from inventory (splice removes 1 item at the specified index)
         inventory.splice(index, 1); 
@@ -348,10 +347,60 @@ document.getElementById("save").addEventListener("click", () => {
 
 document.getElementById("patchNotesButton").addEventListener("click", () => {
     window.location.href = "/patch";
+    // fetch to /datasave
+    fetch('/datasave', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            lightMode: lightMode,
+            money: money,
+            inventory: inventory,
+            Isize: Isize,
+            xp: xp,
+            maxXP: maxXP,
+            level: level,
+            pogAmount: pogAmount
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data saved successfully:", data);
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
 });
 
 document.getElementById("achievementsButton").addEventListener("click", () => {
     window.location.href = "/achievements";
+    // fetch to /datasave
+    fetch('/datasave', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            lightMode: lightMode,
+            money: money,
+            inventory: inventory,
+            Isize: Isize,
+            xp: xp,
+            maxXP: maxXP,
+            level: level,
+            pogAmount: pogAmount
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data saved successfully:", data);
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
     console.log(userdata.totalSold);
 });
 
