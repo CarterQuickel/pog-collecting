@@ -20,7 +20,8 @@ const achievements = [
             icon: "3️⃣",
             reward: "Pileup I",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Coneisseur",
@@ -28,7 +29,8 @@ const achievements = [
             icon: "6️⃣",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Candid Coiner",
@@ -36,7 +38,8 @@ const achievements = [
             icon: "6️⃣0️⃣",
             reward: "None",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "6-7",
@@ -44,7 +47,8 @@ const achievements = [
             icon: "🔥",
             reward: "Throwaway I",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "Pristine",
@@ -52,7 +56,8 @@ const achievements = [
             icon: "✨",
             reward: "XP Boost II",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Exquisite",
@@ -60,7 +65,8 @@ const achievements = [
             icon: "💎",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Mythical",
@@ -68,7 +74,8 @@ const achievements = [
             icon: "🌌",
             reward: "XP Boost III",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Mr. Smith",
@@ -76,7 +83,8 @@ const achievements = [
             icon: "🎮",
             reward: "None",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "Hoarder",
@@ -84,7 +92,8 @@ const achievements = [
             icon: "📦",
             reward: "Pileup II",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Insane Hoarder",
@@ -92,7 +101,8 @@ const achievements = [
             icon: "🎁",
             reward: "Pileup III",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
     ],
     //start of level achievements
@@ -102,7 +112,8 @@ const achievements = [
             description: "Reach level 5.",
             icon: "🎖️",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Getting Better",
@@ -110,7 +121,8 @@ const achievements = [
             icon: "🎗️",
             reward: "Combo Multiplier II",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Experienced",
@@ -118,35 +130,40 @@ const achievements = [
             icon: "🏅",
             reward: "Combo Multiplier III",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Veteran",
             description: "Reach level 25.",
             icon: "🥇",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Professional",
             description: "Reach level 40.",
             icon: "🕶️",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Halfway There",
             description: "Reach level 50.",
             icon: "🥈",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Itsumi!",
             description: "Reach level 64.",
             icon: "🍄",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Prestigious",
@@ -154,20 +171,23 @@ const achievements = [
             icon: "👑",
             status: false,
             hidden: false,
+            notified: false,
         },
         {
             name: "No-Life",
             description: "Reach level 100.",
             icon: "💀",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "What color is grass?",
             description: "Reach the max level.",
             icon: "🔵",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         }
     ],
     //start of progression achievements
@@ -177,7 +197,8 @@ const achievements = [
             description: "Open your first crate.",
             icon: "🏆",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Pogger",
@@ -185,7 +206,8 @@ const achievements = [
             icon: "😲",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Merge Maniac",
@@ -193,7 +215,8 @@ const achievements = [
             icon: "🌀",
             reward: "Fast Cash I",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Merge Monster",
@@ -201,7 +224,8 @@ const achievements = [
             icon: "👹",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Merge Master",
@@ -209,7 +233,8 @@ const achievements = [
             icon: "👺",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "God",
@@ -217,7 +242,8 @@ const achievements = [
             icon: "🪙",
             reward: "Fast Cash II",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "Granter",
@@ -225,7 +251,8 @@ const achievements = [
             icon: "I",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Achiever",
@@ -233,7 +260,8 @@ const achievements = [
             icon: "II",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Successor",
@@ -241,7 +269,8 @@ const achievements = [
             icon: "III",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Victor",
@@ -249,7 +278,8 @@ const achievements = [
             icon: "IV",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Conqueror",
@@ -257,7 +287,8 @@ const achievements = [
             icon: "V",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Dragon Lord",
@@ -265,7 +296,8 @@ const achievements = [
             icon: "VI",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Above All",
@@ -273,7 +305,8 @@ const achievements = [
             icon: "VII",
             reward: "God Pog",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Zeno",
@@ -281,7 +314,8 @@ const achievements = [
             icon: "X",
             reward: "None",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         
         {
@@ -290,7 +324,8 @@ const achievements = [
             icon: "🌟",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Secret Achiever",
@@ -298,7 +333,8 @@ const achievements = [
             icon: "🤫🧏‍♂️",
             reward: "None",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "Platinum Trophy",
@@ -306,7 +342,8 @@ const achievements = [
             icon: "💯",
             reward: "None",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         }
     ],
     //start of economy achievements
@@ -317,7 +354,8 @@ const achievements = [
             icon: "🌈",
             reward: "Throwaway III",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "420",
@@ -325,7 +363,8 @@ const achievements = [
             icon: "🗣️",
             reward: "Throwaway II",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "Wealthy",
@@ -333,7 +372,8 @@ const achievements = [
             icon: "💵",
             reward: "TBD",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Rich",
@@ -341,7 +381,8 @@ const achievements = [
             icon: "💴",
             reward: "TBD",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Elon",
@@ -349,7 +390,8 @@ const achievements = [
             icon: "💰",
             reward: "Winter is Coming Theme",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Entrepreneur",
@@ -357,7 +399,8 @@ const achievements = [
             icon: "🏦",
             reward: "TBD",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Tycoon",
@@ -365,7 +408,8 @@ const achievements = [
             icon: "🤑",
             reward: "TBD",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Pawn Broker",
@@ -373,7 +417,8 @@ const achievements = [
             icon: "💸",
             reward: "TBD",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         }
     ],
     //start of unique achievements
@@ -384,7 +429,8 @@ const achievements = [
             icon: "🤓",
             reward: "None",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "Chicken Jockey!",
@@ -392,7 +438,8 @@ const achievements = [
             icon: "🐔",
             reward: "Inventory Expansion",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "An Ender Pearl",
@@ -400,7 +447,8 @@ const achievements = [
             icon: "🟢",
             reward: "Sorting System",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Soda Pop",
@@ -408,7 +456,8 @@ const achievements = [
             icon: "🥤",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         }, 
         {
             name: "Sus",
@@ -416,7 +465,8 @@ const achievements = [
             icon: "👽",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Elden Lord",
@@ -424,7 +474,8 @@ const achievements = [
             icon: "⚔️",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "1% of My Power",
@@ -432,7 +483,8 @@ const achievements = [
             icon: "🟠",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Ultimate Despair",
@@ -440,7 +492,8 @@ const achievements = [
             icon: "🔪",
             reward: "None",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "Shaw!",
@@ -448,7 +501,8 @@ const achievements = [
             icon: "🕷️",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Uhhh",
@@ -456,7 +510,8 @@ const achievements = [
             icon: "💖",
             reward: "None",
             status: false,
-            hidden: true
+            hidden: true,
+            notified: false
         },
         {
             name: "Reflection",
@@ -464,7 +519,8 @@ const achievements = [
             icon: "🛖",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         },
         {
             name: "Mog Pog",
@@ -472,7 +528,8 @@ const achievements = [
             icon: "🦑",
             reward: "None",
             status: false,
-            hidden: false
+            hidden: false,
+            notified: false
         }
     ]
 ];
@@ -855,6 +912,15 @@ function econFunc() {
         }
     }
 }
+
+//notify when unique achievement is earned
+function achievementNotify(achievement) {
+    if (achievement.status && !achievement.notified) {
+        achievement.notified = true;
+       
+    }
+}
+
 setInterval(collectFunc, 1000);
 setInterval(levelFuncs, 1000);
 setInterval(progFunc, 1000);
