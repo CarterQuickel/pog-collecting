@@ -1,15 +1,26 @@
-const { render } = require("ejs");
+// Client-side achievements script
+// Initialize userdata and DOM references after DOMContentLoaded
+let achievementContainer = null;
 
-var userdata = JSON.parse(document.getElementById("userdata").textContent);
+document.addEventListener('DOMContentLoaded', () => {
 
-//mode
-if (userdata.theme === "light") {
-    document.body.style.backgroundColor = "white";
-    document.body.style.color = "black";
-} else if (userdata.theme === "dark") {
-    document.body.style.backgroundColor = "black";
-    document.body.style.color = "white";
-}
+    achievementContainer = document.getElementById('achievementsList');
+
+    if (userdata && userdata.theme === 'light') {
+        document.body.style.backgroundColor = 'white';
+        document.body.style.color = 'black';
+    } else if (userdata && userdata.theme === 'dark') {
+        document.body.style.backgroundColor = 'black';
+        document.body.style.color = 'white';
+    }
+
+    // start periodic checks now that DOM and userdata are available
+    setInterval(collectFunc, 1000);
+    setInterval(levelFuncs, 1000);
+    setInterval(progFunc, 1000);
+    setInterval(econFunc, 1000);
+    setInterval(uniqueFunc, 1000);
+});
 
 // Define the achievements array
 const achievements = [
@@ -622,7 +633,6 @@ window.achievements = achievements;
 
 // category variable
 let cate = "";
-const achievementContainer = document.getElementById("achievementsList");
 
 // initial render
 function renderCollection () {
@@ -818,6 +828,9 @@ function renderUnique() {
 
 // highlight selected category button
 setInterval(() => {
+    if (window.location && window.location.pathname === "../views/collection.ejs") {
+        return; // do nothing if on collection page
+    } else {
     if (cate == "collection") {
         document.getElementById("collection").style = "border: 2px solid white;";
     } else {
@@ -843,7 +856,8 @@ setInterval(() => {
     } else {
         document.getElementById("unique").style = "border: none;";
     }
-}, 100);
+}
+} , 100);
 
 // #8e6fa9 (carter dont worry abt ts)
 
@@ -852,44 +866,64 @@ function collectFunc() {
         const achievement = achievements[0][i];
         switch (achievement.name) {
             case "Full Combo!":
-               //cant be tracked yet || ? true : achievement.status;
-               achievementNotify(achievement);
+                if (!achievement.status) {
+                    //cant be tracked yet || ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             case "Coneisseur":
-                //cant be tracked yet || ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    //cant be tracked yet || ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             case "Candid Coiner":
-                //cant be tracked yet || ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    //cant be tracked yet || ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             case "6-7":
-                achievement.status = userdata.Isize >= 7 ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    achievement.status = userdata.Isize >= 7 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             case "Pristine":
-                //cant be tracked yet || ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    //cant be tracked yet || ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             case "Exquisite":
-                 //cant be tracked yet || ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    //cant be tracked yet || ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             case "Mythical":
-                //cant be tracked yet || ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    //cant be tracked yet || ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             case "Mr. Smith":
-                 //cant be tracked yet || ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    //cant be tracked yet || ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             case "Hoarder":
-                achievement.status = userdata.Isize >= 60 && userdata.inventory.length >= userdata.Isize ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    achievement.status = userdata.Isize >= 60 && userdata.inventory.length >= userdata.Isize ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             case "Insane Hoarder":
-                achievement.status = userdata.Isize >= 100 && userdata.inventory.length >= userdata.Isize ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    achievement.status = userdata.Isize >= 100 && userdata.inventory.length >= userdata.Isize ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             default:
                 achievement.status = false; //set to false if no match
@@ -903,64 +937,64 @@ function levelFuncs() {
         switch (achievement.name) {
             case "Rookie":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 5 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 5 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Getting Better":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 10 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 10 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Experienced":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 15 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 15 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Veteran":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 25 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 25 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Professional":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 40 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 40 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Halfway There":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 50 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 50 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Itsumi!":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 64 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 64 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Prestigious":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 75 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 75 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "No-Life":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 100 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 100 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "What color is grass?":
                 if (!achievement.status) {
-                achievement.status = userdata.level >= 101 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.level >= 101 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             default:
                 achievement.status = false; // Optional: set to false if no match
         }
@@ -973,10 +1007,10 @@ function progFunc() {
         switch (achievement.name) {
             case "First Steps":
                 if (!achievement.status) {
-                //untracked ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             default:
                 achievement.status = false; //set to false if no match
         }
@@ -989,82 +1023,52 @@ function econFunc() {
         switch (achievement.name) {
             case "69":
                 if (!achievement.status) {
-                achievement.status = userdata.inventory.length == 69 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.inventory.length == 69 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "420":
                 if (!achievement.status) {
-                achievement.status = userdata.totalSold >= 420 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.totalSold >= 420 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Wealthy":
                 if (!achievement.status) {
-                achievement.status = userdata.score >= 1000 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.score >= 1000 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Rich":
                 if (!achievement.status) {
-                achievement.status = userdata.score >= 1000000 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.score >= 1000000 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Elon":
                 if (!achievement.status) {
-                achievement.status = userdata.score >= 100000000 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.score >= 100000000 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Entrepreneur":
                 if (!achievement.status) {
-                achievement.status = userdata.income >= 2000 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.income >= 2000 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Tycoon":
                 if (!achievement.status) {
-                achievement.status = userdata.income >= 10000 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+                    achievement.status = userdata.income >= 10000 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
+                break;
             case "Pawn Broker":
                 if (!achievement.status) {
-                achievement.status = userdata.income >= 50000 ? true : achievement.status;
-                achievementNotify(achievement);
+                    achievement.status = userdata.income >= 50000 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
-            }
-            case "Bank Breaker":
-                if (!achievement.status) {
-                achievement.status = userdata.income >= 100000 ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
-            }
-            case "Industrialist":
-                if (!achievement.status) {
-                //untracked ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
-            }
-            case "Capitalist":
-                if (!achievement.status) {
-                //untracked ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
-            }
-            case "Monopoly":
-                if (!achievement.status) {
-                //untracked ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
-            }
-            case "Oligarch":
-                if (!achievement.status) {
-                //untracked ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
-            }
             default:
                 achievement.status = false; //set to false if no match
         }
@@ -1076,8 +1080,10 @@ function uniqueFunc() {
         const achievement = achievements[4][i];
         switch (achievement.name) {
             case "Nerdy Inspector":
-                //untracked ? true : achievement.status;
-                achievementNotify(achievement);
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
                 break;
             default:
                 achievement.status = false; //set to false if no match
@@ -1115,7 +1121,6 @@ function refreshAchievementsView() {
             default: renderCollection(); break;
         }
     } catch (e) {
-        console.error("Error refreshing achievements view:", e);
     }
 }
 
