@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Removed server-side require and defer DOM reads until DOMContentLoaded
 let userdata = null;
 =======
+=======
+>>>>>>> parent of 16cc64c (ahh)
 
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 
@@ -1054,7 +1057,6 @@ function achievementNotify(achievement) {
        //animate slider in and out 
        slider.style.left = "20px";
 
-<<<<<<< HEAD
     // slide in (use RAF so the transition applies)
     requestAnimationFrame(() => {
         slider.style.left = SLIDE_IN;
@@ -1063,15 +1065,12 @@ function achievementNotify(achievement) {
     // wait DISPLAY_MS, then slide out, then show next
 // periodic checks are started after DOMContentLoaded (see above)fore processing next to avoid overlap
             setTimeout(processAchievementQueue, 100)
-        }, TRANSITION_MS);
-    }, DISPLAY_MS);
-=======
+
        setTimeout(() => {
            slider.style.left = "-320px";
        }, 3000);
     }
->>>>>>> parent of 16cc64c (ahh)
-}
+
 
 setInterval(collectFunc, 1000);
 setInterval(levelFuncs, 1000);
