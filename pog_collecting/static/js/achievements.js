@@ -460,7 +460,7 @@ const achievements = [
         },
         {
             name: "Chicken Jockey!",
-            description: "Get a chicken jockey combo.",
+            description: "Get a chicken jockey.",
             icon: "🐔",
             status: false,
             hidden: true,
@@ -1011,6 +1011,103 @@ function progFunc() {
                     achievementNotify(achievement);
                 }
                 break;
+            case "Pogger":
+                if(!achievement.status){
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Merge Maniac":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Merge Monster":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Merge Master":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "God":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Granter":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Achiever":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Successor":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Victor":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Conqueror":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Dragon Lord":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Above All":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Zeno":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Completionist":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Secret Achiever":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Platinum Trophy":
+                if (!achievement.status) {
+                    //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+
             default:
                 achievement.status = false; //set to false if no match
         }
@@ -1082,6 +1179,12 @@ function uniqueFunc() {
             case "Nerdy Inspector":
                 if (!achievement.status) {
                     //untracked ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Chicken Jockey!":
+                if (!achievement.status) {
+                    userdata.inventory.includes("Zombie") && userdata.inventory.includes("Chicken") ? achievement.status = true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
