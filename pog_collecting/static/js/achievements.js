@@ -1,15 +1,5 @@
-const { render } = require("ejs");
-
-var userdata = JSON.parse(document.getElementById("userdata").textContent);
-
-//mode
-if (userdata.theme === "light") {
-    document.body.style.backgroundColor = "white";
-    document.body.style.color = "black";
-} else if (userdata.theme === "dark") {
-    document.body.style.backgroundColor = "black";
-    document.body.style.color = "white";
-}
+// Removed server-side require and defer DOM reads until DOMContentLoaded
+let userdata = null;
 
 // Define the achievements array
 const achievements = [
@@ -630,9 +620,6 @@ function renderCollection () {
     achievementContainer.innerHTML = "";
     achievements[0].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
-        achievementElement.classList.add("achievement");
-        achievementElement.id = `achievement-${index}`;
-
         if (achievement.hidden && !achievement.status) {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
@@ -819,50 +806,33 @@ function renderUnique() {
 // highlight selected category button
 setInterval(() => {
     if (cate == "collection") {
-        document.getElementById("collection").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("collection").style = "border: none;";
-    }
-    if (cate == "level") {
-        document.getElementById("level").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("level").style = "border: none;";
-    }
-    if (cate == "progression") {
-        document.getElementById("progression").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("progression").style = "border: none;";
-    }
-    if (cate == "economy") {
-        document.getElementById("economy").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("economy").style = "border: none;";
-    }
-    if (cate == "unique") {
-        document.getElementById("unique").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("unique").style = "border: none;";
-    }
-}, 100);
+// highlight selected category button (handled after DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        const userdataElement = document.getElementById("userdata");
+        userdata = userdataElement ? JSON.parse(userdataElement.textContent) : {};
 
-// #8e6fa9 (carter dont worry abt ts)
+        //mode
+        if (userdata && userdata.theme === "light") {
+            document.body.style.backgroundColor = "white";
+            document.body.style.color = "black";
+        } else if (userdata && userdata.theme === "dark") {
+            document.body.style.backgroundColor = "black";
+            document.body.style.color = "white";
+        }
 
-function collectFunc() {
-    for (let i = 0; i < achievements[0].length; i++) {
-        const achievement = achievements[0][i];
-        switch (achievement.name) {
-            case "Full Combo!":
-               //cant be tracked yet || ? true : achievement.status;
-               achievementNotify(achievement);
-                break;
-            case "Coneisseur":
-                //cant be tracked yet || ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
-            case "Candid Coiner":
-                //cant be tracked yet || ? true : achievement.status;
-                achievementNotify(achievement);
-                break;
+        achievementContainer = document.getElementById("achievementsList");
+
+        // initial render (safely)
+        try { renderCollection(); } catch (e) { console.error("Initial render failed:", e); }
+
+        // highlight selected category button (guard element access)
+        setInterval(() => {
+            const btnCollection = document.getElementById("collection");
+            if (btnCollection) btnCollection.style.border = (cate === "collection") ? "2px solid white" : "none";
+
+            const btnLevel = document.getElementById("level");
+            if (btnLevel) btnLevel.style.border = (cate                break;
             case "6-7":
                 achievement.status = userdata.Isize >= 7 ? true : achievement.status;
                 achievementNotify(achievement);
@@ -1148,12 +1118,8 @@ function processAchievementQueue() {
     });
 
     // wait DISPLAY_MS, then slide out, then show next
-    setTimeout(() => {
-        slider.style.left = SLIDE_OUT;
-        setTimeout(() => {
-            sliderBusy = false;
-            // slight delay before processing next to avoid overlap
-            setTimeout(processAchievementQueue, 100);
+// periodic checks are started after DOMContentLoaded (see above)fore processing next to avoid overlap
+            setTimeout(processAchievementQueue, 100)
         }, TRANSITION_MS);
     }, DISPLAY_MS);
 }
