@@ -86,17 +86,12 @@ function updateMoney() {
 }
 
 // sell item
-function sellItem(index, sellvalue) {
-    if (index >= 0 && index < inventory.length) {
-        const item = inventory[index];
-        const rarity = pogList.find(r => r.rarity === item.value);
-        if (rarity) {
-            money += sellvalue; // add money based on rarity value
-        }
-        // remove item from inventory (splice removes 1 item at the specified index)
-        inventory.splice(index, 1); 
+function sellItem(id, sellvalue) {
+        sitem = inventory.filter(item => item.id === id)[0]; // find item by id; [0] to get the first match
+        inventory.splice(inventory.indexOf(sitem), 1); // remove item from inventory
+        console.log(`Sold ${sitem.name} for $${sellvalue}`);
+        money += sellvalue; // add money based on rarity value
         refreshInventory();
-    }
 }
 
 // update loop
@@ -215,7 +210,7 @@ function refreshInventory() {
             <li class='list' style="color: ${item.color}">${item.value}</li>
             <li class='list' style="color: green">$${hasBonus ? Math.round(item.income * bonusMulti) : item.income}/s</li>
         </ul>
-        <button id="sellbtn" onclick="sellItem(${index}, sellvalue)">Sell for $${sellvalue}</button>
+        <button id="sellbtn" onclick="sellItem(${item.id}, ${sellvalue})">Sell for $${sellvalue}</button>
         ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold})">Merge (${mergeAmount})</button>` : ""}
         </div>
     `}).join("");
@@ -278,8 +273,11 @@ function openCrate(cost, index) {
                     pogAmount++;
                 }
 
+                // randomize id for each item
+                let id = Math.floor(Math.random() * 1000000);
+
                 // Add result to inventory
-                inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity });
+                inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity, id: id });
 
                 // XP gain
                 xp += Math.floor(income * (3 * level/15)); // gain XP based on income and level
