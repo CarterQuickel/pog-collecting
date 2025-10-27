@@ -270,7 +270,11 @@ function openCrate(cost, index) {
                 let added = { name: rarity.name}
                 const exists = inventory.find(i => i.name === added.name);
                 if (!exists) {
-                    pogAmount++;
+                    if (pogAmount < maxPogs) {
+                        pogAmount++;
+                    } else {
+                        document.getElementById("pogCount").style.color = "yellow";
+                    }
                 }
 
                 // randomize id for each item
