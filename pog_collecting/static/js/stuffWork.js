@@ -28,8 +28,13 @@ let moneyTick = 1000;
 // items
 let inventory = userdata.inventory || [];
 
+//crate vars
+cratesOpened = userdata.cratesOpened || 0;
+
 // money
 let money = userdata.score || 200000000;
+let userIncome = userdata.income || 0;
+let totalSold = userdata.totalSold || 0;
 
 let pogAmount = userdata.pogamount || 0;
 
@@ -76,7 +81,7 @@ function getTotalIncome() {
     }, 0);
 }
 
-income = getTotalIncome();
+userIncome = getTotalIncome();
 
 // initial money display
 setInterval(updateMoney, 100);
@@ -91,7 +96,8 @@ function sellItem(index, sellvalue) {
         const item = inventory[index];
         const rarity = pogList.find(r => r.rarity === item.value);
         if (rarity) {
-            money += sellvalue; // add money based on rarity value
+            money += sellvalue;
+            totalSold ++;
         }
         // remove item from inventory (splice removes 1 item at the specified index)
         inventory.splice(index, 1); 
@@ -287,6 +293,7 @@ function openCrate(cost, index) {
 
                 // Deduct cost
                 money -= cost;
+                cratesOpened++;
                 refreshInventory();
                 break;
             }
@@ -332,6 +339,9 @@ document.getElementById("save").addEventListener("click", () => {
             xp: xp,
             maxXP: maxXP,
             level: level,
+            income: userIncome,
+            totalSold: totalSold,
+            cratesOpened: cratesOpened,
             pogAmount: pogAmount
         })
     })
@@ -346,9 +356,7 @@ document.getElementById("save").addEventListener("click", () => {
 });
 
 document.getElementById("patchNotesButton").addEventListener("click", () => {
-    window.location.href = "/patch";
-    // fetch to /datasave
-    fetch('/datasave', {
+        fetch('/datasave', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -362,6 +370,9 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
             xp: xp,
             maxXP: maxXP,
             level: level,
+            income: userIncome,
+            totalSold: totalSold,
+            cratesOpened: cratesOpened,
             pogAmount: pogAmount
         })
     })
@@ -372,12 +383,11 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
         .catch(err => {
             console.error("Error saving data:", err);
         });
+    window.location.href = "/patch";
 });
 
 document.getElementById("achievementsButton").addEventListener("click", () => {
-    window.location.href = "/achievements";
-    // fetch to /datasave
-    fetch('/datasave', {
+        fetch('/datasave', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -391,6 +401,9 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
             xp: xp,
             maxXP: maxXP,
             level: level,
+            income: userIncome,
+            totalSold: totalSold,
+            cratesOpened: cratesOpened,
             pogAmount: pogAmount
         })
     })
@@ -401,7 +414,7 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
         .catch(err => {
             console.error("Error saving data:", err);
         });
-    console.log(userdata.totalSold);
+    window.location.href = "/achievements";
 });
 
 // mode toggle

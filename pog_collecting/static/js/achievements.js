@@ -619,7 +619,7 @@ const achievements = [
             notified: false
         },
         {
-            name: "OUATH",
+            name: "OAUTH",
             description: "Get a Formbar pog combo.",
             icon: "📊",
             status: false,
@@ -1007,13 +1007,13 @@ function progFunc() {
         switch (achievement.name) {
             case "First Steps":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    userdata.cratesOpened >= 1 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Pogger":
                 if(!achievement.status){
-                    //untracked ? true : achievement.status;
+                    userdata.cratesOpened >= 100 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -1166,6 +1166,18 @@ function econFunc() {
                     achievementNotify(achievement);
                 }
                 break;
+            case "Bank Breaker":
+                if (!achievement.status) {
+                    achievement.status = userdata.income >= 100000 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Industrialist":
+                if (!achievement.status) {
+                    achievement.status = userdata.inventory.includes("Robucks") ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
             default:
                 achievement.status = false; //set to false if no match
         }
@@ -1184,7 +1196,7 @@ function uniqueFunc() {
                 break;
             case "Chicken Jockey!":
                 if (!achievement.status) {
-                    userdata.inventory.includes("Zombie") && userdata.inventory.includes("Chicken") ? achievement.status = true : achievement.status;
+                    achievement.status = userdata.inventory.includes("Zombie") && userdata.inventory.includes("Chicken") ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -1194,7 +1206,7 @@ function uniqueFunc() {
     }
 }
 
-//notify when unique achievement is earned
+//notification slider logic bc im lazy
 const achievementQueue = [];
 let sliderBusy = false;
 const SLIDE_IN = "20px";
