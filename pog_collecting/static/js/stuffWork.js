@@ -445,6 +445,10 @@ document.getElementById("selectSort").addEventListener("change", () => {
         inventory.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortBy === "nameZA") {
         inventory.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortBy === "svHf") {
+        inventory.sort((a, b) => (b.income * 105) - (a.income * 105));
+    } else if (sortBy === "svLf") {
+        inventory.sort((a, b) => (a.income * 105) - (b.income * 105));
     }
     refreshInventory();
 });

@@ -25,6 +25,9 @@
             </div>
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
+            <button id="leaderboardButton">
+                <a href="/leaderboard" style="text-decoration: none; color: black;">Highscores</a>
+            </button>
             <button id="save">Save</button>
             <label class="switch">
                 <input type="checkbox" id="darkmode">
@@ -42,17 +45,19 @@
                     <button id="searchbtn">Search</button>
                 </div>
                 <select id="selectSort">
-                    <option value="rarityAZ">Sort by Rarity (a-z)</option>
-                    <option value="rarityZA">Sort by Rarity (z-a)</option>
-                    <option value="nameAZ">Sort by Name (a-z)</option>
-                    <option value="nameZA">Sort by Name (z-a)</option>
-                    <option value="incomeHf">Sort by Income (high to low)</option>
-                    <option value="incomeLf">Sort by Income (low to high)</option>
+                    <option value="rarityAZ">Sort by Rarity (a-z) &#8593;</option>
+                    <option value="rarityZA">Sort by Rarity (z-a) &#8595;</option>
+                    <option value="nameAZ" style="background-color: lightgrey">Sort by Name (a-z) &#8593;</option>
+                    <option value="nameZA" style="background-color: lightgrey">Sort by Name (z-a) &#8595;</option>
+                    <option value="incomeHf" style="background-color: grey">Sort by Income (high to low) &#8593;</option>
+                    <option value="incomeLf" style="background-color: grey">Sort by Income (low to high) &#8595;</option>
+                    <option value="svHf" style="background-color: black; color: white">Sort by Sell Value (high to low) &#8593;</option>
+                    <option value="svLf" style="background-color: black; color: white">Sort by Sell Value (low to high) &#8595;</option>
                 </select>
             </div>
             <div id="locators">
                 <button id="patchNotesButton" class="pageButtons">
-                    <a href="/patch" style="text-decoration: none; color: black;">Patch Notes</a>
+                    <a href="/patch" style="text-decoration: none; color: black;">Patches</a>
                 </button>
                 <button id="achievementsButton">
                     <a href="/achievements" style="text-decoration: none; color: black;">Achievements</a>

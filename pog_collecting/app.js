@@ -221,6 +221,10 @@ app.get('/achievements', (req, res) => {
     res.render('achievements', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
 
+app.get('/leaderboard', (req, res) => {
+    res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
+});
+
 // save data route
 app.post('/datasave', (req, res) => {
     console.log(req.body);
