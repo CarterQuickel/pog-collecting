@@ -21,7 +21,6 @@ fs.createReadStream('pogipedia/db/pogs.csv')
     results.push({ name, rarity });
 })
 .on('end', () => {
-    console.log('Extracted Pogs:', results);
 });
 
 // API key for Formbar API access
@@ -222,7 +221,16 @@ app.get('/achievements', (req, res) => {
 });
 
 app.get('/leaderboard', (req, res) => {
-    res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
+    usdb.all(
+        'SELECT displayname, score FROM userSettings ORDER BY score DESC LIMIT 10', [],
+        (err, rows) => {
+            if (err) {
+                console.error('DB select error:', err);
+            }
+            console.log('highscore: ', rows)
+            res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results, scores: rows });
+        }
+    );
 });
 
 // save data route
