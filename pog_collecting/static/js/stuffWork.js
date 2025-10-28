@@ -406,6 +406,35 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
     console.log(userdata.totalSold);
 });
 
+document.getElementById("leaderboardButton").addEventListener("click", () => {
+    window.location.href = "/leaderboard";
+    // fetch to /datasave
+    fetch('/datasave', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            lightMode: lightMode,
+            money: money,
+            inventory: inventory,
+            Isize: Isize,
+            xp: xp,
+            maxXP: maxXP,
+            level: level,
+            pogAmount: pogAmount
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data saved successfully:", data);
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
+});
+
 // mode toggle
 document.getElementById("darkmode").addEventListener("click", () => {
     console.log("toggled");
