@@ -339,7 +339,6 @@ document.getElementById("save").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);
@@ -369,7 +368,6 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);
@@ -398,7 +396,6 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);
@@ -428,7 +425,6 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);

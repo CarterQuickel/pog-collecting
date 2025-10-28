@@ -116,7 +116,6 @@ app.get('/collection', (req, res) => {
     res.render('collection', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
 
-
 // login route
 app.get('/', isAuthenticated, (req, res) => {
     try {
@@ -222,7 +221,7 @@ app.get('/achievements', (req, res) => {
 
 app.get('/leaderboard', (req, res) => {
     usdb.all(
-        'SELECT displayname, score FROM userSettings ORDER BY score DESC LIMIT 10', [],
+        'SELECT displayname, score, level, pogamount FROM userSettings ORDER BY score DESC LIMIT 10', [],
         (err, rows) => {
             if (err) {
                 console.error('DB select error:', err);
