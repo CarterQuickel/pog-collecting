@@ -1007,13 +1007,13 @@ function progFunc() {
         switch (achievement.name) {
             case "First Steps":
                 if (!achievement.status) {
-                    userdata.cratesOpened >= 1 ? true : achievement.status;
+                    achievement.status = userdata.cratesOpened >= 1 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Pogger":
                 if(!achievement.status){
-                    userdata.cratesOpened >= 100 ? true : achievement.status;
+                    achievement.status = userdata.cratesOpened >= 100 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -1248,7 +1248,10 @@ function processAchievementQueue() {
     const achievement = achievementQueue.shift();
     const slider = document.getElementById("slider");
     if (!slider) {
+        // put the achievement back and retry later if the slider DOM isn't available
+        achievementQueue.unshift(achievement);
         sliderBusy = false;
+        setTimeout(processAchievementQueue, 200);
         return;
     }
 
@@ -1259,20 +1262,16 @@ function processAchievementQueue() {
        <span class="description">${achievement.description}</span><br>
     `;
 
-    // ensure a transition is present
     if (!slider.style.transition) slider.style.transition = `left ${TRANSITION_MS}ms ease`;
 
-    // slide in (use RAF so the transition applies)
     requestAnimationFrame(() => {
         slider.style.left = SLIDE_IN;
     });
 
-    // wait DISPLAY_MS, then slide out, then show next
     setTimeout(() => {
         slider.style.left = SLIDE_OUT;
         setTimeout(() => {
             sliderBusy = false;
-            // slight delay before processing next to avoid overlap
             setTimeout(processAchievementQueue, 100);
         }, TRANSITION_MS);
     }, DISPLAY_MS);

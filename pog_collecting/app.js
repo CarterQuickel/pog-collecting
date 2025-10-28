@@ -136,7 +136,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -301,6 +301,7 @@ app.get('/login', (req, res) => {
             level: tokenData.level || 1,
             income: tokenData.income || 0,
             totalSold: tokenData.totalSold || 0,
+            cratesOpened: tokenData.cratesOpened || 0,
         };
         res.redirect('/');
     } else {
