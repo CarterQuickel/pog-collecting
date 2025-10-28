@@ -22,7 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(uniqueFunc, 1000);
 });
 
-// Define the achievements array
+
+
+
 const achievements = [
     //start of collection achievements
     [
@@ -833,29 +835,19 @@ setInterval(() => {
     } else {
     if (cate == "collection") {
         document.getElementById("collection").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("collection").style = "border: none;";
     }
     if (cate == "level") {
         document.getElementById("level").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("level").style = "border: none;";
     }
     if (cate == "progression") {
         document.getElementById("progression").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("progression").style = "border: none;";
-    }
+    } 
     if (cate == "economy") {
         document.getElementById("economy").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("economy").style = "border: none;";
-    }
+    } 
     if (cate == "unique") {
         document.getElementById("unique").style = "border: 2px solid white;";
-    } else {
-        document.getElementById("unique").style = "border: none;";
-    }
+    } 
 }
 } , 100);
 
@@ -1174,7 +1166,17 @@ function econFunc() {
                 break;
             case "Industrialist":
                 if (!achievement.status) {
-                    achievement.status = userdata.inventory.includes("Robucks") ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const hasRobux = inv.some(it => (it && it.name || '').toLowerCase().includes('robux') || (it && it.name || '').toLowerCase().includes('robuck'));
+                    achievement.status = hasRobux ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Capitalist":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const hasVbucks = inv.some(it => (it && it.name || '').toLowerCase().includes('v-bucks') || (it && it.name || '').toLowerCase().includes('vbuck'));
+                    achievement.status = hasVbucks ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -1196,10 +1198,30 @@ function uniqueFunc() {
                 break;
             case "Chicken Jockey!":
                 if (!achievement.status) {
-                    achievement.status = userdata.inventory.includes("Zombie") && userdata.inventory.includes("Chicken") ? true : achievement.status;
+                const inv = userdata.inventory;
+                const hasChicken = inv.some(it => (it && it.name || '').toLowerCase().includes('chicken'));
+                const hasZombie = inv.some(it => (it && it.name || '').toLowerCase().includes('zombie'));
+                achievement.status = hasChicken && hasZombie ? true : achievement.status;
+                achievementNotify(achievement);
+                }
+                break;
+            case "An Ender Pearl":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const hasUpperEnder = inv.some(it => (it && it.name || '').toLowerCase().includes('upper endermen'));
+                    const hasLowerEnder = inv.some(it => (it && it.name || '').toLowerCase().includes('lower endermen'));
+                    achievement.status = hasUpperEnder && hasLowerEnder ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
+            case "Ultimate Despair":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const drCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('danganronpa')).length;
+                    achievement.status = drCount >= 13 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;           
             default:
                 achievement.status = false; //set to false if no match
         }
@@ -1233,7 +1255,7 @@ function refreshAchievementsView() {
             case "progression": renderProgression(); break;
             case "economy": renderEconomy(); break;
             case "unique": renderUnique(); break;
-            default: renderCollection(); break;
+            default:  break;
         }
     } catch (e) {
     }
