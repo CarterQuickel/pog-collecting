@@ -27,7 +27,7 @@ fs.createReadStream('pogipedia/db/pogs.csv')
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
 
 // URL to take user to Formbar for authentication
-const AUTH_URL = 'http://localhost:420/oauth'; // ... or the address to the instance of fbjs you wish to connect to
+const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
 const THIS_URL = 'http://172.16.3.126:3000/login'; // ... or whatever the address to your application is
@@ -60,7 +60,7 @@ function isAuthenticated(req, res, next) {
             res.redirect(`${AUTH_URL}/oauth?refreshToken=${tokenData.refreshToken}&redirectURL=${THIS_URL}`);
         }
     } else {
-        res.redirect(`/login?redirectURL=${THIS_URL}`);
+        res.redirect(`${AUTH_URL}/oauth?redirectURL=${THIS_URL}`);
     }
 }
 // The following isAuthenticated function checks when the access token expires and promptly retrieves a new one using the user's refresh token.
