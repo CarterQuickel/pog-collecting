@@ -94,3 +94,14 @@ li {
 .board tr:hover {
     background: rgba(255, 255, 255, 0.08);
 }
+
+.infobtn {
+    width: 120px;
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0) /* transparent */
+}
+
+.infobtn:hover {
+    background-color: rgba(187, 126, 187, 0.733)
+}

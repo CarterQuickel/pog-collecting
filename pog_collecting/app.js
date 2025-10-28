@@ -221,12 +221,11 @@ app.get('/achievements', (req, res) => {
 
 app.get('/leaderboard', (req, res) => {
     usdb.all(
-        'SELECT displayname, score, level, pogamount FROM userSettings ORDER BY score DESC LIMIT 10', [],
+        'SELECT displayname, score, level, pogamount, xp, inventory FROM userSettings ORDER BY score DESC LIMIT 10', [],
         (err, rows) => {
             if (err) {
                 console.error('DB select error:', err);
             }
-            console.log('highscore: ', rows)
             res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results, scores: rows });
         }
     );
