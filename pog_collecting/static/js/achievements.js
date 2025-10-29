@@ -3,6 +3,13 @@
 let achievementContainer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('slider');
+    if (slider) {
+        //slider stuff cuz it pmo
+        if (!slider.style.position) slider.style.position = 'fixed';
+        slider.style.transition = `left ${TRANSITION_MS}ms ease`;
+        slider.style.left = SLIDE_OUT; // start hidden
+    }
 
     achievementContainer = document.getElementById('achievementsList');
 
@@ -567,7 +574,7 @@ const achievements = [
         {
             name: "Goon",
             description: "Get an anime girl pog combo.",
-            icon: "👧",
+            icon: "🤍",
             status: false,
             hidden: true,
             notified: false
@@ -830,26 +837,16 @@ function renderUnique() {
 
 // highlight selected category button
 setInterval(() => {
-    if (window.location && window.location.pathname === "../views/collection.ejs") {
-        return; // do nothing if on collection page
-    } else {
-    if (cate == "collection") {
-        document.getElementById("collection").style = "border: 2px solid white;";
-    }
-    if (cate == "level") {
-        document.getElementById("level").style = "border: 2px solid white;";
-    }
-    if (cate == "progression") {
-        document.getElementById("progression").style = "border: 2px solid white;";
-    } 
-    if (cate == "economy") {
-        document.getElementById("economy").style = "border: 2px solid white;";
-    } 
-    if (cate == "unique") {
-        document.getElementById("unique").style = "border: 2px solid white;";
-    } 
-}
-} , 100);
+    try {
+        const ids = ['collection','level','progression','economy','unique'];
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            // explicitly reset then apply highlight only to the active category
+            el.style.border = (cate === id) ? '2px solid white' : 'none';
+        });
+    } catch (e) { /* ignore */ }
+}, 100);
 
 // #8e6fa9 (carter dont worry abt ts)
 
@@ -1214,6 +1211,45 @@ function uniqueFunc() {
                     achievementNotify(achievement);
                 }
                 break;
+            case "Soda Pop":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const sodaCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('soda')).length;
+                    achievement.status = sodaCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "SODA!":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    //achievement.status = cant be tracked yet || ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Sus":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const dingusCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('dingus')).length;
+                    achievement.status = dingusCount >= 10 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break; 
+            case "Elden Lord":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const eldenCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('elden ring')).length;
+                    achievement.status = eldenCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "1% of My Power":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const shaggyCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('saiyan shaggy')).length;
+                    achievement.status = shaggyCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
             case "Ultimate Despair":
                 if (!achievement.status) {
                     const inv = userdata.inventory;
@@ -1221,7 +1257,71 @@ function uniqueFunc() {
                     achievement.status = drCount >= 13 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
-                break;           
+                break;         
+            case "Shaw!":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const hornetCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('hornet')).length;
+                    achievement.status = hornetCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Uhhh":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const cpCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('i [heart] cp')).length;
+                    achievement.status = cpCount >= 1 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Reflection":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const vaultCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('fallout vault')).length;
+                    achievement.status = vaultCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Pineapple Under the Sea":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const sbCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('spongebob squarepants')).length;
+                    achievement.status = sbCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Mog Pog":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const squidCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('squidward')).length;
+                    achievement.status = squidCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Goon":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const goonCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('anime girl')).length;
+                    achievement.status = goonCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Margot Robbie":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const barbieCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('barbie')).length;
+                    achievement.status = barbieCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "I am Vengeance":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const brCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('batman & robin')).length;
+                    achievement.status = brCount >= 12 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
             default:
                 achievement.status = false; //set to false if no match
         }
@@ -1264,13 +1364,23 @@ function refreshAchievementsView() {
 
 function processAchievementQueue() {
     if (sliderBusy) return;
-    if (achievementQueue.length === 0) return;
+    if (achievementQueue.length === 0) {
+        // ensure slider is hidden if queue is empty
+        const slider = document.getElementById("slider");
+        if (slider) {
+            slider.style.left = SLIDE_OUT;
+            // clear leftover content after transition to avoid lingering visuals
+            setTimeout(() => {
+                slider.innerHTML = "";
+            }, TRANSITION_MS);
+        }
+        return;
+    }
 
     sliderBusy = true;
     const achievement = achievementQueue.shift();
     const slider = document.getElementById("slider");
     if (!slider) {
-        // put the achievement back and retry later if the slider DOM isn't available
         achievementQueue.unshift(achievement);
         sliderBusy = false;
         setTimeout(processAchievementQueue, 200);
@@ -1286,13 +1396,17 @@ function processAchievementQueue() {
 
     if (!slider.style.transition) slider.style.transition = `left ${TRANSITION_MS}ms ease`;
 
+    //me when the slider slides in
     requestAnimationFrame(() => {
         slider.style.left = SLIDE_IN;
     });
 
+    //me when the slider slides out
     setTimeout(() => {
         slider.style.left = SLIDE_OUT;
         setTimeout(() => {
+            // clear DOM so last item doesn't linger visually
+            slider.innerHTML = "";
             sliderBusy = false;
             setTimeout(processAchievementQueue, 100);
         }, TRANSITION_MS);
