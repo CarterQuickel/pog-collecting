@@ -304,5 +304,5 @@ app.get('/login', (req, res) => {
 
 //listens
 app.listen(3000, () => {
-    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆');
+    console.log('Server started on port 3000\nIP: 176.16.3.126');
 });
