@@ -449,7 +449,7 @@ const achievements = [
             notified: false
         },
         {
-            name: "Oligarch",
+            name: "Monarch",
             description: "Be the Top 1 on the leaderboard.",
             icon: "€£¥",
             status: false,
@@ -878,27 +878,57 @@ function collectFunc() {
                     achievementNotify(achievement);
                 }
                 break;
+            case "Programming Prodigy":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const CPCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('cp')).length;
+                    achievement.status = CPCount >= 100 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
             case "Pristine":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const hasBronzePog = inv.some(it => (it && it.name || '').toLowerCase().includes('bronze pog'));
+                    const hasSilverPog = inv.some(it => (it && it.name || '').toLowerCase().includes('silver pog'));
+                    const hasGoldPog = inv.some(it => (it && it.name || '').toLowerCase().includes('gold pog'));
+                    achievement.status = hasBronzePog && hasSilverPog && hasGoldPog ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Exquisite":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const hasBronzePog = inv.some(it => (it && it.name || '').toLowerCase().includes('bronze pog'));
+                    const hasSilverPog = inv.some(it => (it && it.name || '').toLowerCase().includes('silver pog'));
+                    const hasGoldPog = inv.some(it => (it && it.name || '').toLowerCase().includes('gold pog'));
+                    const hasDiamondPog = inv.some(it => (it && it.name || '').toLowerCase().includes('diamond pog'));
+                    achievement.status = hasBronzePog && hasSilverPog && hasGoldPog && hasDiamondPog ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Mythical":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const hasBronzePog = inv.some(it => (it && it.name || '').toLowerCase().includes('bronze pog'));
+                    const hasSilverPog = inv.some(it => (it && it.name || '').toLowerCase().includes('silver pog'));
+                    const hasGoldPog = inv.some(it => (it && it.name || '').toLowerCase().includes('gold pog'));
+                    const hasDiamondPog = inv.some(it => (it && it.name || '').toLowerCase().includes('diamond pog'));
+                    const hasAstralPog = inv.some(it => (it && it.name || '').toLowerCase().includes('astral pog'));
+                    achievement.status = hasBronzePog && hasSilverPog && hasGoldPog && hasDiamondPog && hasAstralPog ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Mr. Smith":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const hasBronzePog = inv.some(it => (it && it.name || '').toLowerCase().includes('bronze pog'));
+                    const hasSilverPog = inv.some(it => (it && it.name || '').toLowerCase().includes('silver pog'));
+                    const hasGoldPog = inv.some(it => (it && it.name || '').toLowerCase().includes('gold pog'));
+                    const hasDiamondPog = inv.some(it => (it && it.name || '').toLowerCase().includes('diamond pog'));
+                    const hasAstralPog = inv.some(it => (it && it.name || '').toLowerCase().includes('astral pog'));
+                    const hasGodPog = inv.some(it => (it && it.name || '').toLowerCase().includes('god pog'));
+                    achievement.status = hasBronzePog && hasSilverPog && hasGoldPog && hasDiamondPog && hasAstralPog && hasGodPog ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -1026,73 +1056,122 @@ function progFunc() {
                 break;
             case "God":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const hasGodPog = inv.some(it => (it && it.name || '').toLowerCase().includes('god pog'));
+                    achievement.status = hasGodPog ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Granter":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const has1Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 1'));
+                    achievement.status = has1Star ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Achiever":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const has2Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 2'));
+                    achievement.status = has2Star ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Successor":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const has3Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 3'));
+                    achievement.status = has3Star ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Victor":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const has4Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 4'));
+                    achievement.status = has4Star ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Conqueror":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const has5Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 5'));
+                    achievement.status = has5Star ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Dragon Lord":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const has6Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 6'));
+                    achievement.status = has6Star ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Above All":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const has7Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 7'));
+                    achievement.status = has7Star ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Zeno":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    const inv = userdata.inventory;
+                    const has1Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 1'));
+                    const has2Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 2'));
+                    const has3Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 3'));
+                    const has4Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 4'));
+                    const has5Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 5'));
+                    const has6Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 6'));
+                    const has7Star = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 7'));
+                    achievement.status = has1Star && has2Star && has3Star && has4Star && has5Star && has6Star && has7Star ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Completionist":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    for (let c = 0; c < achievements.length - 1; c++) {
+                        for (let a = 0; a < achievements[c].length; a++) {
+                            if (!achievements[c][a].hidden) {
+                                if (!achievements[c][a].status) {
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    achievement.status = true;
                     achievementNotify(achievement);
                 }
                 break;
             case "Secret Achiever":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    for (let c = 0; c < achievements.length - 1; c++) {
+                        for (let a = 0; a < achievements[c].length; a++) {
+                            if (achievements[c][a].hidden) {
+                                if (!achievements[c][a].status) {
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    achievement.status = true;
                     achievementNotify(achievement);
                 }
                 break;
             case "Platinum Trophy":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    for (let c = 0; c < achievements.length - 1; c++) {
+                        for (let a = 0; a < achievements[c].length; a++) {
+                            if (!achievements[c][a].status) {
+                                return;
+                            }
+                        }
+                    }
+                    achievement.status = true;
                     achievementNotify(achievement);
                 }
                 break;
@@ -1175,6 +1254,16 @@ function econFunc() {
                     const hasVbucks = inv.some(it => (it && it.name || '').toLowerCase().includes('v-bucks') || (it && it.name || '').toLowerCase().includes('vbuck'));
                     achievement.status = hasVbucks ? true : achievement.status;
                     achievementNotify(achievement);
+                }
+                break;
+            case "Monopoly":
+                if (!achievement.status) {
+                    //not function yet aughhh
+                }
+                break;
+            case "Monarch":
+                if (!achievement.status) {
+                    //not function yet aughhh
                 }
                 break;
             default:
@@ -1322,6 +1411,45 @@ function uniqueFunc() {
                     achievementNotify(achievement);
                 }
                 break;
+            case "Nuke Kaboom":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const nkCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('thomas nuke')).length;
+                    achievement.status = nkCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Hiding in your WiFi":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const mikuCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('hatsune miku')).length;
+                    achievement.status = mikuCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "Strange Man's Game":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const smCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('elf biker')).length;
+                    achievement.status = smCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "buttr":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const buttrCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('butter pog')).length;
+                    achievement.status = buttrCount >= 3 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
+                break;
+            case "OAUTH":
+                if (!achievement.status) {
+                    const inv = userdata.inventory;
+                    const fbCount = inv.filter(it => (it && it.name || '').toLowerCase().includes('formbar')).length;
+                    achievement.status = fbCount >= 1 ? true : achievement.status;
+                    achievementNotify(achievement);
+                }
             default:
                 achievement.status = false; //set to false if no match
         }

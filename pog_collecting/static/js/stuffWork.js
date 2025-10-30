@@ -92,17 +92,15 @@ function updateMoney() {
 
 // sell item
 function sellItem(index, sellvalue) {
-    if (index >= 0 && index < inventory.length) {
-        const item = inventory[index];
-        const rarity = pogList.find(r => r.rarity === item.value);
-        if (rarity) {
-            money += sellvalue;
-            totalSold ++;
-        }
-        // remove item from inventory (splice removes 1 item at the specified index)
-        inventory.splice(index, 1); 
-        refreshInventory();
-    }
+    if (index < 0 || index >= inventory.length) return;
+    const item = inventory[index];
+    money += sellvalue;
+    totalSold++;
+
+    inventory.splice(index, 1);
+    // recalc income and refresh UI
+    userIncome = getTotalIncome();
+    refreshInventory();
 }
 
 // update loop
@@ -131,7 +129,7 @@ function update() {
     }
 }
 
-function merge(bronze, silver, gold) {
+function merge(bronze, silver, gold, diamond, astral) {
     let sold = 0;
     // add new  pog to inventory
     if (bronze) {
@@ -140,6 +138,10 @@ function merge(bronze, silver, gold) {
         inventory.push({ name: "Gold Pog", color: "orange", income: 7400, value: "UNIQUE" });
     } else if (gold) {
         inventory.push({ name: "Diamond Pog", color: "orange", income: 83000, value: "UNIQUE" });
+    } else if (diamond) {
+        inventory.push({ name: "Astral Pog", color: "purple", income: 1000000, value: "UNIQUE" });
+    } else if (astral) {
+        inventory.push({ name: "God Pog", color: "purple", income: 694206741, value: "???" });
     }
     // only sell the amount needed
     for (let i = 0; i < inventory.length && sold < mergeAmount; i++) {
@@ -152,6 +154,14 @@ function merge(bronze, silver, gold) {
             sold++;
             i--;
         } else if (inventory[i].name === "Gold Pog" && gold) {
+            sellItem(i, 0);
+            sold++;
+            i--;
+        } else if (inventory[i].name === "Diamond Pog" && diamond) {
+            sellItem(i, 0);
+            sold++;
+            i--;
+        } else if (inventory[i].name === "Astral Pog" && astral) {
             sellItem(i, 0);
             sold++;
             i--;
@@ -188,6 +198,8 @@ function refreshInventory() {
     const goldCount = inventory.filter(item => item.name === "Gold Pog").length;
     // see if there is mergeAmount diamond pogs for merge button
     const diamondCount = inventory.filter(item => item.name === "Diamond Pog").length;
+    // see if there is mergeAmount astral pogs for merge button
+    const astralCount = inventory.filter(item => item.name === "Astral Pog").length;
 
     // set inventory html
     // .filter is used to get the search and .includes to check if the item name includes the searched text
@@ -201,6 +213,7 @@ function refreshInventory() {
         isSilver = item.name === "Silver Pog",
         isGold = item.name === "Gold Pog",
         isDiamond = item.name === "Diamond Pog",
+        isAstral = item.name === "Astral Pog",
         // how many bronze pogs are there? (mergAmount)
         //bronze
         bronze = isBronze && bronzeCount >= mergeAmount,
@@ -210,11 +223,13 @@ function refreshInventory() {
         gold = isGold && goldCount >= mergeAmount,
         //diamond
         diamond = isDiamond && diamondCount >= mergeAmount,
+        //astral from vamy
+        astral = isAstral && astralCount >= mergeAmount,
         // show merge button
-        canMerge = bronze || silver || gold || diamond,
+        canMerge = bronze || silver || gold || diamond || astral,
         // return html
         `<div class="item ${hasBonus ? 'highlight' : ''}">
-        <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
+        <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
         <br>
         <hr>
         <ul>
@@ -222,7 +237,7 @@ function refreshInventory() {
             <li class='list' style="color: green">$${hasBonus ? Math.round(item.income * bonusMulti) : item.income}/s</li>
         </ul>
         <button id="sellbtn" onclick="sellItem(${index}, sellvalue)">Sell for $${sellvalue}</button>
-        ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold})">Merge (${mergeAmount})</button>` : ""}
+        ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
         </div>
     `}).join("");
 }
@@ -284,8 +299,42 @@ function openCrate(cost, index) {
                     pogAmount++;
                 }
 
+                // dragon pog stuff
+                if (rarity.name === "Dragon Ball") {
+                    const inv = inventory;
+                    const hasDragonPog1 = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 1'));
+                    const hasDragonPog2 = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 2'));
+                    const hasDragonPog3 = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 3'));
+                    const hasDragonPog4 = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 4'));
+                    const hasDragonPog5 = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 5'));
+                    const hasDragonPog6 = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 6'));
+                    const hasDragonPog7 = inv.some(it => (it && it.name || '').toLowerCase().includes('dragon ball 7'));
+                    if (!hasDragonPog1) {
+                        rarity.name = "Dragon Ball 1";
+                    } else if (!hasDragonPog2) {
+                        rarity.name = "Dragon Ball 2";
+                    } else if (!hasDragonPog3) {
+                        rarity.name = "Dragon Ball 3";
+                    } else if (!hasDragonPog4) {
+                        rarity.name = "Dragon Ball 4";
+                    } else if (!hasDragonPog5) {
+                        rarity.name = "Dragon Ball 5";
+                    } else if (!hasDragonPog6) {
+                        rarity.name = "Dragon Ball 6";
+                    } else if (!hasDragonPog7) {
+                        rarity.name = "Dragon Ball 7";
+                    } else {
+                        // all dragon pogs collected, give a bronze pog instead
+                        rarity.name = "Bronze Pog";
+                        rarity.rarity = "Uncommon";
+                        income = 53;
+                        color = "#857f3f";
+                }
+            }
                 // Add result to inventory
-                inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity });
+                if (rarity.name != "Dragon Ball") {
+                    inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity });
+                }
 
                 // XP gain
                 xp += Math.floor(income * (3 * level/15)); // gain XP based on income and level
@@ -298,6 +347,7 @@ function openCrate(cost, index) {
                 break;
             }
         }
+    
 }
 
 // crate open events
