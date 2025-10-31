@@ -485,6 +485,9 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
             xp: xp,
             maxXP: maxXP,
             level: level,
+            income: userIncome,
+            totalSold: totalSold,
+            cratesOpened: cratesOpened,
             pogAmount: pogAmount
         })
     })
