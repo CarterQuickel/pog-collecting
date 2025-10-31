@@ -23,9 +23,9 @@ document.querySelectorAll(".infobtn").forEach(button => {
         }
         console.log(sortedI)
         const info = document.getElementById("details");
-        info.innerHTML = `<h3>Details for ${player.displayname}</h3>
-                          <h4>Score</h4> <p>${player.score}</p>
-                          <h4>Level</h4> <p>${player.level}</p>
-                          <h4>Inventory</h4> <p>${sortedI.length > 0 ? displayed : "No items"}</p>`;
+        info.innerHTML = `<h2>Details for ${player.displayname}</h2>
+                          <h3>Score</h3> <p>${player.score}</p>
+                          <h3>Level</h3> <p>${player.level}</p>
+                          <h3>Inventory</h3> <p>${sortedI.length > 0 ? displayed : "No items"}</p>`;
     })
 });
