@@ -86,17 +86,12 @@ function updateMoney() {
 }
 
 // sell item
-function sellItem(index, sellvalue) {
-    if (index >= 0 && index < inventory.length) {
-        const item = inventory[index];
-        const rarity = pogList.find(r => r.rarity === item.value);
-        if (rarity) {
-            money += sellvalue; // add money based on rarity value
-        }
-        // remove item from inventory (splice removes 1 item at the specified index)
-        inventory.splice(index, 1); 
+function sellItem(id, sellvalue) {
+        sitem = inventory.filter(item => item.id === id)[0]; // find item by id; [0] to get the first match
+        inventory.splice(inventory.indexOf(sitem), 1); // remove item from inventory
+        console.log(`Sold ${sitem.name} for $${sellvalue}`);
+        money += sellvalue; // add money based on rarity value
         refreshInventory();
-    }
 }
 
 // update loop
@@ -215,7 +210,7 @@ function refreshInventory() {
             <li class='list' style="color: ${item.color}">${item.value}</li>
             <li class='list' style="color: green">$${hasBonus ? Math.round(item.income * bonusMulti) : item.income}/s</li>
         </ul>
-        <button id="sellbtn" onclick="sellItem(${index}, sellvalue)">Sell for $${sellvalue}</button>
+        <button id="sellbtn" onclick="sellItem(${item.id}, ${sellvalue})">Sell for $${sellvalue}</button>
         ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold})">Merge (${mergeAmount})</button>` : ""}
         </div>
     `}).join("");
@@ -275,11 +270,18 @@ function openCrate(cost, index) {
                 let added = { name: rarity.name}
                 const exists = inventory.find(i => i.name === added.name);
                 if (!exists) {
-                    pogAmount++;
+                    if (pogAmount < maxPogs) {
+                        pogAmount++;
+                    } else {
+                        document.getElementById("pogCount").style.color = "yellow";
+                    }
                 }
 
+                // randomize id for each item
+                let id = Math.floor(Math.random() * 1000000);
+
                 // Add result to inventory
-                inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity });
+                inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity, id: id });
 
                 // XP gain
                 xp += Math.floor(income * (3 * level/15)); // gain XP based on income and level
@@ -337,7 +339,6 @@ document.getElementById("save").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);
@@ -367,7 +368,6 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);
@@ -396,12 +396,39 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);
         });
     console.log(userdata.totalSold);
+});
+
+document.getElementById("leaderboardButton").addEventListener("click", () => {
+    window.location.href = "/leaderboard";
+    // fetch to /datasave
+    fetch('/datasave', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            lightMode: lightMode,
+            money: money,
+            inventory: inventory,
+            Isize: Isize,
+            xp: xp,
+            maxXP: maxXP,
+            level: level,
+            pogAmount: pogAmount
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
 });
 
 // mode toggle
@@ -426,6 +453,29 @@ document.getElementById("searchbtn").addEventListener("click", () => {
         itemSearched = box.value.toLowerCase();
         refreshInventory();
     }
+});
+
+//categorize functionality
+document.getElementById("selectSort").addEventListener("change", () => {
+    const sortBy = document.getElementById("selectSort").value;
+    if (sortBy === "rarityAZ") {
+        inventory.sort((a, b) => a.value.localeCompare(b.value));
+    } else if (sortBy === "rarityZA") {
+        inventory.sort((a, b) => b.value.localeCompare(a.value));
+    } else if (sortBy === "incomeHf") {
+        inventory.sort((a, b) => b.income - a.income);
+    } else if (sortBy === "incomeLf") {
+        inventory.sort((a, b) => a.income - b.income);
+    } else if (sortBy === "nameAZ") {
+        inventory.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "nameZA") {
+        inventory.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortBy === "svHf") {
+        inventory.sort((a, b) => (b.income * 105) - (a.income * 105));
+    } else if (sortBy === "svLf") {
+        inventory.sort((a, b) => (a.income * 105) - (b.income * 105));
+    }
+    refreshInventory();
 });
 
 //number abbreviation function
