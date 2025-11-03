@@ -209,7 +209,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     level: 1,
                     income: 0,
                     totalSold: 0,
-                    cratesOpened: 0
+                    cratesOpened: 0,
+                    pogamount: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
@@ -233,11 +234,12 @@ app.get('/achievements', (req, res) => {
 
 app.get('/leaderboard', (req, res) => {
     usdb.all(
-        'SELECT displayname, score, level, pogamount, xp, inventory FROM userSettings ORDER BY score DESC LIMIT 10', [],
+        'SELECT * FROM userSettings ORDER BY score DESC LIMIT 10', [],
         (err, rows) => {
             if (err) {
                 console.error('DB select error:', err);
             }
+            console.log('Leaderboard data retrieved:', rows);
             res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results, scores: rows });
         }
     );
@@ -312,6 +314,7 @@ app.get('/login', (req, res) => {
             income: tokenData.income || 0,
             totalSold: tokenData.totalSold || 0,
             cratesOpened: tokenData.cratesOpened || 0,
+            pogamount: tokenData.pogamount || 0
         };
         res.redirect('/');
     } else {
