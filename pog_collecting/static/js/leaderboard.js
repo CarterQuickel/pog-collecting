@@ -21,7 +21,6 @@ document.querySelectorAll(".infobtn").forEach(button => {
         if (sortedI.length > 100) {
             displayed.push(" ...and more");
         }
-        const iref = player.inventory
         console.log(sortedI)
         const info = document.getElementById("details");
         info.innerHTML = `<h2>Details for ${player.displayname}</h2>
@@ -37,7 +36,7 @@ document.querySelectorAll(".infobtn").forEach(button => {
                                 <h3>Crates Opened</h3> <p>${player.cratesOpened} crates</p>
                             </div>
                           </div>
-                          <h3>Pogs in Inventory</h3> <p>${iref.length}</p>
+                          <h3>Pogs in Inventory</h3> <p>${sortedI.length}</p>
                           <h3>Inventory</h3> <p>${sortedI.length > 0 ? displayed : "No items"}</p>`;
     })
 });
