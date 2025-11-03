@@ -319,7 +319,7 @@ const achievements = [
         {
             name: "Zeno",
             description: "Have one of each-star dragon pog.",
-            icon: "static/icons/DB_Zeno.png",
+            icon: "static/icons/DB_All.png",
             status: false,
             hidden: true,
             notified: false
@@ -344,9 +344,9 @@ const achievements = [
         {
             name: "Platinum Trophy",
             description: "Unlock all achievements.",
-            icon: "💯",
+            icon: "static/icons/Platinum_Trophy.png",
             status: false,
-            hidden: true,
+            hidden: false,
             notified: false
         }
     ],
@@ -355,7 +355,7 @@ const achievements = [
         {
             name: "69",
             description: "Have exactly 69 pogs at once.",
-            icon: "🌈",
+            icon: "static/icons/69.png",
             status: false,
             hidden: true,
             notified: false
@@ -363,7 +363,7 @@ const achievements = [
         {
             name: "420",
             description: "Sell enough pogs to gain back a TOTAL of 420 digipogs.",
-            icon: "🗣️",
+            icon: "static/icons/420.png",
             status: false,
             hidden: true,
             notified: false
@@ -462,9 +462,9 @@ const achievements = [
         {
             name: "Nerdy Inspector",
             description: "Go to the patch notes page.",
-            icon: "🤓",
+            icon: "static/icons/Nerdy_Inspector.png",
             status: false,
-            hidden: true,
+            hidden: false,
             notified: false
         },
         {
@@ -478,7 +478,7 @@ const achievements = [
         {
             name: "An Ender Pearl",
             description: "Get an endermen combo.",
-            icon: "🟢",
+            icon: "static/icons/An_Ender_Pearl.png",
             status: false,
             hidden: false,
             notified: false
@@ -590,7 +590,7 @@ const achievements = [
         {
             name: "I am Vengeance",
             description: "Get 4 Batman Robin pog combos.",
-            icon: "🦇",
+            icon: "static/icons/I_Am_Vengeance.png",
             status: false,
             hidden: false,
             notified: false
