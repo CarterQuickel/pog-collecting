@@ -83,6 +83,9 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     xp INTEGER,
     maxxp INTEGER,
     level INTEGER,
+    income INTEGER,
+    totalSold INTEGER,
+    cratesOpened INTEGER,
     pogamount INTEGER,
     displayname TEXT UNIQUE
 
@@ -131,7 +134,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, pogamount, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -140,6 +143,9 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.xp,
                             req.session.user.maxxp,
                             req.session.user.level,
+                            req.session.user.income,
+                            req.session.user.totalSold,
+                            req.session.user.cratesOpened,
                             req.session.user.pogamount,
                             displayName
                         ],
@@ -163,6 +169,9 @@ app.get('/', isAuthenticated, (req, res) => {
             xp: req.session.user.xp || 0,
             maxxp: req.session.user.maxxp || 15,
             level: req.session.user.level || 1,
+            income: req.session.user.income || 0,
+            totalSold: req.session.user.totalSold || 0,
+            cratesOpened: req.session.user.cratesOpened || 0,
             pogamount: req.session.user.pogamount || 0
         };
 
@@ -182,6 +191,9 @@ app.get('/', isAuthenticated, (req, res) => {
                     xp: row.xp,
                     maxxp: row.maxxp,
                     level: row.level,
+                    income: row.income,
+                    totalSold: row.totalSold,
+                    cratesOpened: row.cratesOpened,
                     pogamount: row.pogamount
                 };
                 console.log(`User data loaded for '${displayName}'`);
@@ -197,7 +209,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     level: 1,
                     income: 0,
                     totalSold: 0,
-                    achievements: []
+                    cratesOpened: 0,
+                    pogamount: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
@@ -221,11 +234,12 @@ app.get('/achievements', (req, res) => {
 
 app.get('/leaderboard', (req, res) => {
     usdb.all(
-        'SELECT displayname, score, level, pogamount, xp, inventory FROM userSettings ORDER BY score DESC LIMIT 10', [],
+        'SELECT * FROM userSettings ORDER BY score DESC LIMIT 10', [],
         (err, rows) => {
             if (err) {
                 console.error('DB select error:', err);
             }
+            console.log('Leaderboard data retrieved:', rows);
             res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results, scores: rows });
         }
     );
@@ -242,10 +256,12 @@ app.post('/datasave', (req, res) => {
         xp: req.body.xp,
         maxxp: req.body.maxXP,
         level: req.body.level,
+        income: req.body.income,
+        totalSold: req.body.totalSold,
+        cratesOpened: req.body.cratesOpened,
         pogamount: req.body.pogAmount
     }
-    console.log('Achievements type:', typeof req.body.achievements);
-console.log('Achievements value:', req.body.achievements);
+
 
     console.log(userSave.theme);
     // save to session
@@ -262,10 +278,13 @@ console.log('Achievements value:', req.body.achievements);
                 userSave.xp,
                 userSave.maxxp,
                 userSave.level,
+                userSave.income,
+                userSave.totalSold,
+                userSave.cratesOpened,
                 userSave.pogamount,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, pogamount = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -294,7 +313,8 @@ app.get('/login', (req, res) => {
             level: tokenData.level || 1,
             income: tokenData.income || 0,
             totalSold: tokenData.totalSold || 0,
-            achievements: tokenData.achievements || []
+            cratesOpened: tokenData.cratesOpened || 0,
+            pogamount: tokenData.pogamount || 0
         };
         res.redirect('/');
     } else {
