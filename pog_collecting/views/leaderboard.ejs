@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pog Crates -> Leaderboard</title>
+    <link rel="stylesheet" href="../static/css/leaderboard.css">
+</head>
+
+<body>
+    <div id="leadBanner">
+        <div class="leftstuff">
+            <div style="display: none" id="userdata">
+                <%= JSON.stringify(userdata) %>
+            </div>
+            <div style="display: none" id="scores">
+                <%= JSON.stringify(scores) %>
+            </div>
+            <h1 style="margin-left: 10px;">Leaderboard</h1>
+            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %>
+            </h4>
+            <div style="display: none" id="maxPogs">
+                <%= JSON.stringify(maxPogs) %>
+            </div>
+        </div>
+        <div class="rightstuff">
+            <a href="/collection" id="circleButton">
+                < </a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div id="flexcont">
+    <table class="board" style="width: 50%; margin: auto; border-collapse: collapse; color: white;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid white; padding: 8px;">Rank</th>
+                <th style="border: 1px solid white; padding: 8px;">User</th>
+                <th style="border: 1px solid white; padding: 8px;">Score</th>
+                <th style="border: 1px solid white; padding: 8px;">Level</th>
+                <th style="border: 1px solid white; padding: 8px;">Pogs</th>
+                <th style="border: 1px solid white; padding: 8px;">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% scores.forEach((score, index)=> { %>
+                <tr>
+                    <td style="border: 1px solid white; padding: 8px; text-align: center;">
+                        <%= index + 1 %>
+                    </td>
+                    <td style="border: 1px solid white; padding: 8px; text-align: center;">
+                        <%= score.displayname %>
+                    </td>
+                    <td style="border: 1px solid white; padding: 8px; text-align: center;">
+                        <%= score.score %>
+                    </td>
+                    <td style="border: 1px solid white; padding: 8px; text-align: center;">
+                        <%= score.level %>
+                    </td>
+                    <td style="border: 1px solid white; padding: 8px; text-align: center;">
+                        <%= score.pogamount %> / 285
+                    </td>
+                    <td style="border: 1px solid white; padding: 8px; text-align: center;">
+                        <button class="infobtn" data-index="<%= index %>">Player Info</button>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+    <div id="details"><h3>Click on Player Info for Details</h3></div>
+    </div>
+</body>
+<style>
+    body {
+        background-color: #332e2e;
+        margin-top: 50px;
+        padding: 20px;
+    }
+    table {
+        margin-top: 300px
+    }
+</style>
+<script src="../static/js/leaderboard.js"></script>

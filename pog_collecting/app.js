@@ -21,17 +21,16 @@ fs.createReadStream('pogipedia/db/pogs.csv')
     results.push({ name, rarity });
 })
 .on('end', () => {
-    console.log('Extracted Pogs:', results);
 });
 
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
 
 // URL to take user to Formbar for authentication
-const AUTH_URL = 'http://localhost:420/oauth'; // ... or the address to the instance of fbjs you wish to connect to
+const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://localhost:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://172.16.3.126:3000/login'; // ... or whatever the address to your application is
 
 /* This creates session middleware with given options; 
 The 'secret' option is used to sign the session ID cookie. 
@@ -61,7 +60,7 @@ function isAuthenticated(req, res, next) {
             res.redirect(`${AUTH_URL}/oauth?refreshToken=${tokenData.refreshToken}&redirectURL=${THIS_URL}`);
         }
     } else {
-        res.redirect(`/login?redirectURL=${THIS_URL}`);
+        res.redirect(`${AUTH_URL}/oauth?redirectURL=${THIS_URL}`);
     }
 }
 // The following isAuthenticated function checks when the access token expires and promptly retrieves a new one using the user's refresh token.
@@ -119,7 +118,6 @@ app.get('/collection', (req, res) => {
     }
     res.render('collection', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
-
 
 // login route
 app.get('/', isAuthenticated, (req, res) => {
@@ -211,7 +209,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     level: 1,
                     income: 0,
                     totalSold: 0,
-                    cratesOpened: 0
+                    cratesOpened: 0,
+                    pogamount: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
@@ -231,6 +230,19 @@ app.get('/patch', (req, res) => {
 
 app.get('/achievements', (req, res) => {
     res.render('achievements', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
+});
+
+app.get('/leaderboard', (req, res) => {
+    usdb.all(
+        'SELECT * FROM userSettings ORDER BY score DESC LIMIT 10', [],
+        (err, rows) => {
+            if (err) {
+                console.error('DB select error:', err);
+            }
+            console.log('Leaderboard data retrieved:', rows);
+            res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results, scores: rows });
+        }
+    );
 });
 
 // save data route
@@ -302,6 +314,7 @@ app.get('/login', (req, res) => {
             income: tokenData.income || 0,
             totalSold: tokenData.totalSold || 0,
             cratesOpened: tokenData.cratesOpened || 0,
+            pogamount: tokenData.pogamount || 0
         };
         res.redirect('/');
     } else {
@@ -311,5 +324,5 @@ app.get('/login', (req, res) => {
 
 //listens
 app.listen(3000, () => {
-    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆');
+    console.log('Server started on port 3000\nIP: 176.16.3.126');
 });

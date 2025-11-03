@@ -296,7 +296,11 @@ function openCrate(cost, index) {
                 let added = { name: rarity.name}
                 const exists = inventory.find(i => i.name === added.name);
                 if (!exists) {
-                    pogAmount++;
+                    if (pogAmount < maxPogs) {
+                        pogAmount++;
+                    } else {
+                        document.getElementById("pogCount").style.color = "yellow";
+                    }
                 }
 
                 // dragon pog stuff
@@ -397,7 +401,6 @@ document.getElementById("save").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);
@@ -428,7 +431,6 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);
@@ -459,12 +461,42 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Data saved successfully:", data);
         })
         .catch(err => {
             console.error("Error saving data:", err);
         });
     window.location.href = "/achievements";
+});
+
+document.getElementById("leaderboardButton").addEventListener("click", () => {
+    window.location.href = "/leaderboard";
+    // fetch to /datasave
+    fetch('/datasave', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            lightMode: lightMode,
+            money: money,
+            inventory: inventory,
+            Isize: Isize,
+            xp: xp,
+            maxXP: maxXP,
+            level: level,
+            income: userIncome,
+            totalSold: totalSold,
+            cratesOpened: cratesOpened,
+            pogAmount: pogAmount
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
 });
 
 // mode toggle
@@ -489,6 +521,29 @@ document.getElementById("searchbtn").addEventListener("click", () => {
         itemSearched = box.value.toLowerCase();
         refreshInventory();
     }
+});
+
+//categorize functionality
+document.getElementById("selectSort").addEventListener("change", () => {
+    const sortBy = document.getElementById("selectSort").value;
+    if (sortBy === "rarityAZ") {
+        inventory.sort((a, b) => a.value.localeCompare(b.value));
+    } else if (sortBy === "rarityZA") {
+        inventory.sort((a, b) => b.value.localeCompare(a.value));
+    } else if (sortBy === "incomeHf") {
+        inventory.sort((a, b) => b.income - a.income);
+    } else if (sortBy === "incomeLf") {
+        inventory.sort((a, b) => a.income - b.income);
+    } else if (sortBy === "nameAZ") {
+        inventory.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "nameZA") {
+        inventory.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortBy === "svHf") {
+        inventory.sort((a, b) => (b.income * 105) - (a.income * 105));
+    } else if (sortBy === "svLf") {
+        inventory.sort((a, b) => (a.income * 105) - (b.income * 105));
+    }
+    refreshInventory();
 });
 
 //number abbreviation function

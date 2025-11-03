@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pog Crates</title>
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
+
 <body>
     <div id="collectBanner">
         <div class="leftstuff">
-            <h1 style="margin-left: 10px;">POG CRATES v0.0.6</h1>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %></h4>
-            <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
-            <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
-            <div style="display: none" id="pogList"><%= JSON.stringify(pogList) %></div>
+            <h1 style="margin-left: 10px;">POG CRATES v0.1.0</h1>
+            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %>
+            </h4>
+            <div style="display: none" id="userdata">
+                <%= JSON.stringify(userdata) %>
+            </div>
+            <div style="display: none" id="maxPogs">
+                <%= JSON.stringify(maxPogs) %>
+            </div>
+            <div style="display: none" id="pogList">
+                <%= JSON.stringify(pogList) %>
+            </div>
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
+            <button id="leaderboardButton">
+                <a href="/leaderboard" style="text-decoration: none; color: black;">Highscores</a>
+            </button>
             <button id="save">Save</button>
             <label class="switch">
                 <input type="checkbox" id="darkmode">
@@ -23,18 +35,34 @@
             </label>
         </div>
     </div>
-    <div id="centerlayout" style="text-align: center;">  
+    <div id="centerlayout" style="text-align: center;">
         <div id="inventory"></div>
         <div id="settings">
-            <div id="searchbar">
-                <input id="searchbox" type="text" placeholder="Search Pogs..."> <button id="searchbtn">Search</button>
+            <div id="sortcont">
+                <h4>Sorting</h4>
+                <div id="searchbar">
+                    <input id="searchbox" type="text" placeholder="Search Pogs..."> 
+                    <button id="searchbtn">Search</button>
+                </div>
+                <select id="selectSort">
+                    <option value="rarityAZ">Sort by Rarity (a-z) &#8593;</option>
+                    <option value="rarityZA">Sort by Rarity (z-a) &#8595;</option>
+                    <option value="nameAZ" style="background-color: lightgrey">Sort by Name (a-z) &#8593;</option>
+                    <option value="nameZA" style="background-color: lightgrey">Sort by Name (z-a) &#8595;</option>
+                    <option value="incomeHf" style="background-color: grey">Sort by Income (high to low) &#8593;</option>
+                    <option value="incomeLf" style="background-color: grey">Sort by Income (low to high) &#8595;</option>
+                    <option value="svHf" style="background-color: black; color: white">Sort by Sell Value (high to low) &#8593;</option>
+                    <option value="svLf" style="background-color: black; color: white">Sort by Sell Value (low to high) &#8595;</option>
+                </select>
             </div>
-            <button id="patchNotesButton" class="pageButtons">
-                <a href="/patch" style="text-decoration: none; color: black;">Patch Notes</a>
-            </button>
-            <button id="achievementsButton">
-                <a href="/achievements" style="text-decoration: none; color: black;">Achievements</a>
-            </button>
+            <div id="locators">
+                <button id="patchNotesButton" class="pageButtons">
+                    <a href="/patch" style="text-decoration: none; color: black;">Patches</a>
+                </button>
+                <button id="achievementsButton">
+                    <a href="/achievements" style="text-decoration: none; color: black;">Achievements</a>
+                </button>
+            </div>
             <div id="stats">
                 <div id="money">Money: $1000</div>
                 <h3 id="income"></h3>
@@ -43,11 +71,13 @@
                 <progress id="XPPB" value="0" max="100"></progress>
             </div>
             <h3 id="pogCount">Pogs: 0 / 0</h3>
-            <button id="crate1" class="crate">Common Crate - $100</button>
-            <button id="crate2" class="crate">Rare Crate - $500</button>
-            <button id="crate3" class="crate">Epic Crate - $1000</button>
-            <button id="crate4" class="crate">Legendary Crate - $5000</button>
-            <button id="crate5" class="crate">Mythical Crate - $10000</button>
+            <div id="crateBtns">
+                <button id="crate1" class="crate">Common Crate - $100</button>
+                <button id="crate2" class="crate">Rare Crate - $500</button>
+                <button id="crate3" class="crate">Epic Crate - $1000</button>
+                <button id="crate4" class="crate">Legendary Crate - $5000</button>
+                <button id="crate5" class="crate">Mythical Crate - $10000</button>
+            </div>
         </div>
     </div>
     <div id="slider"></div>
