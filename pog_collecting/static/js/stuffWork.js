@@ -469,7 +469,6 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
 });
 
 document.getElementById("leaderboardButton").addEventListener("click", () => {
-    window.location.href = "/leaderboard";
     // fetch to /datasave
     fetch('/datasave', {
         method: 'POST',
@@ -497,6 +496,7 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
         .catch(err => {
             console.error("Error saving data:", err);
         });
+    window.location.href = "/leaderboard";
 });
 
 // mode toggle
