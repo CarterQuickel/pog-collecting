@@ -4,15 +4,33 @@ const app = express();
 const sqlite3 = require('sqlite3').verbose();
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
+const fs = require('fs');
+const csv = require('csv-parser');
+
+const headers = [
+    'id', 'name', 'color', 'code', 'number', 'code2',
+    'description', 'type', 'rarity', 'creator'
+  ];
+
+const results = [];
+  
+fs.createReadStream('pogipedia/db/pogs.csv')
+.pipe(csv({ headers }))
+.on('data', (row) => {
+    const { name, rarity } = row;
+    results.push({ name, rarity });
+})
+.on('end', () => {
+});
 
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
 
 // URL to take user to Formbar for authentication
-const AUTH_URL = 'http://localhost:420/oauth'; // ... or the address to the instance of fbjs you wish to connect to
+const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://localhost:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://172.16.3.126:3000/login'; // ... or whatever the address to your application is
 
 /* This creates session middleware with given options; 
 The 'secret' option is used to sign the session ID cookie. 
@@ -42,7 +60,7 @@ function isAuthenticated(req, res, next) {
             res.redirect(`${AUTH_URL}/oauth?refreshToken=${tokenData.refreshToken}&redirectURL=${THIS_URL}`);
         }
     } else {
-        res.redirect(`/login?redirectURL=${THIS_URL}`);
+        res.redirect(`${AUTH_URL}/oauth?redirectURL=${THIS_URL}`);
     }
 }
 // The following isAuthenticated function checks when the access token expires and promptly retrieves a new one using the user's refresh token.
@@ -65,7 +83,12 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     xp INTEGER,
     maxxp INTEGER,
     level INTEGER,
+    income INTEGER,
+    totalSold INTEGER,
+    cratesOpened INTEGER,
+    pogamount INTEGER,
     displayname TEXT UNIQUE
+
 )`);
 
 // pog database
@@ -93,9 +116,8 @@ app.get('/collection', (req, res) => {
     if (!req.session.user) {
         res.redirect('/');
     }
-    res.render('collection', { userdata: req.session.user, maxPogs: pogCount });
+    res.render('collection', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
-
 
 // login route
 app.get('/', isAuthenticated, (req, res) => {
@@ -112,7 +134,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -121,6 +143,10 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.xp,
                             req.session.user.maxxp,
                             req.session.user.level,
+                            req.session.user.income,
+                            req.session.user.totalSold,
+                            req.session.user.cratesOpened,
+                            req.session.user.pogamount,
                             displayName
                         ],
                         function (err) {
@@ -141,33 +167,56 @@ app.get('/', isAuthenticated, (req, res) => {
             inventory: req.session.user.inventory || [],
             Isize: req.session.user.Isize || 3,
             xp: req.session.user.xp || 0,
-            maxxp: req.session.user.maxxp || 100,
-            level: req.session.user.level || 1
+            maxxp: req.session.user.maxxp || 15,
+            level: req.session.user.level || 1,
+            income: req.session.user.income || 0,
+            totalSold: req.session.user.totalSold || 0,
+            cratesOpened: req.session.user.cratesOpened || 0,
+            pogamount: req.session.user.pogamount || 0
         };
 
         // load user data from database
-        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [req.session.user.displayName], (err, row) => {
+        const displayName = req.session.token?.displayName || "guest";
+        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
             if (err) {
                 return console.error("Error querying user:", err.message);
             }
             if (row) {
                 req.session.user = {
-                    displayName: req.session.user.displayName,
+                    displayName: displayName,
                     theme: row.theme,
                     score: row.score,
                     inventory: JSON.parse(row.inventory),
                     Isize: row.Isize,
                     xp: row.xp,
                     maxxp: row.maxxp,
-                    level: row.level
+                    level: row.level,
+                    income: row.income,
+                    totalSold: row.totalSold,
+                    cratesOpened: row.cratesOpened,
+                    pogamount: row.pogamount
                 };
-                console.log(`User data loaded for '${req.session.user.displayName}'`);
+                console.log(`User data loaded for '${displayName}'`);
             } else {
-                console.log(`No existing user data for '${req.session.user.displayName}', using defaults.`);
+                req.session.user = {
+                    displayName: displayName,
+                    theme: 'light',
+                    score: 0,
+                    inventory: [],
+                    Isize: 3,
+                    xp: 0,
+                    maxxp: 100,
+                    level: 1,
+                    income: 0,
+                    totalSold: 0,
+                    cratesOpened: 0,
+                    pogamount: 0
+                };
+                console.log(`No existing user data for '${displayName}', using defaults.`);
             }
             // Call insertUser and handle callback
             insertUser();
-            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token, maxPogs: pogCount });
+            res.render('collection.ejs', { userdata: req.session.user, token: req.session.token, maxPogs: pogCount, pogList: results });
         });
     } catch (error) {
         res.send(error.message)
@@ -176,11 +225,24 @@ app.get('/', isAuthenticated, (req, res) => {
 
 // patch notes page
 app.get('/patch', (req, res) => {
-    res.render('patch', { userdata: req.session.user, maxPogs: pogCount });
+    res.render('patch', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
 
 app.get('/achievements', (req, res) => {
-    res.render('achievements', { userdata: req.session.user, maxPogs: pogCount });
+    res.render('achievements', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
+});
+
+app.get('/leaderboard', (req, res) => {
+    usdb.all(
+        'SELECT * FROM userSettings ORDER BY score DESC LIMIT 10', [],
+        (err, rows) => {
+            if (err) {
+                console.error('DB select error:', err);
+            }
+            console.log('Leaderboard data retrieved:', rows);
+            res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results, scores: rows });
+        }
+    );
 });
 
 // save data route
@@ -193,8 +255,14 @@ app.post('/datasave', (req, res) => {
         Isize: req.body.Isize,
         xp: req.body.xp,
         maxxp: req.body.maxXP,
-        level: req.body.level
+        level: req.body.level,
+        income: req.body.income,
+        totalSold: req.body.totalSold,
+        cratesOpened: req.body.cratesOpened,
+        pogamount: req.body.pogAmount
     }
+
+
     console.log(userSave.theme);
     // save to session
     req.session.save(err => {
@@ -202,7 +270,7 @@ app.post('/datasave', (req, res) => {
             console.error('Error saving session:', err);
             return res.status(500).json({ message: 'Error saving session' });
         } else {
-            params = [
+            const params = [
                 userSave.theme,
                 userSave.score,
                 JSON.stringify(userSave.inventory),
@@ -210,9 +278,13 @@ app.post('/datasave', (req, res) => {
                 userSave.xp,
                 userSave.maxxp,
                 userSave.level,
+                userSave.income,
+                userSave.totalSold,
+                userSave.cratesOpened,
+                userSave.pogamount,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -230,7 +302,20 @@ app.get('/login', (req, res) => {
     if (req.query.token) {
         let tokenData = jwt.decode(req.query.token);
         req.session.token = tokenData;
-        req.session.user = { displayName: tokenData.displayName };
+        req.session.user = {
+            displayName: tokenData.displayName,
+            theme: tokenData.theme || 'light',
+            score: tokenData.score || 0,
+            inventory: tokenData.inventory || [],
+            Isize: tokenData.Isize || 3,
+            xp: tokenData.xp || 0,
+            maxxp: tokenData.maxxp || 100,
+            level: tokenData.level || 1,
+            income: tokenData.income || 0,
+            totalSold: tokenData.totalSold || 0,
+            cratesOpened: tokenData.cratesOpened || 0,
+            pogamount: tokenData.pogamount || 0
+        };
         res.redirect('/');
     } else {
         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
@@ -239,5 +324,5 @@ app.get('/login', (req, res) => {
 
 //listens
 app.listen(3000, () => {
-    console.log('Server started on port 3000'); console.log('☆*: .｡. o(≧▽≦)o .｡.:*☆'); console.log("Vamy was here");
+    console.log('Server started on port 3000\nIP: 176.16.3.126');
 });
