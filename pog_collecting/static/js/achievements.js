@@ -328,7 +328,7 @@ const achievements = [
         {
             name: "Completionist",
             description: "Unlock all main achievements.",
-            icon: "🌟",
+            icon: "static/icons/Completionist.png",
             status: false,
             hidden: false,
             notified: false
@@ -336,7 +336,7 @@ const achievements = [
         {
             name: "Secret Achiever",
             description: "Unlock all secret achievements.",
-            icon: "🤫🧏‍♂️",
+            icon: "static/icons/Secret_Achiever.png",
             status: false,
             hidden: true,
             notified: false
@@ -371,7 +371,7 @@ const achievements = [
         {
             name: "Wealthy",
             description: "Make your first 1000 dollars.",
-            icon: "💵",
+            icon: "static/icons/Wealthy.png",
             status: false,
             hidden: false,
             notified: false
@@ -379,7 +379,7 @@ const achievements = [
         {
             name: "Rich",
             description: "Have 1 million dollars at once.",
-            icon: "💴",
+            icon: "static/icons/Rich.png",
             status: false,
             hidden: false,
             notified: false
@@ -387,7 +387,7 @@ const achievements = [
         {
             name: "Elon",
             description: "Have 100 million dollars at once.",
-            icon: "💰",
+            icon: "static/icons/Elon.png",
             status: false,
             hidden: false,
             notified: false
@@ -395,7 +395,7 @@ const achievements = [
         {
             name: "Entrepreneur",
             description: "Make 2000 cash a second.",
-            icon: "🏦",
+            icon: "static/icons/Entrepreneur.png",
             status: false,
             hidden: false,
             notified: false
@@ -403,7 +403,7 @@ const achievements = [
         {
             name: "Tycoon",
             description: "Make 10000 cash a second.",
-            icon: "🤑",
+            icon: "static/icons/Tycoon.png",
             status: false,
             hidden: false,
             notified: false
@@ -411,7 +411,7 @@ const achievements = [
         {
             name: "Pawn Broker",
             description: "Make 50000 cash a second.",
-            icon: "💸",
+            icon: "static/icons/Pawn_Broker.png",
             status: false,
             hidden: false,
             notified: false
@@ -419,7 +419,7 @@ const achievements = [
         {
             name: "Bank Breaker",
             description: "Make 100000 cash a second.",
-            icon: "💳",
+            icon: "static/icons/Bank_Breaker.png",
             status: false,
             hidden: false,
             notified: false
@@ -427,7 +427,7 @@ const achievements = [
         {
             name: "Industrialist",
             description: "Own a Robux pog.",
-            icon: "R$",
+            icon: "static/icons/Industrialist.png",
             status: false,
             hidden: false,
             notified: false
@@ -435,7 +435,7 @@ const achievements = [
         {
             name: "Capitalist",
             description: "Own a V-Bucks pog.",
-            icon: "V$",
+            icon: "static/icons/Capitalist.png",
             status: false,
             hidden: false,
             notified: false
@@ -443,7 +443,7 @@ const achievements = [
         {
             name: "Monopoly",
             description: "Be on the Top 5 leaderboard.",
-            icon: "💹",
+            icon: "static/icons/Monopoly.png",
             status: false,
             hidden: false,
             notified: false
@@ -451,7 +451,7 @@ const achievements = [
         {
             name: "Monarch",
             description: "Be the Top 1 on the leaderboard.",
-            icon: "€£¥",
+            icon: "static/icons/Monarch.png",
             status: false,
             hidden: false,
             notified: false
@@ -470,7 +470,7 @@ const achievements = [
         {
             name: "Chicken Jockey!",
             description: "Get a chicken jockey.",
-            icon: "🐔",
+            icon: "static/icons/Chicken_Jockey!.png",
             status: false,
             hidden: true,
             notified: false
@@ -486,7 +486,7 @@ const achievements = [
         {
             name: "Soda Pop",
             description: "Get a soda pog combo.",
-            icon: "🥤",
+            icon: "static/icons/Soda_Pop.png",
             status: false,
             hidden: false,
             notified: false
@@ -494,7 +494,7 @@ const achievements = [
         {
             name: "SODA!",
             description: "Get one of each color soda pog.",
-            icon: "🫧",
+            icon: "static/icons/SODA!.png",
             status: false,
             hidden: false,
             notified: false
@@ -502,7 +502,7 @@ const achievements = [
         {
             name: "Sus",
             description: "Have 10 dingus pogs at once.",
-            icon: "👽",
+            icon: "static/icons/Sus.png",
             status: false,
             hidden: false,
             notified: false
@@ -510,7 +510,7 @@ const achievements = [
         {
             name: "Elden Lord",
             description: "Get an Elden Ring pog combo.",
-            icon: "⚔️",
+            icon: "static/icons/Elden_Lord.png",
             status: false,
             hidden: false,
             notified: false
@@ -526,7 +526,7 @@ const achievements = [
         {
             name: "Ultimate Despair",
             description: "Get 13 DR (danganronpa) pogs",
-            icon: "🔪",
+            icon: "static/icons/Ultimate_Despair.png",
             status: false,
             hidden: true,
             notified: false
@@ -534,7 +534,7 @@ const achievements = [
         {
             name: "Shaw!",
             description: "Get a Hornet pog.",
-            icon: "🕷️",
+            icon: "static/icons/Shaw!.png",
             status: false,
             hidden: false,
             notified: false
@@ -542,7 +542,7 @@ const achievements = [
         {
             name: "Uhhh",
             description: "Get an I Heart CP pog combo.",
-            icon: "💖",
+            icon: "static/icons/Uhhh.png",
             status: false,
             hidden: true,
             notified: false
@@ -598,7 +598,7 @@ const achievements = [
         {
             name: "Nuke Kaboom",
             description: "Collect a Thomas Nuke pog.",
-            icon: "🚂",
+            icon: "static/icons/Nuke_Kaboom.png",
             status: false,
             hidden: false,
             notified: false
@@ -622,7 +622,7 @@ const achievements = [
         {
             name: "buttr",
             description: "Get a Butter Pog combo.",
-            icon: "🧈",
+            icon: "static/icons/buttr.png",
             status: false,
             hidden: false,
             notified: false
@@ -630,7 +630,7 @@ const achievements = [
         {
             name: "OAUTH",
             description: "Get a Formbar pog combo.",
-            icon: "📊",
+            icon: "static/icons/OAUTH.png",
             status: false,
             hidden: false,
             notified: false
