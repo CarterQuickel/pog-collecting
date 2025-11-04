@@ -38,7 +38,7 @@ const achievements = [
         {
             name: "Full Combo!",
             description: "Get a 3-item combo.",
-            icon: "3️⃣",
+            icon: "static/icons/Full_Combo.png",
             status: false,
             hidden: false,
             notified: false
@@ -46,7 +46,7 @@ const achievements = [
         {
             name: "Coneisseur",
             description: "Have 6 3-item combos.",
-            icon: "6️⃣",
+            icon: "static/icons/Coneisseur.png",
             status: false,
             hidden: false,
             notified: false
@@ -54,7 +54,7 @@ const achievements = [
         {
             name: "Candid Coiner",
             description: "Have 60 3-item combos.",
-            icon: "6️⃣0️⃣",
+            icon: "static/icons/Candid_Coiner.png",
             status: false,
             hidden: true,
             notified: false
@@ -62,7 +62,7 @@ const achievements = [
         {
             name: "Programming Prodigy",
             description: "Have 1100100 CP pogs.",
-            icon: "💻",
+            icon: "static/icons/Programming_Prodigy.png",
             status: false,
             hidden: false,
             notified: false
@@ -70,7 +70,7 @@ const achievements = [
         {
             name: "6-7",
             description: "Have 6, then 7, items in your inventory.",
-            icon: "🔥",
+            icon: "static/icons/67.png",
             status: false,
             hidden: true,
             notified: false
@@ -78,7 +78,7 @@ const achievements = [
         {
             name: "Pristine",
             description: "Have a copper, silver, and gold pog all at once.",
-            icon: "✨",
+            icon: "static/icons/Pristine.png",
             status: false,
             hidden: false,
             notified: false
@@ -86,7 +86,7 @@ const achievements = [
         {
             name: "Exquisite",
             description: "Have a copper, silver, gold, and diamond pog all at once.",
-            icon: "💎",
+            icon: "static/icons/Exquisite.png",
             status: false,
             hidden: false,
             notified: false
@@ -94,7 +94,7 @@ const achievements = [
         {
             name: "Mythical",
             description: "Have a copper, silver, gold, diamond, and astral pog all at once.",
-            icon: "🌌",
+            icon: "static/icons/Mythical.png",
             status: false,
             hidden: false,
             notified: false
@@ -102,7 +102,7 @@ const achievements = [
         {
             name: "Mr. Smith",
             description: "Have one of each tier pog at once.",
-            icon: "🎮",
+            icon: "static/icons/Mr_Smith.png",
             status: false,
             hidden: true,
             notified: false
@@ -110,7 +110,7 @@ const achievements = [
         {
             name: "Hoarder",
             description: "Fill your inventory to max when your inventory is greater than 60.",
-            icon: "📦",
+            icon: "static/icons/Hoarder.png",
             status: false,
             hidden: false,
             notified: false
@@ -118,7 +118,7 @@ const achievements = [
         {
             name: "Insane Hoarder",
             description: "Own 100 pogs.",
-            icon: "🎁",
+            icon: "static/icons/Insane_Hoarder.png",
             status: false,
             hidden: true,
             notified: false
@@ -129,7 +129,7 @@ const achievements = [
         {
             name: "Rookie",
             description: "Reach level 5.",
-            icon: "🎖️",
+            icon: "static/icons/Rookie.png",
             status: false,
             hidden: false,
             notified: false
@@ -137,7 +137,7 @@ const achievements = [
         {
             name: "Getting Better",
             description: "Reach level 10.",
-            icon: "🎗️",
+            icon: "static/icons/Getting_Better.png",
             reward: "Combo Multiplier II",
             status: false,
             hidden: false,
@@ -146,7 +146,7 @@ const achievements = [
         {
             name: "Experienced",
             description: "Reach level 15.",
-            icon: "🏅",
+            icon: "static/icons/Experienced.png",
             reward: "Combo Multiplier III",
             status: false,
             hidden: false,
@@ -155,7 +155,7 @@ const achievements = [
         {
             name: "Veteran",
             description: "Reach level 25.",
-            icon: "🥇",
+            icon: "static/icons/Veteran.png",
             status: false,
             hidden: false,
             notified: false
@@ -163,7 +163,7 @@ const achievements = [
         {
             name: "Professional",
             description: "Reach level 40.",
-            icon: "🕶️",
+            icon: "static/icons/Professional.png",
             status: false,
             hidden: false,
             notified: false
@@ -171,7 +171,7 @@ const achievements = [
         {
             name: "Halfway There",
             description: "Reach level 50.",
-            icon: "🥈",
+            icon: "static/icons/Halfway_There.png",
             status: false,
             hidden: false,
             notified: false
@@ -179,7 +179,7 @@ const achievements = [
         {
             name: "Itsumi!",
             description: "Reach level 64.",
-            icon: "🍄",
+            icon: "static/icons/Itsumi!.png",
             status: false,
             hidden: false,
             notified: false
@@ -187,7 +187,7 @@ const achievements = [
         {
             name: "Prestigious",
             description: "Reach level 75.",
-            icon: "👑",
+            icon: "static/icons/Prestigious.png",
             status: false,
             hidden: false,
             notified: false,
@@ -195,7 +195,7 @@ const achievements = [
         {
             name: "No-Life",
             description: "Reach level 100.",
-            icon: "💀",
+            icon: "static/icons/No-Life.png",
             status: false,
             hidden: true,
             notified: false
@@ -203,7 +203,7 @@ const achievements = [
         {
             name: "What color is grass?",
             description: "Reach the max level.",
-            icon: "🔵",
+            icon: "static/icons/What_color_is_grass.png",
             status: false,
             hidden: true,
             notified: false
@@ -214,7 +214,7 @@ const achievements = [
         {
             name: "First Steps",
             description: "Open your first crate.",
-            icon: "🏆",
+            icon: "static/icons/First_Steps.png",
             status: false,
             hidden: false,
             notified: false
@@ -222,7 +222,7 @@ const achievements = [
         {
             name: "Pogger",
             description: "Open 100 crates.",
-            icon: "😲",
+            icon: "static/icons/Pogger.png",
             reward: "None",
             status: false,
             hidden: false,
@@ -231,7 +231,7 @@ const achievements = [
         {
             name: "Merge Maniac",
             description: "Merge your first pog.",
-            icon: "🌀",
+            icon: "static/icons/Merge_Maniac.png",
             status: false,
             hidden: false,
             notified: false
@@ -239,7 +239,7 @@ const achievements = [
         {
             name: "Merge Monster",
             description: "Merge 30 pogs.",
-            icon: "👹",
+            icon: "static/icons/Merge_Monster.png",
             status: false,
             hidden: false,
             notified: false
@@ -247,7 +247,7 @@ const achievements = [
         {
             name: "Merge Master",
             description: "Merge 80 pogs.",
-            icon: "👺",
+            icon: "static/icons/Merge_Master.png",
             status: false,
             hidden: false,
             notified: false
@@ -255,7 +255,7 @@ const achievements = [
         {
             name: "God",
             description: "Merge into a God pog.",
-            icon: "🪙",
+            icon: "static/icons/God.png",
             status: false,
             hidden: true,
             notified: false
@@ -263,7 +263,7 @@ const achievements = [
         {
             name: "Granter",
             description: "Get a 1-star dragon pog.",
-            icon: "I",
+            icon: "static/icons/DB_1.png",
             status: false,
             hidden: false,
             notified: false
@@ -271,7 +271,7 @@ const achievements = [
         {
             name: "Achiever",
             description: "Get a 2-star dragon pog.",
-            icon: "II",
+            icon: "static/icons/DB_2.png",
             status: false,
             hidden: false,
             notified: false
@@ -279,7 +279,7 @@ const achievements = [
         {
             name: "Successor",
             description: "Get a 3-star dragon pog.",
-            icon: "III",
+            icon: "static/icons/DB_3.png",
             status: false,
             hidden: false,
             notified: false
@@ -287,7 +287,7 @@ const achievements = [
         {
             name: "Victor",
             description: "Get a 4-star dragon pog.",
-            icon: "IV",
+            icon: "static/icons/DB_4.png",
             status: false,
             hidden: false,
             notified: false
@@ -295,7 +295,7 @@ const achievements = [
         {
             name: "Conqueror",
             description: "Get a 5-star dragon pog.",
-            icon: "V",
+            icon: "static/icons/DB_5.png",
             status: false,
             hidden: false,
             notified: false
@@ -303,7 +303,7 @@ const achievements = [
         {
             name: "Dragon Lord",
             description: "Get a 6-star dragon pog.",
-            icon: "VI",
+            icon: "static/icons/DB_6.png",
             status: false,
             hidden: false,
             notified: false
@@ -311,7 +311,7 @@ const achievements = [
         {
             name: "Above All",
             description: "Get a 7-star dragon pog.",
-            icon: "VII",
+            icon: "static/icons/DB_7.png",
             status: false,
             hidden: false,
             notified: false
@@ -319,7 +319,7 @@ const achievements = [
         {
             name: "Zeno",
             description: "Have one of each-star dragon pog.",
-            icon: "X",
+            icon: "static/icons/DB_All.png",
             status: false,
             hidden: true,
             notified: false
@@ -328,7 +328,7 @@ const achievements = [
         {
             name: "Completionist",
             description: "Unlock all main achievements.",
-            icon: "🌟",
+            icon: "static/icons/Completionist.png",
             status: false,
             hidden: false,
             notified: false
@@ -336,7 +336,7 @@ const achievements = [
         {
             name: "Secret Achiever",
             description: "Unlock all secret achievements.",
-            icon: "🤫🧏‍♂️",
+            icon: "static/icons/Secret_Achiever.png",
             status: false,
             hidden: true,
             notified: false
@@ -344,9 +344,9 @@ const achievements = [
         {
             name: "Platinum Trophy",
             description: "Unlock all achievements.",
-            icon: "💯",
+            icon: "static/icons/Platinum_Trophy.png",
             status: false,
-            hidden: true,
+            hidden: false,
             notified: false
         }
     ],
@@ -355,7 +355,7 @@ const achievements = [
         {
             name: "69",
             description: "Have exactly 69 pogs at once.",
-            icon: "🌈",
+            icon: "static/icons/69.png",
             status: false,
             hidden: true,
             notified: false
@@ -363,7 +363,7 @@ const achievements = [
         {
             name: "420",
             description: "Sell enough pogs to gain back a TOTAL of 420 digipogs.",
-            icon: "🗣️",
+            icon: "static/icons/420.png",
             status: false,
             hidden: true,
             notified: false
@@ -371,7 +371,7 @@ const achievements = [
         {
             name: "Wealthy",
             description: "Make your first 1000 dollars.",
-            icon: "💵",
+            icon: "static/icons/Wealthy.png",
             status: false,
             hidden: false,
             notified: false
@@ -379,7 +379,7 @@ const achievements = [
         {
             name: "Rich",
             description: "Have 1 million dollars at once.",
-            icon: "💴",
+            icon: "static/icons/Rich.png",
             status: false,
             hidden: false,
             notified: false
@@ -387,7 +387,7 @@ const achievements = [
         {
             name: "Elon",
             description: "Have 100 million dollars at once.",
-            icon: "💰",
+            icon: "static/icons/Elon.png",
             status: false,
             hidden: false,
             notified: false
@@ -395,7 +395,7 @@ const achievements = [
         {
             name: "Entrepreneur",
             description: "Make 2000 cash a second.",
-            icon: "🏦",
+            icon: "static/icons/Entrepreneur.png",
             status: false,
             hidden: false,
             notified: false
@@ -403,7 +403,7 @@ const achievements = [
         {
             name: "Tycoon",
             description: "Make 10000 cash a second.",
-            icon: "🤑",
+            icon: "static/icons/Tycoon.png",
             status: false,
             hidden: false,
             notified: false
@@ -411,7 +411,7 @@ const achievements = [
         {
             name: "Pawn Broker",
             description: "Make 50000 cash a second.",
-            icon: "💸",
+            icon: "static/icons/Pawn_Broker.png",
             status: false,
             hidden: false,
             notified: false
@@ -419,7 +419,7 @@ const achievements = [
         {
             name: "Bank Breaker",
             description: "Make 100000 cash a second.",
-            icon: "💳",
+            icon: "static/icons/Bank_Breaker.png",
             status: false,
             hidden: false,
             notified: false
@@ -427,7 +427,7 @@ const achievements = [
         {
             name: "Industrialist",
             description: "Own a Robux pog.",
-            icon: "R$",
+            icon: "static/icons/Industrialist.png",
             status: false,
             hidden: false,
             notified: false
@@ -435,7 +435,7 @@ const achievements = [
         {
             name: "Capitalist",
             description: "Own a V-Bucks pog.",
-            icon: "V$",
+            icon: "static/icons/Capitalist.png",
             status: false,
             hidden: false,
             notified: false
@@ -443,7 +443,7 @@ const achievements = [
         {
             name: "Monopoly",
             description: "Be on the Top 5 leaderboard.",
-            icon: "💹",
+            icon: "static/icons/Monopoly.png",
             status: false,
             hidden: false,
             notified: false
@@ -451,7 +451,7 @@ const achievements = [
         {
             name: "Monarch",
             description: "Be the Top 1 on the leaderboard.",
-            icon: "€£¥",
+            icon: "static/icons/Monarch.png",
             status: false,
             hidden: false,
             notified: false
@@ -462,15 +462,15 @@ const achievements = [
         {
             name: "Nerdy Inspector",
             description: "Go to the patch notes page.",
-            icon: "🤓",
+            icon: "static/icons/Nerdy_Inspector.png",
             status: false,
-            hidden: true,
+            hidden: false,
             notified: false
         },
         {
             name: "Chicken Jockey!",
             description: "Get a chicken jockey.",
-            icon: "🐔",
+            icon: "static/icons/Chicken_Jockey!.png",
             status: false,
             hidden: true,
             notified: false
@@ -478,7 +478,7 @@ const achievements = [
         {
             name: "An Ender Pearl",
             description: "Get an endermen combo.",
-            icon: "🟢",
+            icon: "static/icons/An_Ender_Pearl.png",
             status: false,
             hidden: false,
             notified: false
@@ -486,7 +486,7 @@ const achievements = [
         {
             name: "Soda Pop",
             description: "Get a soda pog combo.",
-            icon: "🥤",
+            icon: "static/icons/Soda_Pop.png",
             status: false,
             hidden: false,
             notified: false
@@ -494,7 +494,7 @@ const achievements = [
         {
             name: "SODA!",
             description: "Get one of each color soda pog.",
-            icon: "🫧",
+            icon: "static/icons/SODA!.png",
             status: false,
             hidden: false,
             notified: false
@@ -502,7 +502,7 @@ const achievements = [
         {
             name: "Sus",
             description: "Have 10 dingus pogs at once.",
-            icon: "👽",
+            icon: "static/icons/Sus.png",
             status: false,
             hidden: false,
             notified: false
@@ -510,7 +510,7 @@ const achievements = [
         {
             name: "Elden Lord",
             description: "Get an Elden Ring pog combo.",
-            icon: "⚔️",
+            icon: "static/icons/Elden_Lord.png",
             status: false,
             hidden: false,
             notified: false
@@ -526,7 +526,7 @@ const achievements = [
         {
             name: "Ultimate Despair",
             description: "Get 13 DR (danganronpa) pogs",
-            icon: "🔪",
+            icon: "static/icons/Ultimate_Despair.png",
             status: false,
             hidden: true,
             notified: false
@@ -534,7 +534,7 @@ const achievements = [
         {
             name: "Shaw!",
             description: "Get a Hornet pog.",
-            icon: "🕷️",
+            icon: "static/icons/Shaw!.png",
             status: false,
             hidden: false,
             notified: false
@@ -542,7 +542,7 @@ const achievements = [
         {
             name: "Uhhh",
             description: "Get an I Heart CP pog combo.",
-            icon: "💖",
+            icon: "static/icons/Uhhh.png",
             status: false,
             hidden: true,
             notified: false
@@ -590,7 +590,7 @@ const achievements = [
         {
             name: "I am Vengeance",
             description: "Get 4 Batman Robin pog combos.",
-            icon: "🦇",
+            icon: "static/icons/I_Am_Vengeance.png",
             status: false,
             hidden: false,
             notified: false
@@ -598,7 +598,7 @@ const achievements = [
         {
             name: "Nuke Kaboom",
             description: "Collect a Thomas Nuke pog.",
-            icon: "🚂",
+            icon: "static/icons/Nuke_Kaboom.png",
             status: false,
             hidden: false,
             notified: false
@@ -622,7 +622,7 @@ const achievements = [
         {
             name: "buttr",
             description: "Get a Butter Pog combo.",
-            icon: "🧈",
+            icon: "static/icons/buttr.png",
             status: false,
             hidden: false,
             notified: false
@@ -630,7 +630,7 @@ const achievements = [
         {
             name: "OAUTH",
             description: "Get a Formbar pog combo.",
-            icon: "📊",
+            icon: "static/icons/OAUTH.png",
             status: false,
             hidden: false,
             notified: false
@@ -665,15 +665,16 @@ function renderCollection () {
             achievementElement.style.backgroundColor = "#8e6fa9"; 
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
+            const img = document.createElement("img")
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
         } else {
             // Render normal visible achievements
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
@@ -704,14 +705,14 @@ function renderLevel () {
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
         } else {
             // Render normal visible achievements
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
@@ -742,14 +743,14 @@ function renderProgression () {
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
         } else {
             // Render normal visible achievements
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
@@ -780,14 +781,14 @@ function renderEconomy () {
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
         } else {
             // Render normal visible achievements
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
@@ -818,14 +819,14 @@ function renderUnique() {
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
         } else {
             // Render normal visible achievements
             achievementElement.innerHTML = `
-                <span class="icon">${achievement.icon}</span><br>
+                <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
                 <span class="description">${achievement.description}</span><br>
             `;
@@ -1517,7 +1518,7 @@ function processAchievementQueue() {
 
     slider.innerHTML = `
        <span class="title">Achievement Unlocked!</span><br>
-       <span class="icon">${achievement.icon}</span><br>
+       <img src="${achievement.icon}" width="50" height="50"><br>
        <span class="name">${achievement.name}</span><br>
        <span class="description">${achievement.description}</span><br>
     `;

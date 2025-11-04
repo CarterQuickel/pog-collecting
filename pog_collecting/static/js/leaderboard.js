@@ -36,6 +36,7 @@ document.querySelectorAll(".infobtn").forEach(button => {
                                 <h3>Crates Opened</h3> <p>${player.cratesOpened} crates</p>
                             </div>
                           </div>
+                          <h3>Pogs in Inventory</h3> <p>${sortedI.length}</p>
                           <h3>Inventory</h3> <p>${sortedI.length > 0 ? displayed : "No items"}</p>`;
     })
 });
