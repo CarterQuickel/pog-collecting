@@ -231,6 +231,22 @@ option {
     border: 4px solid black;
 }
 
+.buym {
+    border: 4px solid black;
+    border-radius: 45px;
+    width: 100px;
+    padding: 8px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+.buym:hover {
+    background-color: lightgray;
+}
+
 /* crate 1 */
 #crate1 {
     background-color: #f0f0f0;
