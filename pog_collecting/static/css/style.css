@@ -152,6 +152,19 @@ ul {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+#sellAll {
+    border: 2px solid black;
+    border-radius: 20px;
+    margin-top: 15px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 100px;
+    background-color: #659c54;
+}
+
+#sellAll:hover {
+    background-color: #568548;
+}
+
 option {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
@@ -196,7 +209,7 @@ option {
     right: 20px;
     background-color: #7d6381;
     width: 400px;
-    min-height: 800px;
+    min-height: 880px;
     height: 90vh;
     border-radius: 10px;
     text-align: center;

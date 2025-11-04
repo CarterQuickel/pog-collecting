@@ -91,12 +91,10 @@ function updateMoney() {
 }
 
 // sell item
-function sellItem(index, sellvalue) {
-    if (index < 0 || index >= inventory.length) return;
-    const item = inventory[index];
+function sellItem(id, sellvalue) {
+    const index = inventory.findIndex(item => item.id === id)
     money += sellvalue;
     totalSold++;
-
     inventory.splice(index, 1);
     // recalc income and refresh UI
     userIncome = getTotalIncome();
@@ -146,23 +144,23 @@ function merge(bronze, silver, gold, diamond, astral) {
     // only sell the amount needed
     for (let i = 0; i < inventory.length && sold < mergeAmount; i++) {
         if (inventory[i].name === "Bronze Pog" && bronze) {
-            sellItem(i, 0);
+            sellItem(inventory[i].id, 0);
             sold++;
             i--;
         } else if (inventory[i].name === "Silver Pog" && silver) {
-            sellItem(i, 0);
+            sellItem(inventory[i].id, 0);
             sold++;
             i--;
         } else if (inventory[i].name === "Gold Pog" && gold) {
-            sellItem(i, 0);
+            sellItem(inventory[i].id, 0);
             sold++;
             i--;
         } else if (inventory[i].name === "Diamond Pog" && diamond) {
-            sellItem(i, 0);
+            sellItem(inventory[i].id, 0);
             sold++;
             i--;
         } else if (inventory[i].name === "Astral Pog" && astral) {
-            sellItem(i, 0);
+            sellItem(inventory[i].id, 0);
             sold++;
             i--;
         }
@@ -236,11 +234,26 @@ function refreshInventory() {
             <li class='list' style="color: ${item.color}">${item.value}</li>
             <li class='list' style="color: green">$${hasBonus ? Math.round(item.income * bonusMulti) : item.income}/s</li>
         </ul>
-        <button id="sellbtn" onclick="sellItem(${index}, sellvalue)">Sell for $${sellvalue}</button>
+        <button id="sellbtn" onclick="sellItem(${item.id}, sellvalue)">Sell for $${sellvalue}</button>
         ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
         </div>
     `}).join("");
 }
+
+//sell all button
+document.getElementById("sellAll").addEventListener("click", () => {
+    const initialInv = inventory.length
+    for (let i = 0; i < initialInv; i++) {
+        if (i = inventory.length) {
+            i = 0
+        }
+        const item = inventory[i];
+        if (inventory.length == 0) {
+            break
+        }
+        sellItem(i, item.income * 105) //sellvalue
+    }
+});
 
 //first time call
 refreshInventory();
@@ -285,6 +298,9 @@ function openCrate(cost, index) {
 
                 // find rarity color details
                 const match = rarityColor.find(r => r.name === rarity.rarity);
+
+                //id
+                const id = Math.random() * 100000
 
                 // rarity color
                 color = match ? match.color : "white";
@@ -337,7 +353,7 @@ function openCrate(cost, index) {
             }
                 // Add result to inventory
                 if (rarity.name != "Dragon Ball") {
-                    inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity });
+                    inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity, id: id });
                 }
 
                 // XP gain
@@ -469,7 +485,6 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
 });
 
 document.getElementById("leaderboardButton").addEventListener("click", () => {
-    window.location.href = "/leaderboard";
     // fetch to /datasave
     fetch('/datasave', {
         method: 'POST',
@@ -497,6 +512,7 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
         .catch(err => {
             console.error("Error saving data:", err);
         });
+    window.location.href = "/leaderboard";
 });
 
 // mode toggle
