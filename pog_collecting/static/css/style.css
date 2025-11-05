@@ -199,12 +199,13 @@ option {
     right: 20px;
     background-color: #7d6381;
     width: 400px;
-    min-height: 1075px;
-    height: 90vh;
+    padding-bottom: 10px;
+    min-height: auto;
+    height: auto;
     border-radius: 10px;
     text-align: center;
     position: static;
-    flex-shrink: 0;
+    flex-shrink: 1;
 }
 
 .crate {

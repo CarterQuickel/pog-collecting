@@ -377,6 +377,60 @@ document.getElementById("crate3").addEventListener("click", () => openCrate(crat
 document.getElementById("crate4").addEventListener("click", () => openCrate(crates[Object.keys(crates)[3]].price, 3));
 document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
 
+//crate open 5 events
+document.getElementById("crate1_b5").addEventListener("click", () => {
+    for (let i = 0; i < 5; i++) {
+        openCrate(crates[Object.keys(crates)[0]].price, 0);
+    }
+});
+document.getElementById("crate2_b5").addEventListener("click", () => {
+    for (let i = 0; i < 5; i++) {
+        openCrate(crates[Object.keys(crates)[1]].price, 1);
+    }
+});
+document.getElementById("crate3_b5").addEventListener("click", () => {
+    for (let i = 0; i < 5; i++) {
+        openCrate(crates[Object.keys(crates)[2]].price, 2);
+    }
+});
+document.getElementById("crate4_b5").addEventListener("click", () => {
+    for (let i = 0; i < 5; i++) {
+        openCrate(crates[Object.keys(crates)[3]].price, 3);
+    }
+});
+document.getElementById("crate5_b5").addEventListener("click", () => {
+    for (let i = 0; i < 5; i++) {
+        openCrate(crates[Object.keys(crates)[4]].price, 4);
+    }
+});
+
+//crate open 10 events
+document.getElementById("crate1_b10").addEventListener("click", () => {
+    for (let i = 0; i < 10; i++) {
+        openCrate(crates[Object.keys(crates)[0]].price, 0);
+    }
+});
+document.getElementById("crate2_b10").addEventListener("click", () => {
+    for (let i = 0; i < 10; i++) {
+        openCrate(crates[Object.keys(crates)[1]].price, 1);
+    }
+});
+document.getElementById("crate3_b10").addEventListener("click", () => {
+    for (let i = 0; i < 10; i++) {
+        openCrate(crates[Object.keys(crates)[2]].price, 2);
+    }
+});
+document.getElementById("crate4_b10").addEventListener("click", () => {
+    for (let i = 0; i < 10; i++) {
+        openCrate(crates[Object.keys(crates)[3]].price, 3);
+    }
+});
+document.getElementById("crate5_b10").addEventListener("click", () => {
+    for (let i = 0; i < 10; i++) {
+        openCrate(crates[Object.keys(crates)[4]].price, 4);
+    }
+});
+
 // level up
 function levelup() {
     while (xp >= maxXP) {
