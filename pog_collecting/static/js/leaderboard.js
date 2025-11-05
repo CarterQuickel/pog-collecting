@@ -29,6 +29,7 @@ document.querySelectorAll(".infobtn").forEach(button => {
                                 <h3>Score</h3> <p>${player.score}</p>
                                 <h3>Level</h3> <p>${player.level}</p>
                                 <h3>XP</h3> <p>${player.xp}/${player.maxxp}</p>
+                                <h3>Wishes</h3> <p>${player.wish}</p>
                             </div>
                             <div>
                                 <h3>Income</h3> <p>$${player.income}/s</p>

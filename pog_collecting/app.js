@@ -87,6 +87,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     totalSold INTEGER,
     cratesOpened INTEGER,
     pogamount INTEGER,
+    wish INTEGER,
     displayname TEXT UNIQUE
 
 )`);
@@ -134,7 +135,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, wish, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -147,6 +148,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.totalSold,
                             req.session.user.cratesOpened,
                             req.session.user.pogamount,
+                            req.session.user.wish,
                             displayName
                         ],
                         function (err) {
@@ -172,7 +174,8 @@ app.get('/', isAuthenticated, (req, res) => {
             income: req.session.user.income || 0,
             totalSold: req.session.user.totalSold || 0,
             cratesOpened: req.session.user.cratesOpened || 0,
-            pogamount: req.session.user.pogamount || 0
+            pogamount: req.session.user.pogamount || 0,
+            wish: req.session.user.wish || 0
         };
 
         // load user data from database
@@ -194,7 +197,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     income: row.income,
                     totalSold: row.totalSold,
                     cratesOpened: row.cratesOpened,
-                    pogamount: row.pogamount
+                    pogamount: row.pogamount,
+                    wish: row.wish
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
@@ -210,7 +214,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     income: 0,
                     totalSold: 0,
                     cratesOpened: 0,
-                    pogamount: 0
+                    pogamount: 0,
+                    wish: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
@@ -259,7 +264,8 @@ app.post('/datasave', (req, res) => {
         income: req.body.income,
         totalSold: req.body.totalSold,
         cratesOpened: req.body.cratesOpened,
-        pogamount: req.body.pogAmount
+        pogamount: req.body.pogAmount,
+        wish: req.body.wish
     }
 
 
@@ -282,9 +288,10 @@ app.post('/datasave', (req, res) => {
                 userSave.totalSold,
                 userSave.cratesOpened,
                 userSave.pogamount,
+                userSave.wish,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, wish = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -314,7 +321,8 @@ app.get('/login', (req, res) => {
             income: tokenData.income || 0,
             totalSold: tokenData.totalSold || 0,
             cratesOpened: tokenData.cratesOpened || 0,
-            pogamount: tokenData.pogamount || 0
+            pogamount: tokenData.pogamount || 0,
+            wish: tokenData.wish || 0
         };
         res.redirect('/');
     } else {

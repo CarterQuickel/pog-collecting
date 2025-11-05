@@ -9,7 +9,7 @@ crates = [
         },
         {
             name: "Common",
-            chance: 0.3
+            chance: 0.7
         },
         {
             name: "Uncommon",
@@ -23,10 +23,6 @@ crates = [
             name: "Mythic",
             chance: 0.06
         },
-        {
-            name: "Unknown",
-            chance: 0.4
-        }
         ]
     },
     {
@@ -39,7 +35,7 @@ crates = [
         },
         {
             name: "Common",
-            chance: 0.2
+            chance: 0.6
         },
         {
             name: "Uncommon",
@@ -53,10 +49,6 @@ crates = [
             name: "Mythic",
             chance: 0.11
         },
-        {
-            name: "Unknown",
-            chance: 0.4
-        }
         ]
     },
     {
@@ -69,7 +61,7 @@ crates = [
             },
             {
                 name: "Common",
-                chance: 0.0
+                chance: 0.4
             },
             {
                 name: "Uncommon",
@@ -83,10 +75,6 @@ crates = [
                 name: "Mythic",
                 chance: 0.12
             },
-            {
-                name: "Unknown",
-                chance: 0.4
-            }
         ]
     },
     {
@@ -99,7 +87,7 @@ crates = [
             },
             {
                 name: "Common",
-                chance: 0.0
+                chance: 0.4
             },
             {
                 name: "Uncommon",
@@ -112,16 +100,12 @@ crates = [
             {
                 name: "Mythic",
                 chance: 0.24
-            },
-            {
-                name: "Unknown",
-                chance: 0.4
             }
         ]
     },
     {
         name: "godly crate",
-        price: 10000,
+        price: 7000,
         rarities: [
             {
                 name: "Trash",
@@ -129,7 +113,7 @@ crates = [
             },
             {
                 name: "Common",
-                chance: 0.0
+                chance: 0.4
             },
             {
                 name: "Uncommon",
@@ -142,10 +126,6 @@ crates = [
             {
                 name: "Mythic",
                 chance: 0.6
-            },
-            {
-                name: "Unknown",
-                chance: 0.4
             }
         ]
     }
