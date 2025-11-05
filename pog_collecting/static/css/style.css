@@ -16,7 +16,7 @@ h3 {
     background-color: #5f4b63;
     border-radius: 12px;
     padding: 10px;
-    width: 360px;
+    width: 200px;
     border: 3px solid black;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: larger;
@@ -26,24 +26,20 @@ h3 {
     background-color: #5f4b63;
     border-radius: 12px;
     padding: 10px;
-    width: 360px;
+    width: 200px;
     border: 3px solid black;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: larger;
 }
 
 #leaderboardButton {
-    background-color: #a1a1a1;
-    border: 4px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    width: 150px;
-    margin: 0px 10px 0px 0px;
-    text-align: center;
+    background-color: #5f4b63;
+    border-radius: 12px;
+    padding: 10px;
+    width: 200px;
+    border: 3px solid black;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-style: bold;
-    font-size: 22px;
-    cursor: pointer;
+    font-size: larger;
 }
 
 #income {
@@ -189,12 +185,6 @@ option {
     background-color: #d4bebe;
 }
 
-#locators {
-    display: flex;
-    gap: 5px;
-    margin: 10px;
-}
-
 #sortcont {
     background-color: #3e1e42;
     margin: 10px;
@@ -209,7 +199,7 @@ option {
     right: 20px;
     background-color: #7d6381;
     width: 400px;
-    min-height: 880px;
+    min-height: 1075px;
     height: 90vh;
     border-radius: 10px;
     text-align: center;
@@ -243,7 +233,19 @@ option {
     scale: 0.8;
 }
 
-.buym:hover {
+#crate1_b5 {
+    background-color: #f0f0f0;
+}
+
+#crate1_b10 {
+    background-color: #f0f0f0;
+}
+
+#crate1_b5:hover {
+    background-color: lightgray;
+}
+
+#crate1_b10:hover {
     background-color: lightgray;
 }
 
@@ -256,14 +258,45 @@ option {
     background-color: lightgray;
 }
 
+#crate2_b5 {
+    background-color: #4463eb;
+}
+
+#crate2_b10 {
+    background-color: #4463eb;
+}
+
+#crate2_b5:hover {
+    background-color: blue;
+}
+
+#crate2_b10:hover {
+    background-color: blue;
+}
+
 /* crate 2 */
 #crate2 {
     background-color: #4463eb;
-
 }
 
 #crate2:hover {
     background-color: blue;
+}
+
+#crate3_b5 {
+    background-color: #ba61d3;
+}
+
+#crate3_b10 {
+    background-color: #ba61d3;
+}
+
+#crate3_b5:hover {
+    background-color: purple;
+}
+
+#crate3_b10:hover {
+    background-color: purple;
 }
 
 /* crate 3 */
@@ -275,6 +308,22 @@ option {
     background-color: purple;
 }
 
+#crate4_b5 {
+    background-color: #f7ca50;
+}
+
+#crate4_b10 {
+    background-color: #f7ca50;
+}
+
+#crate4_b5:hover {
+    background-color: yellow;
+}
+
+#crate4_b10:hover {
+    background-color: yellow;
+}
+
 /* crate 4 */
 #crate4 {
     background-color: #f7ca50;
@@ -282,6 +331,22 @@ option {
 
 #crate4:hover {
     background-color: yellow;
+}
+
+#crate5_b5 {
+    background-color: #b11b1b;
+}
+
+#crate5_b10 {
+    background-color: #b11b1b;
+}
+
+#crate5_b5:hover {
+    background-color: rgb(100, 19, 19);
+}
+
+#crate5_b10:hover {
+    background-color: rgb(100, 19, 19);
 }
 
 /* crate 5 */
@@ -464,7 +529,8 @@ progress::-webkit-progress-value {
 }
 
 #leaderboardButton:hover {
-    background-color: gray;
+    background-color: #7d6381;
+    cursor: pointer;
 }
 
 /* light and dark mode btn */
