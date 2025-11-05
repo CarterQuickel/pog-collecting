@@ -12,7 +12,6 @@ h3 {
 }
 
 #achievementsButton {
-    margin-top: 10px;
     background-color: #5f4b63;
     border-radius: 12px;
     padding: 10px;
@@ -23,6 +22,7 @@ h3 {
 }
 
 #patchNotesButton {
+    margin-top: 0px; /* idk why bro */
     background-color: #5f4b63;
     border-radius: 12px;
     padding: 10px;
