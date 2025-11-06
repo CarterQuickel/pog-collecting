@@ -635,3 +635,46 @@ input:checked+.slider:before {
 #useWish:hover {
     background-color: #ffb800;
 }
+
+#customConfirm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.confirm-content {
+    background-color: #ffe600;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 20px;
+    border: 3px solid red;
+    border-radius: 5px;
+    text-align: center;
+    color: red; /* Custom text color */
+}
+
+.confirmbtn {
+    background-color: #ffe600;
+    border: 4px solid red;
+    color: red;
+    border-radius: 55px;
+    height: 60px;
+    width: 100px;
+    padding: 8px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+.confirmbtn:hover {
+    background-color: #ffb800;
+}

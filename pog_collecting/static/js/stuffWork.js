@@ -131,6 +131,28 @@ function update() {
     //update wish visibility
     document.getElementById("useWish").style.display = wish > 0 ? "inline-block" : "none";
 
+    //crate 1 text
+    document.getElementById("crate1").innerHTML = `Common Crate ($${abbreviateNumber(crates[0].price)})`;
+
+    //crate 2 text
+    document.getElementById("crate2").innerHTML = `Rare Crate ($${abbreviateNumber(crates[1].price)})`;
+
+    //crate 3 text
+    document.getElementById("crate3").innerHTML = `Epic Crate ($${abbreviateNumber(crates[2].price)})`;
+
+    //crate 4 text
+    document.getElementById("crate4").innerHTML = `Legendary Crate ($${abbreviateNumber(crates[3].price)})`;
+
+    //crate 5 text
+    document.getElementById("crate5").innerHTML = `Mythic Crate ($${abbreviateNumber(crates[4].price)})`;
+
+    if (inventory.length >= 999) {
+        while (inventory.length > 999) {
+            const item = inventory[0];
+            sellItem(item.id, item.income * 105);
+        }
+    }
+
     // change inventory text color if full
     if (inventory.length >= Isize) {
         document.getElementById("invTxt").style.color = "red";
@@ -285,6 +307,10 @@ function refreshInventory() {
 
 //sell all button
 document.getElementById("sellAll").addEventListener("click", () => {
+    confirmation = confirm("Are you sure you want to sell all items in your inventory?");
+    if (confirmation == false) {
+        return;
+    }
     const initialInv = inventory.length
     for (let i = 0; i < initialInv; i++) {
         if (i = inventory.length) {
@@ -317,6 +343,10 @@ setInterval(() => {
 // crate opening function
 function openCrate(cost, index) {
     if (inventory.length >= Isize || money < cost) {
+        return;
+    }
+    if (inventory.length >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
         return;
     }
 
@@ -397,26 +427,86 @@ document.getElementById("crate5").addEventListener("click", () => openCrate(crat
 
 //crate open 5 events
 document.getElementById("crate1_b5").addEventListener("click", () => {
+    if (inventory.length + 5 > Isize) {
+        alert("Not enough inventory space to open 5 crates!");
+        return;
+    }
+    if (money < crates[Object.keys(crates)[0]].price * 5) {
+        alert("Not enough money to open 5 crates!");
+        return;
+    }
+    if (inventory.length + 5 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 5; i++) {
         openCrate(crates[Object.keys(crates)[0]].price, 0);
     }
 });
 document.getElementById("crate2_b5").addEventListener("click", () => {
+    if (inventory.length + 5 > Isize) {
+        alert("Not enough inventory space to open 5 crates!");
+        return;
+    }
+    if (money < crates[Object.keys(crates)[1]].price * 5) {
+        alert("Not enough money to open 5 crates!");
+        return;
+    }
+    if (inventory.length + 5 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 5; i++) {
         openCrate(crates[Object.keys(crates)[1]].price, 1);
     }
 });
 document.getElementById("crate3_b5").addEventListener("click", () => {
+    if (inventory.length + 5 > Isize) {
+        alert("Not enough inventory space to open 5 crates!");
+        return;
+    }
+    if (money < crates[Object.keys(crates)[2]].price * 5) {
+        alert("Not enough money to open 5 crates!");
+        return;
+    }
+    if (inventory.length + 5 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 5; i++) {
         openCrate(crates[Object.keys(crates)[2]].price, 2);
     }
 });
 document.getElementById("crate4_b5").addEventListener("click", () => {
+    if (inventory.length + 5 > Isize) {
+        alert("Not enough inventory space to open 5 crates!");
+        return;
+    }
+    if (money < crates[Object.keys(crates)[3]].price * 5) {
+        alert("Not enough money to open 5 crates!");
+        return;
+    }
+    if (inventory.length + 5 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 5; i++) {
         openCrate(crates[Object.keys(crates)[3]].price, 3);
     }
 });
 document.getElementById("crate5_b5").addEventListener("click", () => {
+    if (inventory.length + 5 > Isize) {
+        alert("Not enough inventory space to open 5 crates!");
+        return;
+    }
+    if (money < crates[Object.keys(crates)[4]].price * 5) {
+        alert("Not enough money to open 5 crates!");
+        return;
+    }
+    if (inventory.length + 5 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 5; i++) {
         openCrate(crates[Object.keys(crates)[4]].price, 4);
     }
@@ -424,26 +514,86 @@ document.getElementById("crate5_b5").addEventListener("click", () => {
 
 //crate open 10 events
 document.getElementById("crate1_b10").addEventListener("click", () => {
+    if (inventory.length + 10 > Isize) {
+        alert("Not enough inventory space to open 10 crates!");
+    return;
+    }
+    if (money < crates[Object.keys(crates)[0]].price * 10) {
+        alert("Not enough money to open 10 crates!");
+        return;
+    }
+    if (inventory.length + 10 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 10; i++) {
         openCrate(crates[Object.keys(crates)[0]].price, 0);
     }
 });
 document.getElementById("crate2_b10").addEventListener("click", () => {
+    if (inventory.length + 10 > Isize) {
+        alert("Not enough inventory space to open 10 crates!");
+    return;
+    }
+    if (money < crates[Object.keys(crates)[1]].price * 10) {
+        alert("Not enough money to open 10 crates!");
+        return;
+    }
+    if (inventory.length + 10 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 10; i++) {
         openCrate(crates[Object.keys(crates)[1]].price, 1);
     }
 });
 document.getElementById("crate3_b10").addEventListener("click", () => {
+    if (inventory.length + 10 > Isize) {
+        alert("Not enough inventory space to open 10 crates!");
+    return;
+    }
+    if (money < crates[Object.keys(crates)[2]].price * 10) {
+        alert("Not enough money to open 10 crates!");
+        return;
+    }
+    if (inventory.length + 10 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 10; i++) {
         openCrate(crates[Object.keys(crates)[2]].price, 2);
     }
 });
 document.getElementById("crate4_b10").addEventListener("click", () => {
+    if (inventory.length + 10 > Isize) {
+        alert("Not enough inventory space to open 10 crates!");
+    return;
+    }
+    if (money < crates[Object.keys(crates)[3]].price * 10) {
+        alert("Not enough money to open 10 crates!");
+        return;
+    }
+    if (inventory.length + 10 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 10; i++) {
         openCrate(crates[Object.keys(crates)[3]].price, 3);
     }
 });
 document.getElementById("crate5_b10").addEventListener("click", () => {
+    if (inventory.length + 10 > Isize) {
+        alert("Not enough inventory space to open 10 crates!");
+    return;
+    }
+    if (money < crates[Object.keys(crates)[4]].price * 10) {
+        alert("Not enough money to open 10 crates!");
+        return;
+    }
+    if (inventory.length + 10 >= 999) {
+        alert("Inventory full! Sell some pogs to make space.");
+        return;
+    }
     for (let i = 0; i < 10; i++) {
         openCrate(crates[Object.keys(crates)[4]].price, 4);
     }
@@ -645,3 +795,52 @@ function abbreviateNumber(value) {
 }
 
 const buttons = document.getElementsByTagName("button");
+
+//custom alert function
+function customConfirm(message) {
+    return new Promise((resolve) => {
+    const confirmBox = document.getElementById("customConfirm");
+    const confirmMessage = document.getElementById("confirmMessage");
+    const confirmYes = document.getElementById("customConfirmYes");
+    const confirmNo = document.getElementById("customConfirmNo");
+
+    confirmMessage.textContent = message;
+    confirmBox.style.display = "block";
+
+    confirmYes.onclick = () => {
+        confirmBox.style.display = "none";
+        resolve(true);
+    };
+
+    confirmNo.onclick = () => {
+        confirmBox.style.display = "none";
+        resolve(false);
+    };
+}
+)};
+
+document.getElementById("useWish").addEventListener("click", async () => {
+    let wealth = await customConfirm("Wish of Wealth: Use wish to gain a permanent income increase?");
+    if (wealth) {
+        bonusMulti += 0.2;
+        userIncome = getTotalIncome();
+        wish--;
+    } else {
+        let power = await customConfirm("Wish of Power: Use wish to gain decreased crate costs?");
+        if (power) {
+            for (let crate in crates) {
+                crates[crate].price = Math.floor(crates[crate].price * 0.8);
+            }
+            wish--;
+        } else {
+            let wisdom = await customConfirm("Wish of Wisdom: Use wish to gain a large amount of XP?");
+            if (wisdom) {
+                xp += Math.floor(maxXP * 0.5);
+                levelup();
+                wish--;
+        } else {
+            await customConfirm("No wish was used.");
+        }
+    }
+}
+});
