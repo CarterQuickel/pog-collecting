@@ -48,10 +48,6 @@ let level =  userdata.level || 1;
 
 //etc.
 const mergeAmount = 10;
-let comboCount = userdata.comboCount || 0; // combo count
-let highestCombo = userdata.highestCombo || 0; // highest combo
-window.comboCount = comboCount;
-window.highestCombo = highestCombo;
 
 // inventory size
 let Isize = userdata.Isize || 45;
@@ -73,40 +69,8 @@ let bonusMulti = 0;
 //abbreviation num
 let abbreviatedMoney = 0;
 
-//combo bonus stuff
 
-function updateBonusMulti() {
-    const perCombo = 0.10; 
-    const maxAdd = 3.0;   
-    bonusMulti = 1 + Math.min(maxAdd, comboCount * perCombo);
-}
 
-function updateComboStats() {
-    const counts = {};
-    for (const item of inventory) {
-        counts[item.name] = (counts[item.name] || 0) + 1;
-    }
-    const newComboCount = Object.values(counts).reduce((sum, c) => sum + Math.floor(c / 3), 0);
-    const currentMaxStack = Object.values(counts).reduce((m, c) => Math.max(m, c), 0);
-    if (newComboCount !== comboCount) {
-        comboCount = newComboCount;
-        window.comboCount = comboCount;
-    }
-    if (currentMaxStack > highestCombo) {
-        highestCombo = currentMaxStack;
-        window.highestCombo = highestCombo;
-    }
-    updateBonusMulti();
-    if (highestCombo > 3) {
-        window.achievements[0][0].status = true;
-    }
-    if (highestCombo > 6) {
-        window.achievements[0][1].status = true;
-    }
-    if (highestCombo > 90) {
-        window.achievements[0][2].status = true;
-    }
-}
 
 // cost multiplier
 function getTotalIncome() {
@@ -224,7 +188,6 @@ function refreshInventory() {
     });
 
 
-    updateComboStats();
 
     // failsafe if they delete all items
     if (inventory.length === 0 && money < 200) {
