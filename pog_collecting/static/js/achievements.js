@@ -247,25 +247,50 @@ setInterval(() => {
 
 // #8e6fa9 (carter dont worry abt ts)
 
+function fetchLeaderboardAndCheck() {
+    // require credentials so server can tell who is current session user (if needed)
+    fetch('/api/leaderboard', { credentials: 'include' })
+        .then(res => res.ok ? res.json() : Promise.resolve([]))
+        .then(rows => {
+            if (!Array.isArray(rows)) return;
+            const myName = (userdata && (userdata.displayName || userdata.displayname || '')).toString().toLowerCase();
+            let rank = null;
+            for (let i = 0; i < rows.length; i++) {
+                const name = ((rows[i].displayname || rows[i].displayName) || '').toString().toLowerCase();
+                if (name && myName && name === myName) {
+                    rank = i + 1;
+                    window.userRank = rank; // store globally for other funcs
+                    break;
+                }
+            }
+        })
+        .catch(err => {
+            console.error('Error fetching leaderboard:', err);
+        });
+}
+
+fetchLeaderboardAndCheck();
+setInterval(fetchLeaderboardAndCheck, 1000);
+
 function collectFunc() {
     for (let i = 0; i < achievements[0].length; i++) {
         const achievement = achievements[0][i];
         switch (achievement.name) {
             case "Full Combo!":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    achievement.status = userdata.highestCombo >= 3 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Coneisseur":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    achievement.status = userdata.highestCombo >= 6 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Candid Coiner":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    achievement.status = userdata.highestCombo >= 60 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -655,12 +680,14 @@ function econFunc() {
                 break;
             case "Monopoly":
                 if (!achievement.status) {
-                    //not function yet aughhh
+                    achievement.status = window.userRank === 5 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
                 break;
             case "Monarch":
                 if (!achievement.status) {
-                    //not function yet aughhh
+                    achievement.status = window.userRank === 1 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
                 break;
             default:

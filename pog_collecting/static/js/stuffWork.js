@@ -53,6 +53,12 @@ let mergeCount = userdata.mergeCount || 0;
 window.mergeCount = mergeCount;
 userdata.mergeCount = mergeCount;
 
+//combo tracking
+let comboCount = 0;
+let highestCombo = userdata.highestCombo || 0;
+window.highestCombo = highestCombo;
+userdata.highestCombo = highestCombo;
+
 // inventory size
 let Isize = userdata.Isize || 45;
 
@@ -68,26 +74,60 @@ if (userdata.theme === "light") {
 }
 
 //bonus multiplier
-let bonusMulti = 1.3;
+let bonusMulti = 1;
 
 //abbreviation num
 let abbreviatedMoney = 0;
 
 
 
+//combo tracking fgdjhkfgjhkfgfgdjk
+let perNameBonus = {}; 
+function computeComboStats() {
+    const counts = {};
+    for (const item of inventory) {
+        counts[item.name] = (counts[item.name] || 0) + 1;
+    }
+
+    // total number of complete 3-item combos across all item types
+    const newComboCount = Object.values(counts).reduce((sum, c) => sum + Math.floor(c / 3), 0);
+    // highest single-item stack count (e.g. 7 of "Bronze Pog" => 7)
+    const currentMaxStack = Object.values(counts).reduce((m, c) => Math.max(m, c), 0);
+
+    if (newComboCount !== comboCount) {
+        comboCount = newComboCount;
+        window.comboCount = comboCount;
+    }
+    if (currentMaxStack > highestCombo) {
+        highestCombo = currentMaxStack;
+        window.highestCombo = highestCombo;
+    }
+
+
+    perNameBonus = {};
+    for (const [name, count] of Object.entries(counts)) {
+        // combo only works if 3+; multiplier increases per item (5% per item) but capped at 2x
+        const rawMult = count >= 3 ? 1 + (count * 0.05) : 1;
+        perNameBonus[name] = Math.min(2, rawMult);
+    }
+    window.perNameBonus = perNameBonus; //we love global variables
+
+    return currentMaxStack;
+}
+
+highestCombo = computeComboStats();
+
+computeComboStats(); //corrects stats on load
 
 // cost multiplier
 function getTotalIncome() {
-    const rarityCounts = {};
-    inventory.forEach(item => {
-        rarityCounts[item.name] = (rarityCounts[item.name] || 0) + 1;
-    });
-
-    const bonusRarities = Object.keys(rarityCounts).filter(rarity => rarityCounts[rarity] >= 3);
-
+    computeComboStats();
+    const bonusMap = window.perNameBonus || {};
+    
+    
     return inventory.reduce((sum, item) => {
-        const hasBonus = bonusRarities.includes(item.name);
-        return sum + (hasBonus ? Math.round(item.income * bonusMulti) : item.income);
+        const mult = bonusMap[item.name] || 1;
+        return sum + Math.round(item.income * mult);
     }, 0);
 }
 
@@ -196,7 +236,8 @@ function refreshInventory() {
         rarityCounts[item.name] = (rarityCounts[item.name] || 0) + 1;
     });
 
-
+    //the computer is recomputing
+    computeComboStats();
 
     // failsafe if they delete all items
     if (inventory.length === 0 && money < 200) {
@@ -218,7 +259,7 @@ function refreshInventory() {
     // see if there is mergeAmount astral pogs for merge button
     const astralCount = inventory.filter(item => item.name === "Astral Pog").length;
 
-    // set inventory html
+        // set inventory html
         // .filter is used to get the search and .includes to check if the item name includes the searched text
         inventoryDiv.innerHTML = inventory.filter(item => item.name.toLowerCase().includes(itemSearched)).map((item) => {
         return hasBonus = highlightColors.includes(item.name), 
@@ -251,7 +292,7 @@ function refreshInventory() {
         <hr>
         <ul>
             <li class='list' style="color: ${item.color}">${item.value}</li>
-            <li class='list' style="color: green">$${hasBonus ? Math.round(item.income * bonusMulti) : item.income}/s</li>
+            <li class='list' style="color: green">$${Math.round(item.income * ((window.perNameBonus && window.perNameBonus[item.name]) || 1))}/s</li>
         </ul>
         <button id="sellbtn" onclick="sellItem(${item.id}, sellvalue)">Sell for $${sellvalue}</button>
         ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
@@ -448,7 +489,8 @@ document.getElementById("save").addEventListener("click", () => {
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
             achievements: window.achievements,
-            mergeCount: window.mergeCount
+            mergeCount: window.mergeCount,
+            highestCombo: window.highestCombo
         })
     })
         .then(response => response.json())
@@ -481,11 +523,12 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
             achievements: window.achievements,
-            mergeCount: window.mergeCount
+            mergeCount: window.mergeCount,
+            highestCombo: window.highestCombo
         })
     })
         .then(response => response.json())
-        .then(data => {
+        .then(() => {
         })
         .catch(err => {
             console.error("Error saving data:", err);
@@ -513,11 +556,12 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
             achievements: window.achievements,
-            mergeCount: window.mergeCount
+            mergeCount: window.mergeCount,
+            highestCombo: window.highestCombo
         })
     })
         .then(response => response.json())
-        .then(data => {
+        .then(() => {
         })
         .catch(err => {
             console.error("Error saving data:", err);
@@ -546,11 +590,12 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
             achievements: window.achievements,
-            mergeCount: window.mergeCount
+            mergeCount: window.mergeCount,
+            highestCombo: window.highestCombo
         })
     })
         .then(response => response.json())
-        .then(data => {
+        .then(() => {
         })
         .catch(err => {
             console.error("Error saving data:", err);

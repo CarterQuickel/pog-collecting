@@ -88,7 +88,8 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     cratesOpened INTEGER,
     pogamount INTEGER,
     achievements TEXT,
-    comboHigh INTEGER,
+    mergeCount INTEGER,
+    highestCombo INTEGER,
     displayname TEXT UNIQUE
 
 )`);
@@ -136,7 +137,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -151,6 +152,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.pogamount,
                             JSON.stringify(req.session.user.achievements),
                             req.session.user.mergeCount,
+                            req.session.user.highestCombo,
                             displayName
                         ],
                         function (err) {
@@ -178,7 +180,8 @@ app.get('/', isAuthenticated, (req, res) => {
             cratesOpened: req.session.user.cratesOpened || 0,
             pogamount: req.session.user.pogamount || 0,
             achievements: req.session.user.achievements || [],
-            mergeCount: req.session.user.mergeCount || 0
+            mergeCount: req.session.user.mergeCount || 0,
+            highestCombo: req.session.user.highestCombo || 0
         };
 
         // load user data from database
@@ -202,7 +205,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     cratesOpened: row.cratesOpened,
                     pogamount: row.pogamount,
                     achievements: JSON.parse(row.achievements),
-                    mergeCount: row.mergeCount
+                    mergeCount: row.mergeCount,
+                    highestCombo: row.comboHigh
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
@@ -220,7 +224,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     cratesOpened: 0,
                     pogamount: 0,
                     achievements: [],
-                    mergeCount: 0
+                    mergeCount: 0,
+                    highestCombo: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
@@ -255,6 +260,16 @@ app.get('/leaderboard', (req, res) => {
     );
 });
 
+app.get('/api/leaderboard', (req, res) => {
+    usdb.all('SELECT displayname, score FROM userSettings ORDER BY score DESC LIMIT 100', [], (err, rows) => {
+        if (err) {
+            console.error('API leaderboard error', err);
+            return res.status(500).json({ error: 'db' });
+        }
+        res.json(rows || []);
+    });
+});
+
 // save data route
 app.post('/datasave', (req, res) => {
     console.log(req.body);
@@ -271,7 +286,8 @@ app.post('/datasave', (req, res) => {
         cratesOpened: req.body.cratesOpened,
         pogamount: req.body.pogAmount,
         achievements: req.body.achievements,
-        mergeCount: req.body.mergeCount
+        mergeCount: req.body.mergeCount,
+        highestCombo: req.body.highestCombo
     }
 
 
@@ -296,9 +312,10 @@ app.post('/datasave', (req, res) => {
                 userSave.pogamount,
                 JSON.stringify(userSave.achievements),
                 userSave.mergeCount,
+                req.session.user.highestCombo,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -331,6 +348,7 @@ app.get('/login', (req, res) => {
             pogamount: tokenData.pogamount || 0,
             achievements: tokenData.achievements || [],
             mergeCount: tokenData.mergeCount || 0,
+            highestCombo: tokenData.highestCombo || 0
         };
         res.redirect('/');
     } else {
