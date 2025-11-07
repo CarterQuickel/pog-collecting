@@ -21,20 +21,22 @@ document.querySelectorAll(".infobtn").forEach(button => {
         if (sortedI.length > 100) {
             displayed.push(" ...and more");
         }
+        let experience = player.xp;
         console.log(sortedI)
         const info = document.getElementById("details");
         info.innerHTML = `<h2>Details for ${player.displayname}</h2>
-                          <div style="display: flex; gap: 10px; justify-content: center; text-align: center;">
+                          <div style="display: flex; gap: 100px; justify-content: center; text-align: center;">
                             <div>
                                 <h3>Score</h3> <p>${player.score}</p>
                                 <h3>Level</h3> <p>${player.level}</p>
-                                <h3>XP</h3> <p>${player.xp}/${player.maxxp}</p>
+                                <h3>Current XP</h3> <p style="font-size: ${experience.toString().length > 9 ? "11px" : "13px"}">${player.xp}</p>
                                 <h3>Wishes</h3> <p>${player.wish}</p>
                             </div>
                             <div>
                                 <h3>Income</h3> <p>$${player.income}/s</p>
                                 <h3>Total Sold</h3> <p>${player.totalSold} pogs</p>
                                 <h3>Crates Opened</h3> <p>${player.cratesOpened} crates</p>
+                                <h3>Pogs Collected</h3> <p>${player.pogamount} / 285</p>
                             </div>
                           </div>
                           <h3>Pogs in Inventory</h3> <p>${sortedI.length}</p>
