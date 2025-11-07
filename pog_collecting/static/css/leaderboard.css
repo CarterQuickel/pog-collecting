@@ -109,7 +109,7 @@ li {
 
 #flexcont {
     display: flex;
-    justify-content: center;  
+    justify-content: center;
 }
 
 #details {
@@ -123,4 +123,5 @@ li {
     height: auto;
     text-align: center;
     margin-right: 200px;
+    font-size: 13px;
 }
