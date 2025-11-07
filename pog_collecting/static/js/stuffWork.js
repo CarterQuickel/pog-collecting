@@ -48,6 +48,10 @@ let level =  userdata.level || 1;
 
 //etc.
 const mergeAmount = 10;
+let mergeCount = userdata.mergeCount || 0;
+//global vari
+window.mergeCount = mergeCount;
+userdata.mergeCount = mergeCount;
 
 // inventory size
 let Isize = userdata.Isize || 45;
@@ -64,7 +68,7 @@ if (userdata.theme === "light") {
 }
 
 //bonus multiplier
-let bonusMulti = 0;
+let bonusMulti = 1.3;
 
 //abbreviation num
 let abbreviatedMoney = 0;
@@ -136,6 +140,11 @@ function update() {
 
 function merge(bronze, silver, gold, diamond, astral) {
     let sold = 0;
+    mergeCount += 1;
+    //syncing global variable with session variable
+    window.mergeCount = mergeCount;
+    userdata.mergeCount = mergeCount;
+
     // add new  pog to inventory
     if (bronze) {
         inventory.push({ name: "Silver Pog", color: "orange", income: 620, value: "UNIQUE" });
@@ -328,7 +337,20 @@ function openCrate(cost, index) {
                         document.getElementById("pogCount").style.color = "yellow";
                     }
                 }
-
+                //Soda pogs
+                if (rarity.name === "Soda") {
+                    const sodaNum = Math.floor(Math.random() * 3) + 1;
+                    if (sodaNum == 1) {
+                        rarity.name = "Red Soda";
+                        rarity.color = "red";
+                    } else if (sodaNum == 2) {
+                        rarity.name = "Green Soda";
+                        rarity.color = "green";
+                    } else if (sodaNum == 3) {
+                        rarity.name = "Brown Soda";
+                        rarity.color = "brown";
+                    }
+                }
                 // dragon pog stuff
                 if (rarity.name === "Dragon Ball") {
                     const inv = inventory;
@@ -362,7 +384,7 @@ function openCrate(cost, index) {
                 }
             }
                 // Add result to inventory
-                if (rarity.name != "Dragon Ball") {
+                if (rarity.name != "Dragon Ball" && rarity.name != "Soda") {
                     inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity, id: id });
                 }
 
@@ -426,7 +448,7 @@ document.getElementById("save").addEventListener("click", () => {
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
             achievements: window.achievements,
-            comboHigh: window.comboHigh
+            mergeCount: window.mergeCount
         })
     })
         .then(response => response.json())
@@ -459,7 +481,7 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
             achievements: window.achievements,
-            comboHigh: window.comboHigh
+            mergeCount: window.mergeCount
         })
     })
         .then(response => response.json())
@@ -491,7 +513,7 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
             achievements: window.achievements,
-            comboHigh: window.comboHigh
+            mergeCount: window.mergeCount
         })
     })
         .then(response => response.json())
@@ -524,7 +546,7 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
             achievements: window.achievements,
-            comboHigh: window.comboHigh
+            mergeCount: window.mergeCount
         })
     })
         .then(response => response.json())

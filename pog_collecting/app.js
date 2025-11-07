@@ -136,7 +136,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, comboHigh, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -150,7 +150,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.cratesOpened,
                             req.session.user.pogamount,
                             JSON.stringify(req.session.user.achievements),
-                            req.session.user.comboHigh,
+                            req.session.user.mergeCount,
                             displayName
                         ],
                         function (err) {
@@ -178,7 +178,7 @@ app.get('/', isAuthenticated, (req, res) => {
             cratesOpened: req.session.user.cratesOpened || 0,
             pogamount: req.session.user.pogamount || 0,
             achievements: req.session.user.achievements || [],
-            comboHigh: req.session.user.comboHigh || 0
+            mergeCount: req.session.user.mergeCount || 0
         };
 
         // load user data from database
@@ -202,7 +202,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     cratesOpened: row.cratesOpened,
                     pogamount: row.pogamount,
                     achievements: JSON.parse(row.achievements),
-                    comboHigh: row.comboHigh
+                    mergeCount: row.mergeCount
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
@@ -220,7 +220,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     cratesOpened: 0,
                     pogamount: 0,
                     achievements: [],
-                    comboHigh: 0
+                    mergeCount: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
@@ -271,7 +271,7 @@ app.post('/datasave', (req, res) => {
         cratesOpened: req.body.cratesOpened,
         pogamount: req.body.pogAmount,
         achievements: req.body.achievements,
-        comboHigh: req.body.comboHigh
+        mergeCount: req.body.mergeCount
     }
 
 
@@ -295,10 +295,10 @@ app.post('/datasave', (req, res) => {
                 userSave.cratesOpened,
                 userSave.pogamount,
                 JSON.stringify(userSave.achievements),
-                userSave.comboHigh,
+                userSave.mergeCount,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, comboHigh = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -330,7 +330,7 @@ app.get('/login', (req, res) => {
             cratesOpened: tokenData.cratesOpened || 0,
             pogamount: tokenData.pogamount || 0,
             achievements: tokenData.achievements || [],
-            comboHigh: tokenData.comboHigh || 0
+            mergeCount: tokenData.mergeCount || 0,
         };
         res.redirect('/');
     } else {

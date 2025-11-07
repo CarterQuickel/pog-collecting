@@ -435,19 +435,19 @@ function progFunc() {
                 break;
             case "Merge Maniac":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    achievement.status = userdata.mergeCount >= 1 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Merge Monster":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    achievement.status = userdata.mergeCount >= 30 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Merge Master":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    achievement.status = userdata.mergeCount >= 80 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -708,7 +708,10 @@ function uniqueFunc() {
             case "SODA!":
                 if (!achievement.status) {
                     const inv = userdata.inventory;
-                    //achievement.status = cant be tracked yet || ? true : achievement.status;
+                    const hasRedSoda = inv.some(it => (it && it.name || '').toLowerCase().includes('red soda'));
+                    const hasGreenSoda = inv.some(it => (it && it.name || '').toLowerCase().includes('green soda'));
+                    const hasBrownSoda = inv.some(it => (it && it.name || '').toLowerCase().includes('brown soda'));
+                    achievement.status = hasRedSoda && hasGreenSoda && hasBrownSoda ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
