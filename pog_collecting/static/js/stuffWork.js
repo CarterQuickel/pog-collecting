@@ -139,16 +139,16 @@ function update() {
     document.getElementById("useWish").style.display = wish > 0 ? "inline-block" : "none";
 
     //crate 1 text
-    document.getElementById("crate1").innerHTML = `Common Crate ($${abbreviateNumber(crates[0].price)})`;
+    document.getElementById("crate1").innerHTML = `Trash Crate ($${abbreviateNumber(crates[0].price)})`;
 
     //crate 2 text
-    document.getElementById("crate2").innerHTML = `Rare Crate ($${abbreviateNumber(crates[1].price)})`;
+    document.getElementById("crate2").innerHTML = `Common Crate ($${abbreviateNumber(crates[1].price)})`;
 
     //crate 3 text
-    document.getElementById("crate3").innerHTML = `Epic Crate ($${abbreviateNumber(crates[2].price)})`;
+    document.getElementById("crate3").innerHTML = `Uncommon Crate ($${abbreviateNumber(crates[2].price)})`;
 
     //crate 4 text
-    document.getElementById("crate4").innerHTML = `Legendary Crate ($${abbreviateNumber(crates[3].price)})`;
+    document.getElementById("crate4").innerHTML = `Rare Crate ($${abbreviateNumber(crates[3].price)})`;
 
     //crate 5 text
     document.getElementById("crate5").innerHTML = `Mythic Crate ($${abbreviateNumber(crates[4].price)})`;

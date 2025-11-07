@@ -79,7 +79,7 @@ crates = [
     },
     {
         name: "risky crate",
-        price: 5000,
+        price: 10000,
         rarities: [
             {
                 name: "Trash",
@@ -87,7 +87,7 @@ crates = [
             },
             {
                 name: "Common",
-                chance: 0.4
+                chance: 0.5
             },
             {
                 name: "Uncommon",
@@ -95,17 +95,17 @@ crates = [
             },
             {
                 name: "Rare",
-                chance: 0.36
+                chance: 0.5
             },
             {
                 name: "Mythic",
-                chance: 0.24
+                chance: 0.0
             }
         ]
     },
     {
         name: "godly crate",
-        price: 7000,
+        price: 5000,
         rarities: [
             {
                 name: "Trash",

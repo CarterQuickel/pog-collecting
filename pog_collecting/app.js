@@ -10,18 +10,18 @@ const csv = require('csv-parser');
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
     'description', 'type', 'rarity', 'creator'
-  ];
+];
 
 const results = [];
-  
+
 fs.createReadStream('pogipedia/db/pogs.csv')
-.pipe(csv({ headers }))
-.on('data', (row) => {
-    const { name, rarity } = row;
-    results.push({ name, rarity });
-})
-.on('end', () => {
-});
+    .pipe(csv({ headers }))
+    .on('data', (row) => {
+        const { name, rarity } = row;
+        results.push({ name, rarity });
+    })
+    .on('end', () => {
+    });
 
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
