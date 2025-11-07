@@ -737,6 +737,7 @@ input:checked+.slider:before {
     transition: opacity 0.3s;
     white-space: nowrap;
     margin-left: 70px;
+    text-align: left;
 }
 
 .tooltip-container:hover .tooltip-text {
