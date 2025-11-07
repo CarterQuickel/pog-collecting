@@ -41,7 +41,7 @@ let inventory = userdata.inventory || [];
 cratesOpened = userdata.cratesOpened || 0;
 
 // money
-let money = userdata.score || 500;
+let money = userdata.score || 400;
 let userIncome = userdata.income || 0;
 let totalSold = userdata.totalSold || 0;
 
