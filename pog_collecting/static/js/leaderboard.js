@@ -17,8 +17,8 @@ document.querySelectorAll(".infobtn").forEach(button => {
         const inv = JSON.parse(player.inventory)
         console.log(inv)
         let sortedI = inv.map((item => ` ${item.name}`));
-        displayed = sortedI.slice(0, 100);
-        if (sortedI.length > 100) {
+        displayed = sortedI.slice(0, 50);
+        if (sortedI.length > 50) {
             displayed.push(" ...and more");
         }
         let experience = player.xp;

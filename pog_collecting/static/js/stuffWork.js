@@ -25,6 +25,13 @@ let wish = userdata.wish || 0;
 let searching = false;
 let itemSearched = "";
 
+// clear search every 100ms if box is empty
+setInterval(() => {
+    if (itemSearched === "") {
+        searching = false;
+    }
+}, 100);
+
 // money upgrade
 let moneyTick = 1000;
 
@@ -44,7 +51,7 @@ let pogAmount = userdata.pogamount || 0;
 // XP
 let xp = userdata.xp || 0;
 let maxXP = userdata.maxxp || 15;
-let level =  userdata.level || 1;
+let level = userdata.level || 1;
 
 //merge amount 
 const mergeAmount = 10;
@@ -145,6 +152,12 @@ function update() {
 
     //crate 5 text
     document.getElementById("crate5").innerHTML = `Mythic Crate ($${abbreviateNumber(crates[4].price)})`;
+
+    //sell all button
+    document.getElementById("sellAll").innerText = `Sell All ${searching ? "(Searched)" : ""}`;
+
+    //sell all width
+    document.getElementById("sellAll").style.width = searching ? "150px" : "100px";
 
     if (inventory.length >= 999) {
         while (inventory.length > 999) {
@@ -264,33 +277,33 @@ function refreshInventory() {
     // set inventory html
     // .filter is used to get the search and .includes to check if the item name includes the searched text
     inventoryDiv.innerHTML = inventory.filter(item => item.name.toLowerCase().includes(itemSearched)).map((item, index) => {
-        return hasBonus = highlightColors.includes(item.name), 
-        namelength = item.name.length,
-        nameFontSize = namelength >= 19 ? '9px' : namelength >= 12 ? '12px' : '16px',
-        sellvalue = item.income * 105,
-        // refernce this inside the map function, for item is only defined in here
-        isBronze = item.name === "Bronze Pog",
-        isSilver = item.name === "Silver Pog",
-        isGold = item.name === "Gold Pog",
-        isDiamond = item.name === "Diamond Pog",
-        isAstral = item.name === "Astral Pog",
-        // how many bronze pogs are there? (mergAmount)
-        //bronze
-        bronze = isBronze && bronzeCount >= mergeAmount,
-        //silver
-        silver = isSilver && silverCount >= mergeAmount,
-        //gold 
-        gold = isGold && goldCount >= mergeAmount,
-        //diamond
-        diamond = isDiamond && diamondCount >= mergeAmount,
-        //astral from vamy
-        astral = isAstral && astralCount >= mergeAmount,
-        // show merge button
-        canMerge = bronze || silver || gold || diamond || astral,
-        // show trade button
-        canTrade = item.name === "Dragon Ball 7",
-        // return html
-        `<div class="item ${hasBonus ? 'highlight' : ''}">
+        return hasBonus = highlightColors.includes(item.name),
+            namelength = item.name.length,
+            nameFontSize = namelength >= 19 ? '9px' : namelength >= 12 ? '12px' : '16px',
+            sellvalue = item.income * 105,
+            // refernce this inside the map function, for item is only defined in here
+            isBronze = item.name === "Bronze Pog",
+            isSilver = item.name === "Silver Pog",
+            isGold = item.name === "Gold Pog",
+            isDiamond = item.name === "Diamond Pog",
+            isAstral = item.name === "Astral Pog",
+            // how many bronze pogs are there? (mergAmount)
+            //bronze
+            bronze = isBronze && bronzeCount >= mergeAmount,
+            //silver
+            silver = isSilver && silverCount >= mergeAmount,
+            //gold 
+            gold = isGold && goldCount >= mergeAmount,
+            //diamond
+            diamond = isDiamond && diamondCount >= mergeAmount,
+            //astral from vamy
+            astral = isAstral && astralCount >= mergeAmount,
+            // show merge button
+            canMerge = bronze || silver || gold || diamond || astral,
+            // show trade button
+            canTrade = item.name === "Dragon Ball 7",
+            // return html
+            `<div class="item ${hasBonus ? 'highlight' : ''}">
         <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
         <br>
         <hr>
@@ -307,20 +320,32 @@ function refreshInventory() {
 
 //sell all button
 document.getElementById("sellAll").addEventListener("click", () => {
-    confirmation = confirm("Are you sure you want to sell all items in your inventory?");
+    confirmation = confirm(`Are you sure you want to sell all ${searching ? "searched " : ""}items in your inventory?`);
     if (confirmation == false) {
         return;
     }
-    const initialInv = inventory.length
-    for (let i = 0; i < initialInv; i++) {
-        if (i = inventory.length) {
-            i = 0
+    if (!searching) {
+        const initialInv = inventory.length
+        for (let i = 0; i < initialInv; i++) {
+            if (i = inventory.length) {
+                i = 0
+            }
+            const item = inventory[i];
+            if (inventory.length == 0) {
+                break
+            }
+            sellItem(i, item.income * 105) //sellvalue
         }
-        const item = inventory[i];
-        if (inventory.length == 0) {
-            break
+    } else {
+        const filteredItems = inventory.filter(item => item.name.toLowerCase().includes(itemSearched));
+        const initialInv = filteredItems.length;
+        for (let i = 0; i < initialInv; i++) {
+            const item = filteredItems[i];
+            const indexInInventory = inventory.findIndex(invItem => invItem.id === item.id);
+            if (indexInInventory !== -1) {
+                sellItem(item.id, item.income * 105); //sellvalue
+            }
         }
-        sellItem(i, item.income * 105) //sellvalue
     }
 });
 
@@ -350,72 +375,72 @@ function openCrate(cost, index) {
         return;
     }
 
-        // variables
-        let rand = Math.random();
-        let cumulativeChance = 0;
-        let color = "white";
-        let income = 5;
+    // variables
+    let rand = Math.random();
+    let cumulativeChance = 0;
+    let color = "white";
+    let income = 5;
 
-        for (let item of crates[Object.keys(crates)[index]].rarities) {
+    for (let item of crates[Object.keys(crates)[index]].rarities) {
 
-            // check if random number is within the chance range
-            cumulativeChance += item.chance;
-            if (rand < cumulativeChance) {
+        // check if random number is within the chance range
+        cumulativeChance += item.chance;
+        if (rand < cumulativeChance) {
 
-                // find all pogs with that rarity
-                const matchingRarities = pogList.filter(r => r.rarity === item.name);
-                if (matchingRarities.length === 0) continue;
+            // find all pogs with that rarity
+            const matchingRarities = pogList.filter(r => r.rarity === item.name);
+            if (matchingRarities.length === 0) continue;
 
-                // Pick one at random
-                const rarity = matchingRarities[Math.floor(Math.random() * matchingRarities.length)];
+            // Pick one at random
+            const rarity = matchingRarities[Math.floor(Math.random() * matchingRarities.length)];
 
-                // find rarity color details
-                const match = rarityColor.find(r => r.name === rarity.rarity);
+            // find rarity color details
+            const match = rarityColor.find(r => r.name === rarity.rarity);
 
-                //id
-                const id = Math.random() * 100000
+            //id
+            const id = Math.random() * 100000
 
-                // rarity color
-                color = match ? match.color : "white";
+            // rarity color
+            color = match ? match.color : "white";
 
-                // rarity income
-                income = match ? match.income : 5;
+            // rarity income
+            income = match ? match.income : 5;
 
-                // add to pog amount if new pog
-                let added = { name: rarity.name}
-                const exists = inventory.find(i => i.name === added.name);
-                if (!exists) {
-                    if (pogAmount < maxPogs) {
-                        pogAmount++;
-                    }
+            // add to pog amount if new pog
+            let added = { name: rarity.name }
+            const exists = inventory.find(i => i.name === added.name);
+            if (!exists) {
+                if (pogAmount < maxPogs) {
+                    pogAmount++;
                 }
-
-                // dragon pog stuff
-                if (rarity.name === "Dragon Ball") {
-                    const inv = inventory.map(i => (i?.name).toLowerCase());
-                    const missing = [1,2,3,4,5,6,7].find(num => !inv.includes(`dragon ball ${num}`));
-                    if (missing) {
-                        rarity.name = `Dragon Ball ${missing}`;
-                    }
-                }
-
-                // Add result to inventory
-                if (rarity.name != "Dragon Ball") {
-                    inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity, id: id });
-                }
-
-                // XP gain
-                xp += Math.floor(income * (3 * level/15)); // gain XP based on income and level
-                levelup();
-
-                // Deduct cost
-                money -= cost;
-                cratesOpened++;
-                refreshInventory();
-                break;
             }
+
+            // dragon pog stuff
+            if (rarity.name === "Dragon Ball") {
+                const inv = inventory.map(i => (i?.name).toLowerCase());
+                const missing = [1, 2, 3, 4, 5, 6, 7].find(num => !inv.includes(`dragon ball ${num}`));
+                if (missing) {
+                    rarity.name = `Dragon Ball ${missing}`;
+                }
+            }
+
+            // Add result to inventory
+            if (rarity.name != "Dragon Ball") {
+                inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity, id: id });
+            }
+
+            // XP gain
+            xp += Math.floor(income * (3 * level / 15)); // gain XP based on income and level
+            levelup();
+
+            // Deduct cost
+            money -= cost;
+            cratesOpened++;
+            refreshInventory();
+            break;
         }
-    
+    }
+
 }
 
 // crate open events
@@ -516,7 +541,7 @@ document.getElementById("crate5_b5").addEventListener("click", () => {
 document.getElementById("crate1_b10").addEventListener("click", () => {
     if (inventory.length + 10 > Isize) {
         alert("Not enough inventory space to open 10 crates!");
-    return;
+        return;
     }
     if (money < crates[Object.keys(crates)[0]].price * 10) {
         alert("Not enough money to open 10 crates!");
@@ -533,7 +558,7 @@ document.getElementById("crate1_b10").addEventListener("click", () => {
 document.getElementById("crate2_b10").addEventListener("click", () => {
     if (inventory.length + 10 > Isize) {
         alert("Not enough inventory space to open 10 crates!");
-    return;
+        return;
     }
     if (money < crates[Object.keys(crates)[1]].price * 10) {
         alert("Not enough money to open 10 crates!");
@@ -550,7 +575,7 @@ document.getElementById("crate2_b10").addEventListener("click", () => {
 document.getElementById("crate3_b10").addEventListener("click", () => {
     if (inventory.length + 10 > Isize) {
         alert("Not enough inventory space to open 10 crates!");
-    return;
+        return;
     }
     if (money < crates[Object.keys(crates)[2]].price * 10) {
         alert("Not enough money to open 10 crates!");
@@ -567,7 +592,7 @@ document.getElementById("crate3_b10").addEventListener("click", () => {
 document.getElementById("crate4_b10").addEventListener("click", () => {
     if (inventory.length + 10 > Isize) {
         alert("Not enough inventory space to open 10 crates!");
-    return;
+        return;
     }
     if (money < crates[Object.keys(crates)[3]].price * 10) {
         alert("Not enough money to open 10 crates!");
@@ -584,7 +609,7 @@ document.getElementById("crate4_b10").addEventListener("click", () => {
 document.getElementById("crate5_b10").addEventListener("click", () => {
     if (inventory.length + 10 > Isize) {
         alert("Not enough inventory space to open 10 crates!");
-    return;
+        return;
     }
     if (money < crates[Object.keys(crates)[4]].price * 10) {
         alert("Not enough money to open 10 crates!");
@@ -648,7 +673,7 @@ document.getElementById("save").addEventListener("click", () => {
 });
 
 document.getElementById("patchNotesButton").addEventListener("click", () => {
-        fetch('/datasave', {
+    fetch('/datasave', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -679,7 +704,7 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
 });
 
 document.getElementById("achievementsButton").addEventListener("click", () => {
-        fetch('/datasave', {
+    fetch('/datasave', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -696,7 +721,7 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
             income: userIncome,
             totalSold: totalSold,
             cratesOpened: cratesOpened,
-            pogAmount: pogAmount, 
+            pogAmount: pogAmount,
             wish: wish
         })
     })
@@ -799,25 +824,26 @@ const buttons = document.getElementsByTagName("button");
 //custom alert function
 function customConfirm(message) {
     return new Promise((resolve) => {
-    const confirmBox = document.getElementById("customConfirm");
-    const confirmMessage = document.getElementById("confirmMessage");
-    const confirmYes = document.getElementById("customConfirmYes");
-    const confirmNo = document.getElementById("customConfirmNo");
+        const confirmBox = document.getElementById("customConfirm");
+        const confirmMessage = document.getElementById("confirmMessage");
+        const confirmYes = document.getElementById("customConfirmYes");
+        const confirmNo = document.getElementById("customConfirmNo");
 
-    confirmMessage.textContent = message;
-    confirmBox.style.display = "block";
+        confirmMessage.textContent = message;
+        confirmBox.style.display = "block";
 
-    confirmYes.onclick = () => {
-        confirmBox.style.display = "none";
-        resolve(true);
-    };
+        confirmYes.onclick = () => {
+            confirmBox.style.display = "none";
+            resolve(true);
+        };
 
-    confirmNo.onclick = () => {
-        confirmBox.style.display = "none";
-        resolve(false);
-    };
-}
-)};
+        confirmNo.onclick = () => {
+            confirmBox.style.display = "none";
+            resolve(false);
+        };
+    }
+    )
+};
 
 document.getElementById("useWish").addEventListener("click", async () => {
     let wealth = await customConfirm("Wish of Wealth: Use wish to gain a permanent income increase?");
@@ -838,9 +864,9 @@ document.getElementById("useWish").addEventListener("click", async () => {
                 xp += Math.floor(maxXP * 0.5);
                 levelup();
                 wish--;
-        } else {
-            await customConfirm("No wish was used.");
+            } else {
+                await customConfirm("No wish was used.");
+            }
         }
     }
-}
 });
