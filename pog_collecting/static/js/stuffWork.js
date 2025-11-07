@@ -12,7 +12,6 @@ rarityColor = [
     { name: "Uncommon", color: "lime", income: 35 }, //uncommon
     { name: "Rare", color: "aqua", income: 66 }, //rare
     { name: "Mythic", color: "fuchsia", income: 205 }, //mythic
-    { name: "Unknown", color: "grey", income: 16 }, //unknown
 ]
 
 // debug rarity list
