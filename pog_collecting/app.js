@@ -87,6 +87,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     totalSold INTEGER,
     cratesOpened INTEGER,
     pogamount INTEGER,
+    wish INTEGER,
     achievements TEXT,
     mergeCount INTEGER,
     highestCombo INTEGER,
@@ -137,7 +138,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, wish, achievements, mergeCount, highestCombo, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -150,6 +151,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.totalSold,
                             req.session.user.cratesOpened,
                             req.session.user.pogamount,
+                            req.session.user.wish,
                             JSON.stringify(req.session.user.achievements),
                             req.session.user.mergeCount,
                             req.session.user.highestCombo,
@@ -179,6 +181,7 @@ app.get('/', isAuthenticated, (req, res) => {
             totalSold: req.session.user.totalSold || 0,
             cratesOpened: req.session.user.cratesOpened || 0,
             pogamount: req.session.user.pogamount || 0,
+            wish: req.session.user.wish || 0,
             achievements: req.session.user.achievements || [],
             mergeCount: req.session.user.mergeCount || 0,
             highestCombo: req.session.user.highestCombo || 0
@@ -204,6 +207,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     totalSold: row.totalSold,
                     cratesOpened: row.cratesOpened,
                     pogamount: row.pogamount,
+                    wish: row.wish,
                     achievements: JSON.parse(row.achievements),
                     mergeCount: row.mergeCount,
                     highestCombo: row.comboHigh
@@ -223,6 +227,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     totalSold: 0,
                     cratesOpened: 0,
                     pogamount: 0,
+                    wish: 0,
                     achievements: [],
                     mergeCount: 0,
                     highestCombo: 0
@@ -285,6 +290,7 @@ app.post('/datasave', (req, res) => {
         totalSold: req.body.totalSold,
         cratesOpened: req.body.cratesOpened,
         pogamount: req.body.pogAmount,
+        wish: req.body.wish,
         achievements: req.body.achievements,
         mergeCount: req.body.mergeCount,
         highestCombo: req.body.highestCombo
@@ -310,6 +316,7 @@ app.post('/datasave', (req, res) => {
                 userSave.totalSold,
                 userSave.cratesOpened,
                 userSave.pogamount,
+                userSave.wish,
                 JSON.stringify(userSave.achievements),
                 userSave.mergeCount,
                 req.session.user.highestCombo,
