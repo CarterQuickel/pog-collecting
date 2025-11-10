@@ -30,7 +30,7 @@ const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb9
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.126:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://172.16.3.130:3000/login'; // ... or whatever the address to your application is
 
 /* This creates session middleware with given options; 
 The 'secret' option is used to sign the session ID cookie. 
@@ -87,6 +87,9 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     totalSold INTEGER,
     cratesOpened INTEGER,
     pogamount INTEGER,
+    achievements TEXT,
+    mergeCount INTEGER,
+    highestCombo INTEGER,
     wish INTEGER,
     displayname TEXT UNIQUE
 
@@ -135,7 +138,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, wish, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -148,6 +151,9 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.totalSold,
                             req.session.user.cratesOpened,
                             req.session.user.pogamount,
+                            JSON.stringify(req.session.user.achievements),
+                            req.session.user.mergeCount,
+                            req.session.user.highestCombo,
                             req.session.user.wish,
                             displayName
                         ],
@@ -175,6 +181,9 @@ app.get('/', isAuthenticated, (req, res) => {
             totalSold: req.session.user.totalSold || 0,
             cratesOpened: req.session.user.cratesOpened || 0,
             pogamount: req.session.user.pogamount || 0,
+            achievements: req.session.user.achievements || [],
+            mergeCount: req.session.user.mergeCount || 0,
+            highestCombo: req.session.user.highestCombo || 0,
             wish: req.session.user.wish || 0
         };
 
@@ -198,6 +207,9 @@ app.get('/', isAuthenticated, (req, res) => {
                     totalSold: row.totalSold,
                     cratesOpened: row.cratesOpened,
                     pogamount: row.pogamount,
+                    achievements: JSON.parse(row.achievements),
+                    mergeCount: row.mergeCount,
+                    highestCombo: row.comboHigh,
                     wish: row.wish
                 };
                 console.log(`User data loaded for '${displayName}'`);
@@ -215,6 +227,9 @@ app.get('/', isAuthenticated, (req, res) => {
                     totalSold: 0,
                     cratesOpened: 0,
                     pogamount: 0,
+                    achievements: [],
+                    mergeCount: 0,
+                    highestCombo: 0,
                     wish: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
@@ -250,6 +265,16 @@ app.get('/leaderboard', (req, res) => {
     );
 });
 
+app.get('/api/leaderboard', (req, res) => {
+    usdb.all('SELECT displayname, score FROM userSettings ORDER BY score DESC LIMIT 100', [], (err, rows) => {
+        if (err) {
+            console.error('API leaderboard error', err);
+            return res.status(500).json({ error: 'db' });
+        }
+        res.json(rows || []);
+    });
+});
+
 // save data route
 app.post('/datasave', (req, res) => {
     console.log(req.body);
@@ -265,6 +290,9 @@ app.post('/datasave', (req, res) => {
         totalSold: req.body.totalSold,
         cratesOpened: req.body.cratesOpened,
         pogamount: req.body.pogAmount,
+        achievements: req.body.achievements,
+        mergeCount: req.body.mergeCount,
+        highestCombo: req.body.highestCombo,
         wish: req.body.wish
     }
 
@@ -288,10 +316,13 @@ app.post('/datasave', (req, res) => {
                 userSave.totalSold,
                 userSave.cratesOpened,
                 userSave.pogamount,
+                JSON.stringify(userSave.achievements),
+                userSave.mergeCount,
+                req.session.user.highestCombo,
                 userSave.wish,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, wish = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -322,6 +353,9 @@ app.get('/login', (req, res) => {
             totalSold: tokenData.totalSold || 0,
             cratesOpened: tokenData.cratesOpened || 0,
             pogamount: tokenData.pogamount || 0,
+            achievements: tokenData.achievements || [],
+            mergeCount: tokenData.mergeCount || 0,
+            highestCombo: tokenData.highestCombo || 0,
             wish: tokenData.wish || 0
         };
         res.redirect('/');
@@ -332,5 +366,5 @@ app.get('/login', (req, res) => {
 
 //listens
 app.listen(3000, () => {
-    console.log('Server started on port 3000\nIP: 176.16.3.126');
+    console.log('Server started on port 3000');
 });

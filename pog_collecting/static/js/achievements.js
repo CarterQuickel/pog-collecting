@@ -32,613 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-const achievements = [
-    //start of collection achievements
-    [
-        {
-            name: "Full Combo!",
-            description: "Get a 3-item combo.",
-            icon: "static/icons/Full_Combo.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Coneisseur",
-            description: "Have 6 3-item combos.",
-            icon: "static/icons/Coneisseur.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Candid Coiner",
-            description: "Have 60 3-item combos.",
-            icon: "static/icons/Candid_Coiner.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "Programming Prodigy",
-            description: "Have 1100100 CP pogs.",
-            icon: "static/icons/Programming_Prodigy.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "6-7",
-            description: "Have 6, then 7, items in your inventory.",
-            icon: "static/icons/67.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "Pristine",
-            description: "Have a copper, silver, and gold pog all at once.",
-            icon: "static/icons/Pristine.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Exquisite",
-            description: "Have a copper, silver, gold, and diamond pog all at once.",
-            icon: "static/icons/Exquisite.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Mythical",
-            description: "Have a copper, silver, gold, diamond, and astral pog all at once.",
-            icon: "static/icons/Mythical.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Mr. Smith",
-            description: "Have one of each tier pog at once.",
-            icon: "static/icons/Mr_Smith.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "Hoarder",
-            description: "Fill your inventory to max when your inventory is greater than 60.",
-            icon: "static/icons/Hoarder.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Insane Hoarder",
-            description: "Own 100 pogs.",
-            icon: "static/icons/Insane_Hoarder.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-    ],
-    //start of level achievements
-    [
-        {
-            name: "Rookie",
-            description: "Reach level 5.",
-            icon: "static/icons/Rookie.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Getting Better",
-            description: "Reach level 10.",
-            icon: "static/icons/Getting_Better.png",
-            reward: "Combo Multiplier II",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Experienced",
-            description: "Reach level 15.",
-            icon: "static/icons/Experienced.png",
-            reward: "Combo Multiplier III",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Veteran",
-            description: "Reach level 25.",
-            icon: "static/icons/Veteran.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Professional",
-            description: "Reach level 40.",
-            icon: "static/icons/Professional.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Halfway There",
-            description: "Reach level 50.",
-            icon: "static/icons/Halfway_There.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Itsumi!",
-            description: "Reach level 64.",
-            icon: "static/icons/Itsumi!.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Prestigious",
-            description: "Reach level 75.",
-            icon: "static/icons/Prestigious.png",
-            status: false,
-            hidden: false,
-            notified: false,
-        },
-        {
-            name: "No-Life",
-            description: "Reach level 100.",
-            icon: "static/icons/No-Life.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "What color is grass?",
-            description: "Reach the max level.",
-            icon: "static/icons/What_color_is_grass.png",
-            status: false,
-            hidden: true,
-            notified: false
-        }
-    ],
-    //start of progression achievements
-    [
-        {
-            name: "First Steps",
-            description: "Open your first crate.",
-            icon: "static/icons/First_Steps.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Pogger",
-            description: "Open 100 crates.",
-            icon: "static/icons/Pogger.png",
-            reward: "None",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Merge Maniac",
-            description: "Merge your first pog.",
-            icon: "static/icons/Merge_Maniac.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Merge Monster",
-            description: "Merge 30 pogs.",
-            icon: "static/icons/Merge_Monster.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Merge Master",
-            description: "Merge 80 pogs.",
-            icon: "static/icons/Merge_Master.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "God",
-            description: "Merge into a God pog.",
-            icon: "static/icons/God.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "Granter",
-            description: "Get a 1-star dragon pog.",
-            icon: "static/icons/DB_1.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Achiever",
-            description: "Get a 2-star dragon pog.",
-            icon: "static/icons/DB_2.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Successor",
-            description: "Get a 3-star dragon pog.",
-            icon: "static/icons/DB_3.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Victor",
-            description: "Get a 4-star dragon pog.",
-            icon: "static/icons/DB_4.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Conqueror",
-            description: "Get a 5-star dragon pog.",
-            icon: "static/icons/DB_5.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Dragon Lord",
-            description: "Get a 6-star dragon pog.",
-            icon: "static/icons/DB_6.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Above All",
-            description: "Get a 7-star dragon pog.",
-            icon: "static/icons/DB_7.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Zeno",
-            description: "Have one of each-star dragon pog.",
-            icon: "static/icons/DB_All.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        
-        {
-            name: "Completionist",
-            description: "Unlock all main achievements.",
-            icon: "static/icons/Completionist.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Secret Achiever",
-            description: "Unlock all secret achievements.",
-            icon: "static/icons/Secret_Achiever.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "Platinum Trophy",
-            description: "Unlock all achievements.",
-            icon: "static/icons/Platinum_Trophy.png",
-            status: false,
-            hidden: false,
-            notified: false
-        }
-    ],
-    //start of economy achievements
-    [
-        {
-            name: "69",
-            description: "Have exactly 69 pogs at once.",
-            icon: "static/icons/69.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "420",
-            description: "Sell enough pogs to gain back a TOTAL of 420 digipogs.",
-            icon: "static/icons/420.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "Wealthy",
-            description: "Make your first 1000 dollars.",
-            icon: "static/icons/Wealthy.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Rich",
-            description: "Have 1 million dollars at once.",
-            icon: "static/icons/Rich.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Elon",
-            description: "Have 100 million dollars at once.",
-            icon: "static/icons/Elon.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Entrepreneur",
-            description: "Make 2000 cash a second.",
-            icon: "static/icons/Entrepreneur.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Tycoon",
-            description: "Make 10000 cash a second.",
-            icon: "static/icons/Tycoon.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Pawn Broker",
-            description: "Make 50000 cash a second.",
-            icon: "static/icons/Pawn_Broker.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Bank Breaker",
-            description: "Make 100000 cash a second.",
-            icon: "static/icons/Bank_Breaker.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Industrialist",
-            description: "Own a Robux pog.",
-            icon: "static/icons/Industrialist.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Capitalist",
-            description: "Own a V-Bucks pog.",
-            icon: "static/icons/Capitalist.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Monopoly",
-            description: "Be on the Top 5 leaderboard.",
-            icon: "static/icons/Monopoly.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Monarch",
-            description: "Be the Top 1 on the leaderboard.",
-            icon: "static/icons/Monarch.png",
-            status: false,
-            hidden: false,
-            notified: false
-        }
-    ],
-    //start of unique achievements
-    [
-        {
-            name: "Nerdy Inspector",
-            description: "Go to the patch notes page.",
-            icon: "static/icons/Nerdy_Inspector.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Chicken Jockey!",
-            description: "Get a chicken jockey.",
-            icon: "static/icons/Chicken_Jockey!.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "An Ender Pearl",
-            description: "Get an endermen combo.",
-            icon: "static/icons/An_Ender_Pearl.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Soda Pop",
-            description: "Get a soda pog combo.",
-            icon: "static/icons/Soda_Pop.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "SODA!",
-            description: "Get one of each color soda pog.",
-            icon: "static/icons/SODA!.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Sus",
-            description: "Have 10 dingus pogs at once.",
-            icon: "static/icons/Sus.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Elden Lord",
-            description: "Get an Elden Ring pog combo.",
-            icon: "static/icons/Elden_Lord.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "1% of My Power",
-            description: "Get a Super Saiyan Shaggy pog combo.",
-            icon: "static/icons/1_of_My_Power.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Ultimate Despair",
-            description: "Get 13 DR (danganronpa) pogs",
-            icon: "static/icons/Ultimate_Despair.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "Shaw!",
-            description: "Get a Hornet pog.",
-            icon: "static/icons/Shaw!.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Uhhh",
-            description: "Get an I Heart CP pog combo.",
-            icon: "static/icons/Uhhh.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "Reflection",
-            description: "Get a Fallout Vault pog combo.",
-            icon: "static/icons/Reflection.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Pineapple Under the Sea",
-            description: "Get a SpongeBob pog combo.",
-            icon: "static/icons/Under_the_Sea.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Mog Pog",
-            description: "Get a Handsome Squidward pog combo.",
-            icon: "static/icons/Mog_Pog.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Goon",
-            description: "Get an anime girl pog combo.",
-            icon: "static/icons/Goon.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "Margot Robbie",
-            description: "Get a Barbie pog combo.",
-            icon: "static/icons/Margot_Robbie.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "I am Vengeance",
-            description: "Get 4 Batman Robin pog combos.",
-            icon: "static/icons/I_Am_Vengeance.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Nuke Kaboom",
-            description: "Collect a Thomas Nuke pog.",
-            icon: "static/icons/Nuke_Kaboom.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Hiding in your WiFi",
-            description: "Get a Hatsune Miku pog combo.",
-            icon: "static/icons/Hiding_in_your_WiFi.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "Strange Man's Game",
-            description: "Get a Elf Biker pog combo.",
-            icon: "static/icons/Strange_Man_s_Game.png",
-            status: false,
-            hidden: true,
-            notified: false
-        },
-        {
-            name: "buttr",
-            description: "Get a Butter Pog combo.",
-            icon: "static/icons/buttr.png",
-            status: false,
-            hidden: false,
-            notified: false
-        },
-        {
-            name: "OAUTH",
-            description: "Get a Formbar pog combo.",
-            icon: "static/icons/OAUTH.png",
-            status: false,
-            hidden: false,
-            notified: false
-        }
-    ]
-];
+const achievements = window.achievements || (typeof userdata !== 'undefined' && userdata.achievements) || [];
 
-window.achievements = achievements;
+
 
 // category variable
 let cate = "";
@@ -851,25 +247,50 @@ setInterval(() => {
 
 // #8e6fa9 (carter dont worry abt ts)
 
+function fetchLeaderboardAndCheck() {
+    // require credentials so server can tell who is current session user (if needed)
+    fetch('/api/leaderboard', { credentials: 'include' })
+        .then(res => res.ok ? res.json() : Promise.resolve([]))
+        .then(rows => {
+            if (!Array.isArray(rows)) return;
+            const myName = (userdata && (userdata.displayName || userdata.displayname || '')).toString().toLowerCase();
+            let rank = null;
+            for (let i = 0; i < rows.length; i++) {
+                const name = ((rows[i].displayname || rows[i].displayName) || '').toString().toLowerCase();
+                if (name && myName && name === myName) {
+                    rank = i + 1;
+                    window.userRank = rank; // store globally for other funcs
+                    break;
+                }
+            }
+        })
+        .catch(err => {
+            console.error('Error fetching leaderboard:', err);
+        });
+}
+
+fetchLeaderboardAndCheck();
+setInterval(fetchLeaderboardAndCheck, 1000);
+
 function collectFunc() {
     for (let i = 0; i < achievements[0].length; i++) {
         const achievement = achievements[0][i];
         switch (achievement.name) {
             case "Full Combo!":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    achievement.status = userdata.highestCombo >= 3 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Coneisseur":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    achievement.status = userdata.highestCombo >= 6 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Candid Coiner":
                 if (!achievement.status) {
-                    //cant be tracked yet || ? true : achievement.status;
+                    achievement.status = userdata.highestCombo >= 60 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -1039,19 +460,19 @@ function progFunc() {
                 break;
             case "Merge Maniac":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    achievement.status = userdata.mergeCount >= 1 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Merge Monster":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    achievement.status = userdata.mergeCount >= 30 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Merge Master":
                 if (!achievement.status) {
-                    //untracked ? true : achievement.status;
+                    achievement.status = userdata.mergeCount >= 80 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -1259,12 +680,14 @@ function econFunc() {
                 break;
             case "Monopoly":
                 if (!achievement.status) {
-                    //not function yet aughhh
+                    achievement.status = window.userRank === 5 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
                 break;
             case "Monarch":
                 if (!achievement.status) {
-                    //not function yet aughhh
+                    achievement.status = window.userRank === 1 ? true : achievement.status;
+                    achievementNotify(achievement);
                 }
                 break;
             default:
@@ -1312,7 +735,10 @@ function uniqueFunc() {
             case "SODA!":
                 if (!achievement.status) {
                     const inv = userdata.inventory;
-                    //achievement.status = cant be tracked yet || ? true : achievement.status;
+                    const hasRedSoda = inv.some(it => (it && it.name || '').toLowerCase().includes('red soda'));
+                    const hasGreenSoda = inv.some(it => (it && it.name || '').toLowerCase().includes('green soda'));
+                    const hasBrownSoda = inv.some(it => (it && it.name || '').toLowerCase().includes('brown soda'));
+                    achievement.status = hasRedSoda && hasGreenSoda && hasBrownSoda ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -1547,3 +973,15 @@ setInterval(levelFuncs, 1000);
 setInterval(progFunc, 1000);
 setInterval(econFunc, 1000);
 setInterval(uniqueFunc, 1000);
+
+
+function checkAllAchievements() {
+        collectFunc();
+        levelFuncs();
+        progFunc();
+        econFunc();
+        uniqueFunc();
+        refreshAchievementsView();
+}
+
+window.checkAllAchievements = checkAllAchievements;

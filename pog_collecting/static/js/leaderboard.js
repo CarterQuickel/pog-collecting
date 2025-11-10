@@ -43,3 +43,4 @@ document.querySelectorAll(".infobtn").forEach(button => {
                           <h3>Inventory</h3> <p>${sortedI.length > 0 ? displayed : "No items"}</p>`;
     })
 });
+
