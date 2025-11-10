@@ -212,7 +212,7 @@ function update() {
     if (inventory.length >= 999) {
         while (inventory.length > 999) {
             const item = inventory[0];
-            sellItem(item.id, item.income * 105);
+            sellItem(item.id, Math.round(item.income * 1.05));
         }
     }
 
@@ -339,7 +339,7 @@ function refreshInventory() {
         return hasBonus = highlightColors.includes(item.name),
             namelength = item.name.length,
             nameFontSize = namelength >= 19 ? '9px' : namelength >= 12 ? '12px' : '16px',
-            sellvalue = item.income * 105,
+            sellvalue = Math.round(item.income * 1.05),
             // refernce this inside the map function, for item is only defined in here
             isBronze = item.name === "Bronze Pog",
             isSilver = item.name === "Silver Pog",
@@ -370,7 +370,7 @@ function refreshInventory() {
             <li class='list' style="color: ${item.color}">${item.value}</li>
             <li class='list' style="color: green">$${Math.round(item.income * ((window.perNameBonus && window.perNameBonus[item.name]) || 1))}/s</li>
         </ul>
-        <button id="sellbtn" onclick="sellItem(${item.id}, sellvalue)">Sell for $${sellvalue}</button>
+        <button id="sellbtn" onclick="sellItem(${item.id}, sellvalue)">Sell for <br>$${sellvalue}</button>
         ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
         ${canTrade ? `<button class="mergebtn" onclick="trade()">Trade (7)</button>` : ""}
         </div>
@@ -393,7 +393,7 @@ document.getElementById("sellAll").addEventListener("click", () => {
             if (inventory.length == 0) {
                 break
             }
-            sellItem(i, item.income * 105) //sellvalue
+            sellItem(i, Math.round(item.income * 1.05)) //sellvalue
         }
     } else {
         const filteredItems = inventory.filter(item => item.name.toLowerCase().includes(itemSearched));
@@ -402,7 +402,7 @@ document.getElementById("sellAll").addEventListener("click", () => {
             const item = filteredItems[i];
             const indexInInventory = inventory.findIndex(invItem => invItem.id === item.id);
             if (indexInInventory !== -1) {
-                sellItem(item.id, item.income * 105); //sellvalue
+                sellItem(item.id, Math.round(item.income * 1.05)); //sellvalue
             }
         }
     }
@@ -879,9 +879,9 @@ document.getElementById("selectSort").addEventListener("change", () => {
     } else if (sortBy === "nameZA") {
         inventory.sort((a, b) => b.name.localeCompare(a.name));
     } else if (sortBy === "svHf") {
-        inventory.sort((a, b) => (b.income * 105) - (a.income * 105));
+        inventory.sort((a, b) => (Math.round(b.income * 1.05)) - (Math.round(a.income * 1.05)));
     } else if (sortBy === "svLf") {
-        inventory.sort((a, b) => (a.income * 105) - (b.income * 105));
+        inventory.sort((a, b) => (Math.round(a.income * 1.05)) - (Math.round(b.income * 1.05)));
     }
     refreshInventory();
 });
