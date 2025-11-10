@@ -720,10 +720,10 @@ document.getElementById("save").addEventListener("click", () => {
             totalSold: totalSold,
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
+            wish: wish,
             achievements: window.achievements,
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo
-            wish: wish
         })
     })
         .then(response => response.json())
@@ -738,7 +738,6 @@ document.getElementById("save").addEventListener("click", () => {
 document.getElementById("patchNotesButton").addEventListener("click", () => {
     window.achievements[4][0].status = true;
         fetch('/datasave', {
-    fetch('/datasave', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -756,10 +755,10 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
             totalSold: totalSold,
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
+            wish: wish,
             achievements: window.achievements,
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo
-            wish: wish
         })
     })
         .then(response => response.json())
@@ -790,10 +789,10 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
             totalSold: totalSold,
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
+            wish: wish,
             achievements: window.achievements,
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo
-            wish: wish
         })
     })
         .then(response => response.json())
@@ -825,10 +824,10 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
             totalSold: totalSold,
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
+            wish: wish,
             achievements: window.achievements,
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo
-            wish: wish
         })
     })
         .then(response => response.json())
