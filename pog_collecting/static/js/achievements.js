@@ -518,7 +518,7 @@ const achievements = [
         {
             name: "1% of My Power",
             description: "Get a Super Saiyan Shaggy pog combo.",
-            icon: "🟠",
+            icon: "static/icons/1_of_My_Power.png",
             status: false,
             hidden: false,
             notified: false
@@ -550,7 +550,7 @@ const achievements = [
         {
             name: "Reflection",
             description: "Get a Fallout Vault pog combo.",
-            icon: "🛖",
+            icon: "static/icons/Reflection.png",
             status: false,
             hidden: false,
             notified: false
@@ -558,7 +558,7 @@ const achievements = [
         {
             name: "Pineapple Under the Sea",
             description: "Get a SpongeBob pog combo.",
-            icon: "🍍",
+            icon: "static/icons/Under_the_Sea.png",
             status: false,
             hidden: false,
             notified: false
@@ -566,7 +566,7 @@ const achievements = [
         {
             name: "Mog Pog",
             description: "Get a Handsome Squidward pog combo.",
-            icon: "🦑",
+            icon: "static/icons/Mog_Pog.png",
             status: false,
             hidden: false,
             notified: false
@@ -574,7 +574,7 @@ const achievements = [
         {
             name: "Goon",
             description: "Get an anime girl pog combo.",
-            icon: "🤍",
+            icon: "static/icons/Goon.png",
             status: false,
             hidden: true,
             notified: false
@@ -582,7 +582,7 @@ const achievements = [
         {
             name: "Margot Robbie",
             description: "Get a Barbie pog combo.",
-            icon: "🎀",
+            icon: "static/icons/Margot_Robbie.png",
             status: false,
             hidden: false,
             notified: false
@@ -606,7 +606,7 @@ const achievements = [
         {
             name: "Hiding in your WiFi",
             description: "Get a Hatsune Miku pog combo.",
-            icon: "🎤",
+            icon: "static/icons/Hiding_in_your_WiFi.png",
             status: false,
             hidden: false,
             notified: false
@@ -614,7 +614,7 @@ const achievements = [
         {
             name: "Strange Man's Game",
             description: "Get a Elf Biker pog combo.",
-            icon: "🏍️",
+            icon: "static/icons/Strange_Man_s_Game.png",
             status: false,
             hidden: true,
             notified: false
