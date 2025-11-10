@@ -31,10 +31,10 @@ const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to t
  
 //URL to take user back to after authentication
 const THIS_URL = 'http://172.16.3.130:3000/login'; // ... or whatever the address to your application is
- 
-/* This creates session middleware with given options;
-The 'secret' option is used to sign the session ID cookie.
-The 'resave' option is used to force the session to be saved back to the session store, even if the session was never modified during the request.
+
+/* This creates session middleware with given options; 
+The 'secret' option is used to sign the session ID cookie. 
+The 'resave' option is used to force the session to be saved back to the session store, even if the session was never modified during the request. 
 The 'saveUninitialized' option is used to force a session that is not initialized to be saved to the store.*/
 app.use(session({
     secret: 'youweremybrotheranakin',
