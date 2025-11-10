@@ -10,18 +10,18 @@ const csv = require('csv-parser');
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
     'description', 'type', 'rarity', 'creator'
-  ];
+];
 
 const results = [];
-  
+
 fs.createReadStream('pogipedia/db/pogs.csv')
-.pipe(csv({ headers }))
-.on('data', (row) => {
-    const { name, rarity } = row;
-    results.push({ name, rarity });
-})
-.on('end', () => {
-});
+    .pipe(csv({ headers }))
+    .on('data', (row) => {
+        const { name, rarity } = row;
+        results.push({ name, rarity });
+    })
+    .on('end', () => {
+    });
 
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
@@ -90,6 +90,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     achievements TEXT,
     mergeCount INTEGER,
     highestCombo INTEGER,
+    wish INTEGER,
     displayname TEXT UNIQUE
 
 )`);
@@ -138,6 +139,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     return;
                 } else {
                     usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, wish, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -153,6 +155,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             JSON.stringify(req.session.user.achievements),
                             req.session.user.mergeCount,
                             req.session.user.highestCombo,
+                            req.session.user.wish,
                             displayName
                         ],
                         function (err) {
@@ -182,6 +185,7 @@ app.get('/', isAuthenticated, (req, res) => {
             achievements: req.session.user.achievements || [],
             mergeCount: req.session.user.mergeCount || 0,
             highestCombo: req.session.user.highestCombo || 0
+            wish: req.session.user.wish || 0
         };
 
         // load user data from database
@@ -207,6 +211,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     achievements: JSON.parse(row.achievements),
                     mergeCount: row.mergeCount,
                     highestCombo: row.comboHigh
+                    wish: row.wish
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
@@ -226,6 +231,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     achievements: [],
                     mergeCount: 0,
                     highestCombo: 0
+                    wish: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
@@ -288,6 +294,7 @@ app.post('/datasave', (req, res) => {
         achievements: req.body.achievements,
         mergeCount: req.body.mergeCount,
         highestCombo: req.body.highestCombo
+        wish: req.body.wish
     }
 
 
@@ -316,6 +323,10 @@ app.post('/datasave', (req, res) => {
                 req.session.user.displayName
             ]
             usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ? WHERE displayname = ?`, params, function (err) {
+                userSave.wish,
+                req.session.user.displayName
+            ]
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, wish = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -349,6 +360,7 @@ app.get('/login', (req, res) => {
             achievements: tokenData.achievements || [],
             mergeCount: tokenData.mergeCount || 0,
             highestCombo: tokenData.highestCombo || 0
+            wish: tokenData.wish || 0
         };
         res.redirect('/');
     } else {
