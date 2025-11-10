@@ -1,4 +1,3 @@
-
 // reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 // ensure a global achievements object exists early so other scripts can read it
@@ -386,7 +385,7 @@ document.getElementById("sellAll").addEventListener("click", () => {
     if (!searching) {
         const initialInv = inventory.length
         for (let i = 0; i < initialInv; i++) {
-            if (i = inventory.length) {
+            if (i == initialInv) {
                 i = 0
             }
             const item = inventory[i];
