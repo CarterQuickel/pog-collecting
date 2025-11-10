@@ -6,14 +6,14 @@ const jwt = require('jsonwebtoken');
 const session = require('express-session');
 const fs = require('fs');
 const csv = require('csv-parser');
-
+ 
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
     'description', 'type', 'rarity', 'creator'
 ];
-
+ 
 const results = [];
-
+ 
 fs.createReadStream('pogipedia/db/pogs.csv')
     .pipe(csv({ headers }))
     .on('data', (row) => {
@@ -22,28 +22,28 @@ fs.createReadStream('pogipedia/db/pogs.csv')
     })
     .on('end', () => {
     });
-
+ 
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
-
+ 
 // URL to take user to Formbar for authentication
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
-
+ 
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.247:3000/login'; // ... or whatever the address to your application is
-
-/* This creates session middleware with given options; 
-The 'secret' option is used to sign the session ID cookie. 
-The 'resave' option is used to force the session to be saved back to the session store, even if the session was never modified during the request. 
+const THIS_URL = 'http://172.16.3.130:3000/login'; // ... or whatever the address to your application is
+ 
+/* This creates session middleware with given options;
+The 'secret' option is used to sign the session ID cookie.
+The 'resave' option is used to force the session to be saved back to the session store, even if the session was never modified during the request.
 The 'saveUninitialized' option is used to force a session that is not initialized to be saved to the store.*/
 app.use(session({
     secret: 'youweremybrotheranakin',
     resave: false,
     saveUninitialized: false
 }))
-/* It is a good idea to use a Environment Variable or a .env file that is in the .gitignore file for your SECRET. 
+/* It is a good idea to use a Environment Variable or a .env file that is in the .gitignore file for your SECRET.
 This will prevent it from getting out and allowing people to hack your cookies.*/
-
+ 
 // Middleware to check if user is authenticated
 function isAuthenticated(req, res, next) {
     console.log("Authenticating...");
@@ -64,14 +64,14 @@ function isAuthenticated(req, res, next) {
     }
 }
 // The following isAuthenticated function checks when the access token expires and promptly retrieves a new one using the user's refresh token.
-
+ 
 //set
 app.set('view engine', 'ejs');
 app.set('trust proxy', true);
 app.use('/static', express.static('static'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+ 
 // user settings database
 const usdb = new sqlite3.Database('usersettings.sqlite');
 usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
@@ -87,15 +87,14 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     totalSold INTEGER,
     cratesOpened INTEGER,
     pogamount INTEGER,
-    wish INTEGER,
     achievements TEXT,
     mergeCount INTEGER,
     highestCombo INTEGER,
     wish INTEGER,
     displayname TEXT UNIQUE
-
+ 
 )`);
-
+ 
 // pog database
 const pogs = new sqlite3.Database("pogipedia/db/pog.db", (err) => {
     if (err) {
@@ -104,7 +103,7 @@ const pogs = new sqlite3.Database("pogipedia/db/pog.db", (err) => {
         console.log("Connected to pog database.");
     }
 });
-
+ 
 let pogCount = 0;
 //show many pogs there are
 pogs.get(`SELECT COUNT(*) AS count FROM pogs`, (err, row) => {
@@ -115,7 +114,7 @@ pogs.get(`SELECT COUNT(*) AS count FROM pogs`, (err, row) => {
         pogCount = row.count;
     }
 });
-
+ 
 // home page
 app.get('/collection', (req, res) => {
     if (!req.session.user) {
@@ -123,14 +122,14 @@ app.get('/collection', (req, res) => {
     }
     res.render('collection', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
-
+ 
 // login route
 app.get('/', isAuthenticated, (req, res) => {
     try {
         function insertUser() {
-
+ 
             const displayName = req.session.user.displayName;
-
+ 
             usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
                 if (err) {
                     return console.error("Error querying user:", err.message);
@@ -139,7 +138,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, wish, achievements, mergeCount, highestCombo, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -152,7 +151,6 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.totalSold,
                             req.session.user.cratesOpened,
                             req.session.user.pogamount,
-                            req.session.user.wish,
                             JSON.stringify(req.session.user.achievements),
                             req.session.user.mergeCount,
                             req.session.user.highestCombo,
@@ -168,7 +166,7 @@ app.get('/', isAuthenticated, (req, res) => {
                 }
             });
         }
-
+ 
         // add variable references here
         req.session.user = {
             displayName: req.session.token?.displayName || "guest",
@@ -183,12 +181,12 @@ app.get('/', isAuthenticated, (req, res) => {
             totalSold: req.session.user.totalSold || 0,
             cratesOpened: req.session.user.cratesOpened || 0,
             pogamount: req.session.user.pogamount || 0,
-            wish: req.session.user.wish || 0,
             achievements: req.session.user.achievements || [],
             mergeCount: req.session.user.mergeCount || 0,
-            highestCombo: req.session.user.highestCombo || 0
+            highestCombo: req.session.user.highestCombo || 0,
+            wish: req.session.user.wish || 0
         };
-
+ 
         // load user data from database
         const displayName = req.session.token?.displayName || "guest";
         usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
@@ -209,10 +207,10 @@ app.get('/', isAuthenticated, (req, res) => {
                     totalSold: row.totalSold,
                     cratesOpened: row.cratesOpened,
                     pogamount: row.pogamount,
-                    wish: row.wish,
                     achievements: JSON.parse(row.achievements),
                     mergeCount: row.mergeCount,
-                    highestCombo: row.comboHigh
+                    highestCombo: row.comboHigh,
+                    wish: row.wish
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
@@ -229,10 +227,10 @@ app.get('/', isAuthenticated, (req, res) => {
                     totalSold: 0,
                     cratesOpened: 0,
                     pogamount: 0,
-                    wish: 0,
                     achievements: [],
                     mergeCount: 0,
-                    highestCombo: 0
+                    highestCombo: 0,
+                    wish: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
@@ -244,16 +242,16 @@ app.get('/', isAuthenticated, (req, res) => {
         res.send(error.message)
     }
 });
-
+ 
 // patch notes page
 app.get('/patch', (req, res) => {
     res.render('patch', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
-
+ 
 app.get('/achievements', (req, res) => {
     res.render('achievements', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
-
+ 
 app.get('/leaderboard', (req, res) => {
     usdb.all(
         'SELECT * FROM userSettings ORDER BY score DESC LIMIT 10', [],
@@ -266,7 +264,7 @@ app.get('/leaderboard', (req, res) => {
         }
     );
 });
-
+ 
 app.get('/api/leaderboard', (req, res) => {
     usdb.all('SELECT displayname, score FROM userSettings ORDER BY score DESC LIMIT 100', [], (err, rows) => {
         if (err) {
@@ -276,7 +274,7 @@ app.get('/api/leaderboard', (req, res) => {
         res.json(rows || []);
     });
 });
-
+ 
 // save data route
 app.post('/datasave', (req, res) => {
     console.log(req.body);
@@ -292,13 +290,13 @@ app.post('/datasave', (req, res) => {
         totalSold: req.body.totalSold,
         cratesOpened: req.body.cratesOpened,
         pogamount: req.body.pogAmount,
-        wish: req.body.wish,
         achievements: req.body.achievements,
         mergeCount: req.body.mergeCount,
-        highestCombo: req.body.highestCombo
+        highestCombo: req.body.highestCombo,
+        wish: req.body.wish
     }
-
-
+ 
+ 
     console.log(userSave.theme);
     // save to session
     req.session.save(err => {
@@ -318,13 +316,13 @@ app.post('/datasave', (req, res) => {
                 userSave.totalSold,
                 userSave.cratesOpened,
                 userSave.pogamount,
-                userSave.wish,
                 JSON.stringify(userSave.achievements),
                 userSave.mergeCount,
                 req.session.user.highestCombo,
+                userSave.wish,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, wish = ?, achievements = ?, mergeCount = ?, highestCombo = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -336,7 +334,7 @@ app.post('/datasave', (req, res) => {
         }
     });
 });
-
+ 
 // login page
 app.get('/login', (req, res) => {
     if (req.query.token) {
@@ -355,17 +353,17 @@ app.get('/login', (req, res) => {
             totalSold: tokenData.totalSold || 0,
             cratesOpened: tokenData.cratesOpened || 0,
             pogamount: tokenData.pogamount || 0,
-            wish: tokenData.wish || 0,
             achievements: tokenData.achievements || [],
             mergeCount: tokenData.mergeCount || 0,
-            highestCombo: tokenData.highestCombo || 0
+            highestCombo: tokenData.highestCombo || 0,
+            wish: tokenData.wish || 0
         };
         res.redirect('/');
     } else {
         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
     };
 });
-
+ 
 //listens
 app.listen(3000, () => {
     console.log('Server started on port 3000');

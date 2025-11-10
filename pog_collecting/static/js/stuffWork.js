@@ -1,4 +1,3 @@
-
 // reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 // ensure a global achievements object exists early so other scripts can read it
@@ -7,7 +6,7 @@ window.achievements = window.achievements || userdata.achievements || [];
 var maxPogs = JSON.parse(document.getElementById("maxPogs").textContent);
 // reference pogs from ejs
 var pogList = JSON.parse(document.getElementById("pogList").textContent);
-
+ 
 rarityColor = [
     { name: "Trash", color: "red", income: 6 }, //trash
     { name: "Common", color: "yellow", income: 17 }, //common
@@ -15,62 +14,62 @@ rarityColor = [
     { name: "Rare", color: "aqua", income: 66 }, //rare
     { name: "Mythic", color: "fuchsia", income: 205 }, //mythic
 ]
-
+ 
 // debug rarity list
 console.log(crates);
-
+ 
 // wish
 let wish = userdata.wish || 0;
-
+ 
 // search variables
 let searching = false;
 let itemSearched = "";
-
+ 
 // clear search every 100ms if box is empty
 setInterval(() => {
     if (itemSearched === "") {
         searching = false;
     }
 }, 100);
-
+ 
 // money upgrade
 let moneyTick = 1000;
-
+ 
 // items
 let inventory = userdata.inventory || [];
 window.inventory = inventory;
-
+ 
 //crate vars
 cratesOpened = userdata.cratesOpened || 0;
-
+ 
 // money
 let money = userdata.score || 300;
 let userIncome = userdata.income || 0;
 let totalSold = userdata.totalSold || 0;
-
+ 
 let pogAmount = userdata.pogamount || 0;
-
+ 
 // XP
 let xp = userdata.xp || 0;
 let maxXP = userdata.maxxp || 15;
 let level = userdata.level || 1;
-
+ 
 //etc.
 const mergeAmount = 10;
 let mergeCount = userdata.mergeCount || 0;
 //global vari
 window.mergeCount = mergeCount;
 userdata.mergeCount = mergeCount;
-
+ 
 //combo tracking
 let comboCount = 0;
 let highestCombo = userdata.highestCombo || 0;
 window.highestCombo = highestCombo;
 userdata.highestCombo = highestCombo;
-
+ 
 // inventory size
 let Isize = userdata.Isize || 45;
-
+ 
 //mode
 if (userdata.theme === "light") {
     document.body.style.backgroundColor = "white";
@@ -81,28 +80,28 @@ if (userdata.theme === "light") {
     document.body.style.color = "white";
     lightMode = false;
 }
-
+ 
 //bonus multiplier
 let bonusMulti = 1;
-
+ 
 //abbreviation num
 let abbreviatedMoney = 0;
-
-
-
+ 
+ 
+ 
 //combo tracking fgdjhkfgjhkfgfgdjk
-let perNameBonus = {}; 
+let perNameBonus = {};
 function computeComboStats() {
     const counts = {};
     for (const item of inventory) {
         counts[item.name] = (counts[item.name] || 0) + 1;
     }
-
+ 
     // total number of complete 3-item combos across all item types
     const newComboCount = Object.values(counts).reduce((sum, c) => sum + Math.floor(c / 3), 0);
     // highest single-item stack count (e.g. 7 of "Bronze Pog" => 7)
     const currentMaxStack = Object.values(counts).reduce((m, c) => Math.max(m, c), 0);
-
+ 
     if (newComboCount !== comboCount) {
         comboCount = newComboCount;
         window.comboCount = comboCount;
@@ -111,8 +110,8 @@ function computeComboStats() {
         highestCombo = currentMaxStack;
         window.highestCombo = highestCombo;
     }
-
-
+ 
+ 
     perNameBonus = {};
     for (const [name, count] of Object.entries(counts)) {
         // combo only works if 3+; multiplier increases per item (5% per item) but capped at 2x
@@ -120,35 +119,35 @@ function computeComboStats() {
         perNameBonus[name] = Math.min(2, rawMult);
     }
     window.perNameBonus = perNameBonus; //we love global variables
-
+ 
     return currentMaxStack;
 }
-
+ 
 highestCombo = computeComboStats();
-
+ 
 computeComboStats(); //corrects stats on load
-
+ 
 // cost multiplier
 function getTotalIncome() {
     computeComboStats();
     const bonusMap = window.perNameBonus || {};
-    
-    
+   
+   
     return inventory.reduce((sum, item) => {
         const mult = bonusMap[item.name] || 1;
         return sum + Math.round(item.income * mult);
     }, 0);
 }
-
+ 
 userIncome = getTotalIncome();
-
+ 
 // initial money display
 setInterval(updateMoney, 100);
 function updateMoney() {
     const abbreviatedMoney = abbreviateNumber(money);
     document.getElementById("money").innerText = `$${abbreviatedMoney}`;
 }
-
+ 
 // sell item
 function sellItem(id, sellvalue) {
     const index = inventory.findIndex(item => item.id === id)
@@ -160,7 +159,7 @@ function sellItem(id, sellvalue) {
     refreshInventory();
     if (window.checkAllAchievements) window.checkAllAchievements();
 }
-
+ 
 // update loop
 setInterval(update, 100);
 function update() {
@@ -169,53 +168,53 @@ function update() {
     const abbreviatedMaxXP = abbreviateNumber(maxXP);
     // update inventory size text
     document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize} Slots`
-
+ 
     // update XP Txt
     document.getElementById("XPTxt").innerText = `Level ${level} (${abbreviatedXP}/${abbreviatedMaxXP} XP)`;
-
+ 
     // update income Txt
     document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;
-
+ 
     //update pog / pog
     document.getElementById("pogCount").innerText = `Pogs Discovered: ${pogAmount} / ${maxPogs}`;
-
+ 
     //update pogs color
     document.getElementById("pogCount").style.color = pogAmount >= maxPogs ? "gold" : lightMode ? "black" : "white";
-
+ 
     //update wish text
     document.getElementById("useWish").innerText = `Use Wish (${wish})`;
-
+ 
     //update wish visibility
     document.getElementById("useWish").style.display = wish > 0 ? "inline-block" : "none";
-
+ 
     //crate 1 text
     document.getElementById("crate1").innerHTML = `Trash Crate ($${abbreviateNumber(crates[0].price)})`;
-
+ 
     //crate 2 text
     document.getElementById("crate2").innerHTML = `Common Crate ($${abbreviateNumber(crates[1].price)})`;
-
+ 
     //crate 3 text
     document.getElementById("crate3").innerHTML = `Uncommon Crate ($${abbreviateNumber(crates[2].price)})`;
-
+ 
     //crate 4 text
     document.getElementById("crate4").innerHTML = `Rare Crate ($${abbreviateNumber(crates[3].price)})`;
-
+ 
     //crate 5 text
     document.getElementById("crate5").innerHTML = `Mythic Crate ($${abbreviateNumber(crates[4].price)})`;
-
+ 
     //sell all button
     document.getElementById("sellAll").innerText = `Sell All ${searching ? "(Searched)" : ""}`;
-
+ 
     //sell all width
     document.getElementById("sellAll").style.width = searching ? "150px" : "100px";
-
+ 
     if (inventory.length >= 999) {
         while (inventory.length > 999) {
             const item = inventory[0];
             sellItem(item.id, item.income * 105);
         }
     }
-
+ 
     // change inventory text color if full
     if (inventory.length >= Isize) {
         document.getElementById("invTxt").style.color = "red";
@@ -223,14 +222,14 @@ function update() {
         document.getElementById("invTxt").style.color = lightMode ? "black" : "white";
     }
 }
-
+ 
 function merge(bronze, silver, gold, diamond, astral) {
     let sold = 0;
     mergeCount += 1;
     //syncing global variable with session variable
     window.mergeCount = mergeCount;
     userdata.mergeCount = mergeCount;
-
+ 
     // add new  pog to inventory
     if (bronze) {
         inventory.push({ name: "Silver Pog", color: "orange", income: 620, value: "UNIQUE" });
@@ -269,7 +268,7 @@ function merge(bronze, silver, gold, diamond, astral) {
     }
     if (window.checkAllAchievements) window.checkAllAchievements();
 }
-
+ 
 function trade() {
     let hasAll = true;
     // does user have all 7 dragon balls?
@@ -297,31 +296,31 @@ function trade() {
         refreshInventory();
     }
 }
-
+ 
 //update inventory
 function refreshInventory() {
     // get inventory div
     const inventoryDiv = document.getElementById("inventory");
-
+ 
     // count how many of each rarity in inventory
     const rarityCounts = {};
     inventory.forEach(item => {
         // rarityCounts is an object where the KEY is the rarity name [] and the VALUE is the count of that rarity in the inventory; use the || operator to initialize the count to 0 if it doesn't exist yet; +1 to increment the count
         rarityCounts[item.name] = (rarityCounts[item.name] || 0) + 1;
     });
-
+ 
     //the computer is recomputing
     computeComboStats();
-
+ 
     // failsafe if they delete all items
     if (inventory.length === 0 && money < 200) {
         money = 200;
     }
-
+ 
     // create bonus outline for items with more than one of the same rarity
     // Object.keys get the KEY (rarity name) of the rarityCounts object ; filter to only get rarities with 3 or more items
     const highlightColors = Object.keys(rarityCounts).filter(rarity => rarityCounts[rarity] >= 3);
-
+ 
     //see if there is mergeAmount bronze pogs for merge button
     const bronzeCount = inventory.filter(item => item.name === "Bronze Pog").length;
     // see if there is mergeAmount silver pogs for merge button
@@ -332,7 +331,7 @@ function refreshInventory() {
     const diamondCount = inventory.filter(item => item.name === "Diamond Pog").length;
     // see if there is mergeAmount astral pogs for merge button
     const astralCount = inventory.filter(item => item.name === "Astral Pog").length;
-
+ 
     // set inventory html
     // .filter is used to get the search and .includes to check if the item name includes the searched text
     inventoryDiv.innerHTML = inventory.filter(item => item.name.toLowerCase().includes(itemSearched)).map((item, index) => {
@@ -351,7 +350,7 @@ function refreshInventory() {
             bronze = isBronze && bronzeCount >= mergeAmount,
             //silver
             silver = isSilver && silverCount >= mergeAmount,
-            //gold 
+            //gold
             gold = isGold && goldCount >= mergeAmount,
             //diamond
             diamond = isDiamond && diamondCount >= mergeAmount,
@@ -376,7 +375,7 @@ function refreshInventory() {
         </div>
     `}).join("");
 }
-
+ 
 //sell all button
 document.getElementById("sellAll").addEventListener("click", () => {
     confirmation = confirm(`Are you sure you want to sell all ${searching ? "searched " : ""}items in your inventory?`);
@@ -407,10 +406,10 @@ document.getElementById("sellAll").addEventListener("click", () => {
         }
     }
 });
-
+ 
 //first time call
 refreshInventory();
-
+ 
 //update progress bar
 setInterval(updatePB, 100)
 function updatePB() {
@@ -418,12 +417,12 @@ function updatePB() {
     XPPB.value = xp;
     XPPB.max = maxXP;
 }
-
+ 
 // passive money income
 setInterval(() => {
     money += getTotalIncome(); // increase money based on the rarity income for each item in inventory every second
 }, 1000);
-
+ 
 // crate opening function
 function openCrate(cost, index) {
     if (inventory.length >= Isize || money < cost) {
@@ -433,38 +432,38 @@ function openCrate(cost, index) {
         alert("Inventory full! Sell some pogs to make space.");
         return;
     }
-
+ 
     // variables
     let rand = Math.random();
     let cumulativeChance = 0;
     let color = "white";
     let income = 5;
-
+ 
     for (let item of crates[Object.keys(crates)[index]].rarities) {
-
+ 
         // check if random number is within the chance range
         cumulativeChance += item.chance;
         if (rand < cumulativeChance) {
-
+ 
             // find all pogs with that rarity
             const matchingRarities = pogList.filter(r => r.rarity === item.name);
             if (matchingRarities.length === 0) continue;
-
+ 
             // Pick one at random
             const rarity = matchingRarities[Math.floor(Math.random() * matchingRarities.length)];
-
+ 
             // find rarity color details
             const match = rarityColor.find(r => r.name === rarity.rarity);
-
+ 
             //id
             const id = Math.random() * 100000
-
+ 
             // rarity color
             color = match ? match.color : "white";
-
+ 
             // rarity income
             income = match ? match.income : 5;
-
+ 
             // add to pog amount if new pog
             let added = { name: rarity.name }
             const exists = inventory.find(i => i.name === added.name);
@@ -473,7 +472,7 @@ function openCrate(cost, index) {
                     pogAmount++;
                 }
             }
-
+ 
             // dragon pog stuff
             if (rarity.name === "Dragon Ball") {
                 const inv = inventory.map(i => (i?.name).toLowerCase());
@@ -482,16 +481,16 @@ function openCrate(cost, index) {
                     rarity.name = `Dragon Ball ${missing}`;
                 }
             }
-
+ 
             // Add result to inventory
             if (rarity.name != "Dragon Ball") {
                 inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity, id: id });
             }
-
+ 
             // XP gain
             xp += Math.floor(income * (3 * level / 15)); // gain XP based on income and level
             levelup();
-
+ 
             // Deduct cost
             money -= cost;
             cratesOpened++;
@@ -499,16 +498,16 @@ function openCrate(cost, index) {
             break;
         }
     }
-
+ 
 }
-
+ 
 // crate open events
 document.getElementById("crate1").addEventListener("click", () => openCrate(crates[Object.keys(crates)[0]].price, 0));
 document.getElementById("crate2").addEventListener("click", () => openCrate(crates[Object.keys(crates)[1]].price, 1));
 document.getElementById("crate3").addEventListener("click", () => openCrate(crates[Object.keys(crates)[2]].price, 2));
 document.getElementById("crate4").addEventListener("click", () => openCrate(crates[Object.keys(crates)[3]].price, 3));
 document.getElementById("crate5").addEventListener("click", () => openCrate(crates[Object.keys(crates)[4]].price, 4));
-
+ 
 //crate open 5 events
 document.getElementById("crate1_b5").addEventListener("click", () => {
     if (inventory.length + 5 > Isize) {
@@ -595,7 +594,7 @@ document.getElementById("crate5_b5").addEventListener("click", () => {
         openCrate(crates[Object.keys(crates)[4]].price, 4);
     }
 });
-
+ 
 //crate open 10 events
 document.getElementById("crate1_b10").addEventListener("click", () => {
     if (inventory.length + 10 > Isize) {
@@ -682,7 +681,7 @@ document.getElementById("crate5_b10").addEventListener("click", () => {
         openCrate(crates[Object.keys(crates)[4]].price, 4);
     }
 });
-
+ 
 // level up
 function levelup() {
     while (xp >= maxXP) {
@@ -698,7 +697,7 @@ function levelup() {
         if (window.checkAllAchievements) window.checkAllAchievements();
     }
 }
-
+ 
 // save game
 document.getElementById("save").addEventListener("click", () => {
     // fetch to /datasave
@@ -720,10 +719,10 @@ document.getElementById("save").addEventListener("click", () => {
             totalSold: totalSold,
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
-            wish: wish,
             achievements: window.achievements,
             mergeCount: window.mergeCount,
-            highestCombo: window.highestCombo
+            highestCombo: window.highestCombo,
+            wish: wish
         })
     })
         .then(response => response.json())
@@ -734,10 +733,10 @@ document.getElementById("save").addEventListener("click", () => {
         });
     alert("Game Saved!");
 });
-
+ 
 document.getElementById("patchNotesButton").addEventListener("click", () => {
     window.achievements[4][0].status = true;
-        fetch('/datasave', {
+    fetch('/datasave', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -755,10 +754,10 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
             totalSold: totalSold,
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
-            wish: wish,
             achievements: window.achievements,
             mergeCount: window.mergeCount,
-            highestCombo: window.highestCombo
+            highestCombo: window.highestCombo,
+            wish: wish
         })
     })
         .then(response => response.json())
@@ -769,7 +768,7 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
         });
     window.location.href = "/patch";
 });
-
+ 
 document.getElementById("achievementsButton").addEventListener("click", () => {
     fetch('/datasave', {
         method: 'POST',
@@ -789,10 +788,10 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
             totalSold: totalSold,
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
-            wish: wish,
             achievements: window.achievements,
             mergeCount: window.mergeCount,
-            highestCombo: window.highestCombo
+            highestCombo: window.highestCombo,
+            wish: wish
         })
     })
         .then(response => response.json())
@@ -803,7 +802,7 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
         });
     window.location.href = "/achievements";
 });
-
+ 
 document.getElementById("leaderboardButton").addEventListener("click", () => {
     // fetch to /datasave
     fetch('/datasave', {
@@ -824,10 +823,10 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
             totalSold: totalSold,
             cratesOpened: cratesOpened,
             pogAmount: pogAmount,
-            wish: wish,
             achievements: window.achievements,
             mergeCount: window.mergeCount,
-            highestCombo: window.highestCombo
+            highestCombo: window.highestCombo,
+            wish: wish
         })
     })
         .then(response => response.json())
@@ -838,7 +837,7 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
         });
     window.location.href = "/leaderboard";
 });
-
+ 
 // mode toggle
 document.getElementById("darkmode").addEventListener("click", () => {
     console.log("toggled");
@@ -851,7 +850,7 @@ document.getElementById("darkmode").addEventListener("click", () => {
         document.body.style.color = "white";
     }
 });
-
+ 
 //search functionality
 document.getElementById("searchbtn").addEventListener("click", () => {
     box = document.getElementById("searchbox")
@@ -862,7 +861,7 @@ document.getElementById("searchbtn").addEventListener("click", () => {
         refreshInventory();
     }
 });
-
+ 
 //categorize functionality
 document.getElementById("selectSort").addEventListener("change", () => {
     const sortBy = document.getElementById("selectSort").value;
@@ -885,17 +884,17 @@ document.getElementById("selectSort").addEventListener("change", () => {
     }
     refreshInventory();
 });
-
+ 
 //number abbreviation function
 function abbreviateNumber(value) {
     const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });
     return formatter.format(value);
 }
-
+ 
 const buttons = document.getElementsByTagName("button");
-
-
-
+ 
+ 
+ 
 window.achievements = userdata.achievements || [
     [
         {
@@ -1187,7 +1186,7 @@ window.achievements = userdata.achievements || [
             hidden: true,
             notified: false
         },
-        
+       
         {
             name: "Completionist",
             description: "Unlock all main achievements.",
@@ -1381,7 +1380,7 @@ window.achievements = userdata.achievements || [
         {
             name: "1% of My Power",
             description: "Get a Super Saiyan Shaggy pog combo.",
-            icon: "🟠",
+            icon: "static/icons/1_of_My_Power.png",
             status: false,
             hidden: false,
             notified: false
@@ -1413,7 +1412,7 @@ window.achievements = userdata.achievements || [
         {
             name: "Reflection",
             description: "Get a Fallout Vault pog combo.",
-            icon: "🛖",
+            icon: "static/icons/Reflection.png",
             status: false,
             hidden: false,
             notified: false
@@ -1421,7 +1420,7 @@ window.achievements = userdata.achievements || [
         {
             name: "Pineapple Under the Sea",
             description: "Get a SpongeBob pog combo.",
-            icon: "🍍",
+            icon: "static/icons/Under_the_Sea.png",
             status: false,
             hidden: false,
             notified: false
@@ -1429,7 +1428,7 @@ window.achievements = userdata.achievements || [
         {
             name: "Mog Pog",
             description: "Get a Handsome Squidward pog combo.",
-            icon: "🦑",
+            icon: "static/icons/Mog_Pog.png",
             status: false,
             hidden: false,
             notified: false
@@ -1437,7 +1436,7 @@ window.achievements = userdata.achievements || [
         {
             name: "Goon",
             description: "Get an anime girl pog combo.",
-            icon: "🤍",
+            icon: "static/icons/Goon.png",
             status: false,
             hidden: true,
             notified: false
@@ -1445,7 +1444,7 @@ window.achievements = userdata.achievements || [
         {
             name: "Margot Robbie",
             description: "Get a Barbie pog combo.",
-            icon: "🎀",
+            icon: "static/icons/Margot_Robbie.png",
             status: false,
             hidden: false,
             notified: false
@@ -1469,7 +1468,7 @@ window.achievements = userdata.achievements || [
         {
             name: "Hiding in your WiFi",
             description: "Get a Hatsune Miku pog combo.",
-            icon: "🎤",
+            icon: "static/icons/Hiding_in_your_WiFi.png",
             status: false,
             hidden: false,
             notified: false
@@ -1477,7 +1476,7 @@ window.achievements = userdata.achievements || [
         {
             name: "Strange Man's Game",
             description: "Get a Elf Biker pog combo.",
-            icon: "🏍️",
+            icon: "static/icons/Strange_Man_s_Game.png",
             status: false,
             hidden: true,
             notified: false
