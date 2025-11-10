@@ -10,18 +10,18 @@ const csv = require('csv-parser');
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
     'description', 'type', 'rarity', 'creator'
-  ];
+];
 
 const results = [];
-  
+
 fs.createReadStream('pogipedia/db/pogs.csv')
-.pipe(csv({ headers }))
-.on('data', (row) => {
-    const { name, rarity } = row;
-    results.push({ name, rarity });
-})
-.on('end', () => {
-});
+    .pipe(csv({ headers }))
+    .on('data', (row) => {
+        const { name, rarity } = row;
+        results.push({ name, rarity });
+    })
+    .on('end', () => {
+    });
 
 // API key for Formbar API access
 const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
@@ -91,6 +91,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     achievements TEXT,
     mergeCount INTEGER,
     highestCombo INTEGER,
+    wish INTEGER,
     displayname TEXT UNIQUE
 
 )`);
@@ -155,6 +156,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             JSON.stringify(req.session.user.achievements),
                             req.session.user.mergeCount,
                             req.session.user.highestCombo,
+                            req.session.user.wish,
                             displayName
                         ],
                         function (err) {
@@ -322,7 +324,7 @@ app.post('/datasave', (req, res) => {
                 req.session.user.highestCombo,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, wish = ?, achievements = ?, mergeCount = ?, highestCombo = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -353,6 +355,7 @@ app.get('/login', (req, res) => {
             totalSold: tokenData.totalSold || 0,
             cratesOpened: tokenData.cratesOpened || 0,
             pogamount: tokenData.pogamount || 0,
+            wish: tokenData.wish || 0,
             achievements: tokenData.achievements || [],
             mergeCount: tokenData.mergeCount || 0,
             highestCombo: tokenData.highestCombo || 0
