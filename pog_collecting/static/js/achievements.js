@@ -1,63 +1,5 @@
-// Client-side achievements script
-// Initialize userdata and DOM references after DOMContentLoaded
-let achievementContainer = null;
 
-// notification slider constants and queue MUST be defined before DOMContentLoaded uses them
-const SLIDE_IN = "20px";
-const SLIDE_OUT = "-320px";
-const DISPLAY_MS = 3000;
-const TRANSITION_MS = 400;
-
-const achievementQueue = [];
-let sliderBusy = false;
-
-// ensure we read the shared achievements array before any DOM logic runs
-const achievements = window.achievements || (typeof userdata !== 'undefined' && userdata.achievements) || [];
-
-// defensive helpers: ensure userdata.inventory exists and categories always return arrays
-if (typeof userdata === 'undefined' || userdata === null) userdata = {};
-if (!Array.isArray(userdata.inventory)) userdata.inventory = [];
-if (!Array.isArray(achievements)) window.achievements = window.achievements || [], achievements = window.achievements;
-
-// return a safe array for a category index
-function getCategory(idx) {
-    return Array.isArray(achievements[idx]) ? achievements[idx] : [];
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const slider = document.getElementById('slider');
-    if (slider) {
-        //slider stuff cuz it pmo
-        if (!slider.style.position) slider.style.position = 'fixed';
-        slider.style.transition = `left ${TRANSITION_MS}ms ease`;
-        slider.style.left = SLIDE_OUT; // start hidden
-    }
-
-    achievementContainer = document.getElementById('achievementsList');
-
-    if (userdata && userdata.theme === 'light') {
-        document.body.style.backgroundColor = 'white';
-        document.body.style.color = 'black';
-    } else if (userdata && userdata.theme === 'dark') {
-        document.body.style.backgroundColor = 'black';
-        document.body.style.color = 'white';
-    }
-
-    // initial render so achievements are visible immediately if data exists
-    if (achievementContainer && Array.isArray(achievements) && achievements.length > 0) {
-        // default to the collection category on load
-        renderCollection();
-    }
-
-    // start periodic checks now that DOM and userdata are available
-    setInterval(collectFunc, 1000);
-    setInterval(levelFuncs, 1000);
-    setInterval(progFunc, 1000);
-    setInterval(econFunc, 1000);
-    setInterval(uniqueFunc, 1000);
-});
-
-
+achievements = window.achievements || [];
 
 // category variable
 let cate = "";
@@ -73,11 +15,18 @@ function renderCollection () {
 
         if (achievement.hidden && !achievement.status) {
             // Darken and replace content for hidden achievements
+            achievementElement.style.backgroundColor = "#333";
+            achievementElement.innerHTML = `
+                <span class="icon">❓</span><br>
+                <span class="name">???</span><br>
+                <span class="description">???</span><br>
+            `;
         } else if (achievement.status) {
             // Render unlocked achievements with glowing effect
             achievementElement.style.backgroundColor = "#8e6fa9"; 
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
+            const img = document.createElement("img")
             achievementElement.innerHTML = `
                 <img src="${achievement.icon}" width="100" height="100"><br>
                 <span class="name">${achievement.name}</span><br>
@@ -263,12 +212,10 @@ setInterval(() => {
 
 // #8e6fa9 (carter dont worry abt ts)
 
-
 function collectFunc() {
-    const category = getCategory(0);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
-        switch (achievement.name) {
+    for (let i = 0; i < achievements[0].length; i++) {
+        const achievement = achievements[0][i];
+       switch (achievement.name) {
             case "Full Combo!":
                 if (!achievement.status) {
                     achievement.status = userdata.highestCombo >= 3 ? true : achievement.status;
@@ -366,9 +313,8 @@ function collectFunc() {
 }
 
 function levelFuncs() {
-    const category = getCategory(1);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
+    for (let i = 0; i < achievements[1].length; i++) {
+        const achievement = achievements[1][i];
         switch (achievement.name) {
             case "Rookie":
                 if (!achievement.status) {
@@ -437,9 +383,8 @@ function levelFuncs() {
 }
 
 function progFunc() {
-    const category = getCategory(2);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
+    for (let i = 0; i < achievements[2].length; i++) {
+        const achievement = achievements[2][i];
         switch (achievement.name) {
             case "First Steps":
                 if (!achievement.status) {
@@ -600,9 +545,8 @@ function progFunc() {
 }
 
 function econFunc() {
-    const category = getCategory(3);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
+    for (let i = 0; i < achievements[3].length; i++) {
+        const achievement = achievements[3][i];
         switch (achievement.name) {
             case "69":
                 if (!achievement.status) {
@@ -692,9 +636,8 @@ function econFunc() {
 }
 
 function uniqueFunc() {
-    const category = getCategory(4);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
+    for (let i = 0; i < achievements[4].length; i++) {
+        const achievement = achievements[4][i];
         switch (achievement.name) {
             case "Nerdy Inspector":
                 if (!achievement.status) {
@@ -880,6 +823,12 @@ function uniqueFunc() {
 }
 
 //notification slider logic bc im lazy
+const achievementQueue = [];
+let sliderBusy = false;
+const SLIDE_IN = "20px";
+const SLIDE_OUT = "-320px";
+const DISPLAY_MS = 3000;
+const TRANSITION_MS = 400;
 
 function achievementNotify(achievement) {
     // queue achievements instead of showing immediately
@@ -957,13 +906,6 @@ function processAchievementQueue() {
         }, TRANSITION_MS);
     }, DISPLAY_MS);
 }
-
-setInterval(collectFunc, 1000);
-setInterval(levelFuncs, 1000);
-setInterval(progFunc, 1000);
-setInterval(econFunc, 1000);
-setInterval(uniqueFunc, 1000);
-
 
 function checkAllAchievements() {
         collectFunc();
