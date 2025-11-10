@@ -138,8 +138,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, wish, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -184,7 +183,7 @@ app.get('/', isAuthenticated, (req, res) => {
             pogamount: req.session.user.pogamount || 0,
             achievements: req.session.user.achievements || [],
             mergeCount: req.session.user.mergeCount || 0,
-            highestCombo: req.session.user.highestCombo || 0
+            highestCombo: req.session.user.highestCombo || 0,
             wish: req.session.user.wish || 0
         };
 
@@ -210,7 +209,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     pogamount: row.pogamount,
                     achievements: JSON.parse(row.achievements),
                     mergeCount: row.mergeCount,
-                    highestCombo: row.comboHigh
+                    highestCombo: row.comboHigh,
                     wish: row.wish
                 };
                 console.log(`User data loaded for '${displayName}'`);
@@ -230,7 +229,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     pogamount: 0,
                     achievements: [],
                     mergeCount: 0,
-                    highestCombo: 0
+                    highestCombo: 0,
                     wish: 0
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
@@ -293,7 +292,7 @@ app.post('/datasave', (req, res) => {
         pogamount: req.body.pogAmount,
         achievements: req.body.achievements,
         mergeCount: req.body.mergeCount,
-        highestCombo: req.body.highestCombo
+        highestCombo: req.body.highestCombo,
         wish: req.body.wish
     }
 
@@ -320,13 +319,10 @@ app.post('/datasave', (req, res) => {
                 JSON.stringify(userSave.achievements),
                 userSave.mergeCount,
                 req.session.user.highestCombo,
-                req.session.user.displayName
-            ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ? WHERE displayname = ?`, params, function (err) {
                 userSave.wish,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, wish = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -359,7 +355,7 @@ app.get('/login', (req, res) => {
             pogamount: tokenData.pogamount || 0,
             achievements: tokenData.achievements || [],
             mergeCount: tokenData.mergeCount || 0,
-            highestCombo: tokenData.highestCombo || 0
+            highestCombo: tokenData.highestCombo || 0,
             wish: tokenData.wish || 0
         };
         res.redirect('/');
