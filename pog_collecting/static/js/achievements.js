@@ -1,89 +1,7 @@
 // Client-side achievements script
-// ======= INSERT/REPLACE TOP-LEVEL INITIALIZATION (put this above any DOMContentLoaded usage) =======
-
-// ensure userdata is present (stuffWork.js normally defines it; fallback to embedded #userdata)
-if (typeof userdata === 'undefined') {
-    try {
-        var userdata = JSON.parse(document.getElementById('userdata')?.textContent || '{}');
-    } catch (e) {
-        var userdata = {};
-    }
-}
-
-// slider / notification constants and queue must exist before DOMContentLoaded
-const SLIDE_IN = "20px";
-const SLIDE_OUT = "-320px";
-const DISPLAY_MS = 3000;
-const TRANSITION_MS = 400;
-
-const achievementQueue = [];
-let sliderBusy = false;
-
-// safe achievements canonical: prefer window.achievements, then userdata.achievements, else empty nested array
-const achievements = Array.isArray(window.achievements) && window.achievements.length
-    ? window.achievements
-    : (Array.isArray(userdata && userdata.achievements) ? userdata.achievements : []);
-
-// ensure userdata.inventory exists to avoid runtime errors
-if (!Array.isArray(userdata.inventory)) userdata.inventory = [];
-
-// safe accessor for categories
-function getCategory(idx) {
-    return Array.isArray(achievements[idx]) ? achievements[idx] : [];
-}
-
-function achievementNotify(achievement) {
-    if (!achievement) return;
-    if (achievement.status && !achievement.notified) {
-        achievement.notified = true;
-        achievementQueue.push(achievement);
-        processAchievementQueue();
-        refreshAchievementsView();
-    }
-}
-
-function processAchievementQueue() {
-    if (sliderBusy) return;
-    if (achievementQueue.length === 0) {
-        const slider = document.getElementById("slider");
-        if (slider) {
-            slider.style.left = SLIDE_OUT;
-            setTimeout(() => { if (slider) slider.innerHTML = ""; }, TRANSITION_MS);
-        }
-        return;
-    }
-
-    sliderBusy = true;
-    const achievement = achievementQueue.shift();
-    const slider = document.getElementById("slider");
-    if (!slider) {
-        achievementQueue.unshift(achievement);
-        sliderBusy = false;
-        setTimeout(processAchievementQueue, 200);
-        return;
-    }
-
-    slider.innerHTML = `
-       <span class="title">Achievement Unlocked!</span><br>
-       <img src="${achievement.icon}" width="50" height="50"><br>
-       <span class="name">${achievement.name}</span><br>
-       <span class="description">${achievement.description}</span><br>
-    `;
-
-    if (!slider.style.transition) slider.style.transition = `left ${TRANSITION_MS}ms ease`;
-    requestAnimationFrame(() => slider.style.left = SLIDE_IN);
-
-    setTimeout(() => {
-        slider.style.left = SLIDE_OUT;
-        setTimeout(() => {
-            slider.innerHTML = "";
-            sliderBusy = false;
-            setTimeout(processAchievementQueue, 100);
-        }, TRANSITION_MS);
-    }, DISPLAY_MS);
-}
-
 // Initialize userdata and DOM references after DOMContentLoaded
+let achievementContainer = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('slider');
     if (slider) {
@@ -113,14 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-const achievements = Array.isArray(window.achievements) && window.achievements.length
-    ? window.achievements
-    : (Array.isArray(userdata && userdata.achievements) ? userdata.achievements : []);
 
-// helper to safely get a category array
-function getCategory(idx) {
-    return Array.isArray(achievements[idx]) ? achievements[idx] : [];
-}
+const achievements = window.achievements || (typeof userdata !== 'undefined' && userdata.achievements) || [];
+
+
 
 // category variable
 let cate = "";
@@ -129,7 +43,7 @@ let cate = "";
 function renderCollection () {
     cate = "collection";
     achievementContainer.innerHTML = "";
-    getCategory(0).forEach((achievement, index) => {
+    achievements[0].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
@@ -168,7 +82,7 @@ function renderCollection () {
 function renderLevel () {
     cate = "level";
     achievementContainer.innerHTML = "";
-    getCategory(1).forEach((achievement, index) => {
+    achievements[1].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
@@ -206,7 +120,7 @@ function renderLevel () {
 function renderProgression () {
     cate = "progression";
     achievementContainer.innerHTML = "";
-    getCategory(2).forEach((achievement, index) => {
+    achievements[2].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
@@ -244,7 +158,7 @@ function renderProgression () {
 function renderEconomy () {
     cate = "economy";
     achievementContainer.innerHTML = "";
-    getCategory(3).forEach((achievement, index) => {
+    achievements[3].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
@@ -282,7 +196,7 @@ function renderEconomy () {
 function renderUnique() {
     cate = "unique";
     achievementContainer.innerHTML = "";
-    getCategory(4).forEach((achievement, index) => {
+    achievements[4].forEach((achievement, index) => {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
@@ -334,19 +248,18 @@ setInterval(() => {
 // #8e6fa9 (carter dont worry abt ts)
 
 function collectFunc() {
-    const category = getCategory(0);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
+    for (let i = 0; i < achievements[0].length; i++) {
+        const achievement = achievements[0][i];
         switch (achievement.name) {
             case "Full Combo!":
                 if (!achievement.status) {
-                    achievement.status = (userdata.highestCombo || 0) >= 3 ? true : achievement.status;
+                    achievement.status = userdata.highestCombo >= 3 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
             case "Coneisseur":
                 if (!achievement.status) {
-                    achievement.status = (userdata.highestCombo || 0) >= 6 ? true : achievement.status;
+                    achievement.status = userdata.highestCombo >= 6 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -429,15 +342,14 @@ function collectFunc() {
                 }
                 break;
             default:
-                // don't overwrite achievement.status here — leave existing value
+                achievement.status = false; //set to false if no match
         }
     }
 }
 
 function levelFuncs() {
-    const category = getCategory(1);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
+    for (let i = 0; i < achievements[1].length; i++) {
+        const achievement = achievements[1][i];
         switch (achievement.name) {
             case "Rookie":
                 if (!achievement.status) {
@@ -506,9 +418,8 @@ function levelFuncs() {
 }
 
 function progFunc() {
-    const category = getCategory(2);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
+    for (let i = 0; i < achievements[2].length; i++) {
+        const achievement = achievements[2][i];
         switch (achievement.name) {
             case "First Steps":
                 if (!achievement.status) {
@@ -669,9 +580,8 @@ function progFunc() {
 }
 
 function econFunc() {
-    const category = getCategory(3);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
+    for (let i = 0; i < achievements[3].length; i++) {
+        const achievement = achievements[3][i];
         switch (achievement.name) {
             case "69":
                 if (!achievement.status) {
@@ -762,9 +672,8 @@ function econFunc() {
 }
 
 function uniqueFunc() {
-    const category = getCategory(4);
-    for (let i = 0; i < category.length; i++) {
-        const achievement = category[i];
+    for (let i = 0; i < achievements[4].length; i++) {
+        const achievement = achievements[4][i];
         switch (achievement.name) {
             case "Nerdy Inspector":
                 if (!achievement.status) {
@@ -948,6 +857,14 @@ function uniqueFunc() {
         }
     }
 }
+
+//notification slider logic bc im lazy
+const achievementQueue = [];
+let sliderBusy = false;
+const SLIDE_IN = "20px";
+const SLIDE_OUT = "-320px";
+const DISPLAY_MS = 3000;
+const TRANSITION_MS = 400;
 
 function achievementNotify(achievement) {
     // queue achievements instead of showing immediately
