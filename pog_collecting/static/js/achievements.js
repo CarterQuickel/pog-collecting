@@ -1,7 +1,7 @@
 // Client-side achievements script
 // Initialize userdata and DOM references after DOMContentLoaded
 let achievementContainer = null;
-
+ 
 document.addEventListener('DOMContentLoaded', () => {
     const slider = document.getElementById('slider');
     if (slider) {
@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
         slider.style.transition = `left ${TRANSITION_MS}ms ease`;
         slider.style.left = SLIDE_OUT; // start hidden
     }
-
+ 
     achievementContainer = document.getElementById('achievementsList');
-
+ 
     if (userdata && userdata.theme === 'light') {
         document.body.style.backgroundColor = 'white';
         document.body.style.color = 'black';
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.backgroundColor = 'black';
         document.body.style.color = 'white';
     }
-
+ 
     // start periodic checks now that DOM and userdata are available
     setInterval(collectFunc, 1000);
     setInterval(levelFuncs, 1000);
@@ -28,17 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(econFunc, 1000);
     setInterval(uniqueFunc, 1000);
 });
-
-
-
-
+ 
+ 
+ 
+ 
 const achievements = window.achievements || (typeof userdata !== 'undefined' && userdata.achievements) || [];
-
-
-
+ 
+ 
+ 
 // category variable
 let cate = "";
-
+ 
 // initial render
 function renderCollection () {
     cate = "collection";
@@ -47,7 +47,7 @@ function renderCollection () {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-
+ 
         if (achievement.hidden && !achievement.status) {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
@@ -58,7 +58,7 @@ function renderCollection () {
             `;
         } else if (achievement.status) {
             // Render unlocked achievements with glowing effect
-            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.backgroundColor = "#8e6fa9";
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
             const img = document.createElement("img")
@@ -75,7 +75,7 @@ function renderCollection () {
                 <span class="description">${achievement.description}</span><br>
             `;
         }
-
+ 
         achievementContainer.appendChild(achievementElement);
     });
 }
@@ -86,7 +86,7 @@ function renderLevel () {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-
+ 
         if (achievement.hidden && !achievement.status) {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
@@ -97,7 +97,7 @@ function renderLevel () {
             `;
         } else if (achievement.status) {
             // Render unlocked achievements with glowing effect
-            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.backgroundColor = "#8e6fa9";
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
             achievementElement.innerHTML = `
@@ -113,7 +113,7 @@ function renderLevel () {
                 <span class="description">${achievement.description}</span><br>
             `;
         }
-
+ 
         achievementContainer.appendChild(achievementElement);
     });
 }
@@ -124,7 +124,7 @@ function renderProgression () {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-
+ 
         if (achievement.hidden && !achievement.status) {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
@@ -135,7 +135,7 @@ function renderProgression () {
             `;
         } else if (achievement.status) {
             // Render unlocked achievements with glowing effect
-            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.backgroundColor = "#8e6fa9";
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
             achievementElement.innerHTML = `
@@ -151,7 +151,7 @@ function renderProgression () {
                 <span class="description">${achievement.description}</span><br>
             `;
         }
-
+ 
         achievementContainer.appendChild(achievementElement);
     });  
 }
@@ -162,7 +162,7 @@ function renderEconomy () {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-
+ 
         if (achievement.hidden && !achievement.status) {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
@@ -173,7 +173,7 @@ function renderEconomy () {
             `;
         } else if (achievement.status) {
             // Render unlocked achievements with glowing effect
-            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.backgroundColor = "#8e6fa9";
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
             achievementElement.innerHTML = `
@@ -189,7 +189,7 @@ function renderEconomy () {
                 <span class="description">${achievement.description}</span><br>
             `;
         }
-
+ 
         achievementContainer.appendChild(achievementElement);
     });
 }
@@ -200,7 +200,7 @@ function renderUnique() {
         const achievementElement = document.createElement("div");
         achievementElement.classList.add("achievement");
         achievementElement.id = `achievement-${index}`;
-
+ 
         if (achievement.hidden && !achievement.status) {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
@@ -211,7 +211,7 @@ function renderUnique() {
             `;
         } else if (achievement.status) {
             // Render unlocked achievements with glowing effect
-            achievementElement.style.backgroundColor = "#8e6fa9"; 
+            achievementElement.style.backgroundColor = "#8e6fa9";
             achievementElement.style.border = "2px solid #FFFFFF"; // Solid border
             achievementElement.style.boxShadow = "0 0 10px #FFFFFF"; // Glowing effect
             achievementElement.innerHTML = `
@@ -227,11 +227,11 @@ function renderUnique() {
                 <span class="description">${achievement.description}</span><br>
             `;
         }
-
+ 
         achievementContainer.appendChild(achievementElement);
     });
 }
-
+ 
 // highlight selected category button
 setInterval(() => {
     try {
@@ -244,9 +244,9 @@ setInterval(() => {
         });
     } catch (e) { /* ignore */ }
 }, 100);
-
+ 
 // #8e6fa9 (carter dont worry abt ts)
-
+ 
 function fetchLeaderboardAndCheck() {
     // require credentials so server can tell who is current session user (if needed)
     fetch('/api/leaderboard', { credentials: 'include' })
@@ -268,10 +268,10 @@ function fetchLeaderboardAndCheck() {
             console.error('Error fetching leaderboard:', err);
         });
 }
-
+ 
 fetchLeaderboardAndCheck();
 setInterval(fetchLeaderboardAndCheck, 1000);
-
+ 
 function collectFunc() {
     for (let i = 0; i < achievements[0].length; i++) {
         const achievement = achievements[0][i];
@@ -371,7 +371,7 @@ function collectFunc() {
         }
     }
 }
-
+ 
 function levelFuncs() {
     for (let i = 0; i < achievements[1].length; i++) {
         const achievement = achievements[1][i];
@@ -441,7 +441,7 @@ function levelFuncs() {
         }
     }
 }
-
+ 
 function progFunc() {
     for (let i = 0; i < achievements[2].length; i++) {
         const achievement = achievements[2][i];
@@ -597,13 +597,13 @@ function progFunc() {
                     achievementNotify(achievement);
                 }
                 break;
-
+ 
             default:
                 achievement.status = false; //set to false if no match
         }
     }
 }
-
+ 
 function econFunc() {
     for (let i = 0; i < achievements[3].length; i++) {
         const achievement = achievements[3][i];
@@ -680,7 +680,8 @@ function econFunc() {
                 break;
             case "Monopoly":
                 if (!achievement.status) {
-                    achievement.status = window.userRank === 5 ? true : achievement.status;
+                    const rank = Number(window.userRank);
+                    achievement.status = Number.isInteger(rank) && rank >= 1 && rank <= 5 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
@@ -695,7 +696,7 @@ function econFunc() {
         }
     }
 }
-
+ 
 function uniqueFunc() {
     for (let i = 0; i < achievements[4].length; i++) {
         const achievement = achievements[4][i];
@@ -749,7 +750,7 @@ function uniqueFunc() {
                     achievement.status = dingusCount >= 10 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
-                break; 
+                break;
             case "Elden Lord":
                 if (!achievement.status) {
                     const inv = userdata.inventory;
@@ -773,7 +774,7 @@ function uniqueFunc() {
                     achievement.status = drCount >= 13 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
-                break;         
+                break;        
             case "Shaw!":
                 if (!achievement.status) {
                     const inv = userdata.inventory;
@@ -882,7 +883,7 @@ function uniqueFunc() {
         }
     }
 }
-
+ 
 //notification slider logic bc im lazy
 const achievementQueue = [];
 let sliderBusy = false;
@@ -890,7 +891,7 @@ const SLIDE_IN = "20px";
 const SLIDE_OUT = "-320px";
 const DISPLAY_MS = 3000;
 const TRANSITION_MS = 400;
-
+ 
 function achievementNotify(achievement) {
     // queue achievements instead of showing immediately
     if (achievement.status && !achievement.notified) {
@@ -900,8 +901,8 @@ function achievementNotify(achievement) {
         refreshAchievementsView();
     }
 }
-
-
+ 
+ 
 function refreshAchievementsView() {
     try {
         switch (cate) {
@@ -915,8 +916,8 @@ function refreshAchievementsView() {
     } catch (e) {
     }
 }
-
-
+ 
+ 
 function processAchievementQueue() {
     if (sliderBusy) return;
     if (achievementQueue.length === 0) {
@@ -931,7 +932,7 @@ function processAchievementQueue() {
         }
         return;
     }
-
+ 
     sliderBusy = true;
     const achievement = achievementQueue.shift();
     const slider = document.getElementById("slider");
@@ -941,21 +942,21 @@ function processAchievementQueue() {
         setTimeout(processAchievementQueue, 200);
         return;
     }
-
+ 
     slider.innerHTML = `
        <span class="title">Achievement Unlocked!</span><br>
        <img src="${achievement.icon}" width="50" height="50"><br>
        <span class="name">${achievement.name}</span><br>
        <span class="description">${achievement.description}</span><br>
     `;
-
+ 
     if (!slider.style.transition) slider.style.transition = `left ${TRANSITION_MS}ms ease`;
-
+ 
     //me when the slider slides in
     requestAnimationFrame(() => {
         slider.style.left = SLIDE_IN;
     });
-
+ 
     //me when the slider slides out
     setTimeout(() => {
         slider.style.left = SLIDE_OUT;
@@ -967,14 +968,14 @@ function processAchievementQueue() {
         }, TRANSITION_MS);
     }, DISPLAY_MS);
 }
-
+ 
 setInterval(collectFunc, 1000);
 setInterval(levelFuncs, 1000);
 setInterval(progFunc, 1000);
 setInterval(econFunc, 1000);
 setInterval(uniqueFunc, 1000);
-
-
+ 
+ 
 function checkAllAchievements() {
         collectFunc();
         levelFuncs();
@@ -983,5 +984,6 @@ function checkAllAchievements() {
         uniqueFunc();
         refreshAchievementsView();
 }
-
+ 
 window.checkAllAchievements = checkAllAchievements;
+ 
