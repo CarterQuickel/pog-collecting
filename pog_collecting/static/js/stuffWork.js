@@ -920,10 +920,9 @@ function customConfirm(message) {
 };
 
 document.getElementById("useWish").addEventListener("click", async () => {
-    let wealth = await customConfirm("Wish of Wealth: Use wish to gain a permanent income increase?");
+    let wealth = await customConfirm("Wish of Wealth: Use wish to gain a large amount of money?");
     if (wealth) {
-        bonusMulti += 0.2;
-        userIncome = getTotalIncome();
+        money += Math.floor(money * 1.5);
         wish--;
     } else {
         let power = await customConfirm("Wish of Power: Use wish to gain decreased crate costs?");
