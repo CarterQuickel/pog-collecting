@@ -384,8 +384,8 @@ document.getElementById("sellAll").addEventListener("click", () => {
     }
     if (!searching) {
         const initialInv = inventory.length
-        for (let i = 0; i < initialInv; i++) {
-            if (i == initialInv) {
+        for (let i = inventory.length - 1; i >= 0; i--) {
+            if (i === initialInv) {
                 i = 0
             }
             const item = inventory[i];
@@ -736,7 +736,6 @@ document.getElementById("save").addEventListener("click", () => {
 });
 
 document.getElementById("patchNotesButton").addEventListener("click", () => {
-    window.achievements[4][0].status = true;
     fetch('/datasave', {
         method: 'POST',
         credentials: 'include',
