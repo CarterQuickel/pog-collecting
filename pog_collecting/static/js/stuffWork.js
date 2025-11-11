@@ -945,7 +945,6 @@ document.getElementById("useWish").addEventListener("click", async () => {
     }
 });
 
-if (window.achievements == []) {
 window.achievements = [
     [
         {
@@ -1549,5 +1548,4 @@ window.achievements = [
             notified: false
         }
     ]
-]
-};
+];
