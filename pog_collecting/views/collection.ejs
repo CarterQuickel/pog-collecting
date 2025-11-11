@@ -7,14 +7,39 @@
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
+    <div id="customConfirm" style="display:none;">
+        <div class="confirm-content">
+            <p id="confirmMessage"></p>
+            <button class="confirmbtn" id="customConfirmYes">Yes</button>
+            <button class="confirmbtn" id="customConfirmNo">No</button>
+        </div>
+    </div>
     <div id="collectBanner">
         <div class="leftstuff">
-            <h1 style="margin-left: 10px;">POG CRATES v0.0.2</h1>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %></h4>
-            <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
-            <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
+            <h1 style="margin-left: 10px;">POG CRATES v0.1.15</h1>
+            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %>
+            </h4>
+            <div style="display: none" id="userdata">
+                <%= JSON.stringify(userdata) %>
+            </div>
+            <div style="display: none" id="maxPogs">
+                <%= JSON.stringify(maxPogs) %>
+            </div>
+            <div style="display: none" id="pogList">
+                <%= JSON.stringify(pogList) %>
+            </div>
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
+            <button id="useWish">Use Wish</button>
+            <button id="patchNotesButton" class="pageButtons">
+                <a href="/patch" style="text-decoration: none; color: black;">Patches</a>
+            </button>
+            <button id="achievementsButton" class="pageButtons">
+                <a href="/achievements" style="text-decoration: none; color: black;">Trophies</a>
+            </button>
+            <button id="leaderboardButton" class="pageButtons">
+                <a href="/leaderboard" style="text-decoration: none; color: black;">Board</a>
+            </button>
             <button id="save">Save</button>
             <label class="switch">
                 <input type="checkbox" id="darkmode">
@@ -22,16 +47,27 @@
             </label>
         </div>
     </div>
-    <div id="centerlayout" style="text-align: center;">  
+    <div id="centerlayout" style="text-align: center;">
         <div id="inventory"></div>
         <div id="settings">
-            <h3>INFO</h3>
-            <button id="patchNotesButton" class="pageButtons">
-                <a href="/patch" style="text-decoration: none; color: black;">Patch Notes</a>
-            </button>
-            <button id="achievementsButton">
-                <a href="/achievements" style="text-decoration: none; color: black;">Achievements</a>
-            </button>
+            <div id="sortcont">
+                <h4>Sorting</h4>
+                <div id="searchbar">
+                    <input id="searchbox" type="text" placeholder="Search Pogs..."> 
+                    <button id="searchbtn">Search</button>
+                </div>
+                <select id="selectSort">
+                    <option value="rarityAZ">Sort by Rarity (a-z) &#8593;</option>
+                    <option value="rarityZA">Sort by Rarity (z-a) &#8595;</option>
+                    <option value="nameAZ" style="background-color: lightgrey">Sort by Name (a-z) &#8593;</option>
+                    <option value="nameZA" style="background-color: lightgrey">Sort by Name (z-a) &#8595;</option>
+                    <option value="incomeHf" style="background-color: grey">Sort by Income (high to low) &#8593;</option>
+                    <option value="incomeLf" style="background-color: grey">Sort by Income (low to high) &#8595;</option>
+                    <option value="svHf" style="background-color: black; color: white">Sort by Sell Value (high to low) &#8593;</option>
+                    <option value="svLf" style="background-color: black; color: white">Sort by Sell Value (low to high) &#8595;</option>
+                </select>
+                <button id="sellAll">Sell All</button>
+            </div>
             <div id="stats">
                 <div id="money">Money: $1000</div>
                 <h3 id="income"></h3>
@@ -39,17 +75,89 @@
                 <h4 id="XPTxt"></h4>
                 <progress id="XPPB" value="0" max="100"></progress>
             </div>
-            <h3>Pogs: 0 / <%= maxPogs %></h3>
-            <button id="crate1" class="crate">Common Crate - $100</button>
-            <button id="crate2" class="crate">Rare Crate - $500</button>
-            <button id="crate3" class="crate">Epic Crate - $1000</button>
-            <button id="crate4" class="crate">Legendary Crate - $5000</button>
-            <button id="crate5" class="crate">Mythical Crate - $10000</button>
-            <button id="crate6" class="crate">Godly Crate - $100000</button>
+            <h3 id="pogCount">Pogs: 0 / 0</h3>
+            <div id="crateBtns">
+                <div>
+                    <button id="crate1" class="crate">Common Crate - $100</button>
+                    <button id="crate1_b5" class="buym">Buy 5</button>
+                    <div class="tooltip-container">
+                        <button id="info1" class="infobtn">i</button>
+                        <span id="spani1"class="tooltip-text">
+                            Trash: 35%<br>
+                            Common: 70%<br>
+                            Uncommon: 15%<br>
+                            Rare: 10%<br>
+                            Mythic: 6%<br>
+                        </span>
+                    </div>
+                    <button id="crate1_b10" class="buym">Buy 10</button>
+                </div>
+                <div>
+                    <button id="crate2" class="crate">Rare Crate - $500</button>
+                    <button id="crate2_b5" class="buym">Buy 5</button>
+                    <div class="tooltip-container">
+                        <button id="info2" class="infobtn">i</button>
+                        <span id="spani2"class="tooltip-text">
+                            Trash: 0%<br>
+                            Common: 60%<br>
+                            Uncommon: 16%<br>
+                            Rare: 13%<br>
+                            Mythic: 11%<br>
+                        </span>
+                    </div>
+                    <button id="crate2_b10" class="buym">Buy 10</button>
+                </div>
+                <div>
+                    <button id="crate3" class="crate">Epic Crate - $1000</button>
+                    <button id="crate3_b5" class="buym">Buy 5</button>
+                    <div class="tooltip-container">
+                        <button id="info3" class="infobtn">i</button>
+                        <span id="spani3"class="tooltip-text">
+                            Trash: 0%<br>
+                            Common: 40%<br>
+                            Uncommon: 27%<br>
+                            Rare: 21%<br>
+                            Mythic: 12%<br>
+                        </span>
+                    </div>
+                    <button id="crate3_b10" class="buym">Buy 10</button>
+                </div>
+                <div>
+                    <button id="crate4" class="crate">Legendary Crate - $5000</button>
+                    <button id="crate4_b5" class="buym">Buy 5</button>
+                    <div class="tooltip-container">
+                        <button id="info4" class="infobtn">i</button>
+                        <span id="spani4"class="tooltip-text">
+                            Trash: 0%<br>
+                            Common: 50%<br>
+                            Uncommon: 0%<br>
+                            Rare: 50%<br>
+                            Mythic: 0%<br>
+                        </span>
+                    </div>
+                    <button id="crate4_b10" class="buym">Buy 10</button>
+                </div>
+                <div>
+                    <button id="crate5" class="crate">Mythical Crate - $7000</button>
+                    <button id="crate5_b5" class="buym">Buy 5</button>
+                    <div class="tooltip-container">
+                        <button id="info5" class="infobtn">i</button>
+                        <span id="spani5"class="tooltip-text">
+                            Trash: 0%<br>
+                            Common: 40%<br>
+                            Uncommon: 0%<br>
+                            Rare: 0%<br>
+                            Mythic: 60%<br>
+                        </span>
+                    </div>
+                    <button id="crate5_b10" class="buym">Buy 10</button>
+                </div>
+            </div>
         </div>
     </div>
+    <div id="slider"></div>
 </body>
-<script src="../static/js/rarities.js"></script>
 <script src="../static/js/crates.js"></script>
 <script src="../static/js/stuffWork.js"></script>
+<script src="../static/js/achievements.js"></script>
 </html>
