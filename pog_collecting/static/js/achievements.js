@@ -681,7 +681,7 @@ function econFunc() {
             case "Monopoly":
                 if (!achievement.status) {
                     const rank = Number(window.userRank);
-                    achievement.status = Number.isInteger(rank) && rank >= 1 && rank <= 5 ? true : achievement.status;
+                    achievement.status = Number.isInteger(window.userRank) && window.userRank >= 1 && window.userRank <= 5 ? true : achievement.status;
                     achievementNotify(achievement);
                 }
                 break;
