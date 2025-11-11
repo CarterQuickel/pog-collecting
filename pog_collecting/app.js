@@ -91,6 +91,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     mergeCount INTEGER,
     highestCombo INTEGER,
     wish INTEGER,
+    crates TEXT,
     displayname TEXT UNIQUE
  
 )`);
@@ -138,7 +139,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, crates, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -155,6 +156,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.mergeCount,
                             req.session.user.highestCombo,
                             req.session.user.wish,
+                            JSON.stringify(req.session.user.crates),
                             displayName
                         ],
                         function (err) {
@@ -184,7 +186,8 @@ app.get('/', isAuthenticated, (req, res) => {
             achievements: req.session.user.achievements || [],
             mergeCount: req.session.user.mergeCount || 0,
             highestCombo: req.session.user.highestCombo || 0,
-            wish: req.session.user.wish || 0
+            wish: req.session.user.wish || 0,
+            crates: req.session.user.crates || [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         };
  
         // load user data from database
@@ -210,7 +213,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     achievements: JSON.parse(row.achievements),
                     mergeCount: row.mergeCount,
                     highestCombo: row.comboHigh,
-                    wish: row.wish
+                    wish: row.wish,
+                    crates: JSON.parse(row.crates)
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
@@ -230,7 +234,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     achievements: [],
                     mergeCount: 0,
                     highestCombo: 0,
-                    wish: 0
+                    wish: 0,
+                    crates: [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
                 };
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
@@ -293,7 +298,8 @@ app.post('/datasave', (req, res) => {
         achievements: req.body.achievements,
         mergeCount: req.body.mergeCount,
         highestCombo: req.body.highestCombo,
-        wish: req.body.wish
+        wish: req.body.wish,
+        crates: req.body.crates
     }
  
  
@@ -320,9 +326,10 @@ app.post('/datasave', (req, res) => {
                 userSave.mergeCount,
                 req.session.user.highestCombo,
                 userSave.wish,
+                JSON.stringify(userSave.crates),
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ?, crates = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -356,7 +363,8 @@ app.get('/login', (req, res) => {
             achievements: tokenData.achievements || [],
             mergeCount: tokenData.mergeCount || 0,
             highestCombo: tokenData.highestCombo || 0,
-            wish: tokenData.wish || 0
+            wish: tokenData.wish || 0,
+            crates: tokenData.crates || [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         };
         res.redirect('/');
     } else {
