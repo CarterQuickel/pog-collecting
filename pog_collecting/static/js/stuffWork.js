@@ -736,6 +736,7 @@ document.getElementById("save").addEventListener("click", () => {
 });
  
 document.getElementById("patchNotesButton").addEventListener("click", () => {
+    achievements[4][0].status = true;
     fetch('/datasave', {
         method: 'POST',
         credentials: 'include',
@@ -944,7 +945,7 @@ document.getElementById("useWish").addEventListener("click", async () => {
     }
 });
 
-
+if (window.achievements == []) {
 window.achievements = [
     [
         {
@@ -1548,4 +1549,5 @@ window.achievements = [
             notified: false
         }
     ]
-];
+]
+};
