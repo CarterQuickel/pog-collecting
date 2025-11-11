@@ -384,8 +384,8 @@ document.getElementById("sellAll").addEventListener("click", () => {
     }
     if (!searching) {
         const initialInv = inventory.length
-        for (let i = 0; i < initialInv; i++) {
-            if (i == initialInv) {
+        for (let i = inventory.length - 1; i >= 0; i--) {
+            if (i === initialInv) {
                 i = 0
             }
             const item = inventory[i];
@@ -736,7 +736,6 @@ document.getElementById("save").addEventListener("click", () => {
 });
 
 document.getElementById("patchNotesButton").addEventListener("click", () => {
-    window.achievements[4][0].status = true;
     fetch('/datasave', {
         method: 'POST',
         credentials: 'include',
@@ -921,10 +920,9 @@ function customConfirm(message) {
 };
 
 document.getElementById("useWish").addEventListener("click", async () => {
-    let wealth = await customConfirm("Wish of Wealth: Use wish to gain a permanent income increase?");
+    let wealth = await customConfirm("Wish of Wealth: Use wish to gain a large amount of money?");
     if (wealth) {
-        bonusMulti += 0.2;
-        userIncome = getTotalIncome();
+        money += Math.floor(money * 1.5);
         wish--;
     } else {
         let power = await customConfirm("Wish of Power: Use wish to gain decreased crate costs?");
@@ -947,7 +945,7 @@ document.getElementById("useWish").addEventListener("click", async () => {
 });
 
 
-window.achievements = userdata.achievements || [
+window.achievements = [
     [
         {
             name: "Full Combo!",
