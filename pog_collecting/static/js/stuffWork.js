@@ -1,4 +1,3 @@
-
 // reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
 // ensure a global achievements object exists early so other scripts can read it
@@ -386,7 +385,7 @@ document.getElementById("sellAll").addEventListener("click", () => {
     if (!searching) {
         const initialInv = inventory.length
         for (let i = 0; i < initialInv; i++) {
-            if (i = inventory.length) {
+            if (i == initialInv) {
                 i = 0
             }
             const item = inventory[i];
@@ -723,7 +722,8 @@ document.getElementById("save").addEventListener("click", () => {
             achievements: window.achievements,
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo,
-            wish: wish
+            wish: wish,
+            crates: crates
         })
     })
         .then(response => response.json())
@@ -758,7 +758,8 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
             achievements: window.achievements,
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo,
-            wish: wish
+            wish: wish,
+            crates: crates
         })
     })
         .then(response => response.json())
@@ -792,7 +793,8 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
             achievements: window.achievements,
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo,
-            wish: wish
+            wish: wish,
+            crates: crates
         })
     })
         .then(response => response.json())
@@ -827,7 +829,8 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
             achievements: window.achievements,
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo,
-            wish: wish
+            wish: wish,
+            crates: crates
         })
     })
         .then(response => response.json())
@@ -894,6 +897,54 @@ function abbreviateNumber(value) {
 
 const buttons = document.getElementsByTagName("button");
 
+function customConfirm(message) {
+    return new Promise((resolve) => {
+        const confirmBox = document.getElementById("customConfirm");
+        const confirmMessage = document.getElementById("confirmMessage");
+        const confirmYes = document.getElementById("customConfirmYes");
+        const confirmNo = document.getElementById("customConfirmNo");
+
+        confirmMessage.textContent = message;
+        confirmBox.style.display = "block";
+
+        confirmYes.onclick = () => {
+            confirmBox.style.display = "none";
+            resolve(true);
+        };
+
+        confirmNo.onclick = () => {
+            confirmBox.style.display = "none";
+            resolve(false);
+        };
+    }
+    )
+};
+
+document.getElementById("useWish").addEventListener("click", async () => {
+    let wealth = await customConfirm("Wish of Wealth: Use wish to gain a permanent income increase?");
+    if (wealth) {
+        bonusMulti += 0.2;
+        userIncome = getTotalIncome();
+        wish--;
+    } else {
+        let power = await customConfirm("Wish of Power: Use wish to gain decreased crate costs?");
+        if (power) {
+            for (let crate in crates) {
+                crates[crate].price = Math.floor(crates[crate].price * 0.95);
+            }
+            wish--;
+        } else {
+            let wisdom = await customConfirm("Wish of Wisdom: Use wish to gain a large amount of XP?");
+            if (wisdom) {
+                xp += Math.floor(maxXP * 0.5);
+                levelup();
+                wish--;
+            } else {
+                await customConfirm("No wish was used.");
+            }
+        }
+    }
+});
 
 
 window.achievements = userdata.achievements || [

@@ -1,4 +1,7 @@
-crates = [
+// reference userdata from ejs
+var userdata = JSON.parse(document.getElementById("userdata").textContent);
+
+let crates = userdata.crates || [
     {
         name: "simple crate",
         price: 100,
