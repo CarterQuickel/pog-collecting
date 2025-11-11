@@ -943,8 +943,8 @@ document.getElementById("useWish").addEventListener("click", async () => {
         }
     }
 });
- 
- 
+
+
 window.achievements = [
     [
         {

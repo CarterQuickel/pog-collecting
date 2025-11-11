@@ -1,7 +1,6 @@
 // reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
- 
-let crates = userdata.crates || [
+let crates = [
     {
         name: "simple crate",
         price: 100,
