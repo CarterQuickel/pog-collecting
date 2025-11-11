@@ -945,7 +945,7 @@ document.getElementById("useWish").addEventListener("click", async () => {
 });
 
 
-window.achievements = userdata.achievements || [
+window.achievements = [
     [
         {
             name: "Full Combo!",
