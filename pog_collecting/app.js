@@ -500,7 +500,7 @@ app.get('/login', (req, res) => {
             wish: tokenData.wish || 0,
             crates: tokenData.crates || crateRef
         };
-        
+
         res.redirect('/');
     } else {
         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);

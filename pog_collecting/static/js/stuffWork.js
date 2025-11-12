@@ -8,11 +8,11 @@ var maxPogs = JSON.parse(document.getElementById("maxPogs").textContent);
 var pogList = JSON.parse(document.getElementById("pogList").textContent);
  
 rarityColor = [
-    { name: "Trash", color: "red", income: 6 }, //trash
-    { name: "Common", color: "yellow", income: 17 }, //common
-    { name: "Uncommon", color: "lime", income: 35 }, //uncommon
-    { name: "Rare", color: "aqua", income: 66 }, //rare
-    { name: "Mythic", color: "fuchsia", income: 205 }, //mythic
+    { name: "Trash", color: "red", income: 4 }, //trash
+    { name: "Common", color: "yellow", income: 15 }, //common
+    { name: "Uncommon", color: "lime", income: 27 }, //uncommon
+    { name: "Rare", color: "aqua", income: 49 }, //rare
+    { name: "Mythic", color: "fuchsia", income: 63 }, //mythic
 ]
  
 // debug rarity list
