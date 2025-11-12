@@ -11,7 +11,140 @@ const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
     'description', 'type', 'rarity', 'creator'
 ];
- 
+
+crateRef = [
+    {
+        name: "simple crate",
+        price: 100,
+        rarities: [
+            {
+                name: "Trash",
+                chance: 0.35
+            },
+            {
+                name: "Common",
+                chance: 0.7
+            },
+            {
+                name: "Uncommon",
+                chance: 0.15
+            },
+            {
+                name: "Rare",
+                chance: 0.1
+            },
+            {
+                name: "Mythic",
+                chance: 0.06
+            },
+        ]
+    },
+    {
+        name: "big crate",
+        price: 500,
+        rarities: [
+            {
+                name: "Trash",
+                chance: 0.0
+            },
+            {
+                name: "Common",
+                chance: 0.6
+            },
+            {
+                name: "Uncommon",
+                chance: 0.16
+            },
+            {
+                name: "Rare",
+                chance: 0.13
+            },
+            {
+                name: "Mythic",
+                chance: 0.11
+            },
+        ]
+    },
+    {
+        name: "epic crate",
+        price: 1000,
+        rarities: [
+            {
+                name: "Trash",
+                chance: 0.0
+            },
+            {
+                name: "Common",
+                chance: 0.4
+            },
+            {
+                name: "Uncommon",
+                chance: 0.27
+            },
+            {
+                name: "Rare",
+                chance: 0.21
+            },
+            {
+                name: "Mythic",
+                chance: 0.12
+            },
+        ]
+    },
+    {
+        name: "risky crate",
+        price: 10000,
+        rarities: [
+            {
+                name: "Trash",
+                chance: 0.0
+            },
+            {
+                name: "Common",
+                chance: 0.5
+            },
+            {
+                name: "Uncommon",
+                chance: 0.0
+            },
+            {
+                name: "Rare",
+                chance: 0.5
+            },
+            {
+                name: "Mythic",
+                chance: 0.0
+            }
+        ]
+    },
+    {
+        name: "godly crate",
+        price: 5000,
+        rarities: [
+            {
+                name: "Trash",
+                chance: 0.0
+            },
+            {
+                name: "Common",
+                chance: 0.4
+            },
+            {
+                name: "Uncommon",
+                chance: 0.0
+            },
+            {
+                name: "Rare",
+                chance: 0.0
+            },
+            {
+                name: "Mythic",
+                chance: 0.6
+            }
+        ]
+    }
+]
+
 const results = [];
  
 fs.createReadStream('pogipedia/db/pogs.csv')
@@ -187,9 +320,9 @@ app.get('/', isAuthenticated, (req, res) => {
             mergeCount: req.session.user.mergeCount || 0,
             highestCombo: req.session.user.highestCombo || 0,
             wish: req.session.user.wish || 0,
-            crates: req.session.user.crates || [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+            crates: req.session.user.crates || crateRef
         };
- 
+
         // load user data from database
         const displayName = req.session.token?.displayName || "guest";
         usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
@@ -235,8 +368,9 @@ app.get('/', isAuthenticated, (req, res) => {
                     mergeCount: 0,
                     highestCombo: 0,
                     wish: 0,
-                    crates: [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+                    crates: crateRef
                 };
+
                 console.log(`No existing user data for '${displayName}', using defaults.`);
             }
             // Call insertUser and handle callback
@@ -364,8 +498,9 @@ app.get('/login', (req, res) => {
             mergeCount: tokenData.mergeCount || 0,
             highestCombo: tokenData.highestCombo || 0,
             wish: tokenData.wish || 0,
-            crates: tokenData.crates || [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+            crates: tokenData.crates || crateRef
         };
+        
         res.redirect('/');
     } else {
         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
