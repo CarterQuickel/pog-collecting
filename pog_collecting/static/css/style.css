@@ -619,7 +619,7 @@ input:checked+.slider:before {
     /* required for left to work */
     left: -320px;
     /* start off-screen */
-    top: 20px;
+    bottom: 20px;
     /* adjust as needed */
     width: 280px;
     /* adjust width */
