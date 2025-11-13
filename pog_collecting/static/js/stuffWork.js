@@ -364,6 +364,16 @@ function refreshInventory() {
             `<div class="item ${hasBonus ? 'highlight' : ''}">
         <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
         <br>
+        <div class="tooltip-container">
+        <button id="desc" class="infobtn">i</button>
+            <span id="descSpan" class="tooltip-desc">
+                Id: ${item.pogid} <br>
+                Color: ${item.pogcol} <br>
+                Creator: ${item.creator} <br>
+                Description: ${item.description}
+            </span>
+        </div>
+        <br>
         <hr>
         <ul>
             <li class='list' style="color: ${item.color}">${item.value}</li>
@@ -481,10 +491,10 @@ function openCrate(cost, index) {
                     rarity.name = `Dragon Ball ${missing}`;
                 }
             }
- 
+
             // Add result to inventory
             if (rarity.name != "Dragon Ball") {
-                inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity, id: id });
+                inventory.push({ pogid: rarity.id, name: rarity.name, pogcol: rarity.color, color: color, income: income, value: rarity.rarity, id: id, description: rarity.description, creator: rarity.creator });
             }
  
             // XP gain

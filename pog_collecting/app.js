@@ -150,8 +150,9 @@ const results = [];
 fs.createReadStream('pogipedia/db/pogs.csv')
     .pipe(csv({ headers }))
     .on('data', (row) => {
-        const { name, rarity } = row;
-        results.push({ name, rarity });
+        const { id, name, color, description, rarity, creator } = row;
+        results.push({ id, name, color, description, rarity, creator });
+        console.log(row);
     })
     .on('end', () => {
     });
