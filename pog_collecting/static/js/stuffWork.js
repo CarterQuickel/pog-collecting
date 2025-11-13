@@ -364,7 +364,7 @@ function refreshInventory() {
             `<div class="item ${hasBonus ? 'highlight' : ''}">
         <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
         <br>
-        <div class="tooltip-container">
+        <div class="tooltip-descCont">
         <button id="desc" class="infobtn">i</button>
             <span id="descSpan" class="tooltip-desc">
                 Id: ${item.pogid} <br>
