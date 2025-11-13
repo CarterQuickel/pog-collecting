@@ -386,6 +386,11 @@ app.get('/', isAuthenticated, (req, res) => {
 app.get('/patch', (req, res) => {
     res.render('patch', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
+
+// patch notes page
+app.get('/chatroom', (req, res) => {
+    res.render('chatroom', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
+});
  
 app.get('/achievements', (req, res) => {
     res.render('achievements', { userdata: req.session.user, maxPogs: pogCount, pogList: results });

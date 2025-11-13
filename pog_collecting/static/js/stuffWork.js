@@ -841,6 +841,42 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
         });
     window.location.href = "/leaderboard";
 });
+
+document.getElementById("chatRoomButton").addEventListener("click", () => {
+    // fetch to /datasave
+    fetch('/datasave', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            lightMode: lightMode,
+            money: money,
+            inventory: inventory,
+            Isize: Isize,
+            xp: xp,
+            maxXP: maxXP,
+            level: level,
+            income: userIncome,
+            totalSold: totalSold,
+            cratesOpened: cratesOpened,
+            pogAmount: pogAmount,
+            achievements: window.achievements,
+            mergeCount: window.mergeCount,
+            highestCombo: window.highestCombo,
+            wish: wish,
+            crates: crates
+        })
+    })
+        .then(response => response.json())
+        .then(() => {
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
+    window.location.href = "/chatroom";
+});
  
 // mode toggle
 document.getElementById("darkmode").addEventListener("click", () => {

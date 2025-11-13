@@ -28,6 +28,11 @@ h3 {
     font-size: larger;
 }
 
+#chatRoomButton {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: larger;
+}
+
 #income {
     margin-top: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -531,6 +536,11 @@ progress::-webkit-progress-value {
 }
 
 #leaderboardButton:hover {
+    background-color: #7d6381;
+    cursor: pointer;
+}
+
+#chatRoomButton:hover {
     background-color: #7d6381;
     cursor: pointer;
 }
