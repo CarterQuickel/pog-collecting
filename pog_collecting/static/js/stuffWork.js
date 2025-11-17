@@ -8,11 +8,11 @@ var maxPogs = JSON.parse(document.getElementById("maxPogs").textContent);
 var pogList = JSON.parse(document.getElementById("pogList").textContent);
  
 rarityColor = [
-    { name: "Trash", color: "red", income: 6 }, //trash
-    { name: "Common", color: "yellow", income: 17 }, //common
-    { name: "Uncommon", color: "lime", income: 35 }, //uncommon
-    { name: "Rare", color: "aqua", income: 66 }, //rare
-    { name: "Mythic", color: "fuchsia", income: 205 }, //mythic
+    { name: "Trash", color: "red", income: 4 }, //trash
+    { name: "Common", color: "yellow", income: 15 }, //common
+    { name: "Uncommon", color: "lime", income: 27 }, //uncommon
+    { name: "Rare", color: "aqua", income: 49 }, //rare
+    { name: "Mythic", color: "fuchsia", income: 63 }, //mythic
 ]
  
 // debug rarity list
@@ -364,6 +364,16 @@ function refreshInventory() {
             `<div class="item ${hasBonus ? 'highlight' : ''}">
         <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
         <br>
+        <div class="tooltip-descCont">
+        <button id="desc" class="infobtn">Details</button>
+            <span id="descSpan" class="tooltip-desc">
+                Id: ${item.pogid} <br><br>
+                Color: ${item.pogcol} <br><br>
+                Creator: ${item.creator} <br><br>
+                Description: ${item.description}
+            </span>
+        </div>
+        <br>
         <hr>
         <ul>
             <li class='list' style="color: ${item.color}">${item.value}</li>
@@ -481,10 +491,10 @@ function openCrate(cost, index) {
                     rarity.name = `Dragon Ball ${missing}`;
                 }
             }
- 
+
             // Add result to inventory
             if (rarity.name != "Dragon Ball") {
-                inventory.push({ name: rarity.name, color: color, income: income, value: rarity.rarity, id: id });
+                inventory.push({ pogid: rarity.id, name: rarity.name, pogcol: rarity.color, color: color, income: income, value: rarity.rarity, id: id, description: rarity.description, creator: rarity.creator });
             }
  
             // XP gain
@@ -840,6 +850,42 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
             console.error("Error saving data:", err);
         });
     window.location.href = "/leaderboard";
+});
+
+document.getElementById("chatRoomButton").addEventListener("click", () => {
+    // fetch to /datasave
+    fetch('/datasave', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            lightMode: lightMode,
+            money: money,
+            inventory: inventory,
+            Isize: Isize,
+            xp: xp,
+            maxXP: maxXP,
+            level: level,
+            income: userIncome,
+            totalSold: totalSold,
+            cratesOpened: cratesOpened,
+            pogAmount: pogAmount,
+            achievements: window.achievements,
+            mergeCount: window.mergeCount,
+            highestCombo: window.highestCombo,
+            wish: wish,
+            crates: crates
+        })
+    })
+        .then(response => response.json())
+        .then(() => {
+        })
+        .catch(err => {
+            console.error("Error saving data:", err);
+        });
+    window.location.href = "/chatroom";
 });
  
 // mode toggle

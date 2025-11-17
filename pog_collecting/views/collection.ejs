@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pog Crates</title>
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
+
 <body>
     <div id="customConfirm" style="display:none;">
         <div class="confirm-content">
@@ -16,7 +18,15 @@
     </div>
     <div id="collectBanner">
         <div class="leftstuff">
-            <h1 style="margin-left: 10px;">POG CRATES v0.1.15</h1>
+            <div id="titlecont">
+                <h1 style="margin-left: 10px;">POG CRATES</h1>
+                <div class="tooltip-container">
+                    <button id="infov" class="infobtn">i</button>
+                    <span id="spaniv" class="tooltip-text-version">
+                        v0.1.2
+                    </span>
+                </div>
+            </div>
             <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %>
             </h4>
             <div style="display: none" id="userdata">
@@ -31,6 +41,9 @@
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
             <button id="useWish">Use Wish</button>
+            <button id="chatRoomButton" class="pageButtons">
+                <a href="/chatroom" style="text-decoration: none; color: black;">Chat</a>
+            </button>
             <button id="patchNotesButton" class="pageButtons">
                 <a href="/patch" style="text-decoration: none; color: black;">Patches</a>
             </button>
@@ -53,7 +66,7 @@
             <div id="sortcont">
                 <h4>Sorting</h4>
                 <div id="searchbar">
-                    <input id="searchbox" type="text" placeholder="Search Pogs..."> 
+                    <input id="searchbox" type="text" placeholder="Search Pogs...">
                     <button id="searchbtn">Search</button>
                 </div>
                 <select id="selectSort">
@@ -61,10 +74,14 @@
                     <option value="rarityZA">Sort by Rarity (z-a) &#8595;</option>
                     <option value="nameAZ" style="background-color: lightgrey">Sort by Name (a-z) &#8593;</option>
                     <option value="nameZA" style="background-color: lightgrey">Sort by Name (z-a) &#8595;</option>
-                    <option value="incomeHf" style="background-color: grey">Sort by Income (high to low) &#8593;</option>
-                    <option value="incomeLf" style="background-color: grey">Sort by Income (low to high) &#8595;</option>
-                    <option value="svHf" style="background-color: black; color: white">Sort by Sell Value (high to low) &#8593;</option>
-                    <option value="svLf" style="background-color: black; color: white">Sort by Sell Value (low to high) &#8595;</option>
+                    <option value="incomeHf" style="background-color: grey">Sort by Income (high to low) &#8593;
+                    </option>
+                    <option value="incomeLf" style="background-color: grey">Sort by Income (low to high) &#8595;
+                    </option>
+                    <option value="svHf" style="background-color: black; color: white">Sort by Sell Value (high to low)
+                        &#8593;</option>
+                    <option value="svLf" style="background-color: black; color: white">Sort by Sell Value (low to high)
+                        &#8595;</option>
                 </select>
                 <button id="sellAll">Sell All</button>
             </div>
@@ -72,7 +89,18 @@
                 <div id="money">Money: $1000</div>
                 <h3 id="income"></h3>
                 <h4 id="invTxt"></h4>
-                <h4 id="XPTxt"></h4>
+                <div id="XPinfo">
+                    <div class="tooltip-container">
+                        <button id="infov" class="infobtn">i</button>
+                        <span id="spaniv" class="tooltip-text-version">
+                            Gain XP from opening crates<br>
+                            Leveling up grants more inventory slots:<br>
+                            Every 1 level = 5 more slots<br>
+                            Every 5 levels = 10 more slots
+                        </span>
+                    </div>
+                    <h4 id="XPTxt"></h4>
+                </div>
                 <progress id="XPPB" value="0" max="100"></progress>
             </div>
             <h3 id="pogCount">Pogs: 0 / 0</h3>
@@ -82,7 +110,7 @@
                     <button id="crate1_b5" class="buym">Buy 5</button>
                     <div class="tooltip-container">
                         <button id="info1" class="infobtn">i</button>
-                        <span id="spani1"class="tooltip-text">
+                        <span id="spani1" class="tooltip-text">
                             Trash: 35%<br>
                             Common: 70%<br>
                             Uncommon: 15%<br>
@@ -97,7 +125,7 @@
                     <button id="crate2_b5" class="buym">Buy 5</button>
                     <div class="tooltip-container">
                         <button id="info2" class="infobtn">i</button>
-                        <span id="spani2"class="tooltip-text">
+                        <span id="spani2" class="tooltip-text">
                             Trash: 0%<br>
                             Common: 60%<br>
                             Uncommon: 16%<br>
@@ -112,7 +140,7 @@
                     <button id="crate3_b5" class="buym">Buy 5</button>
                     <div class="tooltip-container">
                         <button id="info3" class="infobtn">i</button>
-                        <span id="spani3"class="tooltip-text">
+                        <span id="spani3" class="tooltip-text">
                             Trash: 0%<br>
                             Common: 40%<br>
                             Uncommon: 27%<br>
@@ -127,7 +155,7 @@
                     <button id="crate4_b5" class="buym">Buy 5</button>
                     <div class="tooltip-container">
                         <button id="info4" class="infobtn">i</button>
-                        <span id="spani4"class="tooltip-text">
+                        <span id="spani4" class="tooltip-text">
                             Trash: 0%<br>
                             Common: 50%<br>
                             Uncommon: 0%<br>
@@ -142,7 +170,7 @@
                     <button id="crate5_b5" class="buym">Buy 5</button>
                     <div class="tooltip-container">
                         <button id="info5" class="infobtn">i</button>
-                        <span id="spani5"class="tooltip-text">
+                        <span id="spani5" class="tooltip-text">
                             Trash: 0%<br>
                             Common: 40%<br>
                             Uncommon: 0%<br>
@@ -160,4 +188,5 @@
 <script src="../static/js/crates.js"></script>
 <script src="../static/js/stuffWork.js"></script>
 <script src="../static/js/achievements.js"></script>
+
 </html>
