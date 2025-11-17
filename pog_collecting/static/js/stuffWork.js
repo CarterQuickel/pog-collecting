@@ -365,11 +365,11 @@ function refreshInventory() {
         <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
         <br>
         <div class="tooltip-descCont">
-        <button id="desc" class="infobtn">i</button>
+        <button id="desc" class="infobtn">Details</button>
             <span id="descSpan" class="tooltip-desc">
-                Id: ${item.pogid} <br>
-                Color: ${item.pogcol} <br>
-                Creator: ${item.creator} <br>
+                Id: ${item.pogid} <br><br>
+                Color: ${item.pogcol} <br><br>
+                Creator: ${item.creator} <br><br>
                 Description: ${item.description}
             </span>
         </div>
