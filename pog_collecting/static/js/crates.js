@@ -1,56 +1,57 @@
 // reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
-let crates = [
+let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crates || 
+[
     {
         name: "simple crate",
         price: 100,
         rarities: [
-        {
-            name: "Trash",
-            chance: 0.35
-        },
-        {
-            name: "Common",
-            chance: 0.7
-        },
-        {
-            name: "Uncommon",
-            chance: 0.15
-        },
-        {
-            name: "Rare",
-            chance: 0.1
-        },
-        {
-            name: "Mythic",
-            chance: 0.06
-        },
+            {
+                name: "Trash",
+                chance: 0.35
+            },
+            {
+                name: "Common",
+                chance: 0.7
+            },
+            {
+                name: "Uncommon",
+                chance: 0.15
+            },
+            {
+                name: "Rare",
+                chance: 0.1
+            },
+            {
+                name: "Mythic",
+                chance: 0.06
+            },
         ]
     },
     {
         name: "big crate",
         price: 500,
         rarities: [
-        {
-            name: "Trash",
-            chance: 0.0
-        },
-        {
-            name: "Common",
-            chance: 0.6
-        },
-        {
-            name: "Uncommon",
-            chance: 0.16
-        },
-        {
-            name: "Rare",
-            chance: 0.13
-        },
-        {
-            name: "Mythic",
-            chance: 0.11
-        },
+            {
+                name: "Trash",
+                chance: 0.0
+            },
+            {
+                name: "Common",
+                chance: 0.6
+            },
+            {
+                name: "Uncommon",
+                chance: 0.16
+            },
+            {
+                name: "Rare",
+                chance: 0.13
+            },
+            {
+                name: "Mythic",
+                chance: 0.11
+            },
         ]
     },
     {
@@ -131,4 +132,4 @@ let crates = [
             }
         ]
     }
-    ]
+] : [];
