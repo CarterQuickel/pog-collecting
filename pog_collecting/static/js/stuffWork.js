@@ -232,15 +232,15 @@ function merge(bronze, silver, gold, diamond, astral) {
  
     // add new  pog to inventory
     if (bronze) {
-        inventory.push({ name: "Silver Pog", color: "orange", income: 620, value: "UNIQUE" });
+        inventory.push({pogid: 286, name: "Silver Pog", pogcol: "Silver", color: "orange", income: 620, value: "UNIQUE", id: Math.random() * 100000, description: "A pog made from pure silver.", creator: "Silversmith" });
     } else if (silver) {
-        inventory.push({ name: "Gold Pog", color: "orange", income: 7400, value: "UNIQUE" });
+        inventory.push({pogid: 287, name: "Gold Pog", pogcol: "Gold", color: "orange", income: 7400, value: "UNIQUE", id: Math.random() * 100000, description: "A pog made from pure gold.", creator: "King Midas" });
     } else if (gold) {
-        inventory.push({ name: "Diamond Pog", color: "orange", income: 83000, value: "UNIQUE" });
+        inventory.push({pogid: 288, name: "Diamond Pog", pogcol: "Diamond", color: "orange", income: 83000, value: "UNIQUE", id: Math.random() * 100000, description: "A pog made from the hardest material on Earth.", creator: "Gemmaster" });
     } else if (diamond) {
-        inventory.push({ name: "Astral Pog", color: "purple", income: 1000000, value: "UNIQUE" });
+        inventory.push({pogid: 289, name: "Astral Pog", pogcol: "Astral", color: "purple", income: 1000000, value: "UNIQUE", id: Math.random() * 100000, description: "A pog infused with the power of the stars.", creator: "Celestial Smith" });
     } else if (astral) {
-        inventory.push({ name: "God Pog", color: "purple", income: 694206741, value: "???" });
+        inventory.push({pogid: 290, name: "God Pog", pogcol: "White", color: "purple", income: 694206741, value: "???", id: Math.random() * 100000, description: "The ultimate pog, said to be created by the gods themselves.", creator: "Ancient Deity" });
     }
     // only sell the amount needed
     for (let i = 0; i < inventory.length && sold < mergeAmount; i++) {
@@ -292,7 +292,6 @@ function trade() {
         }
         // add wish
         wish++;
-        alert("You have traded in all 7 Dragon Balls for a wish!");
         refreshInventory();
     }
 }
@@ -345,6 +344,7 @@ function refreshInventory() {
             isGold = item.name === "Gold Pog",
             isDiamond = item.name === "Diamond Pog",
             isAstral = item.name === "Astral Pog",
+            isGod = item.name === "God Pog",
             // how many bronze pogs are there? (mergAmount)
             //bronze
             bronze = isBronze && bronzeCount >= mergeAmount,
@@ -362,7 +362,7 @@ function refreshInventory() {
             canTrade = item.name === "Dragon Ball 7",
             // return html
             `<div class="item ${hasBonus ? 'highlight' : ''}">
-        <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
+        <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'black' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
         <br>
         <div class="tooltip-descCont">
         <button id="desc" class="infobtn">Details</button>
