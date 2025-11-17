@@ -152,7 +152,6 @@ fs.createReadStream('pogipedia/db/pogs.csv')
     .on('data', (row) => {
         const { id, name, color, description, rarity, creator } = row;
         results.push({ id, name, color, description, rarity, creator });
-        console.log(row);
     })
     .on('end', () => {
     });
