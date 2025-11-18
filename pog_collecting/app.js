@@ -6,8 +6,9 @@ const jwt = require('jsonwebtoken');
 const session = require('express-session');
 const fs = require('fs');
 const csv = require('csv-parser');
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const http = require('http');
+const { Server } = require('socket.io');
+const io = new Server(app);
 
  
 const headers = [
@@ -521,6 +522,16 @@ app.listen(3000, () => {
 });
 
 //chat room stuff
+app.get('/chatroom', (req, res) => {
+    res.render('chatroom', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
+    res.sendFile(__dirname + '../static/views/chatroom.ejs');     
+});
+
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
+    });
+});
 
 
 //achievements list
