@@ -232,15 +232,15 @@ function merge(bronze, silver, gold, diamond, astral) {
  
     // add new  pog to inventory
     if (bronze) {
-        inventory.push({pogid: 286, name: "Silver Pog", pogcol: "Silver", color: "orange", income: 620, value: "UNIQUE", id: Math.random() * 100000, description: "A pog made from pure silver.", creator: "Silversmith" });
+        inventory.push({pogid: 286, name: "Silver Pog", pogcol: "Silver", color: "orange", income: 620, value: "Unique", id: Math.random() * 100000, description: "A pog made from pure silver.", creator: "Silversmith" });
     } else if (silver) {
-        inventory.push({pogid: 287, name: "Gold Pog", pogcol: "Gold", color: "orange", income: 7400, value: "UNIQUE", id: Math.random() * 100000, description: "A pog made from pure gold.", creator: "King Midas" });
+        inventory.push({pogid: 287, name: "Gold Pog", pogcol: "Gold", color: "orange", income: 7400, value: "Unique", id: Math.random() * 100000, description: "A pog made from pure gold.", creator: "King Midas" });
     } else if (gold) {
-        inventory.push({pogid: 288, name: "Diamond Pog", pogcol: "Diamond", color: "orange", income: 83000, value: "UNIQUE", id: Math.random() * 100000, description: "A pog made from the hardest material on Earth.", creator: "Gemmaster" });
+        inventory.push({pogid: 288, name: "Diamond Pog", pogcol: "Diamond", color: "orange", income: 83000, value: "Unique", id: Math.random() * 100000, description: "A pog made from the hardest material on Earth.", creator: "Gemmaster" });
     } else if (diamond) {
-        inventory.push({pogid: 289, name: "Astral Pog", pogcol: "Astral", color: "purple", income: 1000000, value: "UNIQUE", id: Math.random() * 100000, description: "A pog infused with the power of the stars.", creator: "Celestial Smith" });
+        inventory.push({pogid: 289, name: "Astral Pog", pogcol: "Astral", color: "purple", income: 1000000, value: "Unique", id: Math.random() * 100000, description: "A pog infused with the power of the stars.", creator: "Celestial Smith" });
     } else if (astral) {
-        inventory.push({pogid: 290, name: "God Pog", pogcol: "White", color: "purple", income: 694206741, value: "???", id: Math.random() * 100000, description: "The ultimate pog, said to be created by the gods themselves.", creator: "Ancient Deity" });
+        inventory.push({pogid: 290, name: "God Pog", pogcol: "White", color: "purple", income: 694206741, value: "Otherworldly", id: Math.random() * 100000, description: "The ultimate pog, said to be created by the gods themselves.", creator: "Ancient Deity" });
     }
     // only sell the amount needed
     for (let i = 0; i < inventory.length && sold < mergeAmount; i++) {

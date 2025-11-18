@@ -376,7 +376,7 @@ option {
     font-size: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
+    gap: 40px;
     overflow-y: auto;
     min-height: 175px;
     max-height: 90vh;
@@ -464,7 +464,7 @@ option {
     font-style: bold;
     font-size: 15px;
     background-color: rgb(66, 51, 66);
-    min-width: 100px;
+    min-width: 120px;
 }
 
 .item.highlight {
