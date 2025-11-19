@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken');
 const session = require('express-session');
 const fs = require('fs');
 const csv = require('csv-parser');
-const http = require('http');
+const http = require('http').createServer(app);
 const { Server } = require('socket.io');
-const io = new Server(app);
+const io = new Server(http);
 
  
 const headers = [
@@ -167,7 +167,7 @@ const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb9
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
  
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.176:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://172.16.3.183:3000/login'; // ... or whatever the address to your application is
  
 /* This creates session middleware with given options;
 The 'secret' option is used to sign the session ID cookie.
@@ -232,6 +232,14 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     displayname TEXT UNIQUE
  
 )`);
+
+// chat table (persist messages) - use INTEGER time for timestamps
+usdb.run(`CREATE TABLE IF NOT EXISTS chat (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    msg TEXT,
+    time INTEGER
+)`)
  
 // pog database
 const pogs = new sqlite3.Database("pogipedia/db/pog.db", (err) => {
@@ -517,22 +525,35 @@ app.get('/login', (req, res) => {
 });
  
 //listens
-app.listen(3000, () => {
+http.listen(3000, () => {
     console.log('Server started on port 3000');
 });
 
 //chat room stuff
-app.get('/chatroom', (req, res) => {
-    res.render('chatroom', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
-    res.sendFile(__dirname + '../static/views/chatroom.ejs');     
-});
-
 io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
+    // send recent history to the connecting client (oldest -> newest)
+    usdb.all('SELECT id, name, msg, time FROM chat ORDER BY id DESC LIMIT 500', [], (err, rows) => {
+        if (!err && Array.isArray(rows)) {
+            socket.emit('chat history', rows.reverse());
+        }
+    });
+
+    // incoming chat messages: sanitize, persist, then broadcast saved record (with server timestamp)
+    socket.on('chat message', (data) => {
+        const name = data && data.name ? String(data.name).slice(0, 100) : 'Anonymous';
+        const msg = data && data.msg ? String(data.msg).slice(0, 2000) : '';
+        const time = Date.now();
+
+        usdb.run('INSERT INTO chat (name, msg, time) VALUES (?, ?, ?)', [name, msg, time], function (err) {
+            if (err) {
+                console.error('Error saving chat message:', err);
+                return;
+            }
+            const saved = { id: this.lastID, name, msg, time };
+            io.emit('chat message', saved);
+        });
     });
 });
-
 
 //achievements list
 const achievements = [
