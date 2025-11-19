@@ -27,7 +27,7 @@
                     </span>
                 </div>
             </div>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %>
+            <h4 style="margin-top: -25px; color: white; margin-left: 20px;"><%= userdata.displayName %>
             </h4>
             <div style="display: none" id="userdata">
                 <%- JSON.stringify(userdata) %>
@@ -61,14 +61,13 @@
         </div>
     </div>
     <div id="centerlayout" style="text-align: center;">
-        <div id="pogBinder">
+        <!-- <div id="pogBinder">
             <button><</button>
-            <button>></button>
+            <button>></button> -->
             <div id="inventory"></div>
-        </div>
+        <!--</div>-->
         <div id="settings">
             <div id="sortcont">
-                <h4>Sorting</h4>
                 <div id="searchbar">
                     <input id="searchbox" type="text" placeholder="Search Pogs...">
                     <button id="searchbtn">Search</button>
