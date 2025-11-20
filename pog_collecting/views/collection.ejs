@@ -9,12 +9,19 @@
 </head>
 
 <body>
+    <!--Wish Container-->
     <div id="customConfirm" style="display:none;">
         <div class="confirm-content">
             <p id="confirmMessage"></p>
             <button class="confirmbtn" id="customConfirmYes">Yes</button>
             <button class="confirmbtn" id="customConfirmNo">No</button>
         </div>
+    </div>
+    <!--Profile Pic Container-->
+    <div id="pfpChanger">
+        <h3>Choose your Profile Picture</h3>
+        <input id="filepfp" type="file" accept="image/*"/>
+        <button id="closePfpChanger">Close</button>
     </div>
     <div id="collectBanner">
         <div class="leftstuff">
@@ -27,7 +34,10 @@
                     </span>
                 </div>
             </div>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;"><%= userdata.displayName %>
+            <div id="userCont">
+                <img id="userPic" width="20" height="20" src="static/icons/pfp/defaultpfp.png"/>
+                <h4 style="color: white"><%= userdata.displayName %>
+            </div>
             </h4>
             <div style="display: none" id="userdata">
                 <%- JSON.stringify(userdata) %>

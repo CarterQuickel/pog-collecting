@@ -17,7 +17,10 @@ rarityColor = [
  
 // debug rarity list
 console.log(crates);
- 
+
+//pfp 
+let pfpimg = "static/icons/pfp/defaultpfp.png"
+
 // wish
 let wish = userdata.wish || 0;
  
@@ -707,6 +710,28 @@ function levelup() {
         if (window.checkAllAchievements) window.checkAllAchievements();
     }
 }
+
+document.getElementById("userPic").addEventListener("click", () => {
+    document.getElementById("pfpChanger").style.display = "block";
+});
+
+document.getElementById("closePfpChanger").addEventListener("click", () => {
+    document.getElementById("pfpChanger").style.display = "none";
+});
+
+document.getElementById("filepfp").addEventListener("change", () => {
+    const file = document.getElementById("filepfp").files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = function () {
+        pfpimg = reader.result;
+        document.getElementById("userPic").src = pfpimg;
+    }
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+});
+
  
 // save game
 document.getElementById("save").addEventListener("click", () => {
