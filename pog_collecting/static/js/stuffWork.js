@@ -726,6 +726,7 @@ document.getElementById("filepfp").addEventListener("change", () => {
     reader.onloadend = function () {
         pfpimg = reader.result;
         document.getElementById("userPic").src = pfpimg;
+        document.getElementById("bigpfp").src = pfpimg;
     }
     if (file) {
         reader.readAsDataURL(file);
