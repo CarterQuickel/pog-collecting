@@ -22,7 +22,7 @@ li {
 }
 
 #chatroomBanner {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -30,7 +30,6 @@ li {
     justify-content: space-between;
     align-items: center;
     background-color: rgb(158, 84, 158);
-    padding: 10px 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -110,7 +109,8 @@ li {
 .message {
     max-height: 500px;
     overflow-y: auto;
-    border: 1px solid #ccc;
+    background-color: white;
+    color: black;
     border-radius: 5px;
     padding: 10px;
     margin-top: 10px;
