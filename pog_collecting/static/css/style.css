@@ -263,10 +263,12 @@ option {
 }
 
 #crate2_b5:hover {
+    background-color: rgb(196, 196, 91);
     box-shadow: 0 0 30px white;
 }
 
 #crate2_b10:hover {
+    background-color: rgb(196, 196, 91);
     box-shadow: 0 0 30px white;
 }
 
@@ -276,6 +278,7 @@ option {
 }
 
 #crate2:hover {
+    background-color: rgb(196, 196, 91);
     box-shadow: 0 0 30px white;
 }
 
