@@ -318,11 +318,12 @@ option {
 }
 
 #crate4_b5:hover {
-    background-color: lightskyblue;
+    background-color: rgb(101, 152, 184);
     box-shadow: 0 0 30px white;
 }
 
 #crate4_b10:hover {
+    background-color: rgb(101, 152, 184);
     box-shadow: 0 0 30px white;
 }
 
@@ -332,6 +333,7 @@ option {
 }
 
 #crate4:hover {
+    background-color: rgb(101, 152, 184);
     box-shadow: 0 0 30px white;
 }
 
@@ -344,10 +346,12 @@ option {
 }
 
 #crate5_b5:hover {
+    background-color: rgb(162, 107, 187);
     box-shadow: 0 0 30px white;
 }
 
 #crate5_b10:hover {
+    background-color: rgb(162, 107, 187);
     box-shadow: 0 0 30px white;
 }
 
@@ -357,6 +361,7 @@ option {
 }
 
 #crate5:hover {
+    background-color: rgb(162, 107, 187);
     box-shadow: 0 0 30px white;
 }
 
@@ -524,7 +529,7 @@ progress::-webkit-progress-value {
 
 /* save and load btns */
 #save {
-    background-image: linear-gradient(to right, #575757, #e4e4e4);
+    background-color: gray;
     border: 2px solid black;
     box-shadow: 0 0 5px black;
     border-radius: 50px;
