@@ -19,7 +19,9 @@ rarityColor = [
 console.log(crates);
 
 //pfp 
-let pfpimg = "static/icons/pfp/defaultpfp.png"
+let pfpimg = userdata.pfp || ""
+document.getElementById("userPic").src = pfpimg;
+document.getElementById("bigpfp").src = pfpimg;
 
 // wish
 let wish = userdata.wish || 0;
@@ -759,7 +761,8 @@ document.getElementById("save").addEventListener("click", () => {
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo,
             wish: wish,
-            crates: crates
+            crates: crates,
+            pfp: pfpimg
         })
     })
         .then(response => response.json())
@@ -795,7 +798,8 @@ document.getElementById("patchNotesButton").addEventListener("click", () => {
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo,
             wish: wish,
-            crates: crates
+            crates: crates,
+            pfp: pfpimg
         })
     })
         .then(response => response.json())
@@ -830,7 +834,8 @@ document.getElementById("achievementsButton").addEventListener("click", () => {
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo,
             wish: wish,
-            crates: crates
+            crates: crates,
+            pfp: pfpimg
         })
     })
         .then(response => response.json())
@@ -866,7 +871,8 @@ document.getElementById("leaderboardButton").addEventListener("click", () => {
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo,
             wish: wish,
-            crates: crates
+            crates: crates,
+            pfp: pfpimg
         })
     })
         .then(response => response.json())
@@ -902,7 +908,8 @@ document.getElementById("chatRoomButton").addEventListener("click", () => {
             mergeCount: window.mergeCount,
             highestCombo: window.highestCombo,
             wish: wish,
-            crates: crates
+            crates: crates,
+            pfp: pfpimg
         })
     })
         .then(response => response.json())

@@ -167,7 +167,7 @@ const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb9
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
  
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.183:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://172.16.3.130:3000/login'; // ... or whatever the address to your application is
  
 /* This creates session middleware with given options;
 The 'secret' option is used to sign the session ID cookie.
@@ -229,6 +229,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     highestCombo INTEGER,
     wish INTEGER,
     crates TEXT,
+    pfp TEXT,
     displayname TEXT UNIQUE
  
 )`);
@@ -284,7 +285,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     console.log(`User '${displayName}' already exists with uid ${row.uid}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, crates, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, crates, pfp, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
                             req.session.user.theme,
                             req.session.user.score,
@@ -302,6 +303,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.highestCombo,
                             req.session.user.wish,
                             JSON.stringify(req.session.user.crates),
+                            req.session.user.pfp,
                             displayName
                         ],
                         function (err) {
@@ -332,7 +334,8 @@ app.get('/', isAuthenticated, (req, res) => {
             mergeCount: req.session.user.mergeCount || 0,
             highestCombo: req.session.user.highestCombo || 0,
             wish: req.session.user.wish || 0,
-            crates: req.session.user.crates || crateRef
+            crates: req.session.user.crates || crateRef,
+            pfp: req.session.user.pfp || "static/icons/pfp/defaultpfp.png"
         };
 
         // load user data from database
@@ -359,7 +362,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     mergeCount: row.mergeCount,
                     highestCombo: row.comboHigh,
                     wish: row.wish,
-                    crates: JSON.parse(row.crates)
+                    crates: JSON.parse(row.crates),
+                    pfp: row.pfp
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
@@ -380,7 +384,8 @@ app.get('/', isAuthenticated, (req, res) => {
                     mergeCount: 0,
                     highestCombo: 0,
                     wish: 0,
-                    crates: crateRef
+                    crates: crateRef,
+                    pfp: "static/icons/pfp/defaultpfp.png"
                 };
 
                 console.log(`No existing user data for '${displayName}', using defaults.`);
@@ -450,7 +455,8 @@ app.post('/datasave', (req, res) => {
         mergeCount: req.body.mergeCount,
         highestCombo: req.body.highestCombo,
         wish: req.body.wish,
-        crates: req.body.crates
+        crates: req.body.crates,
+        pfp: req.body.pfp
     }
  
  
@@ -478,9 +484,10 @@ app.post('/datasave', (req, res) => {
                 req.session.user.highestCombo,
                 userSave.wish,
                 JSON.stringify(userSave.crates),
+                userSave.pfp,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ?, crates = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ?, crates = ?, pfp = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
@@ -515,7 +522,8 @@ app.get('/login', (req, res) => {
             mergeCount: tokenData.mergeCount || 0,
             highestCombo: tokenData.highestCombo || 0,
             wish: tokenData.wish || 0,
-            crates: tokenData.crates || crateRef
+            crates: tokenData.crates || crateRef,
+            pfp: tokenData.pfp || "static/icons/pfp/defaultpfp.png"
         };
 
         res.redirect('/');

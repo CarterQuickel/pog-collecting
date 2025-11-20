@@ -24,7 +24,8 @@ document.querySelectorAll(".infobtn").forEach(button => {
         let experience = player.xp;
         console.log(sortedI)
         const info = document.getElementById("details");
-        info.innerHTML = `<h2>Details for ${player.displayname}</h2>
+        info.innerHTML = `<h2>${player.displayname}</h2>
+                            <img src="${player.pfp}" style="width: 100px; height: 100px; border-radius: 50%;"><br>
                           <div style="display: flex; gap: 100px; justify-content: center; text-align: center;">
                             <div>
                                 <h3>Score</h3> <p>${player.score}</p>
