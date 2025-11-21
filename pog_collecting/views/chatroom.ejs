@@ -10,9 +10,14 @@
 
 <body>
     <div id="chatroomBanner">
-        <div class="leftstuff"></div>
+        <div class="leftstuff">
+            <h1 style="margin-left: 10px;">Chatroom!</h1>
+            <div class="username" style="margin-left: 10px; margin-top: 6px; color: white; font-size: 0.95rem;">
+                User: <%= (userdata && (userdata.displayName || userdata.displayname)) ? (userdata.displayName || userdata.displayname) : 'Guest' %>
+            </div>
+        </div>
         <div class="rightstuff"></div>
-        <a href="/collection" id="circleButton">Back</a>
+        <a href="/collection" id="circleButton">&lt;</a>
     </div>
 
     <div id="messageCont">
