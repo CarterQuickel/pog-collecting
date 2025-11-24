@@ -404,6 +404,27 @@ option {
     overflow-x: hidden;
 }
 
+#inventory::before,
+#inventory::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+#inventory::before {
+    left: 0;
+    border-width: 20px 20px 0 0;
+    border-color: transparent lightblue transparent transparent;
+}
+
+#inventory::after {
+    right: 0;
+    border-width: 0 0 20px 20px;
+    border-color: transparent transparent transparent lightblue
+}
+
 #stats {
     border: transparent;
     margin: 10px;
