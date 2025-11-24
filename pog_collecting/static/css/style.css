@@ -382,7 +382,6 @@ option {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
     font-size: 20px;
-    cursor: pointer;
     scale: 1.1;
 }
 
@@ -623,7 +622,7 @@ progress::-webkit-progress-value {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 100001;
 }
 
 .confirm-content {

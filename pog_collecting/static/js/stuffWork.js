@@ -300,7 +300,7 @@ function trade() {
         refreshInventory();
     }
 }
- 
+
 //update inventory
 function refreshInventory() {
     // get inventory div
@@ -341,6 +341,8 @@ function refreshInventory() {
     inventoryDiv.innerHTML = inventory.filter(item => item.name.toLowerCase().includes(itemSearched)).map((item, index) => {
         return hasBonus = highlightColors.includes(item.name),
             namelength = item.name.length,
+            desclength = item.description.length,
+            descFontSize = desclength >= 120 ? '12px' : desclength >= 80 ? '14px' : '16px',
             nameFontSize = namelength >= 19 ? '9px' : namelength >= 12 ? '12px' : '16px',
             sellvalue = Math.round(item.income * 1.05),
             // refernce this inside the map function, for item is only defined in here
@@ -371,7 +373,7 @@ function refreshInventory() {
         <br>
         <div class="tooltip-descCont">
         <button id="desc" class="infobtn">Details</button>
-            <span id="descSpan" class="tooltip-desc">
+            <span id="descSpan" class="tooltip-desc" style="font-size: ${descFontSize}">
                 Id: ${item.pogid} <br><br>
                 Color: ${item.pogcol} <br><br>
                 Creator: ${item.creator} <br><br>
