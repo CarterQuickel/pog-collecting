@@ -11,7 +11,10 @@
         <div class="leftstuff">
             <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
             <h1 style="margin-left: 10px;">Achievements</h1>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %></h4>
+            <div id="userCont">
+                <img id="userPic" width="20" height="20" src="<%= userdata.pfp %>"/>
+                <h4 style="color: white"><%= userdata.displayName %>
+            </div>
             <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
         </div>
         <div class="rightstuff"></div>

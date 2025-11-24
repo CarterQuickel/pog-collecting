@@ -18,7 +18,10 @@
                 <%= JSON.stringify(scores) %>
             </div>
             <h1 style="margin-left: 10px;">Leaderboard</h1>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %>
+            <div id="userCont">
+                <img id="userPic" width="20" height="20" src="<%= userdata.pfp %>"/>
+                <h4 style="color: white"><%= userdata.displayName %>
+            </div>
             </h4>
             <div style="display: none" id="maxPogs">
                 <%= JSON.stringify(maxPogs) %>
