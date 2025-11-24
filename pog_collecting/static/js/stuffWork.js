@@ -923,7 +923,6 @@ document.getElementById("chatRoomButton").addEventListener("click", () => {
  
 // mode toggle
 document.getElementById("darkmode").addEventListener("click", () => {
-    console.log("toggled");
     lightMode = !lightMode;
     if (lightMode) {
         document.body.style.backgroundColor = "white";
