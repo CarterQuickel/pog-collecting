@@ -142,9 +142,13 @@ ul {
 #sellAll {
     border: transparent;
     border-radius: 20px;
+    padding: 5px;
+    width: 200px;
+    height: 25px;
     margin-top: 15px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     background-color: #659c54;
+    cursor: pointer;
 }
 
 #sellAll:hover {
@@ -556,20 +560,15 @@ progress::-webkit-progress-value {
     border-radius: 10px;
 }
 
-#save:hover {
-    border: 2px solid white;
-    box-shadow: 0 0 5px white;
-}
-
-#darkmode:hover {
-    border: 2px solid white;
-    box-shadow: 0 0 5px white;
+#save:hover, #darkmode:hover {
+    background-color: #ffffff17;
+    box-shadow: 0 0 5px black;
 }
 
 .imgbtn {
     border-radius: 40px;
     background-color: transparent;
-    border: 2px solid transparent;
+    border: 3px solid transparent;
     padding: 10px;
     width: 40px;
     height: 40px;
