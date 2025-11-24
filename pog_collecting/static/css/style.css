@@ -528,24 +528,6 @@ progress::-webkit-progress-value {
     background: lightskyblue;
 }
 
-/* save and load btns */
-#save {
-    background-color: transparent;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    padding: 20px;
-    width: 30px;
-    height: 30px;
-    margin: 0px 10px 0px 0px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    cursor: pointer;
-}
-
-#save:hover {
-    border: 2px solid white;
-    box-shadow: 0 0 5px white;
-}
-
 #patchNotesButton:hover {
     background-image: linear-gradient(to right, #5502f0, #0161a1);
     cursor: pointer;
@@ -570,21 +552,30 @@ progress::-webkit-progress-value {
     box-shadow: 0 0 5px black;
 }
 
-#darkmode {
-    background-color: transparent;
-    border: 2px solid transparent;
+#save {
     border-radius: 10px;
-    padding: 20px;
-    width: 30px;
-    height: 30px;
-    margin: 0px 10px 0px 0px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    cursor: pointer;
+}
+
+#save:hover {
+    border: 2px solid white;
+    box-shadow: 0 0 5px white;
 }
 
 #darkmode:hover {
     border: 2px solid white;
     box-shadow: 0 0 5px white;
+}
+
+.imgbtn {
+    border-radius: 40px;
+    background-color: transparent;
+    border: 2px solid transparent;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    margin: 0px 10px 0px 0px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    cursor: pointer;
 }
 
 .pageButtons {
