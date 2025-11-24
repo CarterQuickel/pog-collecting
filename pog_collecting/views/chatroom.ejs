@@ -11,15 +11,18 @@
 <body>
     <div id="chatroomBanner">
         <div class="leftstuff">
-            <h1 style="margin-left: 10px;">Chatroom!</h1>
-            <div class="username" style="margin-left: 10px; margin-top: 6px; color: white; font-size: 0.95rem;">
-                User: <%= (userdata && (userdata.displayName || userdata.displayname)) ? (userdata.displayName || userdata.displayname) : 'Guest' %>
+            <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
+            <h1 style="margin-left: 10px;">Chat Room</h1>
+            <div id="userCont">
+                <img id="userPic" width="20" height="20" src="<%= userdata.pfp %>"/>
+                <h4 style="color: white"><%= userdata.displayName %>
             </div>
+            <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
         </div>
-        <div class="rightstuff"></div>
-        <a href="/collection" id="circleButton">&lt;</a>
+            <div class="rightstuff">
+            <a href="/collection" id="circleButton"> < </a>
+        </div>
     </div>
-
     <div id="messageCont">
         <!-- messages will be appended here -->
     </div>

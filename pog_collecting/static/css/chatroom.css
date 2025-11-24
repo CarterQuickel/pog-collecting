@@ -7,64 +7,77 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* fixed header/banner */
+/* Patch Banner Styling */
 #chatroomBanner {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 72px;
+    width: 100vw;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    background-color: rgb(158, 84, 158);
+    align-items: center;
+    background-image: linear-gradient(to right, #de5aff, #582563);
+    padding: 10px 20px; /* Add padding for better spacing */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+#userCont {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: -30px;
+}
+
+#userPic {
+    border-radius: 50%;
+    margin-top: -10px;
+    margin-left: 30px;
+}
+
+button {
+    background-color: #a1a1a1;
+    border: 4px solid black;
+    border-radius: 10px;
     padding: 10px 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.12);
-    z-index: 100;
-    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.leftstuff {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: white;
+button:hover {
+    background-color: gray;
 }
 
-.rightstuff {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: white;
-}
-
-/* Back button inside banner */
+/* Circular Button Styling */
 #circleButton {
     position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 46px;
-    height: 46px;
-    border: none;
-    border-radius: 50%;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for proper centering */
+    right: 75px; /* Position the button on the right */
+    width: 50px; /* Circular button size */
+    height: 50px;
+    border: none; /* Remove border */
+    border-radius: 50%; /* Makes the button circular */
     text-align: center;
-    line-height: 46px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: black;
+    line-height: 50px; /* Centers the text vertically */
+    font-size: 1.5rem; /* Larger font size */
+    font-weight: bold;
+    color: black; /* Black text for contrast */
     text-decoration: none;
-    background-color: white;
-    border: 2px solid rgba(0,0,0,0.12);
+    background-color: white; /* White background */
     cursor: pointer;
-    z-index: 110;
 }
-#circleButton:hover { background-color: #f0f0f0; }
+
+#circleButton:hover {
+    background-color: #e0e0e0; /* Slightly darker on hover */
+}
 
 /* message list - leave space for fixed header */
 #messageCont {
     width: 90%;
-    margin: 100px auto 120px auto; /* top margin clears fixed banner */
+    margin: 150px auto 120px auto; /* top margin clears fixed banner */
     color: #FFFFFF;
     border-radius: 8px;
     padding: 12px;
