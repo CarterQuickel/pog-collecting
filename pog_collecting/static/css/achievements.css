@@ -95,7 +95,7 @@ li {
     padding: 15px;
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
-    border: 5px solid black;
+    border: transparent 2px solid;
 }
 
 .achievement .icon {
