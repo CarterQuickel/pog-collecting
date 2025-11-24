@@ -530,18 +530,14 @@ progress::-webkit-progress-value {
 
 /* save and load btns */
 #save {
-    background-color: gray;
-    border: 2px solid black;
-    box-shadow: 0 0 5px black;
-    border-radius: 50px;
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-radius: 10px;
     padding: 20px;
-    width: 80px;
-    height: 75px;
+    width: 30px;
+    height: 30px;
     margin: 0px 10px 0px 0px;
-    text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-style: bold;
-    font-size: 22px;
     cursor: pointer;
 }
 
