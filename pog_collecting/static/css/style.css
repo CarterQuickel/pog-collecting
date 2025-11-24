@@ -640,18 +640,14 @@ input:checked+.slider:before {
 
 .pageButtons {
     font-size: large;
-    background-image: linear-gradient(to right, #cff03e, #3fc951);
+    background-color: transparent;
     border-radius: 50px;
     padding: 10px;
     width: 100px;
     height: 50px;
     border: transparent;
     scale: 0.8;
-    box-shadow: 0 0 5px black;
-}
-
-.pageButtons:hover {
-    background-color: #522958;
+    font-weight: bold;
 }
 
 #slider {
