@@ -1,123 +1,137 @@
 body {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin-top: 135px;
-    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    background: #f2f2f2;
+    color: #111;
+    -webkit-font-smoothing: antialiased;
 }
 
-h1 {
-    color: whitesmoke;
-}
-
-h3 {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-h4 {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin-top: 15px;
-}
-
-li {
-    list-style: none;
-}
-
+/* fixed header/banner */
 #chatroomBanner {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    height: 72px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     background-color: rgb(158, 84, 158);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.12);
+    z-index: 100;
+    box-sizing: border-box;
 }
 
 .leftstuff {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    gap: 12px;
     color: white;
-    margin-left: 20px;
 }
 
+.rightstuff {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+}
+
+/* Back button inside banner */
 #circleButton {
     position: absolute;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    right: 75px;
-    width: 50px;
-    height: 50px;
+    width: 46px;
+    height: 46px;
     border: none;
     border-radius: 50%;
     text-align: center;
-    line-height: 50px;
-    font-size: 1.5rem;
-    font-weight: bold;
+    line-height: 46px;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: black;
     text-decoration: none;
     background-color: white;
-    border: 2px solid black;
+    border: 2px solid rgba(0,0,0,0.12);
     cursor: pointer;
+    z-index: 110;
+}
+#circleButton:hover { background-color: #f0f0f0; }
+
+/* message list - leave space for fixed header */
+#messageCont {
+    width: 90%;
+    margin: 100px auto 120px auto; /* top margin clears fixed banner */
+    color: #FFFFFF;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-#circleButton:hover {
-    background-color: #e0e0e0;
-}
-
+/* input area fixed at bottom */
 #chatContainer {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
-    bottom: 0;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(128,128,128,0.95);
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    z-index: 90;
+}
+
+#chatContainer form {
+    display: flex;
     width: 100%;
-    max-width: 100vw;
-    position: absolute;
-    left: 0;
-    right: 0;
-    background-color: gray;
+    gap: 10px;
+    align-items: center;
     box-sizing: border-box;
 }
 
 #messageInput {
-    padding: 10px;
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    padding: 12px 14px;
     font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
     box-sizing: border-box;
-    width: 100%;
-    max-width: 700px;
-    min-width: 300px;
 }
 
 #submitBtn {
-    padding: 10px 20px;
+    flex: 0 0 auto;
+    padding: 10px 18px;
     font-size: 1rem;
     background-color: rgb(158, 84, 158);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
+    height: 44px;
 }
+#submitBtn:hover { background-color: rgb(137, 73, 137); }
 
-#submitBtn:hover {
-    background-color: rgb(137, 73, 137);
-}
+/* chat lines */
+.chat-line { margin-bottom: 8px; line-height: 1.3; word-break: break-word; }
+.chat-time { color: #ffffff; margin-right: 6px; font-size: 0.9em; }
+.chat-name { color: #ffffff; margin-right: 6px; }
 
-.message {
-    max-height: 500px;
-    overflow-y: auto;
-    background-color: white;
-    color: black;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    margin-left: 50px;
-}
-
-#messageCont {
-    width: 45%;
-    height: 450px;
+/* responsive tweaks */
+@media (max-width: 900px) {
+    #messageCont, #chatContainer { width: 95%; }
+    #circleButton { right: 12px; }
 }
