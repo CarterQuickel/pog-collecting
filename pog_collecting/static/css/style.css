@@ -369,9 +369,9 @@ option {
 .infobtn {
     background-color: #ffffff;
     border: 1px solid rgb(189, 189, 189);
-    box-shadow: 0 0 5px black;
-    border-radius: 30px;
+    border-radius: 50px;
     width: 30px;
+    height: 30px;
     text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
