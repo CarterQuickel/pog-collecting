@@ -603,7 +603,7 @@ progress::-webkit-progress-value {
     font-style: bold;
     font-size: 15px;
     cursor: pointer;
-    scale: 0.8;
+    scale: 0.7;
     box-shadow: 0 0 5px black;
 }
 

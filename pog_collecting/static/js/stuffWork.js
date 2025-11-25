@@ -187,7 +187,7 @@ function update() {
     document.getElementById("pogCount").style.color = pogAmount >= maxPogs ? "gold" : lightMode ? "black" : "white";
  
     //update wish text
-    document.getElementById("useWish").innerText = `Use Wish (${wish})`;
+    document.getElementById("useWish").innerText = `Wish (${wish})`;
  
     //update wish visibility
     document.getElementById("useWish").style.display = wish > 0 ? "inline-block" : "none";
