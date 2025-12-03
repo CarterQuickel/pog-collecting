@@ -824,3 +824,14 @@ progress::-webkit-progress-value {
     font-size: 15px;
     background-color: rgb(112, 48, 165);
 }
+
+#lock {
+    cursor: pointer;
+    background-color: white;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+#lock:hover {
+    background-color: #d4d4d4;
+}

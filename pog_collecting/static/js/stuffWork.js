@@ -369,7 +369,7 @@ function refreshInventory() {
             canTrade = item.name === "Dragon Ball 7",
             // return html
             `<div class="item ${hasBonus ? 'highlight' : ''}">
-            <button>Lock</button><br>
+            <img id="lock" src="../static/icons/buttons_main/lock.png" width="10" height="12"><br>
             <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'black' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
             <br>
             <div class="tooltip-descCont">
