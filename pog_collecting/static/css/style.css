@@ -557,6 +557,20 @@ progress::-webkit-progress-value {
     box-shadow: 0 0 5px black;
 }
 
+#shopBtn {
+    background-image: linear-gradient(to right, #fff01d, #a15601);
+    cursor: pointer;
+    box-shadow: 0 0 5px black;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: larger;
+}
+
+#shopBtn:hover {
+    background-image: linear-gradient(to right, #e6d017, #7a3e01); 
+    color: white;
+    box-shadow: 0 0 5px white;
+}
+
 #save {
     border-radius: 10px;
 }
@@ -830,4 +844,53 @@ progress::-webkit-progress-value {
     background-color: rgba(255, 255, 255, 0.5);
     padding: 4px 15px 4px 15px;
     border-radius: 10px;
+}
+
+#shopBanner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100001;
+}
+
+.shopCont {
+    background-image: linear-gradient(to right, #b3a786, #b5cae2);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 20px;
+    border: transparent;
+    text-align: center;
+    color: red;
+    /* Custom text color */
+}
+
+#closeShop {
+    background-color: rgb(255, 233, 233);
+    border: transparent;
+    border-radius: 5px;
+    width: 70px;
+    height: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#closeShop:hover {
+    background-color: rgb(112, 106, 106);
+}
+
+#shopItems {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-top: 20px;
 }

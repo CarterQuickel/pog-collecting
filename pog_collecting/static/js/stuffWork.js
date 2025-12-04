@@ -15,6 +15,8 @@ rarityColor = [
     { name: "Mythic", color: "fuchsia", income: 63 }, //mythic
 ]
 
+console.log(shopitems);
+
 // debug rarity list
 console.log(crates);
 
@@ -1055,3 +1057,29 @@ document.getElementById("useWish").addEventListener("click", async () => {
         }
     }
 });
+
+
+document.getElementById("shopBtn").addEventListener("click", () => {
+    const shop = document.getElementById("shopBanner");
+    shop.style.display = "block";
+});
+
+document.getElementById("closeShop").addEventListener("click", () => {
+    const shop = document.getElementById("shopBanner");
+    shop.style.display = "none";
+});
+
+//shop items
+let shopHTML = shopitems.map((item, index) => {
+    const cate = item.category;
+    const ite = cate.items[index];
+    return `
+    <h3>${cate}</h3>
+    <div class="item">
+        <h3>${ite.name}</h3>
+        <p>Price: ${item.price}</p>
+        <button class="buyBtn" data-price="${item.price}">Buy</button>
+    </div>`
+}).join('');
+
+document.getElementById("shopItems").innerHTML = shopHTML;
