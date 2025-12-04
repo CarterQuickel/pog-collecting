@@ -6,7 +6,19 @@ const userdata = (() => {
     }
 })();
 
-// theme
+function normPfp(u) {
+    if (!u) return '';
+    u = String(u).trim();
+    // keep absolute URLs and data URLs as-is
+    if (/^(https?:\/\/|data:)/i.test(u)) return u;
+    // already absolute path
+    if (u.charAt(0) === '/') return u;
+    // make relative storage paths absolute for the server
+    return '/' + u.replace(/^\/+/, '');
+}
+const myPfp = normPfp(userdata.pfp);
+
+
 if (userdata.theme === "light") {
     document.body.style.backgroundColor = "white";
     document.body.style.color = "black";
@@ -27,44 +39,71 @@ const form = document.querySelector('form');
 const messageInput = document.getElementById("messageInput");
 const messageCont = document.getElementById("messageCont");
 
-// escape HTML
+
 function escapeHtml(s = '') {
     return String(s).replace(/[&<>"']/g, (m) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
-// render a saved chat record {id, name, msg, time}
 function renderMessage(chat) {
     if (!chat) return;
     const wrapper = document.createElement('div');
     wrapper.className = 'chat-line';
+
     const time = chat.time ? new Date(Number(chat.time)) : new Date();
     const timeStr = `[${time.toLocaleTimeString()}]`;
-    wrapper.innerHTML = `<span class="chat-time">${escapeHtml(timeStr)}</span> <strong class="chat-name">${escapeHtml(chat.name)}</strong>: <span class="chat-msg">${escapeHtml(chat.msg)}</span>`;
+
+    // profile picture WHY IS THIS SO COMPLICATED ???
+    const pfpSrc = normPfp(chat.pfp) || myPfp || '/static/icons/pfp/defaultpfp.png';
+    if (pfpSrc) {
+        const img = document.createElement('img');
+        img.src = pfpSrc;
+        img.alt = `${chat.name}'s profile picture`;
+        img.className = 'chat-pfp';
+
+        img.onerror = () => {
+            console.warn('pfp failed to load, falling back:', pfpSrc);
+            img.onerror = null;
+            img.src = '/static/icons/pfp/defaultpfp.png';
+        };
+        wrapper.appendChild(img);
+    }
+
+    const metaSpan = document.createElement('span');
+    metaSpan.className = 'chat-meta';
+    metaSpan.innerHTML = `<span class="chat-time">${escapeHtml(timeStr)}</span> <strong class="chat-name">${escapeHtml(chat.name)}</strong>: `;
+    wrapper.appendChild(metaSpan);
+
+    const msgSpan = document.createElement('span');
+    msgSpan.className = 'chat-msg';
+    msgSpan.textContent = chat.msg;
+    wrapper.appendChild(msgSpan);
+
     messageCont.appendChild(wrapper);
     messageCont.scrollTop = messageCont.scrollHeight;
 }
 
-// receive history (array of saved records)
+
 socket.on('chat history', (rows) => {
     messageCont.innerHTML = '';
     (rows || []).forEach(renderMessage);
 });
 
-// receive new saved message
+
 socket.on('chat message', (chat) => {
     renderMessage(chat);
 });
 
-// send message (do not send client timestamp; server will add)
+
+
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const text = (messageInput.value || '').trim();
     if (!text) return;
-    socket.emit("chat message", { name: myName, msg: text });
+    socket.emit("chat message", { name: myName, msg: text, pfp: myPfp || null });
     messageInput.value = "";
 });
 
-// optional: fallback fetch if socket history didn't arrive
+
 setTimeout(() => {
     if (messageCont.children.length === 0) {
         fetch('/api/chat/recent').then(r => r.ok ? r.json() : []).then(rows => {
@@ -73,3 +112,4 @@ setTimeout(() => {
         }).catch(()=>{});
     }
 }, 300);
+

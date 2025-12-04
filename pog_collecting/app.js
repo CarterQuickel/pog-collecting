@@ -167,7 +167,7 @@ const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb9
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
  
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.130:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://172.16.3.183:3000/login'; // ... or whatever the address to your application is
  
 /* This creates session middleware with given options;
 The 'secret' option is used to sign the session ID cookie.
@@ -239,7 +239,8 @@ usdb.run(`CREATE TABLE IF NOT EXISTS chat (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     msg TEXT,
-    time INTEGER
+    time INTEGER,
+    pfp TEXT
 )`)
  
 // pog database
@@ -540,7 +541,7 @@ http.listen(3000, () => {
 //chat room stuff
 io.on('connection', (socket) => {
     // send recent history to the connecting client (oldest -> newest)
-    usdb.all('SELECT id, name, msg, time FROM chat ORDER BY id DESC LIMIT 500', [], (err, rows) => {
+    usdb.all('SELECT id, name, msg, time, pfp FROM chat ORDER BY id DESC LIMIT 500', [], (err, rows) => {
         if (!err && Array.isArray(rows)) {
             socket.emit('chat history', rows.reverse());
         }
@@ -550,14 +551,15 @@ io.on('connection', (socket) => {
     socket.on('chat message', (data) => {
         const name = data && data.name ? String(data.name).slice(0, 100) : 'Anonymous';
         const msg = data && data.msg ? String(data.msg).slice(0, 2000) : '';
+        const pfp = data && data.pfp ? String(data.pfp).slice(0, 200) : null;
         const time = Date.now();
 
-        usdb.run('INSERT INTO chat (name, msg, time) VALUES (?, ?, ?)', [name, msg, time], function (err) {
+        usdb.run('INSERT INTO chat (name, msg, time, pfp) VALUES (?, ?, ?, ?)', [name, msg, time, pfp], function (err) {
             if (err) {
                 console.error('Error saving chat message:', err);
                 return;
             }
-            const saved = { id: this.lastID, name, msg, time };
+            const saved = { id: this.lastID, name, msg, time, pfp };
             io.emit('chat message', saved);
         });
     });
