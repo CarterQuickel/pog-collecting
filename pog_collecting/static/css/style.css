@@ -827,11 +827,7 @@ progress::-webkit-progress-value {
 
 #lock {
     cursor: pointer;
-    background-color: white;
-    padding: 5px;
-    border-radius: 50%;
-}
-
-#lock:hover {
-    background-color: #d4d4d4;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 4px 15px 4px 15px;
+    border-radius: 10px;
 }

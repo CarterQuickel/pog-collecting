@@ -154,15 +154,18 @@ function updateMoney() {
 }
 
 // sell item
-function sellItem(id, sellvalue) {
-    const index = inventory.findIndex(item => item.id === id)
-    money += sellvalue;
-    totalSold++;
-    inventory.splice(index, 1);
-    // recalc income and refresh UI
-    userIncome = getTotalIncome();
-    refreshInventory();
-    if (window.checkAllAchievements) window.checkAllAchievements();
+function sellItem(id, sellvalue, locked) {
+    console.log(locked)
+    if (!locked) {
+        const index = inventory.findIndex(item => item.id === id)
+        money += sellvalue;
+        totalSold++;
+        inventory.splice(index, 1);
+        // recalc income and refresh UI
+        userIncome = getTotalIncome();
+        refreshInventory();
+        if (window.checkAllAchievements) window.checkAllAchievements();
+    }
 }
 
 // update loop
@@ -216,7 +219,7 @@ function update() {
     if (inventory.length >= 999) {
         while (inventory.length > 999) {
             const item = inventory[0];
-            sellItem(item.id, Math.round(item.income * 1.05));
+            sellItem(item.id, Math.round(item.income * 1.05), false);
         }
     }
 
@@ -226,6 +229,12 @@ function update() {
     } else {
         document.getElementById("invTxt").style.color = lightMode ? "black" : "white";
     }
+}
+
+function lock(id) {
+    const index = inventory.findIndex(item => item.id === id)
+    inventory[index].locked = !inventory[index].locked;
+    refreshInventory();
 }
 
 function merge(bronze, silver, gold, diamond, astral) {
@@ -250,23 +259,23 @@ function merge(bronze, silver, gold, diamond, astral) {
     // only sell the amount needed
     for (let i = 0; i < inventory.length && sold < mergeAmount; i++) {
         if (inventory[i].name === "Bronze Pog" && bronze) {
-            sellItem(inventory[i].id, 0);
+            sellItem(inventory[i].id, 0, false);
             sold++;
             i--;
         } else if (inventory[i].name === "Silver Pog" && silver) {
-            sellItem(inventory[i].id, 0);
+            sellItem(inventory[i].id, 0, false);
             sold++;
             i--;
         } else if (inventory[i].name === "Gold Pog" && gold) {
-            sellItem(inventory[i].id, 0);
+            sellItem(inventory[i].id, 0, false);
             sold++;
             i--;
         } else if (inventory[i].name === "Diamond Pog" && diamond) {
-            sellItem(inventory[i].id, 0);
+            sellItem(inventory[i].id, 0, false);
             sold++;
             i--;
         } else if (inventory[i].name === "Astral Pog" && astral) {
-            sellItem(inventory[i].id, 0);
+            sellItem(inventory[i].id, 0, false);
             sold++;
             i--;
         }
@@ -368,8 +377,9 @@ function refreshInventory() {
             // show trade button
             canTrade = item.name === "Dragon Ball 7",
             // return html
-            `<div class="item ${hasBonus ? 'highlight' : ''}">
-            <img id="lock" src="../static/icons/buttons_main/lock.png" width="10" height="12"><br>
+            `<div class="item ${hasBonus ? 'highlight' : ''}" style="scale: ${item.locked ? 0.9 : 1}">
+            <img id="lock" style="background-color: ${item.locked ? "white" : "rgba(255, 255, 255, 0.5)"}" src="../static/icons/buttons_main/lock.png" onclick="lock(${item.id})" width="11" height="12" title="Lock (can't be sold when locked">
+            <br>
             <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'black' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
             <br>
             <div class="tooltip-descCont">
@@ -387,7 +397,7 @@ function refreshInventory() {
                 <li class='list' style="color: ${item.color}">${item.value}</li>
                 <li class='list' style="color: green">$${Math.round(item.income * ((window.perNameBonus && window.perNameBonus[item.name]) || 1))}/s</li>
             </ul>
-            <button id="sellbtn" onclick="sellItem(${item.id}, sellvalue)">Sell for <br>$${sellvalue}</button>
+            <button id="sellbtn" onclick="sellItem(${item.id}, sellvalue, ${item.locked})">Sell for <br>$${sellvalue}</button>
             ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
             ${canTrade ? `<button class="mergebtn" onclick="trade()">Trade (7)</button>` : ""}
         </div>
@@ -402,24 +412,28 @@ document.getElementById("sellAll").addEventListener("click", () => {
     }
     if (!searching) {
         const initialInv = inventory.length
-        for (let i = inventory.length - 1; i >= 0; i--) {
-            if (i === initialInv) {
-                i = 0
+        for (let i = initialInv - 1; i >= 0; i--) {
+            if (inventory[i].locked) {
+                console.log(`Item sold at index: ${i} (name: ${inventory[i].name}), and lock is: ${inventory[i].locked}`)
+                continue;
             }
-            const item = inventory[i];
             if (inventory.length == 0) {
-                break
+                break;
             }
-            sellItem(i, Math.round(item.income * 1.05)) //sellvalue
+            console.log(`Item sold at index: ${i} (name: ${inventory[i].name}), and lock is: ${inventory[i].locked}`)
+            sellItem(inventory[i].id, Math.round(inventory[i].income * 1.05), inventory[i].locked)
         }
     } else {
         const filteredItems = inventory.filter(item => item.name.toLowerCase().includes(itemSearched));
         const initialInv = filteredItems.length;
-        for (let i = 0; i < initialInv; i++) {
+        for (let i = initialInv - 1; i >= 0; i--) {
             const item = filteredItems[i];
             const indexInInventory = inventory.findIndex(invItem => invItem.id === item.id);
+            if (item.locked) {
+                continue;
+            }
             if (indexInInventory !== -1) {
-                sellItem(item.id, Math.round(item.income * 1.05)); //sellvalue
+                sellItem(item.id, Math.round(item.income * 1.05), item.locked); //sellvalue
             }
         }
     }
@@ -502,7 +516,7 @@ function openCrate(cost, index) {
 
             // Add result to inventory
             if (rarity.name != "Dragon Ball") {
-                inventory.push({ pogid: rarity.id, name: rarity.name, pogcol: rarity.color, color: color, income: income, value: rarity.rarity, id: id, description: rarity.description, creator: rarity.creator });
+                inventory.push({ locked: false, pogid: rarity.id, name: rarity.name, pogcol: rarity.color, color: color, income: income, value: rarity.rarity, id: id, description: rarity.description, creator: rarity.creator });
             }
 
             // XP gain
