@@ -15,10 +15,7 @@ rarityColor = [
     { name: "Mythic", color: "fuchsia", income: 63 }, //mythic
 ]
 
-console.log(shopitems);
-
-// debug rarity list
-console.log(crates);
+let enabledCrate = false;
 
 //pfp 
 let pfpimg = userdata.pfp || ""
@@ -1099,3 +1096,13 @@ let shopHTML = shopitems.map((item) => {
 }).join('');
 
 document.getElementById("shopItems").innerHTML = shopHTML;
+
+document.getElementById("openCratesBtn").addEventListener("click", () => {
+    if (enabledCrate == false) {
+    document.getElementById("cratesCont").style.display = "block";
+    enabledCrate = true;
+    } else {
+    document.getElementById("cratesCont").style.display = "none";
+    enabledCrate = false;
+    }
+});
