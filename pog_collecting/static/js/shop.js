@@ -24,17 +24,17 @@ let shopitems = [
         items: [
             { 
                 name: "$100K",
-                description: "Buy 100,000 money to use in the game.",
+                description: "Buy 100,000 dollars to use in the game.",
                 price: 25
             },
             {
                 name: "$1M",
-                description: "Buy 1,000,000 money to use in the game.",
+                description: "Buy 1,000,000 dollars to use in the game.",
                 price: 150
             }, 
             {
                 name: "$10M",
-                description: "Buy 10,000,000 money to use in the game.",
+                description: "Buy 10,000,000 dollars to use in the game.",
                 price: 950
             }
         ]
@@ -69,7 +69,7 @@ let shopitems = [
             },
             {
                 name: "Double XP",
-                description: "Earn double XP permanently.",
+                description: "Earn double of the pog's purchase XP permanently.",
                 price: 80
             }, 
             {

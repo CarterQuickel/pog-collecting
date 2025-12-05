@@ -1070,16 +1070,32 @@ document.getElementById("closeShop").addEventListener("click", () => {
 });
 
 //shop items
-let shopHTML = shopitems.map((item, index) => {
-    const cate = item.category;
-    const ite = cate.items[index];
+let shopHTML = shopitems.map((item) => {
+    const categoryName = item.category;
+    const categoryItems = item.items;
     return `
-    <h3>${cate}</h3>
-    <div class="item">
-        <h3>${ite.name}</h3>
-        <p>Price: ${item.price}</p>
-        <button class="buyBtn" data-price="${item.price}">Buy</button>
-    </div>`
+    <h3 id="cateName">${categoryName}</h3>
+    <div id="itemsCont">
+        <div class="itemTag">
+            <h3>${categoryItems && categoryItems[0] ? categoryItems[0].name : 'Error Rendering'}</h3>
+            <p>${categoryItems[0].description}</p>
+            <br>
+            <button class="buyBtn">${categoryItems[0].price} Digipogs</button>
+        </div>
+        <div class="itemTag">
+            <h3>${categoryItems && categoryItems[1] ? categoryItems[1].name : 'Error Rendering'}</h3>
+            <p>${categoryItems[1].description}</p>
+            <br>
+            <button class="buyBtn"${item.price}">${categoryItems[1].price} Digipogs</button>
+        </div>
+        <div class="itemTag">
+            <h3>${categoryItems && categoryItems[2] ? categoryItems[2].name : 'Error Rendering'}</h3>
+            <p>${categoryItems[2].description}</p>
+            <br>
+            <button class="buyBtn"${item.price}">${categoryItems[2].price} Digipogs</button>
+        </div>
+    </div>
+    `
 }).join('');
 
 document.getElementById("shopItems").innerHTML = shopHTML;

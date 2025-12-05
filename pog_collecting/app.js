@@ -167,7 +167,7 @@ const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb9
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
  
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.130:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://192.168.8.3:3000/login'; // ... or whatever the address to your application is
  
 /* This creates session middleware with given options;
 The 'secret' option is used to sign the session ID cookie.
