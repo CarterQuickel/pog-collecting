@@ -454,7 +454,7 @@ option {
     gap: 37px;
     overflow-y: auto;
     min-height: 175px;
-    max-height: 90vh;
+    max-height: 80vh;
     position: static;
     flex: 1;
     width: 100%;
