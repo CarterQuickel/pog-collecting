@@ -13,7 +13,7 @@
         <div class="leftstuff">
             <h1>Chat Room</h1>
             <div id="userCont">
-                <img id="userPic" src="<%= userdata && userdata.pfp ? (userdata.pfp.charAt(0) === '/' ? userdata.pfp : '/' + userdata.pfp) : '/static/icons/pfp/defaultpfp.png' %>" alt="pfp" />
+                <img id="userPic" src="<%= userdata.pfp %>" />
                 <span class="username"><%= (userdata && (userdata.displayName || userdata.displayname)) || 'Guest' %></span>
             </div>
         </div>
