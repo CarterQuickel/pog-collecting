@@ -78,5 +78,25 @@ let shopitems = [
                 price: 100
             }
         ]
+    },
+    {
+        category: "Pogs",
+        items: [
+            {
+                name: "Common Pog",
+                description: "A random common pog to add to your collection.",
+                price: 5
+            },
+            { 
+                name: "Mythical Pog",
+                description: "A random mythical pog to add to your collection.",
+                price: 50
+            },
+            {
+                name: "Bronze Pog",
+                description: "A special bronze pog to add to your collection.",
+                price: 200
+            }
+        ]
     }
 ]
