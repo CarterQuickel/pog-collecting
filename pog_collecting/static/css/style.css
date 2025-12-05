@@ -250,13 +250,13 @@ option {
 }
 
 #openCratesBtn {
-    background-color: #856f82;
+    background-color: #ffffff;
     border: transparent;
     position: fixed;
-    border-radius: 70px;
-    padding: 10px;
-    width: 150px;
-    height: 150px;
+    border-radius: 100px;
+    padding: 40px;
+    width: 100px;
+    height: 100px;
     bottom: 0px;
     right: 0px;
     cursor: pointer;
@@ -266,8 +266,7 @@ option {
 }
 
 #openCratesBtn:hover {
-    background-color: #7d6381;
-    box-shadow: 0 0 10px white;
+    background-color: #a3a3a3;
 }
 
 #cratesCont {
@@ -910,7 +909,7 @@ progress::-webkit-progress-value {
     margin-top: 20px;
     background-color: rgb(255, 233, 233);
     border: transparent;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 70px;
     height: 25px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
