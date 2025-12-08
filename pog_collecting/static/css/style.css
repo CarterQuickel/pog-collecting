@@ -12,38 +12,25 @@ h3 {
 }
 
 #achievementsButton {
-    margin-top: 10px;
-    background-color: #5f4b63;
-    border-radius: 12px;
-    padding: 10px;
-    width: 360px;
-    border: 3px solid black;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: larger;
 }
 
 #patchNotesButton {
-    background-color: #5f4b63;
-    border-radius: 12px;
-    padding: 10px;
-    width: 360px;
-    border: 3px solid black;
+    margin-top: 0px;
+    /* idk why bro */
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: larger;
 }
 
 #leaderboardButton {
-    background-color: #a1a1a1;
-    border: 4px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    width: 150px;
-    margin: 0px 10px 0px 0px;
-    text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-style: bold;
-    font-size: 22px;
-    cursor: pointer;
+    font-size: larger;
+}
+
+#chatRoomButton {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: larger;
 }
 
 #income {
@@ -80,8 +67,9 @@ ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(158, 84, 158);
+    background-image: linear-gradient(to right, #de5aff, #582563);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 
 #centerlayout {
@@ -104,7 +92,6 @@ ul {
 .rightstuff {
     display: flex;
     align-items: center;
-    gap: 10px;
     margin-left: 20px;
 }
 
@@ -116,15 +103,16 @@ ul {
 
 /* search button */
 #searchbar {
+    gap: 3px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin: 0px 30px 0px 10px;
 }
 
 #searchbox {
     background-color: #e6e6e6;
-    border: 3px solid black;
+    border: transparent;
     border-radius: 10px;
     width: 400px;
     padding: 4px;
@@ -143,7 +131,7 @@ ul {
     width: 300px;
     color: #000000;
     background-color: #fff0f5;
-    border: 3px solid #000000;
+    border: transparents;
     border-radius: 30px;
     background-repeat: no-repeat;
     background-size: 12px;
@@ -153,12 +141,15 @@ ul {
 }
 
 #sellAll {
-    border: 2px solid black;
+    border: transparent;
     border-radius: 20px;
+    padding: 5px;
+    width: 200px;
+    height: 25px;
     margin-top: 15px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    width: 100px;
     background-color: #659c54;
+    cursor: pointer;
 }
 
 #sellAll:hover {
@@ -173,52 +164,50 @@ option {
 
 #searchbtn {
     background-color: #ecdcdc;
-    border: 3px solid black;
+    border: transparent;
     border-radius: 10px;
     padding: 7px;
-    width: 100px;
+    width: 35px;
+    height: 35px;
     text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
     font-size: 18px;
     cursor: pointer;
-    scale: 0.85;
+    scale: 0.8;
 }
 
 #searchbtn:hover {
     background-color: #d4bebe;
 }
 
-#locators {
-    display: flex;
-    gap: 5px;
-    margin: 10px;
-}
-
 #sortcont {
     background-color: #3e1e42;
     margin: 10px;
-    padding: 0px 10px 10px 10px;
-    border: 3px solid black;
+    padding: 10px;
+    border: transparent;
     border-radius: 10px;
 }
 
 /* settings */
 #settings {
+    margin-top: 8px;
     top: 100px;
     right: 20px;
     background-color: #7d6381;
     width: 400px;
-    min-height: 880px;
-    height: 90vh;
+    padding-bottom: 10px;
+    min-height: auto;
+    height: auto;
     border-radius: 10px;
     text-align: center;
     position: static;
-    flex-shrink: 0;
+    flex-shrink: 1;
 }
 
 .crate {
     border-radius: 10px;
+    box-shadow: 0 0 5px black;
     padding: 14px;
     width: 300px;
     margin: 20px 10px -15px 45px;
@@ -228,55 +217,177 @@ option {
     font-size: 22px;
     cursor: pointer;
     display: block;
-    border: 4px solid black;
+    border: transparent;
+}
+
+.buym {
+    border: transparent;
+    box-shadow: 0 0 5px black;
+    border-radius: 45px;
+    width: 100px;
+    padding: 8px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+#crate1_b5 {
+    background-color: rgb(245, 88, 88);  
+}
+
+#crate1_b10 {
+    background-color: rgb(245, 88, 88); 
+}
+
+#crate1_b5:hover {
+    background-color: rgb(184, 66, 66); 
+    box-shadow: 0 0 30px white;
+}
+
+#crate1_b10:hover {
+    background-color: rgb(184, 66, 66); 
+    box-shadow: 0 0 30px white;
 }
 
 /* crate 1 */
 #crate1 {
-    background-color: #f0f0f0;
+    background-color: rgb(245, 88, 88); 
 }
 
 #crate1:hover {
-    background-color: lightgray;
+    background-color: rgb(184, 66, 66); 
+    box-shadow: 0 0 30px white;
+}
+
+#crate2_b5 {
+    background-color: rgb(250, 250, 114);
+}
+
+#crate2_b10 {
+    background-color: rgb(250, 250, 114);
+}
+
+#crate2_b5:hover {
+    background-color: rgb(196, 196, 91);
+    box-shadow: 0 0 30px white;
+}
+
+#crate2_b10:hover {
+    background-color: rgb(196, 196, 91);
+    box-shadow: 0 0 30px white;
 }
 
 /* crate 2 */
 #crate2 {
-    background-color: #4463eb;
-
+    background-color: rgb(250, 250, 114);
 }
 
 #crate2:hover {
-    background-color: blue;
+    background-color: rgb(196, 196, 91);
+    box-shadow: 0 0 30px white;
+}
+
+#crate3_b5 {
+    background-color: rgb(128, 255, 128);
+}
+
+#crate3_b10 {
+    background-color: rgb(128, 255, 128);
+}
+
+#crate3_b5:hover {
+    background-color: rgb(94, 179, 94);
+    box-shadow: 0 0 30px white;
+}
+
+#crate3_b10:hover {
+    background-color: rgb(94, 179, 94);
+    box-shadow: 0 0 30px white;
 }
 
 /* crate 3 */
 #crate3 {
-    background-color: #ba61d3;
+    background-color: rgb(128, 255, 128);
 }
 
-#crate3:hover {
-    background-color: purple;
+#crate3:hover {background-color: rgb(94, 179, 94);
+    box-shadow: 0 0 30px white;
+}
+
+#crate4_b5 {
+    background-color: lightskyblue;
+}
+
+#crate4_b10 {
+    background-color: lightskyblue;
+}
+
+#crate4_b5:hover {
+    background-color: rgb(101, 152, 184);
+    box-shadow: 0 0 30px white;
+}
+
+#crate4_b10:hover {
+    background-color: rgb(101, 152, 184);
+    box-shadow: 0 0 30px white;
 }
 
 /* crate 4 */
 #crate4 {
-    background-color: #f7ca50;
+    background-color: lightskyblue;
 }
 
 #crate4:hover {
-    background-color: yellow;
+    background-color: rgb(101, 152, 184);
+    box-shadow: 0 0 30px white;
+}
+
+#crate5_b5 {
+    background-color: rgb(219, 143, 255);
+}
+
+#crate5_b10 {
+    background-color: rgb(219, 143, 255);
+}
+
+#crate5_b5:hover {
+    background-color: rgb(162, 107, 187);
+    box-shadow: 0 0 30px white;
+}
+
+#crate5_b10:hover {
+    background-color: rgb(162, 107, 187);
+    box-shadow: 0 0 30px white;
 }
 
 /* crate 5 */
 #crate5 {
-    background-color: #b11b1b;
+    background-color: rgb(219, 143, 255);
 }
 
 #crate5:hover {
-    background-color: rgb(100, 19, 19);
+    background-color: rgb(162, 107, 187);
+    box-shadow: 0 0 30px white;
 }
 
+.infobtn {
+    background-color: #ffffff;
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 20px;
+    scale: 1.1;
+}
+
+.infobtn:hover {
+    background-color: #d4d4d4;
+}
 
 #inventory {
     background-color: #33122e;
@@ -287,18 +398,19 @@ option {
     margin: 8px auto;
     font-size: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 37px;
     overflow-y: auto;
     min-height: 175px;
     max-height: 90vh;
     position: static;
     flex: 1;
     width: 100%;
+    overflow-x: hidden;
 }
 
 #stats {
-    border: 4px solid black;
+    border: transparent;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
@@ -307,7 +419,7 @@ option {
 
 .mergebtn {
     background-color: rgb(230, 230, 124);
-    border: 4px solid black;
+    border: transparent;
     border-radius: 45px;
     padding: 8px;
     width: 100px;
@@ -325,7 +437,7 @@ option {
 
 #sellbtn {
     background-color: #79c761;
-    border: 4px solid black;
+    border: transparent;
     margin-top: 0px;
     border-radius: 45px;
     width: 100px;
@@ -367,7 +479,8 @@ option {
 
 /* inventory items */
 .item {
-    border: 4px solid black;
+    border: transparent;
+    box-shadow: 0 0 5px black;
     border-radius: 10px;
     padding: 10px;
     text-align: center;
@@ -375,6 +488,8 @@ option {
     font-style: bold;
     font-size: 15px;
     background-color: rgb(66, 51, 66);
+    min-width: 120px;
+    height: 220px;
 }
 
 .item.highlight {
@@ -418,133 +533,294 @@ progress::-webkit-progress-value {
     background: lightskyblue;
 }
 
-/* save and load btns */
-#save {
-    background-color: #a1a1a1;
-    border: 4px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    width: 100px;
-    margin: 0px 10px 0px 0px;
-    text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-style: bold;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-#save:hover {
-    background-color: gray;
-}
-
 #patchNotesButton:hover {
-    background-color: #7d6381;
+    background-image: linear-gradient(to right, #5502f0, #0161a1);
     cursor: pointer;
+    box-shadow: 0 0 5px black;
 }
 
 #achievementsButton:hover {
-    background-color: #7d6381;
+    background-image: linear-gradient(to right, #5502f0, #0161a1);
     cursor: pointer;
+    box-shadow: 0 0 5px black;
 }
 
 #leaderboardButton:hover {
-    background-color: gray;
-}
-
-/* light and dark mode btn */
-.switch {
-    position: relative;
-    display: inline-block;
-    margin-right: 10px;
-    width: 60px;
-    height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-/* The slider */
-.slider {
-    position: absolute;
+    background-image: linear-gradient(to right, #5502f0, #0161a1);
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #000000;
-    -webkit-transition: .4s;
-    transition: .4s;
+    box-shadow: 0 0 5px black;
 }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: rgb(95, 85, 85);
-    -webkit-transition: .4s;
-    transition: .4s;
+#chatRoomButton:hover {
+    background-image: linear-gradient(to right, #5502f0, #0161a1);
+    cursor: pointer;
+    box-shadow: 0 0 5px black;
 }
 
-input:checked+.slider {
-    background-color: #ffffff;
+#save {
+    border-radius: 10px;
 }
 
-input:focus+.slider {
-    box-shadow: 0 0 1px #2196F3;
+#save:hover, #darkmode:hover {
+    background-color: #ffffff17;
+    box-shadow: 0 0 5px black;
 }
 
-input:checked+.slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
+.imgbtn {
+    border-radius: 40px;
+    background-color: transparent;
+    border: 3px solid transparent;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    margin: 0px 10px 0px 0px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    cursor: pointer;
 }
 
 .pageButtons {
     font-size: large;
-    margin-top: 10px;
-    background-color: #5f4b63;
-    border-radius: 12px;
+    background-color: transparent;
+    border-radius: 50px;
     padding: 10px;
-    width: 360px;
+    width: 100px;
     height: 50px;
-    border: 3px solid black;
+    border: transparent;
+    scale: 0.8;
+    font-weight: bold;
 }
 
-.pageButtons:hover {
-    background-color: #7d6381;
+#useWish {
+    background-image: linear-gradient(to right, #ffc72c, #fff27d);
+    border: 4px solid red;
+    color: red;
+    border-radius: 55px;
+    height: 100px;
+    width: 100px;
+    padding: 8px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+    box-shadow: 0 0 5px black;
 }
 
-#slider {
-    position: fixed;      /* required for left to work */
-    left: -320px;         /* start off-screen */
-    top: 20px;            /* adjust as needed */
-    width: 280px;         /* adjust width */
-    padding: 12px;
-    background: rgba(30,30,30,0.95);
-    color: white;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    transition: left 0.4s ease;  /* animate in/out */
-    z-index: 9999;         /* above other content */
+#useWish:hover {
+    box-shadow: 0 0 5px rgb(255, 0, 0);
 }
-/* optional: style inside slider */
-#slider .icon { font-size: 1.4em; display:block; }
-#slider .name  { font-weight:700; margin-top:6px; }
-#slider .description { font-size:0.9em; opacity:0.9; margin-top:4px; }
 
+#customConfirm {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100001;
+}
+
+.confirm-content {
+    background-color: #ffe600;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 20px;
+    border: 3px solid red;
+    border-radius: 5px;
+    text-align: center;
+    color: red;
+    /* Custom text color */
+}
+
+.confirmbtn {
+    background-color: #ffe600;
+    border: 4px solid red;
+    color: red;
+    border-radius: 55px;
+    height: 60px;
+    width: 100px;
+    padding: 8px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+.confirmbtn:hover {
+    background-color: #ffb800;
+}
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-descCont {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    margin-left: 70px;
+    text-align: left;
+    pointer-events: none;
+}
+
+.tooltip-desc {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    border: 4px solid #888888;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1001;
+    left: -70%;
+    bottom: -740%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    margin-left: 70px;
+    text-align: left;
+    width: 170px;
+    height: 250px;
+    scale: 0.7;
+    pointer-events: none;
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-descCont:hover .tooltip-desc {
+    visibility: visible;
+    opacity: 1;
+}
+
+#titlecont {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#infov {
+    scale: 0.8;
+}
+
+#desc {
+    scale: 0.6;
+    width: 90px;
+    background-color: rgba(241, 193, 241, 0.39);
+    border: none;
+}
+
+#desc:hover {
+    background-color: rgba(241, 193, 241, 0.7);
+}
+
+.tooltip-text-version {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 90%;
+    left: 30%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    margin-left: 20px;
+    text-align: left;
+    pointer-events: none;
+}
+
+.tooltip-container:hover .tooltip-text-version {
+    visibility: visible;
+    opacity: 1;
+}
+
+#XPinfo {
+    display: flex;
+    justify-content: center;
+}
+
+#userCont {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: -30px;
+}
+
+#userPic {
+    border-radius: 50%;
+    margin-top: -10px;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+#pfpChanger {
+    background-color: #9f75a5;
+    border: transparent;
+    border-radius: 10px;
+    padding: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    z-index: 1;
+    position: fixed;
+    display: none;
+}
+
+#closePfpChanger {
+    background-color: rgb(255, 233, 233);
+    border: transparent;
+    border-radius: 10%;
+    width: 70px;
+    height: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+#closePfpChanger:hover {
+    background-color: rgb(112, 106, 106);
+}
+
+#filepfp {
+    margin-top: 10px;
+    border: transparent;
+    border-radius: 10px;
+    padding: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    background-color: rgb(112, 48, 165);
+}

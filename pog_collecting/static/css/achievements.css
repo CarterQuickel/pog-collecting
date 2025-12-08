@@ -28,9 +28,22 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(158, 84, 158);
+    background-image: linear-gradient(to right, #de5aff, #582563);
     padding: 10px 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#userCont {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: -30px;
+}
+
+#userPic {
+    border-radius: 50%;
+    margin-top: -10px;
+    margin-left: 30px;
 }
 
 .leftstuff {
@@ -57,7 +70,6 @@ li {
     color: black;
     text-decoration: none;
     background-color: white;
-    border: 2px solid black;
     cursor: pointer;
 }
 
