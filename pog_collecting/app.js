@@ -262,8 +262,8 @@ function isAuthenticated(req, res, next) {
 app.set('view engine', 'ejs');
 app.set('trust proxy', true);
 app.use('/static', express.static('static'));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.urlencoded({limit: '50mb', extended: true }));
+app.use(express.json({limit: '50mb'}));
 
 // user settings database
 const usdb = new sqlite3.Database('usersettings.sqlite');
