@@ -559,6 +559,7 @@ app.post('/datasave', (req, res) => {
 // Express route to handle digipog transfer requests
 // the URL for the post must be the same as the one in the fetch request
 app.post('/api/digipogs/transfer', (req, res) => {
+    // req.body gets the information sent from the client
     const payload = req.body;
     const cost = payload.price;
     const reason = payload.reason;
@@ -567,12 +568,15 @@ app.post('/api/digipogs/transfer', (req, res) => {
         to: 1,    // Formbar user ID of payee (e.g., pog collecting's account)
         amount: cost,
         reason: reason,
+        // security pin for the payer's account
         pin: 8715
     }
     // make a direct transfer request using fetch
     fetch(`${AUTH_URL}/api/digipogs/transfer`, {
         method: 'POST',
+        // headers to specify json content
         headers: { 'Content-Type': 'application/json' },
+        // stringify the paydesc object to send as JSON
         body: JSON.stringify(paydesc),
     }).then((transferResult) => {
         return transferResult.json();

@@ -1107,18 +1107,9 @@ function purchase(price, reason) {
         },
         body: JSON.stringify({
             price: price,
-            reason: reason
+            reason: `Pogglebar - ${reason}`
         })
-    }).then(response => response.text())
-        .then(data => {
-            if (data.success) {
-                alert(`You have purchased: ${reason}`);
-            } else {
-                alert(data.message);
-            }
-        }).catch(err => {
-            console.error("Error purchasing item:", err);
-        });
+    })
 }
 
 document.getElementById("openCratesBtn").addEventListener("click", () => {
