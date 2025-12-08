@@ -365,7 +365,8 @@ option {
     background-color: rgb(128, 255, 128);
 }
 
-#crate3:hover {background-color: rgb(94, 179, 94);
+#crate3:hover {
+    background-color: rgb(94, 179, 94);
     box-shadow: 0 0 30px white;
 }
 
