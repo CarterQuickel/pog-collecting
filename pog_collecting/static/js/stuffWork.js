@@ -1062,7 +1062,12 @@ document.getElementById("shopBtn").addEventListener("click", () => {
 document.getElementById("closeShop").addEventListener("click", () => {
     const shop = document.getElementById("shopBanner");
     shop.style.display = "none";
+    document.getElementById("transConf").style.display = "none";
 });
+
+// default transaction
+let defprice = 0
+let defreason = ""
 
 //shop items
 let shopHTML = shopitems.map((item) => {
@@ -1075,19 +1080,19 @@ let shopHTML = shopitems.map((item) => {
             <h3>${categoryItems && categoryItems[0] ? categoryItems[0].name : 'Error Rendering'}</h3>
             <p>${categoryItems[0].description}</p>
             <br>
-            <button class="buyBtn" onclick="purchase(${categoryItems[0].price}, '${categoryItems[0].name.replace(/'/g, "\\'")}')">${categoryItems[0].price} Digipogs</button>
+            <button class="buyBtn" onclick="transaction(${categoryItems[0].price}, '${categoryItems[0].name.replace(/'/g, "\\'")}')">${categoryItems[0].price} Digipogs</button>
         </div>
         <div class="itemTag">
             <h3>${categoryItems && categoryItems[1] ? categoryItems[1].name : 'Error Rendering'}</h3>
             <p>${categoryItems[1].description}</p>
             <br>
-            <button class="buyBtn" onclick="purchase(${categoryItems[1].price}, '${categoryItems[1].name.replace(/'/g, "\\'")}')">${categoryItems[1].price} Digipogs</button>
+            <button class="buyBtn" onclick="transaction(${categoryItems[1].price}, '${categoryItems[1].name.replace(/'/g, "\\'")}')">${categoryItems[1].price} Digipogs</button>
         </div>
         <div class="itemTag">
             <h3>${categoryItems && categoryItems[2] ? categoryItems[2].name : 'Error Rendering'}</h3>
             <p>${categoryItems[2].description}</p>
             <br>
-            <button class="buyBtn" onclick="purchase(${categoryItems[2].price}, '${categoryItems[2].name.replace(/'/g, "\\'")}')">${categoryItems[2].price} Digipogs</button>
+            <button class="buyBtn" onclick="transaction(${categoryItems[2].price}, '${categoryItems[2].name.replace(/'/g, "\\'")}')">${categoryItems[2].price} Digipogs</button>
         </div>
     </div>
     `
@@ -1095,8 +1100,58 @@ let shopHTML = shopitems.map((item) => {
 
 document.getElementById("shopItems").innerHTML = shopHTML;
 
+console.log(document.getElementById("pinField").value);
+
+function transaction(price, reason) {
+    document.getElementById("transConf").style.display = "block";
+    defprice = price;
+    defreason = reason;
+}
+
+document.getElementById("purchaseBtn").addEventListener("click", () => {
+    const pinval = document.getElementById("pinField").value;
+    purchase(defprice, defreason, pinval);
+    document.getElementById("transConf").style.display = "none";
+});
+
+document.getElementById("cancelBtn").addEventListener("click", () => {
+    document.getElementById("transConf").style.display = "none";
+});
+
+// implement purchased item effect
+function implement(reason) {
+    if (reason === "1 Wish") {
+        wish++;
+    } else if (reason === "5 Wishes") {
+        wish += 5;
+    } else if (reason === "10 Wishes") {
+        wish += 10;
+    } else if (reason === "$100K") {
+        money += 100000;
+    } else if (reason === "$1M") {
+        money += 1000000;
+    } else if (reason === "$10M") {
+        money += 10000000;
+    } else if (reason === "1 Slot") {
+        Isize += 1;
+    } else if (reason === "5 Slots") {
+        Isize += 5;
+    } else if (reason === "10 Slots") {
+        Isize += 10;
+    } else if (reason === "Double Money") {
+        userIncome *= 2;
+    } else if (reason === "Double XP") {
+        xp *= 2;
+        levelup();
+    } else if  (reason === "Half Crate Costs") {
+        for (let crate in crates) {
+            crates[crate].price = Math.floor(crates[crate].price * 0.5);
+        }
+    }
+}
+
 //buy buttons
-function purchase(price, reason) {
+function purchase(price, reason, pin) {
     fetch('/api/digipogs/transfer', {
         // post is to use app.post with the route /api/digipogs/transfer
         method: 'POST',
@@ -1107,10 +1162,23 @@ function purchase(price, reason) {
         },
         body: JSON.stringify({
             price: price,
-            reason: `Pogglebar - ${reason}`
+            reason: `Pogglebar - ${reason}`,
+            pin: pin
         })
-    })
-}
+        }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Purchase successful: ${reason}`);
+                    // add purchased item effect here
+                    implement(reason);
+                } else {
+                    alert(`Purchase failed: ${data.message}`);
+                }
+            })
+            .catch(err => {
+                console.error("Error during purchase:", err);
+            })
+    }
 
 document.getElementById("openCratesBtn").addEventListener("click", () => {
     if (enabledCrate == false) {

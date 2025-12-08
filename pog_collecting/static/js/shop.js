@@ -64,18 +64,18 @@ let shopitems = [
         items: [
             { 
                 name: "Double Money",
-                description: "Earn double money passively permanently.",
+                description: "Multiply current income by 2x.",
                 price: 370
             },
             {
                 name: "Double XP",
-                description: "Earn double of the pog's purchase XP permanently.",
+                description: "Gain 2x the current XP.",
                 price: 80
             }, 
             {
-                name: "100x Sell Value",
-                description: "Earn centuple money from selling pogs permanently.",
-                price: 100
+                name: "Half Crate Cost",
+                description: "Half the cost of crates.",
+                price: 800
             }
         ]
     },
