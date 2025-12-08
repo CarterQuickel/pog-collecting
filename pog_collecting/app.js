@@ -18,7 +18,7 @@ const API_KEY = 'c44f8bc4bb6acef2b313cdb70ddae3228bf0cb73015831fe9133b1dd2c758f9
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://192.168.0.183:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://172.16.3.183:3000/login'; // ... or whatever the address to your application is
 
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
@@ -641,7 +641,7 @@ io.on('connection', (socket) => {
     socket.on('chat message', (data) => {
         const name = data && data.name ? String(data.name).slice(0, 100) : 'Anonymous';
         const msg = data && data.msg ? String(data.msg).slice(0, 2000) : '';
-        const pfp = data && data.pfp ? String(data.pfp).slice(0, 200) : null;
+        const pfp = data && data.pfp ? String(data.pfp) : null;
         const time = Date.now();
 
         usdb.run('INSERT INTO chat (name, msg, time, pfp) VALUES (?, ?, ?, ?)', [name, msg, time, pfp], function (err) {
