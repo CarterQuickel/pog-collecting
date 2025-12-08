@@ -1147,6 +1147,18 @@ function implement(reason) {
         for (let crate in crates) {
             crates[crate].price = Math.floor(crates[crate].price * 0.5);
         }
+    } else if (reason === "Common Pog") {
+        const id = Math.random() * 100000
+        inventory.push({ locked: false, pogid: 0, name: "Common Pog", pogcol: "Gray", color: "gray", income: 5, value: "Bronze Pog", id: id, description: "A common pog.", creator: "Pogglebar" });
+        refreshInventory();
+    } else if (reason === "Mythical Pog") {
+        const id = Math.random() * 100000
+        inventory.push({ locked: false, pogid: 1, name: "Mythical Pog", pogcol: "Rainbow", color: "rainbow", income: 5000, value: "Astral Pog", id: id, description: "A mythical pog.", creator: "Pogglebar" });
+        refreshInventory();
+    } else if (reason === "Bronze Pog") {
+        const id = Math.random() * 100000
+        inventory.push({ locked: false, pogid: 2, name: "Bronze Pog", pogcol: "Brown", color: "#CD7F32", income: 10, value: "Bronze Pog", id: id, description: "A shiny bronze pog.", creator: "Pogglebar" });
+        refreshInventory();
     }
 }
 
