@@ -91,8 +91,6 @@ let bonusMulti = 1;
 //abbreviation num
 let abbreviatedMoney = 0;
 
-
-
 //combo tracking fgdjhkfgjhkfgfgdjk
 let perNameBonus = {};
 function computeComboStats() {
