@@ -60,7 +60,7 @@ ul {
 }
 
 #collectBanner {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -70,6 +70,7 @@ ul {
     background-image: linear-gradient(to right, #de5aff, #582563);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    overflow-x: auto;
 }
 
 #centerlayout {
@@ -210,13 +211,10 @@ option {
     box-shadow: 0 0 5px black;
     padding: 14px;
     width: 300px;
-    margin: 20px 10px -15px 45px;
-    text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
     font-size: 22px;
     cursor: pointer;
-    display: block;
     border: transparent;
 }
 
@@ -224,13 +222,68 @@ option {
     border: transparent;
     box-shadow: 0 0 5px black;
     border-radius: 45px;
-    width: 100px;
+    width: 50px;
     padding: 8px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
     font-size: 15px;
     cursor: pointer;
     scale: 0.8;
+}
+
+.buttonSources {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 5px;
+    gap: 5px;
+}
+
+.buymCont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-right: -260px;
+    scale: 0.75;
+}
+
+#openCratesBtn {
+    background-color: #ffffff;
+    border: transparent;
+    position: fixed;
+    border-radius: 100px;
+    padding: 20px;
+    width: 100px;
+    height: 100px;
+    bottom: 0px;
+    right: 0px;
+    cursor: pointer;
+    z-index: 1000;
+    scale: 0.6;
+    box-shadow: 0 0 5px black;
+    overflow: visible;
+}
+
+#openCratesBtn:hover {
+    background-color: #a3a3a3;
+}
+
+#cratesCont {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    background-color: #3e1e42;
+    padding: 20px;
+    border-radius: 20px;
+    margin-right: 60px;
+    margin-bottom: 100px;
+    right: 0;
+    bottom: 0;
+    box-shadow: 0 0 5px black;
 }
 
 #crate1_b5 {
@@ -402,7 +455,7 @@ option {
     gap: 37px;
     overflow-y: auto;
     min-height: 175px;
-    max-height: 90vh;
+    max-height: 80vh;
     position: static;
     flex: 1;
     width: 100%;
@@ -489,7 +542,9 @@ option {
     font-size: 15px;
     background-color: rgb(66, 51, 66);
     min-width: 120px;
-    height: 220px;
+    min-height: 220px;
+    max-height: 260px;
+    cursor: pointer;
 }
 
 .item.highlight {
@@ -508,7 +563,6 @@ hr {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
     font-size: 20px;
-    color: white;
     margin-top: 10px;
     margin-bottom: -10px;
 }
@@ -531,30 +585,6 @@ progress::-webkit-progress-bar {
 progress::-webkit-progress-value {
     border-radius: 10px;
     background: lightskyblue;
-}
-
-#patchNotesButton:hover {
-    background-image: linear-gradient(to right, #5502f0, #0161a1);
-    cursor: pointer;
-    box-shadow: 0 0 5px black;
-}
-
-#achievementsButton:hover {
-    background-image: linear-gradient(to right, #5502f0, #0161a1);
-    cursor: pointer;
-    box-shadow: 0 0 5px black;
-}
-
-#leaderboardButton:hover {
-    background-image: linear-gradient(to right, #5502f0, #0161a1);
-    cursor: pointer;
-    box-shadow: 0 0 5px black;
-}
-
-#chatRoomButton:hover {
-    background-image: linear-gradient(to right, #5502f0, #0161a1);
-    cursor: pointer;
-    box-shadow: 0 0 5px black;
 }
 
 #save {
@@ -588,6 +618,12 @@ progress::-webkit-progress-value {
     border: transparent;
     scale: 0.8;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.pageButtons:hover {
+    background-color: #ffffff17;
+    box-shadow: 0 0 5px black;
 }
 
 #useWish {
@@ -603,7 +639,7 @@ progress::-webkit-progress-value {
     font-style: bold;
     font-size: 15px;
     cursor: pointer;
-    scale: 0.8;
+    scale: 0.7;
     box-shadow: 0 0 5px black;
 }
 
@@ -618,7 +654,6 @@ progress::-webkit-progress-value {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent background overlay */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -626,7 +661,7 @@ progress::-webkit-progress-value {
 }
 
 .confirm-content {
-    background-color: #ffe600;
+    background-image: linear-gradient(to right, #ffc72c, #fff27d);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     padding: 20px;
     border: 3px solid red;
@@ -637,7 +672,7 @@ progress::-webkit-progress-value {
 }
 
 .confirmbtn {
-    background-color: #ffe600;
+    background-image: linear-gradient(to right, #ffc72c, #fff27d);
     border: 4px solid red;
     color: red;
     border-radius: 55px;
@@ -653,12 +688,19 @@ progress::-webkit-progress-value {
 }
 
 .confirmbtn:hover {
-    background-color: #ffb800;
+    background-image: linear-gradient(to right, #d6a724, #ddd26b);
 }
 
-.tooltip-container {
+.tooltip-container, .tooltip-chances {
     position: relative;
     display: inline-block;
+}
+
+.tooltip-chances {
+    position: absolute;
+    margin-right: 290px;
+    margin-top: -40px;
+    scale: 0.8;
 }
 
 .tooltip-descCont {
@@ -710,6 +752,11 @@ progress::-webkit-progress-value {
 }
 
 .tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-chances:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
 }
@@ -823,4 +870,150 @@ progress::-webkit-progress-value {
     font-style: bold;
     font-size: 15px;
     background-color: rgb(112, 48, 165);
+}
+
+#lock {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 4px 15px 4px 15px;
+    border-radius: 10px;
+}
+
+#shopBanner {
+    position: fixed;
+    top: 0;
+    padding-top: 40px; /* offsets the shop to be centered */
+    padding-bottom: auto;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100001;
+}
+
+.shopCont {
+    background-color: rgb(0, 0, 0);
+    width: 60%;
+    margin-top: 30px;
+    margin: auto;
+    border-radius: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 20px;
+    border: 6px solid rgb(44, 44, 44);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: White;
+}
+
+#closeShop {
+    margin-top: 20px;
+    background-color: rgb(255, 233, 233);
+    border: transparent;
+    border-radius: 10px;
+    width: 70px;
+    height: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#closeShop:hover {
+    background-color: rgb(112, 106, 106);
+}
+
+#shopItems {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+/* Scrollbar track (background) */
+#shopItems::-webkit-scrollbar {
+    width: 15px;
+    /* width of vertical scrollbar */
+    border-radius: 3px;
+}
+
+/* Scrollbar track */
+#shopItems::-webkit-scrollbar-track {
+    background: #292929;
+}
+
+/* Scrollbar thumb (the draggable handle) */
+#shopItems::-webkit-scrollbar-thumb {
+    background-color: #dddddd;
+    /* color of the thumb */
+}
+
+/* Scrollbar thumb on hover */
+#shopItems::-webkit-scrollbar-thumb:hover {
+    background-color: #858585;
+}
+
+#itemsCont {
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 50px;
+    border: 10px solid rgb(219, 77, 101);
+    padding: 20px;
+    border-radius: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    width: fit-content;
+}
+
+.itemTag {
+    border: transparent;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    background-color: rgb(66, 51, 66);
+    width: 220px;
+    height: 220px;
+}
+
+.buyBtn {
+    background-color: #5ea54e;
+    border: transparent;
+    margin-top: 10px;
+    border-radius: 45px;
+    width: 100px;
+    padding: 8px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 1.2;
+}
+
+.buyBtn:hover {
+    background-color: #4a8440;
+    box-shadow: 0 0 5px white;
+    color: white;
+}
+
+#cateName {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 25px;
+    background-color: rgb(219, 77, 101);
+    width: 400px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -20px;
 }

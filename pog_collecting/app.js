@@ -9,8 +9,17 @@ const csv = require('csv-parser');
 const http = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(http);
+const digio = require('socket.io-client');
 
- 
+// API key for Formbar API access
+const API_KEY = 'c44f8bc4bb6acef2b313cdb70ddae3228bf0cb73015831fe9133b1dd2c758f95' // carter's API key -> this is found in the formbeta profile settings page
+
+// URL to take user to Formbar for authentication
+const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
+
+//URL to take user back to after authentication
+const THIS_URL = 'http://192.168.0.183:3000/login'; // ... or whatever the address to your application is
+
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
     'description', 'type', 'rarity', 'creator'
@@ -150,7 +159,7 @@ crateRef = [
 ]
 
 const results = [];
- 
+
 fs.createReadStream('pogipedia/db/pogs.csv')
     .pipe(csv({ headers }))
     .on('data', (row) => {
@@ -159,16 +168,63 @@ fs.createReadStream('pogipedia/db/pogs.csv')
     })
     .on('end', () => {
     });
- 
-// API key for Formbar API access
-const API_KEY = 'dab43ffb0ad71caa01a8c758bddb8c1e9b9682f6a987b9c2a9040641c415cb92c62bb18a7769e8509cb823f1921463122ad9851c5ff313dc24d929892c86f86a'
- 
-// URL to take user to Formbar for authentication
-const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
- 
-//URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.183:3000/login'; // ... or whatever the address to your application is
- 
+
+const socket = digio(AUTH_URL, {
+    extraHeaders: {
+        api: API_KEY
+    }
+});
+
+// socket events for digipog transfers
+socket.on('connect', () => {
+    console.log('Connected to Formbar socket server');
+    // Send the transfer 
+    socket.emit('transfer digipogs');
+});
+
+socket.on('connect_error',
+    (err) => {
+        console.error('Connection error:', err);
+    }
+);
+
+socket.on('transferResponse', (response) => {
+    console.log('Transfer response:', response);
+});
+
+// pool management
+socket.emit('poolCreate', {
+    name: "Pog Collecting Pool",
+    discription: "A pool for pog collecting users",
+});
+
+socket.emit('poolAddMember', {
+    poolID: 123,
+    userId: 73
+});
+
+socket.emit('poolRemoveMember', {
+    poolID: 123,
+    userId: 73
+});
+
+socket.emit('poolPayout', {
+    poolID: 123,
+});
+
+socket.emit("poolDelete", {
+    poolID: 123,
+});
+
+socket.emit('transferDigipogs', {
+    from: 1,
+    to: 123,  // Pool ID
+    amount: 50,
+    reason: 'Contribution to pog collecting',
+    pin: 8715,
+    pool: false  // Important: set this to true for pool transfers
+});
+
 /* This creates session middleware with given options;
 The 'secret' option is used to sign the session ID cookie.
 The 'resave' option is used to force the session to be saved back to the session store, even if the session was never modified during the request.
@@ -177,10 +233,10 @@ app.use(session({
     secret: 'youweremybrotheranakin',
     resave: false,
     saveUninitialized: false
-}))
+}));
 /* It is a good idea to use a Environment Variable or a .env file that is in the .gitignore file for your SECRET.
 This will prevent it from getting out and allowing people to hack your cookies.*/
- 
+
 // Middleware to check if user is authenticated
 function isAuthenticated(req, res, next) {
     console.log("Authenticating...");
@@ -201,14 +257,14 @@ function isAuthenticated(req, res, next) {
     }
 }
 // The following isAuthenticated function checks when the access token expires and promptly retrieves a new one using the user's refresh token.
- 
+
 //set
 app.set('view engine', 'ejs');
 app.set('trust proxy', true);
 app.use('/static', express.static('static'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
- 
+
 // user settings database
 const usdb = new sqlite3.Database('usersettings.sqlite');
 usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
@@ -251,7 +307,7 @@ const pogs = new sqlite3.Database("pogipedia/db/pog.db", (err) => {
         console.log("Connected to pog database.");
     }
 });
- 
+
 let pogCount = 0;
 //show many pogs there are
 pogs.get(`SELECT COUNT(*) AS count FROM pogs`, (err, row) => {
@@ -262,7 +318,7 @@ pogs.get(`SELECT COUNT(*) AS count FROM pogs`, (err, row) => {
         pogCount = row.count;
     }
 });
- 
+
 // home page
 app.get('/collection', (req, res) => {
     if (!req.session.user) {
@@ -270,14 +326,14 @@ app.get('/collection', (req, res) => {
     }
     res.render('collection', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
- 
+
 // login route
 app.get('/', isAuthenticated, (req, res) => {
     try {
         function insertUser() {
- 
+
             const displayName = req.session.user.displayName;
- 
+
             usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
                 if (err) {
                     return console.error("Error querying user:", err.message);
@@ -316,7 +372,7 @@ app.get('/', isAuthenticated, (req, res) => {
                 }
             });
         }
- 
+
         // add variable references here
         req.session.user = {
             displayName: req.session.token?.displayName || "guest",
@@ -399,7 +455,7 @@ app.get('/', isAuthenticated, (req, res) => {
         res.send(error.message)
     }
 });
- 
+
 // patch notes page
 app.get('/patch', (req, res) => {
     res.render('patch', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
@@ -409,11 +465,11 @@ app.get('/patch', (req, res) => {
 app.get('/chatroom', (req, res) => {
     res.render('chatroom', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
- 
+
 app.get('/achievements', (req, res) => {
     res.render('achievements', { userdata: req.session.user, maxPogs: pogCount, pogList: results });
 });
- 
+
 app.get('/leaderboard', (req, res) => {
     usdb.all(
         'SELECT * FROM userSettings ORDER BY score DESC LIMIT 10', [],
@@ -426,7 +482,7 @@ app.get('/leaderboard', (req, res) => {
         }
     );
 });
- 
+
 app.get('/api/leaderboard', (req, res) => {
     usdb.all('SELECT displayname, score FROM userSettings ORDER BY score DESC LIMIT 100', [], (err, rows) => {
         if (err) {
@@ -436,7 +492,7 @@ app.get('/api/leaderboard', (req, res) => {
         res.json(rows || []);
     });
 });
- 
+
 // save data route
 app.post('/datasave', (req, res) => {
     console.log(req.body);
@@ -459,8 +515,8 @@ app.post('/datasave', (req, res) => {
         crates: req.body.crates,
         pfp: req.body.pfp
     }
- 
- 
+
+
     console.log(userSave.theme);
     // save to session
     req.session.save(err => {
@@ -500,7 +556,41 @@ app.post('/datasave', (req, res) => {
         }
     });
 });
- 
+
+// Express route to handle digipog transfer requests
+// the URL for the post must be the same as the one in the fetch request
+app.post('/api/digipogs/transfer', (req, res) => {
+    // req.body gets the information sent from the client
+    const payload = req.body;
+    const cost = payload.price;
+    const reason = payload.reason;
+    const paydesc = {
+        from: 73, // Formbar user ID of payer
+        to: 1,    // Formbar user ID of payee (e.g., pog collecting's account)
+        amount: cost,
+        reason: reason,
+        // security pin for the payer's account
+        pin: 8715
+    }
+    // make a direct transfer request using fetch
+    fetch(`${AUTH_URL}/api/digipogs/transfer`, {
+        method: 'POST',
+        // headers to specify json content
+        headers: { 'Content-Type': 'application/json' },
+        // stringify the paydesc object to send as JSON
+        body: JSON.stringify(paydesc),
+    }).then((transferResult) => {
+        return transferResult.json();
+    }).then((responseData) => {
+        console.log("Transfer Response:", responseData);
+        //res.JSON must be here to send the response back to the client
+        res.json(responseData);
+    }).catch(err => {
+        console.error("Error during digipog transfer:", err);
+        res.status(500).json({ message: 'Error during digipog transfer' });
+    });
+});
+
 // login page
 app.get('/login', (req, res) => {
     if (req.query.token) {
@@ -532,7 +622,7 @@ app.get('/login', (req, res) => {
         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
     };
 });
- 
+
 //listens
 http.listen(3000, () => {
     console.log('Server started on port 3000');
@@ -857,7 +947,7 @@ const achievements = [
             hidden: true,
             notified: false
         },
-       
+
         {
             name: "Completionist",
             description: "Unlock all main achievements.",

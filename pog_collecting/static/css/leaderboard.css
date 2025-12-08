@@ -127,7 +127,7 @@ li {
 #details {
     color: rgb(255, 255, 255);
     background-color: rgb(187, 126, 187);
-    border: 2px solid rgb(255, 255, 255);
+    border: transparent;
     border-radius: 12px;
     padding: 20px;
     width: 500px;
