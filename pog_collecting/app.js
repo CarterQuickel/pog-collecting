@@ -219,7 +219,7 @@ socket.emit("poolDelete", {
 });
 
 socket.emit('transferDigipogs', {
-    from: 1,
+    from: userTokenId,  // User ID of sender
     to: 30,  // Pool ID
     amount: 50,
     reason: 'Contribution to pog collecting',
@@ -575,7 +575,8 @@ app.post('/api/digipogs/transfer', (req, res) => {
         amount: cost,
         reason: reason,
         // security pin for the payer's account
-        pin: pin
+        pin: pin,
+        pool: true
     }
     // make a direct transfer request using fetch
     fetch(`${AUTH_URL}/api/digipogs/transfer`, {

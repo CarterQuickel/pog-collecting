@@ -1143,21 +1143,52 @@ function implement(reason) {
     } else if (reason === "Double XP") {
         xp *= 2;
         levelup();
-    } else if  (reason === "Half Crate Costs") {
+    } else if (reason === "Half Crate Costs") {
         for (let crate in crates) {
             crates[crate].price = Math.floor(crates[crate].price * 0.5);
         }
     } else if (reason === "Common Pog") {
         const id = Math.random() * 100000
-        inventory.push({ locked: false, pogid: 0, name: "Common Pog", pogcol: "Gray", color: "gray", income: 5, value: "Bronze Pog", id: id, description: "A common pog.", creator: "Pogglebar" });
+        inventory.push({
+            locked: false,
+            pogid: 0,
+            name: "SW",
+            pogcol: "Grey & Black",
+            color: "yellow",
+            income: 15,
+            value: "Common",
+            id: id,
+            description: "This Pog was created to represent the York Tech 2022-2023 class of Computer Software.",
+            creator: "Mr. Smith"
+        });
         refreshInventory();
     } else if (reason === "Mythical Pog") {
         const id = Math.random() * 100000
-        inventory.push({ locked: false, pogid: 1, name: "Mythical Pog", pogcol: "Rainbow", color: "rainbow", income: 5000, value: "Astral Pog", id: id, description: "A mythical pog.", creator: "Pogglebar" });
+        inventory.push({
+            locked: false,
+            pogid: 0,
+            name: "Fallout",
+            pogcol: "Iridescent",
+            color: "purple",
+            income: 63,
+            value: "Mythic",
+            id: id,
+            description: "Based on a vault door in fallout character Vault Boy.",
+            creator: "Mr. Smith"
+        });
         refreshInventory();
     } else if (reason === "Bronze Pog") {
         const id = Math.random() * 100000
-        inventory.push({ locked: false, pogid: 2, name: "Bronze Pog", pogcol: "Brown", color: "#CD7F32", income: 10, value: "Bronze Pog", id: id, description: "A shiny bronze pog.", creator: "Pogglebar" });
+        inventory.push({ 
+            pogid: 286, 
+            name: "Silver Pog", 
+            pogcol: "Silver", 
+            color: "orange", 
+            income: 620, 
+            value: "Unique", 
+            id: Math.random() * 100000, 
+            description: "A pog made from pure silver.", 
+            creator: "Silversmith" });
         refreshInventory();
     }
 }
@@ -1177,20 +1208,20 @@ function purchase(price, reason, pin) {
             reason: `Pogglebar - ${reason}`,
             pin: pin
         })
-        }).then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(`Purchase successful: ${reason}`);
-                    // add purchased item effect here
-                    implement(reason);
-                } else {
-                    alert(`Purchase failed: ${data.message}`);
-                }
-            })
-            .catch(err => {
-                console.error("Error during purchase:", err);
-            })
-    }
+    }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(`Purchase successful: ${reason}`);
+                // add purchased item effect here
+                implement(reason);
+            } else {
+                alert(`Purchase failed: ${data.message}`);
+            }
+        })
+        .catch(err => {
+            console.error("Error during purchase:", err);
+        })
+}
 
 document.getElementById("openCratesBtn").addEventListener("click", () => {
     if (enabledCrate == false) {

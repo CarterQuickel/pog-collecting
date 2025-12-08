@@ -93,9 +93,9 @@ let shopitems = [
                 price: 50
             },
             {
-                name: "Bronze Pog",
+                name: "Silver Pog",
                 description: "A special bronze pog to add to your collection.",
-                price: 200
+                price: 400
             }
         ]
     }
