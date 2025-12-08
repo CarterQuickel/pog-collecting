@@ -188,13 +188,13 @@ socket.on('connect', () => {
     console.log('Connected to Formbar socket server');
     // Send the transfer 
     socket.emit('transfer digipogs', data);
-} );
+});
 
 socket.on('connect_error',
-(err) => {
-    console.error('Connection error:', err);
-}
-    );
+    (err) => {
+        console.error('Connection error:', err);
+    }
+);
 
 socket.on('transferResponse', (response) => {
     console.log('Transfer response:', response);

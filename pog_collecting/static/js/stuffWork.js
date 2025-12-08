@@ -1095,6 +1095,10 @@ let shopHTML = shopitems.map((item) => {
 
 document.getElementById("shopItems").innerHTML = shopHTML;
 
+//buy buttons
+const buyButtons = document.getElementsByClassName("buyBtn");
+
+
 document.getElementById("openCratesBtn").addEventListener("click", () => {
     if (enabledCrate == false) {
     document.getElementById("cratesCont").style.display = "block";
