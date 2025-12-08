@@ -1075,19 +1075,19 @@ let shopHTML = shopitems.map((item) => {
             <h3>${categoryItems && categoryItems[0] ? categoryItems[0].name : 'Error Rendering'}</h3>
             <p>${categoryItems[0].description}</p>
             <br>
-            <button class="buyBtn">${categoryItems[0].price} Digipogs</button>
+            <button class="buyBtn" onclick="purchase(${categoryItems[0].price}, '${categoryItems[0].name.replace(/'/g, "\\'")}')">${categoryItems[0].price} Digipogs</button>
         </div>
         <div class="itemTag">
             <h3>${categoryItems && categoryItems[1] ? categoryItems[1].name : 'Error Rendering'}</h3>
             <p>${categoryItems[1].description}</p>
             <br>
-            <button class="buyBtn"${item.price}">${categoryItems[1].price} Digipogs</button>
+            <button class="buyBtn" onclick="purchase(${categoryItems[1].price}, '${categoryItems[1].name.replace(/'/g, "\\'")}')">${categoryItems[1].price} Digipogs</button>
         </div>
         <div class="itemTag">
             <h3>${categoryItems && categoryItems[2] ? categoryItems[2].name : 'Error Rendering'}</h3>
             <p>${categoryItems[2].description}</p>
             <br>
-            <button class="buyBtn"${item.price}">${categoryItems[2].price} Digipogs</button>
+            <button class="buyBtn" onclick="purchase(${categoryItems[2].price}, '${categoryItems[2].name.replace(/'/g, "\\'")}')">${categoryItems[2].price} Digipogs</button>
         </div>
     </div>
     `
@@ -1096,15 +1096,37 @@ let shopHTML = shopitems.map((item) => {
 document.getElementById("shopItems").innerHTML = shopHTML;
 
 //buy buttons
-const buyButtons = document.getElementsByClassName("buyBtn");
-
+function purchase(price, reason) {
+    fetch('/api/digipogs/transfer', {
+        // post is to use app.post with the route /api/digipogs/transfer
+        method: 'POST',
+        // credentials include to send cookies
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            price: price,
+            reason: reason
+        })
+    }).then(response => response.text())
+        .then(data => {
+            if (data.success) {
+                alert(`You have purchased: ${reason}`);
+            } else {
+                alert(data.message);
+            }
+        }).catch(err => {
+            console.error("Error purchasing item:", err);
+        });
+}
 
 document.getElementById("openCratesBtn").addEventListener("click", () => {
     if (enabledCrate == false) {
-    document.getElementById("cratesCont").style.display = "block";
-    enabledCrate = true;
+        document.getElementById("cratesCont").style.display = "block";
+        enabledCrate = true;
     } else {
-    document.getElementById("cratesCont").style.display = "none";
-    enabledCrate = false;
+        document.getElementById("cratesCont").style.display = "none";
+        enabledCrate = false;
     }
 });

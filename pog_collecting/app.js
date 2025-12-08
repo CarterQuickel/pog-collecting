@@ -175,19 +175,11 @@ const socket = digio(AUTH_URL, {
     }
 });
 
-//example data test
-const payload = {
-    from: 1,
-    to: 97,
-    amount: 10,
-    reason: "test",
-    pin: 6969
-}
-
+// socket events for digipog transfers
 socket.on('connect', () => {
     console.log('Connected to Formbar socket server');
     // Send the transfer 
-    socket.emit('transfer digipogs', payload);
+    socket.emit('transfer digipogs');
 });
 
 socket.on('connect_error',
@@ -200,6 +192,7 @@ socket.on('transferResponse', (response) => {
     console.log('Transfer response:', response);
 });
 
+// pool management
 socket.emit('poolCreate', {
     name: "Pog Collecting Pool",
     discription: "A pool for pog collecting users",
@@ -207,12 +200,12 @@ socket.emit('poolCreate', {
 
 socket.emit('poolAddMember', {
     poolID: 123,
-    userId: 456
+    userId: 73
 });
 
 socket.emit('poolRemoveMember', {
     poolID: 123,
-    userId: 456
+    userId: 73
 });
 
 socket.emit('poolPayout', {
@@ -228,18 +221,8 @@ socket.emit('transferDigipogs', {
     to: 123,  // Pool ID
     amount: 50,
     reason: 'Contribution to pog collecting',
-    pin: 1234,
-    pool: true  // Important: set this to true for pool transfers
-});
-
-fetch(`${AUTH_URL}/api/digipogs/transfer`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-}).then((transferResult) => {
-    return transferResult.json();
-}).then((responseData) => {
-    console.log("Transfer Response:", responseData);
+    pin: 8715,
+    pool: false  // Important: set this to true for pool transfers
 });
 
 /* This creates session middleware with given options;
@@ -570,6 +553,36 @@ app.post('/datasave', (req, res) => {
                 return res.json({ message: 'Data saved successfully' });
             });
         }
+    });
+});
+
+// Express route to handle digipog transfer requests
+// the URL for the post must be the same as the one in the fetch request
+app.post('/api/digipogs/transfer', (req, res) => {
+    const payload = req.body;
+    const cost = payload.price;
+    const reason = payload.reason;
+    const paydesc = {
+        from: 73, // Formbar user ID of payer
+        to: 1,    // Formbar user ID of payee (e.g., pog collecting's account)
+        amount: cost,
+        reason: reason,
+        pin: 8715
+    }
+    // make a direct transfer request using fetch
+    fetch(`${AUTH_URL}/api/digipogs/transfer`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(paydesc),
+    }).then((transferResult) => {
+        return transferResult.json();
+    }).then((responseData) => {
+        console.log("Transfer Response:", responseData);
+        //res.JSON must be here to send the response back to the client
+        res.json(responseData);
+    }).catch(err => {
+        console.error("Error during digipog transfer:", err);
+        res.status(500).json({ message: 'Error during digipog transfer' });
     });
 });
 
