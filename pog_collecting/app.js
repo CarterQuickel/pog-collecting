@@ -176,7 +176,7 @@ const socket = digio(AUTH_URL, {
 });
 
 //example data test
-const data = {
+const payload = {
     from: 1,
     to: 97,
     amount: 10,
@@ -187,7 +187,7 @@ const data = {
 socket.on('connect', () => {
     console.log('Connected to Formbar socket server');
     // Send the transfer 
-    socket.emit('transfer digipogs', data);
+    socket.emit('transfer digipogs', payload);
 });
 
 socket.on('connect_error',
@@ -200,6 +200,48 @@ socket.on('transferResponse', (response) => {
     console.log('Transfer response:', response);
 });
 
+socket.emit('poolCreate', {
+    name: "Pog Collecting Pool",
+    discription: "A pool for pog collecting users",
+});
+
+socket.emit('poolAddMember', {
+    poolID: 123,
+    userId: 456
+});
+
+socket.emit('poolRemoveMember', {
+    poolID: 123,
+    userId: 456
+});
+
+socket.emit('poolPayout', {
+    poolID: 123,
+});
+
+socket.emit("poolDelete", {
+    poolID: 123,
+});
+
+socket.emit('transferDigipogs', {
+    from: 1,
+    to: 123,  // Pool ID
+    amount: 50,
+    reason: 'Contribution to pog collecting',
+    pin: 1234,
+    pool: true  // Important: set this to true for pool transfers
+});
+
+fetch(`${AUTH_URL}/api/digipogs/transfer`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+}).then((transferResult) => {
+    return transferResult.json();
+}).then((responseData) => {
+    console.log("Transfer Response:", responseData);
+});
+
 /* This creates session middleware with given options;
 The 'secret' option is used to sign the session ID cookie.
 The 'resave' option is used to force the session to be saved back to the session store, even if the session was never modified during the request.
@@ -208,7 +250,7 @@ app.use(session({
     secret: 'youweremybrotheranakin',
     resave: false,
     saveUninitialized: false
-}))
+}));
 /* It is a good idea to use a Environment Variable or a .env file that is in the .gitignore file for your SECRET.
 This will prevent it from getting out and allowing people to hack your cookies.*/
 
@@ -271,7 +313,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS chat (
     name TEXT,
     msg TEXT,
     time INTEGER
-)`)
+)`);
 
 // pog database
 const pogs = new sqlite3.Database("pogipedia/db/pog.db", (err) => {
