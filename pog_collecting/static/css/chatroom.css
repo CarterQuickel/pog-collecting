@@ -7,6 +7,20 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* ensure page doesn't scroll — chat area scrolls internally */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* prevents external scrollbar */
+}
+
+/* tweak these to match your banner/input heights */
+:root {
+    --banner-height: 80px;  /* height of #chatroomBanner (adjust as needed) */
+    --chat-height: 120px;   /* height reserved for #chatContainer + spacing */
+}
+
 /* Patch Banner Styling */
 #chatroomBanner {
      position: fixed;
@@ -77,15 +91,19 @@ button:hover {
 
 
 #messageCont {
-    width: 90%;
-    margin: 150px auto 120px auto; 
+    position: absolute;
+    top: var(--banner-height);
+    left: 5%;
+    right: 5%;
+    bottom: var(--chat-height);
+    width: auto; /* use left/right instead of width+margin to avoid extra page height */
+    margin: 0;
     color: #FFFFFF;
     border-radius: 8px;
     padding: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     box-sizing: border-box;
-    max-height: calc(100vh - 220px);
-    overflow-y: auto;
+    overflow-y: auto;               /* internal scrolling only */
     -webkit-overflow-scrolling: touch;
 }
 
