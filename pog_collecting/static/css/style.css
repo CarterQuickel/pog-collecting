@@ -70,6 +70,7 @@ ul {
     background-image: linear-gradient(to right, #de5aff, #582563);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    overflow-x: auto;
 }
 
 #centerlayout {
@@ -278,7 +279,7 @@ option {
     background-color: #3e1e42;
     padding: 20px;
     border-radius: 20px;
-    margin-right: 100px;
+    margin-right: 60px;
     margin-bottom: 100px;
     right: 0;
     bottom: 0;
@@ -541,7 +542,9 @@ option {
     font-size: 15px;
     background-color: rgb(66, 51, 66);
     min-width: 120px;
-    height: 220px;
+    min-height: 220px;
+    max-height: 260px;
+    cursor: pointer;
 }
 
 .item.highlight {

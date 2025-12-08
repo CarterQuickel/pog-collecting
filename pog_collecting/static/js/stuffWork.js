@@ -377,7 +377,7 @@ function refreshInventory() {
             canTrade = item.name === "Dragon Ball 7",
             // return html
             `<div class="item ${hasBonus ? 'highlight' : ''}" style="scale: ${item.locked ? 0.9 : 1}">
-            <img id="lock" style="background-color: ${item.locked ? "white" : "rgba(255, 255, 255, 0.5)"}" src="../static/icons/buttons_main/lock.png" onclick="lock(${item.id})" width="11" height="12" title="Lock (can't be sold when locked">
+            <img id="lock" style="background-color: ${item.locked ? "white" : "rgba(255, 255, 255, 0.5)"}" src="../static/icons/buttons_main/lock.png" onclick="lock(${item.id})" width="11" height="12" title="Lock (can't be sold when locked)">
             <br>
             <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'black' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
             <br>
@@ -723,7 +723,7 @@ function levelup() {
         }
         xp -= maxXP;
         level++;
-        maxXP = Math.floor(maxXP * 1.67);
+        maxXP = Math.floor(maxXP * 1.4);
         Isize += level % 5 === 0 ? 10 : 5; // increase inventory size by 10 every 5 levels, otherwise by 5
         if (window.checkAllAchievements) window.checkAllAchievements();
     }
