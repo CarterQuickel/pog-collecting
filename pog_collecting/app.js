@@ -18,7 +18,7 @@ const API_KEY = 'c44f8bc4bb6acef2b313cdb70ddae3228bf0cb73015831fe9133b1dd2c758f9
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://192.168.0.111:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://172.16.3.135:3000/login'; // ... or whatever the address to your application is
 
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
@@ -218,11 +218,11 @@ socket.emit("poolDelete", {
 
 socket.emit('transferDigipogs', {
     from: 1,
-    to: 123,  // Pool ID
+    to: 30,  // Pool ID
     amount: 50,
     reason: 'Contribution to pog collecting',
     pin: 8715,
-    pool: false  // Important: set this to true for pool transfers
+    pool: true  // Important: set this to true for pool transfers
 });
 
 /* This creates session middleware with given options;
