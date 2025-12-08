@@ -194,39 +194,6 @@ socket.on('transferResponse', (response) => {
     console.log('Transfer response:', response);
 });
 
-// pool management
-socket.emit('poolCreate', {
-    name: "Pog Collecting Pool",
-    discription: "A pool for pog collecting users",
-});
-
-socket.emit('poolAddMember', {
-    poolID: 123,
-    userId: 73
-});
-
-socket.emit('poolRemoveMember', {
-    poolID: 123,
-    userId: 73
-});
-
-socket.emit('poolPayout', {
-    poolID: 123,
-});
-
-socket.emit("poolDelete", {
-    poolID: 123,
-});
-
-socket.emit('transferDigipogs', {
-    from: userTokenId,  // User ID of sender
-    to: 30,  // Pool ID
-    amount: 50,
-    reason: 'Contribution to pog collecting',
-    pin: 8715,
-    pool: true  // Important: set this to true for pool transfers
-});
-
 /* This creates session middleware with given options;
 The 'secret' option is used to sign the session ID cookie.
 The 'resave' option is used to force the session to be saved back to the session store, even if the session was never modified during the request.
