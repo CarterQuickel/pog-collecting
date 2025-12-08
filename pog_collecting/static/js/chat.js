@@ -13,7 +13,7 @@ const form = document.querySelector('form');
 const messageInput = document.getElementById("messageInput"); 
 const messageCont = document.getElementById("messageCont");
 
-// escape HTML 
+
 function escapeHtml(s = '') {
     const map = {
         '&': '&amp;',
