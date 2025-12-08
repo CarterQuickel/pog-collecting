@@ -1018,3 +1018,7 @@ progress::-webkit-progress-value {
     margin-right: auto;
     margin-bottom: -20px;
 }
+
+#transConf {
+    position: flex;
+}

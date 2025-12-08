@@ -615,7 +615,6 @@ app.get('/login', (req, res) => {
             crates: tokenData.crates || crateRef,
             pfp: tokenData.pfp || "static/icons/pfp/defaultpfp.png"
         };
-
         res.redirect('/');
     } else {
         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
