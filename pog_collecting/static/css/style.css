@@ -254,7 +254,7 @@ option {
     border: transparent;
     position: fixed;
     border-radius: 100px;
-    padding: 40px;
+    padding: 20px;
     width: 100px;
     height: 100px;
     bottom: 0px;
@@ -263,6 +263,7 @@ option {
     z-index: 1000;
     scale: 0.6;
     box-shadow: 0 0 5px black;
+    overflow: visible;
 }
 
 #openCratesBtn:hover {
