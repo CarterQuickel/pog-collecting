@@ -9,9 +9,6 @@ body {
 
 /* ensure page doesn't scroll — chat area scrolls internally */
 html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
     overflow: hidden; /* prevents external scrollbar */
 }
 
