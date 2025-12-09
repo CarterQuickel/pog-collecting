@@ -239,6 +239,7 @@ app.use(express.json());
 const usdb = new sqlite3.Database('usersettings.sqlite');
 usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     uid INTEGER PRIMARY KEY AUTOINCREMENT,
+    fid INTEGER UNIQUE,
     theme TEXT,
     score INTEGER,
     inventory TEXT,
@@ -303,16 +304,19 @@ app.get('/', isAuthenticated, (req, res) => {
 
             const displayName = req.session.user.displayName;
 
-            usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
+            const id = req.session.token.id;
+
+            usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], [id], (err, row) => {
                 if (err) {
                     return console.error("Error querying user:", err.message);
                 }
                 if (row) {
-                    console.log(`User '${displayName}' already exists with uid ${row.uid}`);
+                    console.log(`User '${displayName}' already exists with uid ${row.uid} and fid ${id}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, crates, pfp, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (fid, theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, crates, pfp, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
+                            id,
                             req.session.user.theme,
                             req.session.user.score,
                             JSON.stringify(req.session.user.inventory),
@@ -336,7 +340,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             if (err) {
                                 return console.error("Error inserting user:", err.message);
                             }
-                            console.log(`User '${displayName}' inserted with rowid ${this.lastID}`);
+                            console.log(`User '${displayName}' inserted with rowid ${this.lastID} and fid ${id}`);
                         });
                 }
             });
@@ -344,6 +348,7 @@ app.get('/', isAuthenticated, (req, res) => {
 
         // add variable references here
         req.session.user = {
+            fid: req.session.token?.id || 0,
             displayName: req.session.token?.displayName || "guest",
             theme: req.session.user.theme || 'light',
             score: req.session.user.score || 0,
@@ -366,12 +371,14 @@ app.get('/', isAuthenticated, (req, res) => {
 
         // load user data from database
         const displayName = req.session.token?.displayName || "guest";
-        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
+        const id = req.session.token?.id || 0;
+        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [displayName], [id], (err, row) => {
             if (err) {
                 return console.error("Error querying user:", err.message);
             }
             if (row) {
                 req.session.user = {
+                    fid: id,
                     displayName: displayName,
                     theme: row.theme,
                     score: row.score,
@@ -394,6 +401,7 @@ app.get('/', isAuthenticated, (req, res) => {
                 console.log(`User data loaded for '${displayName}'`);
             } else {
                 req.session.user = {
+                    fid: id,
                     displayName: displayName,
                     theme: 'light',
                     score: 0,
@@ -494,6 +502,7 @@ app.post('/datasave', (req, res) => {
             return res.status(500).json({ message: 'Error saving session' });
         } else {
             const params = [
+                req.session.user.fid,
                 userSave.theme,
                 userSave.score,
                 JSON.stringify(userSave.inventory),
@@ -513,12 +522,12 @@ app.post('/datasave', (req, res) => {
                 userSave.pfp,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ?, crates = ?, pfp = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET fid = ?, theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ?, crates = ?, pfp = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
                 }
-                console.log(`User settings updated for ${req.session.user.displayName}`);
+                console.log(`User settings updated for ${req.session.user.displayName} with fid ${req.session.user.fid}`);
                 req.session.user = { ...req.session.user, ...userSave };
                 return res.json({ message: 'Data saved successfully' });
             });
@@ -534,7 +543,7 @@ app.post('/api/digipogs/transfer', (req, res) => {
     const cost = payload.price;
     const reason = payload.reason;
     const pin = payload.pin;
-    const id = userTokenId
+    const id = req.session.user.fid; // Formbar user ID of payer from session
     console.log(cost, reason, pin, id);
     const paydesc = {
         from: id, // Formbar user ID of payer
@@ -571,6 +580,7 @@ app.get('/login', (req, res) => {
         req.session.token = tokenData;
         req.session.user = {
             displayName: tokenData.displayName,
+            fid: tokenData.fid,
             theme: tokenData.theme || 'light',
             score: tokenData.score || 0,
             inventory: tokenData.inventory || [],
