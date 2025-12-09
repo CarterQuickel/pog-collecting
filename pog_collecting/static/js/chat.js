@@ -51,11 +51,27 @@ function renderMessage(chat) {
     }
     
     if (pfp) {
-        const img = document.createElement('img');
-        img.src = pfp;
-        img.alt = `${chat.name}'s profile picture`;
-        img.className = 'chat-pfp';
-        wrapper.appendChild(img);
+        // create a button wrapper so the pfp is clickable and keyboard accessible
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'pfp-btn';
+        btn.setAttribute('aria-label', `Open profile for ${chat.name || 'user'}`);
+
+        const imgEl = document.createElement('img');
+        imgEl.src = pfp;
+        imgEl.alt = `${chat.name}'s profile picture`;
+        imgEl.className = 'chat-pfp';
+        imgEl.onerror = () => { imgEl.onerror = null; imgEl.src = '/static/icons/pfp/defaultpfp.png'; };
+
+        btn.appendChild(imgEl);
+        // sample click handler - replace with your real action
+        btn.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            console.log('pfp clicked for', chat.name, chat);
+            // e.g. open a profile modal: openProfile(chat);
+        });
+
+        wrapper.appendChild(btn);
     }
 
     // Build meta (time + name) as separate elements so we can style them

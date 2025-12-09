@@ -27,26 +27,27 @@ html, body {
     top: 0;
     left: 0;
     width: 100%;
+    height: var(--banner-height);      /* enforce consistent banner height */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 18px;                   /* keep content away from edges */
     background-image: linear-gradient(to right, #de5aff, #582563);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    overflow-x: auto;
+    overflow: hidden;                  /* avoid layout shift / horizontal overflow */
 }
 
 #userCont {
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-top: -30px;
+    gap: 10px;
+    margin: 0;               /* remove negative margins that blow-up layout */
+    padding: 0;
 }
-
-#userPic {
+#userCont button {
     border-radius: 50%;
-    margin-top: -10px;
-    margin-left: 30px;
+    margin: 0;
 }
 
 button {
@@ -70,7 +71,7 @@ button:hover {
     position: absolute;
     top: 50%; /* Center vertically */
     transform: translateY(-50%); /* Adjust for proper centering */
-    right: 75px; /* Position the button on the right */
+    right: 18px; /* Position the button on the right */
     width: 50px; /* Circular button size */
     height: 50px;
     border: none; /* Remove border */
@@ -164,16 +165,80 @@ button:hover {
 
 
 
+/* clickable pfp button that matches site button styling */
+.pfp-btn {
+    all: unset;                 /* remove default button styles */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0;
+    margin-right: 8px;
+    box-sizing: border-box;
+    transition: box-shadow 160ms ease, transform 120ms ease;
+    border: 2px solid rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.04);
+}
+
+/* hover / focus to look like other buttons */
+.pfp-btn:hover,
+.pfp-btn:focus {
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+/* smaller circular img inside the button - matches existing .chat-pfp sizing */
 .chat-pfp {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    vertical-align: middle;
-    margin-right: 8px;
+    object-fit: cover;
+    display: block;
 }
 
-#chatroomBanner img {
-    width: 20px;
-    height: 20px;
+/* dark theme adjustments (if you use body.theme-dark) */
+body.theme-dark .pfp-btn {
+    background: rgba(255,255,255,0.03);
+    border-color: rgba(255,255,255,0.06);
+}
+body.theme-dark .pfp-btn:hover {
+    box-shadow: 0 6px 14px rgba(0,0,0,0.6);
+}
+
+/* ensure layout spacing remains the same */
+.chat-line .pfp-btn { margin-right: 8px; }
+
+/* make the banner title and username fit the small banner */
+.leftstuff h1 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #fff;
+}
+
+/* user picture sizing inside banner */
+#userPic,
+#userCont img {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.12);
+}
+
+/* ensure in-message avatars match the same sensible sizing */
+.chat-pfp,
+.pfp-btn img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* username small and readable on banner */
+.username {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
 }
