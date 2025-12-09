@@ -11,8 +11,6 @@ const { Server } = require('socket.io');
 const io = new Server(http);
 const digio = require('socket.io-client');
 
-let userTokenId = 0;
-
 // API key for Formbar API access
 const API_KEY = 'c44f8bc4bb6acef2b313cdb70ddae3228bf0cb73015831fe9133b1dd2c758f95' // carter's API key -> this is found in the formbeta profile settings page
 
@@ -211,7 +209,6 @@ function isAuthenticated(req, res, next) {
     console.log("Authenticating...");
     if (req.session.user) {
         const tokenData = req.session.token;
-        userTokenId = tokenData.id;
         try {
             // Check if the token has expired
             const currentTime = Math.floor(Date.now() / 1000);
