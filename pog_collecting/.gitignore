@@ -1,5 +1,5 @@
+/node_modules
 /.env
 /usersettings.sqlite
 /.sqlite
 *.sqlite
-/node_modules/
