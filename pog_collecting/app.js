@@ -18,7 +18,7 @@ const API_KEY = 'c44f8bc4bb6acef2b313cdb70ddae3228bf0cb73015831fe9133b1dd2c758f9
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.183:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://172.16.3.143:3000/login'; // ... or whatever the address to your application is
 
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
@@ -192,39 +192,6 @@ socket.on('transferResponse', (response) => {
     console.log('Transfer response:', response);
 });
 
-// pool management
-socket.emit('poolCreate', {
-    name: "Pog Collecting Pool",
-    discription: "A pool for pog collecting users",
-});
-
-socket.emit('poolAddMember', {
-    poolID: 123,
-    userId: 73
-});
-
-socket.emit('poolRemoveMember', {
-    poolID: 123,
-    userId: 73
-});
-
-socket.emit('poolPayout', {
-    poolID: 123,
-});
-
-socket.emit("poolDelete", {
-    poolID: 123,
-});
-
-socket.emit('transferDigipogs', {
-    from: 1,
-    to: 123,  // Pool ID
-    amount: 50,
-    reason: 'Contribution to pog collecting',
-    pin: 8715,
-    pool: false  // Important: set this to true for pool transfers
-});
-
 /* This creates session middleware with given options;
 The 'secret' option is used to sign the session ID cookie.
 The 'resave' option is used to force the session to be saved back to the session store, even if the session was never modified during the request.
@@ -269,6 +236,7 @@ app.use(express.json({limit: '50mb'}));
 const usdb = new sqlite3.Database('usersettings.sqlite');
 usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     uid INTEGER PRIMARY KEY AUTOINCREMENT,
+    fid INTEGER UNIQUE,
     theme TEXT,
     score INTEGER,
     inventory TEXT,
@@ -334,16 +302,19 @@ app.get('/', isAuthenticated, (req, res) => {
 
             const displayName = req.session.user.displayName;
 
-            usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
+            const id = req.session.token.id;
+
+            usdb.get(`SELECT uid FROM userSettings WHERE displayname = ?`, [displayName], [id], (err, row) => {
                 if (err) {
                     return console.error("Error querying user:", err.message);
                 }
                 if (row) {
-                    console.log(`User '${displayName}' already exists with uid ${row.uid}`);
+                    console.log(`User '${displayName}' already exists with uid ${row.uid} and fid ${id}`);
                     return;
                 } else {
-                    usdb.run(`INSERT INTO userSettings (theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, crates, pfp, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    usdb.run(`INSERT INTO userSettings (fid, theme, score, inventory, Isize, xp, maxxp, level, income, totalSold, cratesOpened, pogamount, achievements, mergeCount, highestCombo, wish, crates, pfp, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                         [
+                            id,
                             req.session.user.theme,
                             req.session.user.score,
                             JSON.stringify(req.session.user.inventory),
@@ -367,7 +338,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             if (err) {
                                 return console.error("Error inserting user:", err.message);
                             }
-                            console.log(`User '${displayName}' inserted with rowid ${this.lastID}`);
+                            console.log(`User '${displayName}' inserted with rowid ${this.lastID} and fid ${id}`);
                         });
                 }
             });
@@ -375,6 +346,7 @@ app.get('/', isAuthenticated, (req, res) => {
 
         // add variable references here
         req.session.user = {
+            fid: req.session.token?.id || 0,
             displayName: req.session.token?.displayName || "guest",
             theme: req.session.user.theme || 'light',
             score: req.session.user.score || 0,
@@ -397,12 +369,14 @@ app.get('/', isAuthenticated, (req, res) => {
 
         // load user data from database
         const displayName = req.session.token?.displayName || "guest";
-        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [displayName], (err, row) => {
+        const id = req.session.token?.id || 0;
+        usdb.get(`SELECT * FROM userSettings WHERE displayname = ?`, [displayName], [id], (err, row) => {
             if (err) {
                 return console.error("Error querying user:", err.message);
             }
             if (row) {
                 req.session.user = {
+                    fid: id,
                     displayName: displayName,
                     theme: row.theme,
                     score: row.score,
@@ -425,6 +399,7 @@ app.get('/', isAuthenticated, (req, res) => {
                 console.log(`User data loaded for '${displayName}'`);
             } else {
                 req.session.user = {
+                    fid: id,
                     displayName: displayName,
                     theme: 'light',
                     score: 0,
@@ -525,6 +500,7 @@ app.post('/datasave', (req, res) => {
             return res.status(500).json({ message: 'Error saving session' });
         } else {
             const params = [
+                req.session.user.fid,
                 userSave.theme,
                 userSave.score,
                 JSON.stringify(userSave.inventory),
@@ -544,12 +520,12 @@ app.post('/datasave', (req, res) => {
                 userSave.pfp,
                 req.session.user.displayName
             ]
-            usdb.run(`UPDATE userSettings SET theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ?, crates = ?, pfp = ? WHERE displayname = ?`, params, function (err) {
+            usdb.run(`UPDATE userSettings SET fid = ?, theme = ?, score = ?, inventory = ?, Isize = ?, xp = ?, maxxp = ?, level = ?, income = ?, totalSold = ?, cratesOpened = ?, pogamount = ?, achievements = ?, mergeCount = ?, highestCombo = ?, wish = ?, crates = ?, pfp = ? WHERE displayname = ?`, params, function (err) {
                 if (err) {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
                 }
-                console.log(`User settings updated for ${req.session.user.displayName}`);
+                console.log(`User settings updated for ${req.session.user.displayName} with fid ${req.session.user.fid}`);
                 req.session.user = { ...req.session.user, ...userSave };
                 return res.json({ message: 'Data saved successfully' });
             });
@@ -564,13 +540,17 @@ app.post('/api/digipogs/transfer', (req, res) => {
     const payload = req.body;
     const cost = payload.price;
     const reason = payload.reason;
+    const pin = payload.pin;
+    const id = req.session.user.fid; // Formbar user ID of payer from session
+    console.log(cost, reason, pin, id);
     const paydesc = {
-        from: 73, // Formbar user ID of payer
-        to: 1,    // Formbar user ID of payee (e.g., pog collecting's account)
+        from: id, // Formbar user ID of payer
+        to: 30,    // Formbar user ID of payee (e.g., pog collecting's account)
         amount: cost,
         reason: reason,
         // security pin for the payer's account
-        pin: 8715
+        pin: pin,
+        pool: true
     }
     // make a direct transfer request using fetch
     fetch(`${AUTH_URL}/api/digipogs/transfer`, {
@@ -598,6 +578,7 @@ app.get('/login', (req, res) => {
         req.session.token = tokenData;
         req.session.user = {
             displayName: tokenData.displayName,
+            fid: tokenData.fid,
             theme: tokenData.theme || 'light',
             score: tokenData.score || 0,
             inventory: tokenData.inventory || [],
@@ -616,7 +597,6 @@ app.get('/login', (req, res) => {
             crates: tokenData.crates || crateRef,
             pfp: tokenData.pfp || "static/icons/pfp/defaultpfp.png"
         };
-
         res.redirect('/');
     } else {
         res.redirect(`${AUTH_URL}?redirectURL=${THIS_URL}`);
