@@ -21,33 +21,62 @@ html, body {
     --chat-height: 120px;   /* height reserved for #chatContainer + spacing */
 }
 
-/* Patch Banner Styling */
 #chatroomBanner {
-     position: fixed;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: var(--banner-height);      /* enforce consistent banner height */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 18px;                   /* keep content away from edges */
     background-image: linear-gradient(to right, #de5aff, #582563);
+    padding: 10px 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    overflow: hidden;                  /* avoid layout shift / horizontal overflow */
 }
 
 #userCont {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 0;               /* remove negative margins that blow-up layout */
-    padding: 0;
+    gap: 5px;
+    margin-top: -30px;
 }
-#userCont button {
+
+#userPic {
     border-radius: 50%;
-    margin: 0;
+    margin-top: -10px;
+    margin-left: 30px;
+}
+
+.leftstuff {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    margin-left: 20px;
+}
+
+#circleButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 75px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+#circleButton:hover {
+    background-color: #e0e0e0;
 }
 
 button {
@@ -215,16 +244,6 @@ body.theme-dark .pfp-btn:hover {
     margin: 0;
     font-size: 1.05rem;
     color: #fff;
-}
-
-/* user picture sizing inside banner */
-#userPic,
-#userCont img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(255,255,255,0.12);
 }
 
 /* ensure in-message avatars match the same sensible sizing */
