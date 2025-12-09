@@ -12,35 +12,32 @@
 <body>
     <div id="chatroomBanner">
         <div class="leftstuff">
-            <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
-            <h1 style="margin-left: 10px;">Chat Room</h1>
+            <h1>Chat Room</h1>
             <div id="userCont">
-                <img id="userPic" width="20" height="20" src="<%= userdata.pfp %>"/>
-                <h4 style="color: white"><%= userdata.displayName %>
+                <img id="userPic" src="<%= userdata.pfp %>" />
+                <span class="username"><%= (userdata && (userdata.displayName || userdata.displayname)) || 'Guest' %></span>
             </div>
-            <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
         </div>
-            <div class="rightstuff">
-            <a href="/collection" id="circleButton"> < </a>
+        <div class="rightstuff">
+            <a href="/collection" id="circleButton"> &lt; </a>
         </div>
     </div>
-    <div id="messageCont">
-        <!-- messages will be appended here -->
-    </div>
+
+    <div id="messageCont"></div>
 
     <div id="chatContainer">
         <form>
-            <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off" required />
+            <input id="messageInput" autocomplete="off" placeholder="Type a message..." />
             <button id="submitBtn" type="submit">Send</button>
         </form>
     </div>
 
-    <!-- embed userdata for client scripts -->
+    <!-- embed server userdata so client JS can read pfp -->
     <div id="userdata" style="display:none"><%= JSON.stringify(userdata || {}) %></div>
 
-    <!-- socket.io client and chat script -->
+    <!-- socket.io client + chat script -->
     <script src="/socket.io/socket.io.js"></script>
-    <script src="../static/js/chat.js"></script>
+    <script src="/static/js/chat.js"></script>
 </body>
 
 </html>
