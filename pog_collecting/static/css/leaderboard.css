@@ -31,6 +31,7 @@ li {
     background-image: linear-gradient(to right, #de5aff, #582563);
     padding: 10px 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 80px;
 }
 
 #userCont {
@@ -134,6 +135,32 @@ li {
     min-height: 600px;
     height: auto;
     text-align: center;
-    margin-right: 200px;
+    margin-right: auto;
+    margin-left: auto;
     font-size: 13px;
+    position: fixed;
+    top: 50%; /* Place the top edge at 50% of the parent's height */
+    left: 50%; /* Place the left edge at 50% of the parent's width (for horizontal centering) */
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 5px black;
+}
+
+#hideBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#hideBtn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#pfpimg {
+    border: 2px solid white;
+    margin-bottom: -10px;
 }

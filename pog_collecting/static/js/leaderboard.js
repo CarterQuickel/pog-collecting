@@ -10,23 +10,25 @@ if (userdata.theme === "light") {
     document.body.style.color = "white";
 }
 
+function hide() {
+    const info = document.getElementById("details");
+    info.style.display = "none";
+}
+
 document.querySelectorAll(".infobtn").forEach(button => {
     button.addEventListener('click', () => {
         const index = button.dataset.index;
         const player = scores[index]
         const inv = JSON.parse(player.inventory)
-        console.log(inv)
         let sortedI = inv.map((item => ` ${item.name}`));
         displayed = sortedI.slice(0, 50);
-        if (sortedI.length > 50) {
-            displayed.push(" ...and more");
-        }
         let experience = player.xp;
-        console.log(sortedI)
         const info = document.getElementById("details");
-        info.innerHTML = `<h2>${player.displayname}</h2>
-                            <img src="${player.pfp}" style="width: 100px; height: 100px; border-radius: 50%;"><br>
-                          <div style="display: flex; gap: 100px; justify-content: center; text-align: center;">
+        info.style.display = "block";
+        info.innerHTML = ` <h1>Player Details</h1>
+                            <img id="pfpimg" src="${player.pfp}" style="width: 100px; height: 100px; border-radius: 50%;"><br>
+                            <h2>${player.displayname}</h2>
+                          <div style="display: flex; gap: 40px; justify-content: center;">
                             <div>
                                 <h3>Score</h3> <p>${player.score}</p>
                                 <h3>Level</h3> <p>${player.level}</p>
@@ -41,7 +43,7 @@ document.querySelectorAll(".infobtn").forEach(button => {
                             </div>
                           </div>
                           <h3>Pogs in Inventory</h3> <p>${sortedI.length}</p>
-                          <h3>Inventory</h3> <p>${sortedI.length > 0 ? displayed : "No items"}</p>`;
+                          <button id="hideBtn" onclick="hide()" style="margin-bottom: 10px;">Hide Details</button>`;
     })
 });
 
