@@ -239,9 +239,37 @@
     </div>
     <div id="slider" style="position: flex"></div>
 </body>
+<!--updateinventory.js and searchsort.js must always come first in the js lineup-->
+<script src="../static/js/collectionJS/searchsort.js"></script>
+<script src="../static/js/collectionJS/updateinventory.js"></script>
+<!--crates, shop, combo, lightmode, sellitem, stuffWork next-->
+<!--stuffWork tackles things like: 
+    1. variable definition
+    2. loose functions
+    3. calling functions:
+        i. locking items
+        ii. number abbreviation
+    stuffwork uses userData to define global parameters-->
 <script src="../static/js/crates.js"></script>
 <script src="../static/js/shop.js"></script>
-<script src="../static/js/stuffWork.js"></script>
+<script src="../static/js/collectionJS/combo.js"></script>
+<script src="../static/js/collectionJS/lightmode.js"></script>
+<script src="../static/js/collectionJS/sellitem.js"></script>
+<script src="../static/js/collectionJS/stuffWork.js"></script>
+<!--as long as they aren't dependent on each other, there is no needed order-->
+<script src="../static/js/collectionJS/levelup.js"></script>
+<script src="../static/js/collectionJS/income.js"></script>
+<script src="../static/js/collectionJS/trade.js"></script>
+<script src="../static/js/collectionJS/merge.js"></script>
+<script src="../static/js/collectionJS/sellall.js"></script>
+<script src="../static/js/collectionJS/crateopen.js"></script>
+<script src="../static/js/collectionJS/saving.js"></script>
+<script src="../static/js/collectionJS/shopint.js"></script>
+<script src="../static/js/collectionJS/wish.js"></script>
+<script src="../static/js/collectionJS/pfp.js"></script>
+<!--don't put anything here-->
 <script src="../static/js/achievements.js"></script>
+<!--tickupdate is last-->
+<script src="../static/js/collectionJS/tickupdate.js"></script>
 
 </html>
