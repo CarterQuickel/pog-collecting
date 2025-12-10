@@ -13,7 +13,8 @@ function setHelp() {
     </ul>
     <p>Your income also rises with new pogs.</p>
     <p>There are 285 unique pogs. Collect them all!</p>
-    <h2>
+    <h2>Unqiue Pogs</h2>
+    <h4></h4>
     `
 }
 
