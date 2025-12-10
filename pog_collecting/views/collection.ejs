@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../static/css/collectionCSS/settings.css">
     <link rel="stylesheet" href="../static/css/collectionCSS/tooltip.css">
     <link rel="stylesheet" href="../static/css/collectionCSS/banner.css">
+    <link rel="stylesheet" href="../static/css/collectionCSS/help.css">
 </head>
 
 <body>
@@ -28,6 +29,7 @@
             <button class="confirmbtn" id="customConfirmNo">No</button>
         </div>
     </div>
+    <!--Shop-->
     <div id="shopBanner" style="display:none;">
         <div class="shopCont">
             <h1 style="font-size: 60px; margin-top: -10px;">POGGLESHOP</h1>
@@ -43,6 +45,15 @@
         <button id="purchaseBtn">Purchase</button>
         <br>
         <button id="cancelBtn">Cancel</button>
+    </div>
+    <!--How to Play-->
+    <div id="helpBanner" style="display:none;">
+        <div class="helpCont">
+            <h1 style="font-size: 60px; margin-top: -10px;">HOW TO PLAY</h1>
+            <p style="margin-top: -50px">Basic Rules for Pogglebar</p>
+            <div id="htpDiv"></div>
+            <button id="closeHelp">Close</button>
+        </div>
     </div>
     <!--Profile Pic Container-->
     <div id="pfpChanger">
@@ -98,6 +109,8 @@
                 title="Save Game">
             <img id="darkmode" class="imgbtn" src="../static/icons/buttons_main/sun.png" width="40" height="40"
                 title="Mode">
+            <img id="help" class="imgbtn" src="../static/icons/buttons_main/help.png" width="40" height="40"
+                title="How to Play">
         </div>
     </div>
     <div id="centerlayout" style="text-align: center;">
@@ -257,6 +270,7 @@
 <script src="../static/js/collectionJS/sellitem.js"></script>
 <script src="../static/js/collectionJS/stuffWork.js"></script>
 <!--as long as they aren't dependent on each other, there is no needed order-->
+<script src="../static/js/collectionJS/howtoplay.js"></script>
 <script src="../static/js/collectionJS/levelup.js"></script>
 <script src="../static/js/collectionJS/income.js"></script>
 <script src="../static/js/collectionJS/trade.js"></script>

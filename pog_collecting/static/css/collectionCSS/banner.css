@@ -39,7 +39,7 @@
     border-radius: 10px;
 }
 
-#save:hover, #darkmode:hover {
+#save:hover, #darkmode:hover, #help:hover {
     background-color: #ffffff17;
     box-shadow: 0 0 5px black;
 }
