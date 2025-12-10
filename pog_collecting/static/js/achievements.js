@@ -52,7 +52,7 @@ function renderCollection () {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
-                <span class="icon">❓</span><br>
+                <span class="icon">?</span><br>
                 <span class="name">???</span><br>
                 <span class="description">???</span><br>
             `;
@@ -91,7 +91,7 @@ function renderLevel () {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
-                <span class="icon">❓</span><br>
+                <span class="icon">?</span><br>
                 <span class="name">???</span><br>
                 <span class="description">???</span><br>
             `;
@@ -129,7 +129,7 @@ function renderProgression () {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
-                <span class="icon">❓</span><br>
+                <span class="icon">?</span><br>
                 <span class="name">???</span><br>
                 <span class="description">???</span><br>
             `;
@@ -167,7 +167,7 @@ function renderEconomy () {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
-                <span class="icon">❓</span><br>
+                <span class="icon">?</span><br>
                 <span class="name">???</span><br>
                 <span class="description">???</span><br>
             `;
@@ -205,7 +205,7 @@ function renderUnique() {
             // Darken and replace content for hidden achievements
             achievementElement.style.backgroundColor = "#333";
             achievementElement.innerHTML = `
-                <span class="icon">❓</span><br>
+                <span class="icon">?</span><br>
                 <span class="name">???</span><br>
                 <span class="description">???</span><br>
             `;
