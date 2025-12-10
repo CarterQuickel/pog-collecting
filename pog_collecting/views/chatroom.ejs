@@ -34,6 +34,9 @@
         </form>
     </div>
 
+    <!-- embed server userdata so client JS can read pfp -->
+    <div id="userdata" style="display:none"><%= JSON.stringify(userdata || {}) %></div>
+
     <!-- socket.io client + chat script -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="/static/js/chat.js"></script>

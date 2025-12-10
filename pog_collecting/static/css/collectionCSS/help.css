@@ -26,6 +26,8 @@
     align-items: center;
     justify-content: center;
     color: White;
+    height: 800px;
+    overflow-y: auto;
 }
 
 #closeHelp {
