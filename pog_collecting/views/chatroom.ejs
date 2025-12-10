@@ -18,8 +18,8 @@
                 <span class="username"><%= (userdata && (userdata.displayName || userdata.displayname)) || 'Guest' %></span>
             </div>
         </div>
-        <div class="rightstuff">
-            <a href="/collection" id="circleButton"> &lt; </a>
+        <div class="rightstuff"></div>
+            <a href="/collection" id="circleButton"> < </a>
         </div>
     </div>
 
@@ -31,9 +31,6 @@
             <button id="submitBtn" type="submit">Send</button>
         </form>
     </div>
-
-    <!-- embed server userdata so client JS can read pfp -->
-    <div id="userdata" style="display:none"><%= JSON.stringify(userdata || {}) %></div>
 
     <!-- socket.io client + chat script -->
     <script src="/socket.io/socket.io.js"></script>

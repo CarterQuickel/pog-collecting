@@ -1,0 +1,50 @@
+#helpBanner {
+    position: fixed;
+    top: 0;
+    padding-top: 40px; /* offsets the shop to be centered */
+    padding-bottom: auto;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100001;
+}
+
+.helpCont {
+    background-color: rgb(39, 39, 39);
+    width: 60%;
+    margin-top: 30px;
+    margin: auto;
+    border-radius: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 20px;
+    border: 6px solid rgb(44, 44, 44);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: White;
+}
+
+#closeHelp {
+    margin-top: 20px;
+    background-color: rgb(255, 233, 233);
+    border: transparent;
+    border-radius: 10px;
+    width: 70px;
+    height: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#closeHelp:hover {
+    background-color: rgb(112, 106, 106);
+}
+
+#htpDiv {
+    text-align: left;
+}

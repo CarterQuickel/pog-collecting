@@ -1,0 +1,129 @@
+#inventory {
+    background-color: #33122e;
+    border-radius: 6px;
+    padding: 20px;
+    min-width: 300px;
+    max-width: 1425px;
+    margin: 8px auto;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 37px;
+    overflow-y: auto;
+    min-height: 175px;
+    max-height: 80vh;
+    position: static;
+    flex: 1;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+#stats {
+    border: transparent;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #443546;
+}
+
+.mergebtn {
+    background-color: rgb(230, 230, 124);
+    border: transparent;
+    border-radius: 45px;
+    padding: 8px;
+    width: 100px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+.mergebtn:hover {
+    background-color: rgb(134, 132, 17);
+}
+
+#sellbtn {
+    background-color: #79c761;
+    border: transparent;
+    margin-top: 0px;
+    border-radius: 45px;
+    width: 100px;
+    padding: 8px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+#sellbtn:hover {
+    background-color: green;
+}
+
+/* Scrollbar track (background) */
+#inventory::-webkit-scrollbar {
+    width: 15px;
+    /* width of vertical scrollbar */
+    border-radius: 3px;
+}
+
+/* Scrollbar track */
+#inventory::-webkit-scrollbar-track {
+    background: #4b2b46;
+}
+
+/* Scrollbar thumb (the draggable handle) */
+#inventory::-webkit-scrollbar-thumb {
+    background-color: #a3a1a3;
+    /* color of the thumb */
+}
+
+/* Scrollbar thumb on hover */
+#inventory::-webkit-scrollbar-thumb:hover {
+    background-color: #391b3f;
+}
+
+/* inventory items */
+.item {
+    border: transparent;
+    box-shadow: 0 0 5px black;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    background-color: rgb(66, 51, 66);
+    min-width: 120px;
+    min-height: 220px;
+    max-height: 260px;
+    cursor: pointer;
+}
+
+.item.highlight {
+    outline: 3px solid white;
+    outline-offset: -3px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px white;
+}
+
+hr {
+    border: 1px solid #181616;
+    margin: 10px 0;
+}
+
+#lock {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 4px 15px 4px 15px;
+    border-radius: 10px;
+}
+
+.list {
+    margin: 0px;
+    font-size: 18px;
+    color: white;
+}

@@ -165,5 +165,4 @@ form.addEventListener("submit", (e) => {
 
 
 
-
 setTimeout(() => { if (messageCont.children.length === 0) { fetch('/api/chat/recent').then(r => r.ok ? r.json() : []).then(rows => { messageCont.innerHTML = ''; (rows || []).forEach(renderMessage); }).catch(()=>{}); } }, 300);

@@ -1,0 +1,47 @@
+#userPic {
+    border-radius: 50%;
+    margin-top: -10px;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+#pfpChanger {
+    background-color: #9f75a5;
+    border: transparent;
+    border-radius: 10px;
+    padding: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    z-index: 1;
+    position: fixed;
+    display: none;
+}
+
+#closePfpChanger {
+    background-color: rgb(255, 233, 233);
+    border: transparent;
+    border-radius: 10%;
+    width: 70px;
+    height: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+#closePfpChanger:hover {
+    background-color: rgb(112, 106, 106);
+}
+
+#filepfp {
+    margin-top: 10px;
+    border: transparent;
+    border-radius: 10px;
+    padding: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    background-color: rgb(112, 48, 165);
+}
