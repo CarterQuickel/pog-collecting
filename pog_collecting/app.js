@@ -545,7 +545,7 @@ app.post('/api/digipogs/transfer', (req, res) => {
     console.log(cost, reason, pin, id);
     const paydesc = {
         from: id, // Formbar user ID of payer
-        to: 30,    // Formbar user ID of payee (e.g., pog collecting's account)
+        to: 31,    // Formbar user ID of payee (e.g., pog collecting's account)
         amount: cost,
         reason: reason,
         // security pin for the payer's account
