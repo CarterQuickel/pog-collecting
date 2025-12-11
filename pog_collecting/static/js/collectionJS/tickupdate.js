@@ -8,7 +8,7 @@ function update() {
     document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize} Slots`
 
     // update XP Txt
-    document.getElementById("XPTxt").innerText = `Level ${level} (${abbreviatedXP}/${abbreviatedMaxXP} XP)`;
+    document.getElementById("XPTxt").innerText = `Level ${level}`;
 
     // update income Txt
     document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;

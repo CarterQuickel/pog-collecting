@@ -12,10 +12,6 @@
         <div class="leftstuff">
             <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
             <h1 style="margin-left: 10px;">Patch Notes</h1>
-            <div id="userCont">
-                <img id="userPic" width="20" height="20" src="<%= userdata.pfp %>"/>
-                <h4 style="color: white"><%= userdata.displayName %>
-            </div>
             <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
         </div>
             <div class="rightstuff">
@@ -31,6 +27,9 @@
             <li>Can no longer view a player's pog inventory on the leaderboard</li>
             <li>There is now a help button, which shows the simple rules of the game for newcomers</li>
             <li>Improved saving performance</li>
+            <li>Can no longer see the xp/max xp next to your level</li>
+            <li>XP now scales by (income * (2 * 1 / level)) instead of (income * (15 * level / 15))</li>
+            <li>Can no longer view your username and profile on seperate pages</li>
         </ul>
     </div>
     <div class="weeks">

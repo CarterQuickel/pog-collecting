@@ -398,15 +398,16 @@ app.get('/', isAuthenticated, (req, res) => {
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
+                // all starting values are HERE
                 req.session.user = {
                     fid: id,
                     displayName: displayName,
                     theme: 'light',
                     score: 0,
                     inventory: [],
-                    Isize: 3,
+                    Isize: 5,
                     xp: 0,
-                    maxxp: 100,
+                    maxxp: 30,
                     level: 1,
                     income: 0,
                     totalSold: 0,

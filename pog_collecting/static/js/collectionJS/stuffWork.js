@@ -47,7 +47,7 @@ let pogAmount = userdata.pogamount || 0;
 
 // XP
 let xp = userdata.xp || 0;
-let maxXP = userdata.maxxp || 15;
+let maxXP = userdata.maxxp || 30;
 let level = userdata.level || 1;
 
 // merge
