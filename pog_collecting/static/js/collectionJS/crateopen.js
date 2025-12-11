@@ -63,7 +63,7 @@ function openCrate(cost, index) {
             }
 
             // XP gain
-            xp += Math.floor(income * (15 * level / 15)); // gain XP based on income and level
+            xp += Math.floor(income * (5 * level / 20)); // gain XP based on income and level
             levelup();
 
             // Deduct cost

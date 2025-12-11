@@ -470,7 +470,6 @@ app.get('/api/leaderboard', (req, res) => {
 
 // save data route
 app.post('/datasave', (req, res) => {
-    console.log(req.body);
     const userSave = {
         theme: req.body.lightMode ? 'light' : 'dark',
         score: req.body.money,
@@ -492,7 +491,6 @@ app.post('/datasave', (req, res) => {
     }
 
 
-    console.log(userSave.theme);
     // save to session
     req.session.save(err => {
         if (err) {
@@ -545,7 +543,7 @@ app.post('/api/digipogs/transfer', (req, res) => {
     console.log(cost, reason, pin, id);
     const paydesc = {
         from: id, // Formbar user ID of payer
-        to: 31,    // Formbar user ID of payee (e.g., pog collecting's account)
+        to: 30,    // Formbar user ID of payee (e.g., pog collecting's account)
         amount: cost,
         reason: reason,
         // security pin for the payer's account
