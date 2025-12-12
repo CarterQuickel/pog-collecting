@@ -41,7 +41,7 @@ function refreshInventory() {
             desclength = item.description.length,
             descFontSize = desclength >= 120 ? '12px' : desclength >= 80 ? '14px' : '16px',
             nameFontSize = namelength >= 19 ? '9px' : namelength >= 12 ? '12px' : '16px',
-            sellvalue = Math.round(item.income * 1.05),
+            sellvalue = Math.round(item.income * 8.15 * (level / 1.2)),
             // refernce this inside the map function, for item is only defined in here
             isBronze = item.name === "Bronze Pog",
             isSilver = item.name === "Silver Pog",
@@ -85,7 +85,7 @@ function refreshInventory() {
                 <li class='list' style="color: ${item.color}">${item.value}</li>
                 <li class='list' style="color: green">$${Math.round(item.income * ((window.perNameBonus && window.perNameBonus[item.name]) || 1))}/s</li>
             </ul>
-            <button id="sellbtn" onclick="sellItem(${item.id}, sellvalue, ${item.locked})">Sell for <br>$${sellvalue}</button>
+            <button id="sellbtn" onclick="sellItem(${item.id}, ${sellvalue}, ${item.locked})">Sell for <br>$${sellvalue}</button>
             ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
             ${canTrade ? `<button class="mergebtn" onclick="trade()">Trade (7)</button>` : ""}
         </div>

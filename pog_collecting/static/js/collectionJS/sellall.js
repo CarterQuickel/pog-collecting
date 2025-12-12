@@ -27,7 +27,7 @@ document.getElementById("sellAll").addEventListener("click", () => {
                 continue;
             }
             if (indexInInventory !== -1) {
-                sellItem(item.id, Math.round(item.income * 1.05), item.locked); //sellvalue
+                sellItem(item.id, Math.round(item.income * 8.15 * (level / 1.2)), item.locked); //sellvalue
             }
         }
     }
