@@ -35,28 +35,6 @@
     /* Shrinks slightly to feel "caught" */
 }
 
-/* "Open" state triggers when crate is clicked (add via JS) */
-.crate.opening {
-    animation: popBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@keyframes popBounce {
-    0% {
-        transform: scale(0.95);
-    }
-
-    30% {
-        transform: scale(1.15);
-        filter: brightness(1.2);
-    }
-
-    /* Exaggerated grow */
-    100% {
-        transform: scale(1);
-        filter: brightness(1);
-    }
-}
-
 .buym {
     border: transparent;
     box-shadow: 0 0 5px black;
