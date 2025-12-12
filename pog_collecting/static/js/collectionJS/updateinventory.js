@@ -41,7 +41,7 @@ function refreshInventory() {
             desclength = item.description.length,
             descFontSize = desclength >= 120 ? '12px' : desclength >= 80 ? '14px' : '16px',
             nameFontSize = namelength >= 19 ? '9px' : namelength >= 12 ? '12px' : '16px',
-            sellvalue = Math.round(item.income * 8.15 * (level / 1.2)),
+            sellvalue = Math.round((item.income * 2.94 * (level / 1.6))**((level / 100) + 1)),
             // refernce this inside the map function, for item is only defined in here
             isBronze = item.name === "Bronze Pog",
             isSilver = item.name === "Silver Pog",
