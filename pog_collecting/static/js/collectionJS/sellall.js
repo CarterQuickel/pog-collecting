@@ -15,7 +15,7 @@ document.getElementById("sellAll").addEventListener("click", () => {
                 break;
             }
             console.log(`Item sold at index: ${i} (name: ${inventory[i].name}), and lock is: ${inventory[i].locked}`)
-            sellItem(inventory[i].id, Math.round(inventory[i].income * 1.05), inventory[i].locked)
+            sellItem(inventory[i].id, Math.round(inventory[i].income * 8.15 * (level / 1.2)), inventory[i].locked)
         }
     } else {
         const filteredItems = inventory.filter(item => item.name.toLowerCase().includes(itemSearched));

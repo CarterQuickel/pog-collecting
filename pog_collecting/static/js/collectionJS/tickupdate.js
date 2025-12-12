@@ -85,7 +85,7 @@ function updatecrates() {
         // Access price from the crates array at the current index
         let currentPrice = crates[i].price; 
         // Disable individual button if money is less than its price
-        if (money < currentPrice) {
+        if (money < currentPrice || inventory.length == Isize) {
             crateButtons[i].disabled = true;
             buym5.disabled = true;
             buym10.disabled = true;
