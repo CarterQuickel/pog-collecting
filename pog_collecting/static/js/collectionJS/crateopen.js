@@ -15,7 +15,11 @@ function openCrate(cost, index) {
     let income = 5;
 
     for (let item of crates[Object.keys(crates)[index]].rarities) {
-
+        console.log(item.chance)
+        if (item.chance == 0.0) {
+            console.log("skipped")
+            continue;
+        }
         // check if random number is within the chance range
         cumulativeChance += item.chance;
         if (rand < cumulativeChance) {

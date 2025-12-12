@@ -42,6 +42,8 @@
 #save:hover, #darkmode:hover, #help:hover {
     background-color: #ffffff17;
     box-shadow: 0 0 5px black;
+    margin-top: -2px;
+    transition: all 0.1s ease;
 }
 
 .imgbtn {
