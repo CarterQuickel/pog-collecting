@@ -16,7 +16,12 @@
 }
 
 #binder {
-    background-color: yellow;
+    background-color: rgb(240, 240, 112);
+    border-radius: 5px;
+    padding: 9px;
+    border: transparent;
+    cursor: pointer;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 #searchbtn {
