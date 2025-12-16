@@ -37,3 +37,341 @@ li {
 ul {
     padding: 0px;
 }
+
+/* Gacha Animation Styles */
+#gachaOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: all;
+}
+
+#gachaBackground {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 20, 0.95);
+    backdrop-filter: blur(5px);
+}
+
+#clickToContinue {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: gold;
+    font-size: 24px;
+    text-align: center;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+#skipAnimation {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 10001;
+}
+
+#skipAnimation:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#gachaResults {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+#pullCounter {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #ffd700;
+}
+
+#pogLineContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    max-width: 90vw;
+}
+
+.resultPog {
+    width: 120px;
+    height: 150px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid;
+    box-shadow: 0 0 20px;
+    animation: pogReveal 0.8s ease-out;
+    animation-fill-mode: both;
+}
+
+/* Rarity-based styling */
+.resultPog.trash { 
+    background: linear-gradient(135deg, #666, #999);
+    border-color: #999;
+    box-shadow: 0 0 20px rgba(153, 153, 153, 0.5);
+}
+
+.resultPog.common { 
+    background: linear-gradient(135deg, #4a9eff, #7bb3ff);
+    border-color: #7bb3ff;
+    box-shadow: 0 0 20px rgba(123, 179, 255, 0.5);
+}
+
+.resultPog.mythic { 
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    border-color: #ffd700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    animation: pogRevealMythic 1.2s ease-out, mythicGlow 2s infinite alternate;
+}
+
+@keyframes pogReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes pogRevealMythic {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.8);
+    }
+    70% {
+        transform: translateY(-10px) scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes mythicGlow {
+    0% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+    100% { box-shadow: 0 0 50px rgba(255, 215, 0, 1); }
+}
+
+/* Rarity-based styling (highest to lowest) */
+.resultPog.unique { 
+    background: linear-gradient(135deg, #ff00ff, #ff69b4, #9400d3);
+    border-color: #ff00ff;
+    box-shadow: 0 0 40px rgba(255, 0, 255, 1);
+    animation: pogRevealUnique 1.5s ease-out, uniqueGlow 2s infinite alternate;
+}
+
+.resultPog.mythic { 
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    border-color: #ffd700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    animation: pogRevealMythic 1.2s ease-out, mythicGlow 2s infinite alternate;
+}
+
+.resultPog.rare { 
+    background: linear-gradient(135deg, #9b59b6, #c39bd3);
+    border-color: #9b59b6;
+    box-shadow: 0 0 25px rgba(155, 89, 182, 0.6);
+}
+
+.resultPog.uncommon { 
+    background: linear-gradient(135deg, #27ae60, #58d68d);
+    border-color: #27ae60;
+    box-shadow: 0 0 20px rgba(39, 174, 96, 0.5);
+}
+
+.resultPog.common { 
+    background: linear-gradient(135deg, #4a9eff, #7bb3ff);
+    border-color: #7bb3ff;
+    box-shadow: 0 0 20px rgba(123, 179, 255, 0.5);
+}
+
+.resultPog.trash { 
+    background: linear-gradient(135deg, #666, #999);
+    border-color: #999;
+    box-shadow: 0 0 15px rgba(153, 153, 153, 0.3);
+}
+
+/* Special animation for Unique rarity */
+@keyframes pogRevealUnique {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.8);
+    }
+    50% {
+        transform: translateY(-20px) scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes uniqueGlow {
+    0% { 
+        box-shadow: 0 0 40px rgba(255, 0, 255, 0.8);
+        filter: hue-rotate(0deg);
+    }
+    100% { 
+        box-shadow: 0 0 60px rgba(255, 0, 255, 1);
+        filter: hue-rotate(60deg);
+    }
+}
+
+/* Rainbow shooting stars for Unique pulls */
+.shootingStar.rainbow {
+    background: linear-gradient(45deg, 
+        #ff0000, #ff7f00, #ffff00, #00ff00, 
+        #0000ff, #4b0082, #9400d3, #ff0000);
+    background-size: 400% 400%;
+    animation: rainbowShoot 2s linear infinite, rainbowCycle 1s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.shootingStar.mythic {
+    background: linear-gradient(45deg, #ffd700, #ffed4a);
+    animation: goldenShoot 2s linear infinite;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+.shootingStar.normal {
+    background: linear-gradient(45deg, #ffffff, #e0e0e0);
+    animation: normalShoot 2s linear infinite;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes rainbowCycle {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes rainbowShoot {
+    0% { 
+        transform: translateX(-100px) translateY(100px) rotate(45deg);
+        opacity: 0;
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { 
+        transform: translateX(calc(100vw + 100px)) translateY(-100px) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+@keyframes borderPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes explodeRainbow {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    70% {
+        transform: translate(
+            calc(-50% + var(--endX)), 
+            calc(-50% + var(--endY))
+        ) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(
+            calc(-50% + var(--endX)), 
+            calc(-50% + var(--endY))
+        ) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Screenshake animation for Unique pulls */
+@keyframes uniqueScreenshake {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    10% { transform: translate(-8px, -4px) rotate(-1deg); }
+    20% { transform: translate(6px, -8px) rotate(1deg); }
+    30% { transform: translate(-6px, 8px) rotate(0deg); }
+    40% { transform: translate(8px, 4px) rotate(1deg); }
+    50% { transform: translate(-4px, -6px) rotate(-1deg); }
+    60% { transform: translate(6px, 8px) rotate(0deg); }
+    70% { transform: translate(-8px, -4px) rotate(-1deg); }
+    80% { transform: translate(4px, -8px) rotate(1deg); }
+    90% { transform: translate(-2px, 4px) rotate(0deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.screenshake {
+    animation: uniqueScreenshake 0.8s ease-in-out;
+}
+
+/* Enhanced rainbow particle explosion */
+.rainbowParticle {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(45deg, 
+        #ff0000, #ff7f00, #ffff00, #00ff00, 
+        #0000ff, #4b0082, #9400d3, #ff0000);
+    background-size: 400% 400%;
+    animation: explodeRainbow 2s ease-out forwards, rainbowParticleShimmer 0.5s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes rainbowParticleShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes explodeRainbow {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    20% {
+        transform: translate(
+            calc(-50% + var(--endX) * 0.3), 
+            calc(-50% + var(--endY) * 0.3)
+        ) scale(1.2);
+        opacity: 1;
+    }
+    70% {
+        transform: translate(
+            calc(-50% + var(--endX)), 
+            calc(-50% + var(--endY))
+        ) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(
+            calc(-50% + var(--endX) * 1.2), 
+            calc(-50% + var(--endY) * 1.2)
+        ) scale(0);
+        opacity: 0;
+    }
+}

@@ -251,6 +251,31 @@
         </div>
     </div>
     <div id="slider" style="position: flex"></div>
+<!-- Gacha Animation Overlay -->
+<div id="gachaOverlay" style="display: none;">
+    <div id="gachaBackground"></div>
+    
+    <!-- Skip button in top right -->
+    <button id="skipAnimation" style="display: none;">Skip ⏭️</button>
+    
+    <div id="shootingStarsContainer"></div>
+    
+    <div id="clickToContinue" style="display: none;">
+        <p>Click anywhere to continue...</p>
+    </div>
+    
+    <!-- Genshin-style results -->
+    <div id="gachaResults" style="display: none;">
+        <div id="pullCounter"></div>
+        <div id="pogLineContainer">
+            <!-- Pogs will be dynamically added here -->
+        </div>
+        <button id="closeResults">Continue</button>
+    </div>
+</div>
+
+
+
 </body>
 <!--updateinventory.js and searchsort.js must always come first in the js lineup-->
 <script src="../static/js/collectionJS/searchsort.js"></script>
