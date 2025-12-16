@@ -1,0 +1,237 @@
+/* Base Crate Style */
+.crate {
+    width: 300px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 15px 30px;
+    font-size: 20px;
+    background-color: #130f0c;
+    border: 4px solid #130f0c;
+    color: black;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    /* For smooth hover */
+    box-shadow: 0 8px #130f0c;
+    /* Thick bottom border shadow for weight */
+    position: relative;
+    top: 0;
+}
+
+.crate:disabled {
+    pointer-events: none;
+}
+
+/* Hover creates anticipation */
+.crate:hover {
+    top: -2px;
+}
+
+/* The tactile "Pressed" state */
+.crate:active {
+    top: 4px;
+    /* Depresses visually */
+    box-shadow: 0 4px #130f0c;
+    transform: scale(0.95);
+    /* Shrinks slightly to feel "caught" */
+}
+
+.buym {
+    border: transparent;
+    box-shadow: 0 0 5px black;
+    border-radius: 10px;
+    width: 50px;
+    padding: 8px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 15px;
+    cursor: pointer;
+    scale: 0.8;
+    transition: all 0.1s ease;
+    color: black;
+    border: 3px solid #130f0c;
+}
+
+.buym:disabled {
+    pointer-events: none;
+}
+
+.buttonSources {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 5px;
+    gap: 5px;
+}
+
+.buymCont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-right: -260px;
+    scale: 0.75;
+    z-index: 21;
+}
+
+#openCratesBtn {
+    background-color: #ffffff;
+    border: transparent;
+    position: fixed;
+    border-radius: 100px;
+    padding: 20px;
+    width: 100px;
+    height: 100px;
+    bottom: 0px;
+    right: 0px;
+    cursor: pointer;
+    z-index: 1000;
+    scale: 0.6;
+    box-shadow: 0 0 5px black;
+    overflow: visible;
+}
+
+#openCratesBtn:hover {
+    background-color: #a3a3a3;
+}
+
+#cratesCont {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    background-color: #3e1e42;
+    padding: 20px;
+    border-radius: 20px;
+    margin-right: 100px;
+    margin-bottom: 20px;
+    right: 0;
+    bottom: 0;
+    box-shadow: 0 0 5px black;
+}
+
+#crate1_b5 {
+    background-color: rgb(245, 88, 88);
+}
+
+#crate1_b5:disabled {
+    background-color: #a3a3a3;
+}
+
+#crate1_b10 {
+    background-color: rgb(245, 88, 88);
+}
+
+#crate1_b10:disabled {
+    background-color: #a3a3a3;
+}
+
+/* crate 1 */
+#crate1 {
+    background-color: rgb(245, 88, 88);
+}
+
+#crate1:disabled {
+    background-color: #a3a3a3;
+}
+
+#crate2_b5 {
+    background-color: rgb(250, 250, 114);
+}
+
+#crate2_b5:disabled {
+    background-color: #a3a3a3;
+}
+
+#crate2_b10 {
+    background-color: rgb(250, 250, 114);
+}
+
+#crate2_b10:disabled {
+    background-color: #a3a3a3;
+}
+
+/* crate 2 */
+#crate2 {
+    background-color: rgb(250, 250, 114);
+}
+
+#crate2:disabled {
+    background-color: #a3a3a3;
+}
+
+#crate3_b5 {
+    background-color: rgb(128, 255, 128);
+}
+
+#crate3_b5:disabled {
+    background-color: #a3a3a3;
+}
+
+#crate3_b10 {
+    background-color: rgb(128, 255, 128);
+}
+
+#crate3_b10:disabled {
+    background-color: #a3a3a3;
+}
+
+/* crate 3 */
+#crate3 {
+    background-color: rgb(128, 255, 128);
+}
+
+#crate3:disabled {
+    background-color: #a3a3a3;
+}
+
+#crate4_b5 {
+    background-color: lightskyblue;
+}
+
+#crate4_b5:disabled {
+    background-color: #a3a3a3;
+}
+
+#crate4_b10 {
+    background-color: lightskyblue;
+}
+
+#crate4_b10:disabled {
+    background-color: #a3a3a3;
+}
+
+/* crate 4 */
+#crate4 {
+    background-color: lightskyblue;
+}
+
+#crate4:disabled {
+    background-color: #a3a3a3;
+}
+
+#crate5_b5 {
+    background-color: rgb(219, 143, 255);
+}
+
+#crate5_b5:disabled {
+    background-color: #a3a3a3;
+}
+
+#crate5_b10 {
+    background-color: rgb(219, 143, 255);
+}
+
+#crate5_b10:disabled {
+    background-color: #a3a3a3;
+}
+
+/* crate 5 */
+#crate5 {
+    background-color: rgb(219, 143, 255);
+}
+
+#crate5:disabled {
+    background-color: #a3a3a3;
+}

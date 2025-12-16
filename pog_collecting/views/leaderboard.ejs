@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pog Crates -> Leaderboard</title>
+    <link rel="icon" type="image/png" href="../static/icons/monarch.png"/>
+    <title>Leaderboard</title>
     <link rel="stylesheet" href="../static/css/leaderboard.css">
 </head>
 
@@ -18,7 +19,6 @@
                 <%= JSON.stringify(scores) %>
             </div>
             <h1 style="margin-left: 10px;">Leaderboard</h1>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %>
             </h4>
             <div style="display: none" id="maxPogs">
                 <%= JSON.stringify(maxPogs) %>
@@ -44,9 +44,9 @@
             <tr>
                 <th style="border: 1px solid white; padding: 8px;">Rank</th>
                 <th style="border: 1px solid white; padding: 8px;">User</th>
-                <th style="border: 1px solid white; padding: 8px;">Score</th>
+                <th style="border: 1px solid white; padding: 8px;">Score ($)</th>
                 <th style="border: 1px solid white; padding: 8px;">Level</th>
-                <th style="border: 1px solid white; padding: 8px;">Pogs</th>
+                <th style="border: 1px solid white; padding: 8px;">Unique Pogs</th>
                 <th style="border: 1px solid white; padding: 8px;">Details</th>
             </tr>
         </thead>
@@ -75,17 +75,7 @@
                 <% }) %>
         </tbody>
     </table>
-    <div id="details"><h3>Click on Player Info for Details</h3></div>
+    <div id="details" style="display: none"></div>
     </div>
 </body>
-<style>
-    body {
-        background-color: #332e2e;
-        margin-top: 50px;
-        padding: 20px;
-    }
-    table {
-        margin-top: 300px
-    }
-</style>
 <script src="../static/js/leaderboard.js"></script>

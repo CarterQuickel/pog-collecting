@@ -1,0 +1,143 @@
+/* settings */
+#settings {
+    margin-top: 8px;
+    top: 100px;
+    right: 20px;
+    background-color: #7d6381;
+    width: 400px;
+    padding-bottom: 10px;
+    min-height: auto;
+    height: auto;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    text-align: center;
+    position: static;
+    flex-shrink: 1;
+}
+
+#binder {
+    background-color: rgb(240, 240, 112);
+    border-radius: 5px;
+    padding: 9px;
+    border: transparent;
+    cursor: pointer;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#searchbtn {
+    background-color: #ecdcdc;
+    border: transparent;
+    border-radius: 10px;
+    padding: 7px;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 18px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+#searchbtn:hover {
+    background-color: #d4bebe;
+}
+
+#sortcont {
+    background-color: #3e1e42;
+    margin: 10px;
+    padding: 10px;
+    border: transparent;
+    border-radius: 10px;
+}
+
+option {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+/* search button */
+#searchbar {
+    gap: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 30px 0px 10px;
+}
+
+#searchbox {
+    background-color: #e6e6e6;
+    border: transparent;
+    border-radius: 10px;
+    width: 400px;
+    padding: 4px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: bold;
+    font-size: 20px;
+    cursor: text;
+    scale: 0.85;
+}
+
+#selectSort {
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 5px;
+    width: 300px;
+    color: #000000;
+    border: 3px solid rgba(255, 255, 255, 0);
+    background-color: #fff0f5;
+    border-radius: 30px;
+    background-repeat: no-repeat;
+    background-size: 12px;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#selectSort:hover,
+#selectSort:focus {
+    border: 3px solid #a7a7a7;
+    /* Green border on interact */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow lift */
+    outline: none;
+}
+
+#selectSort,
+::picker(select) {
+    appearance: base-select;
+    /* Enables deep customization */
+}
+
+/* Style the dropdown list that pops out */
+::picker(select) {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s allow-discrete;
+    /* Allow animation to popover */
+}
+
+/* Animation state when opened */
+::picker(select):popover-open {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#sellAll {
+    border: transparent;
+    border-radius: 20px;
+    padding: 5px;
+    width: 200px;
+    height: 25px;
+    margin-top: 15px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #659c54;
+    cursor: pointer;
+}
+
+#sellAll:hover {
+    background-color: #568548;
+}

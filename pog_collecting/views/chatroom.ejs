@@ -2,39 +2,40 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pog Crates -> Chat Room</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../static/icons/Programming_Prodigy.png"/>
+    <title>Chat Room</title>
     <link rel="stylesheet" href="../static/css/chatroom.css">
 </head>
 
 <body>
     <div id="chatroomBanner">
         <div class="leftstuff">
-            <div style="display: none" id="userdata">
-                <%= JSON.stringify(userdata) %>
-            </div>
+            <div style="display: none" id="userdata"><%= JSON.stringify(userdata) %></div>
             <h1 style="margin-left: 10px;">Chat Room</h1>
-            <h4 style="margin-top: -25px; color: white; margin-left: 20px;">User: <%= userdata.displayName %>
-            </h4>
-            <div style="display: none" id="maxPogs">
-                <%= JSON.stringify(maxPogs) %>
-            </div>
+            <div style="display: none" id="maxPogs"><%= JSON.stringify(maxPogs) %></div>
         </div>
         <div class="rightstuff"></div>
-        <a href="/collection" id="circleButton">
-            < </a>
+            <a href="/collection" id="circleButton"> < </a>
+        </div>
     </div>
-    </div>
-    <div id="messageCont">
-        <div class="message">yes</div>
-    </div>
+
+    <div id="messageCont"></div>
+
     <div id="chatContainer">
-        <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off" required />
-        <button id="submitBtn">Send</button>
+        <form>
+            <input id="messageInput" autocomplete="off" placeholder="Type a message..." />
+            <button id="submitBtn" type="submit">Send</button>
+        </form>
     </div>
-    </div>
-    <script src="../static/js/chat.js"></script>
+
+    <!-- embed server userdata so client JS can read pfp -->
+    <div id="userdata" style="display:none"><%= JSON.stringify(userdata || {}) %></div>
+
+    <!-- socket.io client + chat script -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/js/chat.js"></script>
 </body>
 
 </html>

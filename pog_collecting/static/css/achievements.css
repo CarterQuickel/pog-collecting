@@ -28,9 +28,11 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(158, 84, 158);
+    background-image: linear-gradient(to right, #de5aff, #582563);
     padding: 10px 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    height: 80px;
 }
 
 .leftstuff {
@@ -57,7 +59,6 @@ li {
     color: black;
     text-decoration: none;
     background-color: white;
-    border: 2px solid black;
     cursor: pointer;
 }
 
@@ -83,7 +84,7 @@ li {
     padding: 15px;
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
-    border: 5px solid black;
+    border: transparent 2px solid;
 }
 
 .achievement .icon {
