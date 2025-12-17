@@ -10,15 +10,17 @@ const http = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(http);
 const digio = require('socket.io-client');
+const dotenv = require('dotenv');
+dotenv.config({ path: './static/env/.env' });
 
 // API key for Formbar API access
-const API_KEY = 'c44f8bc4bb6acef2b313cdb70ddae3228bf0cb73015831fe9133b1dd2c758f95' // carter's API key -> this is found in the formbeta profile settings page
+const API_KEY = process.env.API_KEY; // carter's API key -> this is found in the formbeta profile settings page
 
 // URL to take user to Formbar for authentication
-const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
+const AUTH_URL = process.env.AUTH_URL; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.183:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = process.env.THIS_URL; // ... or whatever the address to your application is
 
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',

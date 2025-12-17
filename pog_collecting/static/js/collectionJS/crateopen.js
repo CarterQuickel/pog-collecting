@@ -425,8 +425,18 @@ async function openMultipleCrates(cost, index, count) {
             results.push(result);
         }
     }
+    
+    // Show animation for all pulls
+    await showPullAnimation(results, 0, count);
+    
+    // Add to inventory after animation
+    results.forEach(result => addPogToInventory(result));
+    
+    // Display results
+    displayGachaResults(results, count);
+}
 
-    async function showShootingStarsAnimation(pullResults = []) {
+async function showShootingStarsAnimation(pullResults = []) {
     // Determine animation type based on highest rarity pulled
     const hasUnique = pullResults.some(pog => pog.rarity === 'Unique');
     const hasMythic = pullResults.some(pog => pog.rarity === 'Mythic');
