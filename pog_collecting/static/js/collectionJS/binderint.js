@@ -15,14 +15,9 @@ const itemView = pogList.map((item) => {
     const name = item.name;
     const rarity = item.rarity;
     let color = "white";
-    let owned = {
-        value: false
-    }
+    let owned = false
     if (inventory.find(r => r.name === name)) {
-        owned.value = true;
-        Object.defineProperty(owned, 'value', {
-            writable: false
-        })
+        owned = true;
     }
     // find rarity color details
     const match = rarityColor.find(r => r.name === rarity);
