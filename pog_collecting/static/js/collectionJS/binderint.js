@@ -1,6 +1,7 @@
 document.getElementById("binder").addEventListener("click", () => {
     const binder = document.getElementById("binderBanner");
     binder.style.display = "block";
+    viewCollection()
 });
 
 document.getElementById("closeBinder").addEventListener("click", () => {
@@ -8,14 +9,20 @@ document.getElementById("closeBinder").addEventListener("click", () => {
     binder.style.display = "none";
 });
 
+function viewCollection() {
 const itemsHTML = document.getElementById("binderItems")
 const itemView = pogList.map((item) => {
     const name = item.name;
     const rarity = item.rarity;
     let color = "white";
-    let owned = false
+    let owned = {
+        value: false
+    }
     if (inventory.find(r => r.name === name)) {
-        owned = true;
+        owned.value = true;
+        Object.defineProperty(owned, 'value', {
+            writable: false
+        })
     }
     // find rarity color details
     const match = rarityColor.find(r => r.name === rarity);
@@ -28,5 +35,5 @@ const itemView = pogList.map((item) => {
         </div>
     `
 }).join("");
-
 itemsHTML.innerHTML = itemView
+}
