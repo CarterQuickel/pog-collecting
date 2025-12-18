@@ -14,6 +14,7 @@ const itemsHTML = document.getElementById("binderItems")
 const itemView = pogList.map((item) => {
     const name = item.name;
     const rarity = item.rarity;
+    const pogcol = item.color;
     let color = "white";
     let owned = false
     if (inventory.find(r => r.name === name)) {
@@ -26,6 +27,7 @@ const itemView = pogList.map((item) => {
     return `
         <div class="singleI" style="background-color: ${owned ? "rgb(66, 51, 66)" : "black"}">
             <h4>${name}</h4>
+            <p style="font-size: 12px; margin-top: -15px">${pogcol} variant</p>
             <p style="color: ${color}">${rarity}</p>
         </div>
     `
