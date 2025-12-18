@@ -1,5 +1,6 @@
 /* settings */
 #settings {
+    transition: ease-in-out 0.3s;
     margin-top: 8px;
     top: 100px;
     right: 20px;

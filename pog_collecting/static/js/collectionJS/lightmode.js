@@ -15,8 +15,10 @@ document.getElementById("darkmode").addEventListener("click", () => {
     if (lightMode) {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
+        save();
     } else {
         document.body.style.backgroundColor = "black";
         document.body.style.color = "white";
+        save();
     }
 });

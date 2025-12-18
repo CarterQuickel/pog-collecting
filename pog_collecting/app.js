@@ -16,10 +16,10 @@ require('dotenv').config()
 const API_KEY = process.env.API_KEY;
 
 // URL to take user to Formbar for authentication
-const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
+const AUTH_URL = process.env.AUTH_URL; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.104:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = process.env.THIS_URL; // ... or whatever the address to your application is
 
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
@@ -326,7 +326,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.income,
                             req.session.user.totalSold,
                             req.session.user.cratesOpened,
-                            req.session.user.pogamount,
+                            JSON.stringify(req.session.user.pogamount),
                             JSON.stringify(req.session.user.achievements),
                             req.session.user.mergeCount,
                             req.session.user.highestCombo,
@@ -525,7 +525,6 @@ app.post('/datasave', (req, res) => {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
                 }
-                console.log(`User settings updated for ${req.session.user.displayName} with fid ${req.session.user.fid}`);
                 req.session.user = { ...req.session.user, ...userSave };
                 return res.json({ message: 'Data saved successfully' });
             });

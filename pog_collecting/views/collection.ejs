@@ -110,8 +110,6 @@
                 <a href="/leaderboard"></a>
             </button>
             <div class="verticalL"></div>
-            <img id="save" class="imgbtn" src="../static/icons/buttons_main/save.png" width="40" height="40"
-                title="Save Game">
             <img id="darkmode" class="imgbtn" src="../static/icons/buttons_main/sun.png" width="40" height="40"
                 title="Mode">
             <img id="help" class="imgbtn" src="../static/icons/buttons_main/help.png" width="40" height="40"
@@ -119,6 +117,12 @@
         </div>
     </div>
     <div id="centerlayout" style="text-align: center;">
+        <!--Description-->
+    <div id="descPanel">
+        <span>
+            Click on a Pog's details to see its stats
+        </span>
+    </div>
         <div id="inventory"></div>
         <div id="settings">
             <div id="sortcont">
@@ -251,8 +255,9 @@
     </div>
     <div id="slider" style="position: flex"></div>
 </body>
-<!--updateinventory.js and searchsort.js must always come first in the js lineup-->
+<!--updateinventory.js and searchsort.js and viewDesc.js must always come first in the js lineup-->
 <script src="../static/js/collectionJS/searchsort.js"></script>
+<script src="../static/js/collectionJS/viewDesc.js"></script>
 <script src="../static/js/collectionJS/updateinventory.js"></script>
 <!--crates, shop, combo, lightmode, sellitem, stuffWork next-->
 <!--stuffWork tackles things like: 
@@ -264,6 +269,7 @@
     stuffwork uses userData to define global parameters-->
 <script src="../static/js/crates.js"></script>
 <script src="../static/js/shop.js"></script>
+<script src="../static/js/collectionJS/saving.js"></script>
 <script src="../static/js/collectionJS/combo.js"></script>
 <script src="../static/js/collectionJS/lightmode.js"></script>
 <script src="../static/js/collectionJS/sellitem.js"></script>
@@ -276,7 +282,6 @@
 <script src="../static/js/collectionJS/merge.js"></script>
 <script src="../static/js/collectionJS/sellall.js"></script>
 <script src="../static/js/collectionJS/crateopen.js"></script>
-<script src="../static/js/collectionJS/saving.js"></script>
 <script src="../static/js/collectionJS/shopint.js"></script>
 <script src="../static/js/collectionJS/binderint.js"></script>
 <script src="../static/js/collectionJS/wish.js"></script>

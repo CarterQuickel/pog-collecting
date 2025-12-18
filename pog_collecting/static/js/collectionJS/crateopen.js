@@ -70,6 +70,7 @@ function openCrate(cost, index) {
             money -= cost;
             cratesOpened++;
             refreshInventory();
+            save()
             break;
         }
     }
