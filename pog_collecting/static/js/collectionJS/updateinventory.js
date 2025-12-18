@@ -83,9 +83,11 @@ function refreshInventory() {
             <hr>
             <ul>
                 <li class='list' style="color: ${item.color}">${item.value}</li>
-                <li class='list' style="color: green">$${Math.round(item.income * ((window.perNameBonus && window.perNameBonus[item.name]) || 1))}/s</li>
+                <li class='list' style="color: green"><strong>$${Math.round(item.income * ((window.perNameBonus && window.perNameBonus[item.name]) || 1))}/s</strong></li>
             </ul>
-            <button id="sellbtn" onclick="sellItem(${item.id}, ${sellvalue}, ${item.locked})">Sell for <br>$${sellvalue}</button>
+            <button id="sellbtn" onclick="sellItem(${item.id}, ${sellvalue}, ${item.locked})">Sell</button>
+            <br>
+            <strong style="color: #79c761">$${sellvalue}</strong>
             ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
             ${canTrade ? `<button class="mergebtn" onclick="trade()">Trade (7)</button>` : ""}
         </div>
