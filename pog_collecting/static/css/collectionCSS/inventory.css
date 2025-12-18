@@ -49,7 +49,7 @@
     border: transparent;
     margin-top: 0px;
     border-radius: 45px;
-    width: 100px;
+    width: 120px;
     padding: 8px;
     text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -96,7 +96,6 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
     font-size: 15px;
-    background-color: rgb(66, 51, 66);
     min-width: 120px;
     min-height: 220px;
     max-height: 260px;

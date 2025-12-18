@@ -19,7 +19,7 @@ const API_KEY = process.env.API_KEY;
 const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://172.16.3.104:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = 'http://192.168.0.111:3000/login'; // ... or whatever the address to your application is
 
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
@@ -33,7 +33,7 @@ crateRef = [
         rarities: [
             {
                 name: "Trash",
-                chance: 0.49
+                chance: 0.59
             },
             {
                 name: "Common",
@@ -45,7 +45,7 @@ crateRef = [
             },
             {
                 name: "Rare",
-                chance: 0.1
+                chance: 0.0
             },
             {
                 name: "Mythic",
@@ -248,7 +248,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     income INTEGER,
     totalSold INTEGER,
     cratesOpened INTEGER,
-    pogamount INTEGER,
+    pogamount TEXT,
     achievements TEXT,
     mergeCount INTEGER,
     highestCombo INTEGER,
@@ -359,7 +359,7 @@ app.get('/', isAuthenticated, (req, res) => {
             income: req.session.user.income || 0,
             totalSold: req.session.user.totalSold || 0,
             cratesOpened: req.session.user.cratesOpened || 0,
-            pogamount: req.session.user.pogamount || 0,
+            pogamount: req.session.user.pogamount || [],
             achievements: req.session.user.achievements || achievements,
             mergeCount: req.session.user.mergeCount || 0,
             highestCombo: req.session.user.highestCombo || 0,
@@ -389,7 +389,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     income: row.income,
                     totalSold: row.totalSold,
                     cratesOpened: row.cratesOpened,
-                    pogamount: row.pogamount,
+                    pogamount: JSON.parse(row.pogamount),
                     achievements: JSON.parse(row.achievements),
                     mergeCount: row.mergeCount,
                     highestCombo: row.comboHigh,
@@ -413,7 +413,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     income: 0,
                     totalSold: 0,
                     cratesOpened: 0,
-                    pogamount: 0,
+                    pogamount: [],
                     achievements: achievements,
                     mergeCount: 0,
                     highestCombo: 0,
@@ -511,7 +511,7 @@ app.post('/datasave', (req, res) => {
                 userSave.income,
                 userSave.totalSold,
                 userSave.cratesOpened,
-                userSave.pogamount,
+                JSON.stringify(userSave.pogamount),
                 JSON.stringify(userSave.achievements),
                 userSave.mergeCount,
                 req.session.user.highestCombo,
@@ -589,7 +589,7 @@ app.get('/login', (req, res) => {
             income: tokenData.income || 0,
             totalSold: tokenData.totalSold || 0,
             cratesOpened: tokenData.cratesOpened || 0,
-            pogamount: tokenData.pogamount || 0,
+            pogamount: tokenData.pogamount || [],
             achievements: tokenData.achievements || achievements,
             mergeCount: tokenData.mergeCount || 0,
             highestCombo: tokenData.highestCombo || 0,

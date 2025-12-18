@@ -14,10 +14,10 @@ function update() {
     document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;
 
     //update pog / pog
-    document.getElementById("pogCount").innerText = `Pogs Discovered: ${pogAmount} / ${maxPogs}`;
+    document.getElementById("pogCount").innerText = `Pogs Discovered: ${pogAmount.length} / ${maxPogs}`;
 
     //update pogs color
-    document.getElementById("pogCount").style.color = pogAmount >= maxPogs ? "gold" : lightMode ? "black" : "white";
+    document.getElementById("pogCount").style.color = pogAmount.length >= maxPogs ? "gold" : "white";
 
     //update wish text
     document.getElementById("useWish").innerText = `Wish (${wish})`;

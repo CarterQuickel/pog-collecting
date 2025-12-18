@@ -65,10 +65,10 @@ function refreshInventory() {
             // show trade button
             canTrade = item.name === "Dragon Ball 7",
             // return html
-            `<div class="item ${hasBonus ? 'highlight' : ''}" style="scale: ${item.locked ? 0.9 : 1}">
+            `<div class="item ${hasBonus ? 'highlight' : ''}" style="scale: ${item.locked ? 0.9 : 1}; background-color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'black' : 'rgb(66, 51, 66)'};">
             <img id="lock" style="background-color: ${item.locked ? "white" : "rgba(255, 255, 255, 0.5)"}" src="../static/icons/buttons_main/lock.png" onclick="lock(${item.id})" width="11" height="12" title="Lock (can't be sold when locked)">
             <br>
-            <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'black' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
+            <strong class ="name" style="font-size: ${nameFontSize}; color: ${item.color};">${item.name}</strong>
             <br>
             <div class="tooltip-descCont">
             <button id="desc" class="infobtn">Details</button>
@@ -82,12 +82,11 @@ function refreshInventory() {
             <br>
             <hr>
             <ul>
-                <li class='list' style="color: ${item.color}">${item.value}</li>
                 <li class='list' style="color: green"><strong>$${Math.round(item.income * ((window.perNameBonus && window.perNameBonus[item.name]) || 1))}/s</strong></li>
             </ul>
-            <button id="sellbtn" onclick="sellItem(${item.id}, ${sellvalue}, ${item.locked})">Sell</button>
-            <br>
-            <strong style="color: #79c761">$${sellvalue}</strong>
+            <button id="sellbtn" onclick="sellItem(${item.id}, ${sellvalue}, ${item.locked})">Sell<br>
+            <strong>$${sellvalue}</strong>
+            </button>
             ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
             ${canTrade ? `<button class="mergebtn" onclick="trade()">Trade (7)</button>` : ""}
         </div>

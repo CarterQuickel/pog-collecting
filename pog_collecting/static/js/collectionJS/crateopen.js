@@ -43,15 +43,6 @@ function openCrate(cost, index) {
             // rarity income
             income = match ? match.income : 5;
 
-            // add to pog amount if new pog
-            let added = { name: rarity.name }
-            const exists = inventory.find(i => i.name === added.name);
-            if (!exists) {
-                if (pogAmount < maxPogs) {
-                    pogAmount++;
-                }
-            }
-
             // dragon pog stuff
             if (rarity.name === "Dragon Ball") {
                 const inv = inventory.map(i => (i?.name).toLowerCase());
@@ -64,6 +55,11 @@ function openCrate(cost, index) {
             // Add result to inventory
             if (rarity.name != "Dragon Ball") {
                 inventory.push({ locked: false, pogid: rarity.id, name: rarity.name, pogcol: rarity.color, color: color, income: income, value: rarity.rarity, id: id, description: rarity.description, creator: rarity.creator });
+            }
+
+            let ownedQueue = { name: rarity.name, rarity: rarity.rarity, pogcol: rarity.color }
+            if (!(pogAmount.find(n => n.name === ownedQueue.name) && pogAmount.find(n => n.rarity === ownedQueue.rarity) && pogAmount.find(n => n.pogcol === ownedQueue.pogcol))) {
+                pogAmount.push(ownedQueue)
             }
 
             // XP gain
