@@ -10,7 +10,10 @@ const http = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(http);
 const digio = require('socket.io-client');
-require('dotenv').config()
+require('dotenv').config() 
+
+const randomthing = require("./modules/backend_js/randomthinig.js")
+console.log(randomthing.goon)
 
 // API key for Formbar API access
 const API_KEY = process.env.API_KEY;
