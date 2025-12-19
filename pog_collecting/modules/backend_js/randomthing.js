@@ -1,4 +1,5 @@
 let goon = 0
 let gooner = 8
 
-module.exports = {goon, gooner}
+let brainrot = 67
+module.exports = {goon, gooner, brainrot}

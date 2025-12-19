@@ -14,6 +14,8 @@ require('dotenv').config()
 
 const randomthing = require("./modules/backend_js/randomthing.js")
 console.log(randomthing.goon)
+console.log('THIS WORKS MY MAN')
+console.log(randomthing.gooner)
 
 // API key for Formbar API access
 const API_KEY = process.env.API_KEY;
@@ -29,6 +31,7 @@ const headers = [
     'description', 'type', 'rarity', 'creator'
 ];
 
+//67 67 67 67
 crateRef = [
     {
         name: "simple crate",
