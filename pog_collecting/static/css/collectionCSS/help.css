@@ -26,6 +26,7 @@
     align-items: center;
     justify-content: center;
     color: White;
+    height: 800px;
 }
 
 #closeHelp {
@@ -47,4 +48,31 @@
 
 #htpDiv {
     text-align: left;
+    overflow-y: auto;
+    margin-top: 20px;
+    max-height: 70vh;
+}
+
+/* Scrollbar track (background) */
+#htpDiv::-webkit-scrollbar {
+    width: 15px;
+    /* width of vertical scrollbar */
+    border-radius: 3px;
+}
+
+/* Scrollbar track */
+#htpDiv::-webkit-scrollbar-track {
+    background: #3a3a3a;
+}
+
+/* Scrollbar thumb (the draggable handle) */
+#htpDiv::-webkit-scrollbar-thumb {
+    background-color: #dddddd;
+    /* color of the thumb */
+}
+
+/* Scrollbar thumb on hover */
+#htpDiv::-webkit-scrollbar-thumb:hover {
+    background-color: #858585;
+    display: none;
 }

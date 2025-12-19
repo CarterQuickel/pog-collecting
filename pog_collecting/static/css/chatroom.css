@@ -46,19 +46,6 @@ html, body {
     height: 80px;
 }
 
-#userCont {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: -30px;
-}
-
-#userPic {
-    border-radius: 50%;
-    margin-top: -10px;
-    margin-left: 30px;
-}
-
 .leftstuff {
     display: flex;
     flex-direction: column;

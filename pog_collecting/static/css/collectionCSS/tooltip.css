@@ -8,6 +8,7 @@
     margin-right: 290px;
     margin-top: -40px;
     scale: 0.8;
+    z-index: 20;
 }
 
 .tooltip-descCont {
@@ -39,7 +40,6 @@
     visibility: hidden;
     background-color: #333;
     color: #fff;
-    border: 4px solid #888888;
     text-align: center;
     padding: 5px 10px;
     border-radius: 5px;
@@ -73,11 +73,6 @@
     opacity: 1;
 }
 
-/* version and xp tooltip */
-#infov {
-    scale: 0.8;
-}
-
 /* item description tooltip */
 #desc {
     scale: 0.6;
@@ -90,34 +85,14 @@
     background-color: rgba(241, 193, 241, 0.7);
 }
 
-.tooltip-text-version {
-    visibility: hidden;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 5px 10px;
-    border-radius: 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 90%;
-    left: 30%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    white-space: nowrap;
-    margin-left: 20px;
-    text-align: left;
-    pointer-events: none;
-}
-
-.tooltip-container:hover .tooltip-text-version {
+.tooltip-container:hover {
     visibility: visible;
     opacity: 1;
 }
 
 .infobtn {
     background-color: #ffffff;
-    border: 1px solid rgb(189, 189, 189);
+    border: transparent;
     border-radius: 50px;
     width: 30px;
     height: 30px;

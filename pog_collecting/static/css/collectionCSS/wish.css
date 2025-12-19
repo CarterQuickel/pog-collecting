@@ -13,10 +13,14 @@
     cursor: pointer;
     scale: 0.7;
     box-shadow: 0 0 5px black;
+    transition: all 0.1s ease;
 }
 
 #useWish:hover {
-    box-shadow: 0 0 5px rgb(255, 0, 0);
+    scale: 0.75; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
+    border-color: #ff4500;
+    color: #ff4500;
 }
 
 #customConfirm {

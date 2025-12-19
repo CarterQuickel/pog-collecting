@@ -34,11 +34,11 @@ crateRef = [
         rarities: [
             {
                 name: "Trash",
-                chance: 0.35
+                chance: 0.49
             },
             {
                 name: "Common",
-                chance: 0.7
+                chance: 0.2
             },
             {
                 name: "Uncommon",
@@ -400,15 +400,16 @@ app.get('/', isAuthenticated, (req, res) => {
                 };
                 console.log(`User data loaded for '${displayName}'`);
             } else {
+                // all starting values are HERE
                 req.session.user = {
                     fid: id,
                     displayName: displayName,
                     theme: 'light',
                     score: 0,
                     inventory: [],
-                    Isize: 3,
+                    Isize: 5,
                     xp: 0,
-                    maxxp: 100,
+                    maxxp: 30,
                     level: 1,
                     income: 0,
                     totalSold: 0,
@@ -472,7 +473,6 @@ app.get('/api/leaderboard', (req, res) => {
 
 // save data route
 app.post('/datasave', (req, res) => {
-    console.log(req.body);
     const userSave = {
         theme: req.body.lightMode ? 'light' : 'dark',
         score: req.body.money,
@@ -494,7 +494,6 @@ app.post('/datasave', (req, res) => {
     }
 
 
-    console.log(userSave.theme);
     // save to session
     req.session.save(err => {
         if (err) {
