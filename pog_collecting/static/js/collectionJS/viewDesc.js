@@ -6,6 +6,7 @@ document.getElementById("inventory").addEventListener("click", (e) => {
 
     const index = itemDiv.dataset.index
     const item = inventory[index];
+    let sellvalue = Math.round((item.income * 2.94 * (level / 1.6))**((level / 100) + 1))
     viewDesc(
         item.name,
         item.locked,
