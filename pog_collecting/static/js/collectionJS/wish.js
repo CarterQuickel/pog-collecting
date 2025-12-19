@@ -25,7 +25,7 @@ function customConfirm(message) {
 document.getElementById("useWish").addEventListener("click", async () => {
     let wealth = await customConfirm("Wish of Wealth: Use wish to gain a large amount of money?");
     if (wealth) {
-        money += Math.floor(money * 1.5);
+        money += Math.floor(money * 3.5);
         wish--;
     } else {
         let power = await customConfirm("Wish of Power: Use wish to gain decreased crate costs?");
@@ -37,7 +37,7 @@ document.getElementById("useWish").addEventListener("click", async () => {
         } else {
             let wisdom = await customConfirm("Wish of Wisdom: Use wish to gain a large amount of XP?");
             if (wisdom) {
-                xp += Math.floor(maxXP * 0.5);
+                xp += Math.floor(maxXP * 1.5);
                 levelup();
                 wish--;
             } else {

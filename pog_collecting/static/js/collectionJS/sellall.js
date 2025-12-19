@@ -15,7 +15,7 @@ document.getElementById("sellAll").addEventListener("click", () => {
                 break;
             }
             console.log(`Item sold at index: ${i} (name: ${inventory[i].name}), and lock is: ${inventory[i].locked}`)
-            sellItem(inventory[i].id, Math.round(inventory[i].income * 1.05), inventory[i].locked)
+            sellItem(inventory[i].id, Math.round((inventory[i].income * 2.94 * (level / 1.6))**((level / 100) + 1)), inventory[i].locked)
         }
     } else {
         const filteredItems = inventory.filter(item => item.name.toLowerCase().includes(itemSearched));
@@ -27,7 +27,7 @@ document.getElementById("sellAll").addEventListener("click", () => {
                 continue;
             }
             if (indexInInventory !== -1) {
-                sellItem(item.id, Math.round(item.income * 1.05), item.locked); //sellvalue
+                sellItem(item.id, Math.round((item.income * 2.94 * (level / 1.6))**((level / 100) + 1)), item.locked); //sellvalue
             }
         }
     }

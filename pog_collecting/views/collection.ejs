@@ -67,12 +67,6 @@
         <div class="leftstuff">
             <div id="titlecont">
                 <h1 style="margin-left: 10px;">POGGLEBAR</h1>
-                <div class="tooltip-container">
-                    <button id="infov" class="infobtn">i</button>
-                    <span id="spaniv" class="tooltip-text-version">
-                        v0.2.2
-                    </span>
-                </div>
             </div>
             <div id="userCont">
                 <img id="userPic" width="20" height="20" src="static/icons/pfp/defaultpfp.png" />
@@ -92,19 +86,20 @@
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
             <button id="useWish" style="display: none;">Use Wish</button>
-            <button id="shopBtn" class="pageButtons" style="color: rgb(0, 0, 0)">Shop</button>
-            <button id="chatRoomButton" class="pageButtons">
-                <a href="/chatroom" style="text-decoration: none; color: rgb(0, 0, 0);">Chat</a>
+            <img id="shopBtn" class="imgbtn" title="Shop" src="../static/icons/buttons_main/shop.png" width="40" height="40"></img>
+            <img src="../static/icons/buttons_main/chat.png" title="Chatroom" width="40" height="40" id="chatRoomButton" class="imgbtn">
+                <a href="/chatroom"></a>
+            </img>
+            <img src="../static/icons/buttons_main/patches.png" title="Patch Notes" width="40" height="40" id="patchNotesButton" class="imgbtn">
+                <a href="/patch"></a>
+            </img>
+            <img src="../static/icons/buttons_main/trophy.png" title="Achievements" width="40" height="40" id="achievementsButton" class="imgbtn">
+                <a href="/achievements"></a>
+        </img>
+            <img src="../static/icons/buttons_main/board.png" title="leaderboard" width="40" height="40" id="leaderboardButton" class="imgbtn">
+                <a href="/leaderboard"></a>
             </button>
-            <button id="patchNotesButton" class="pageButtons">
-                <a href="/patch" style="text-decoration: none; color: rgb(0, 0, 0);">Patches</a>
-            </button>
-            <button id="achievementsButton" class="pageButtons">
-                <a href="/achievements" style="text-decoration: none; color: rgb(0, 0, 0);">Trophies</a>
-            </button>
-            <button id="leaderboardButton" class="pageButtons">
-                <a href="/leaderboard" style="text-decoration: none; color: rgb(0, 0, 0)">Board</a>
-            </button>
+            <div class="verticalL"></div>
             <img id="save" class="imgbtn" src="../static/icons/buttons_main/save.png" width="40" height="40"
                 title="Save Game">
             <img id="darkmode" class="imgbtn" src="../static/icons/buttons_main/sun.png" width="40" height="40"
@@ -123,18 +118,19 @@
                         title="Search Pogs">
                 </div>
                 <select id="selectSort">
+                    <hr />
                     <option value="rarityAZ">Sort by Rarity (a-z) &#8593;</option>
                     <option value="rarityZA">Sort by Rarity (z-a) &#8595;</option>
-                    <option value="nameAZ" style="background-color: lightgrey">Sort by Name (a-z) &#8593;</option>
-                    <option value="nameZA" style="background-color: lightgrey">Sort by Name (z-a) &#8595;</option>
-                    <option value="incomeHf" style="background-color: grey">Sort by Income (high to low) &#8593;
-                    </option>
-                    <option value="incomeLf" style="background-color: grey">Sort by Income (low to high) &#8595;
-                    </option>
-                    <option value="svHf" style="background-color: black; color: white">Sort by Sell Value (high to low)
-                        &#8593;</option>
-                    <option value="svLf" style="background-color: black; color: white">Sort by Sell Value (low to high)
-                        &#8595;</option>
+                    <hr />
+                    <option value="nameAZ">Sort by Name (a-z) &#8593;</option>
+                    <option value="nameZA">Sort by Name (z-a) &#8595;</option>
+                    <hr />
+                    <option value="incomeHf">Sort by Income (high to low) &#8593;</option>
+                    <option value="incomeLf">Sort by Income (low to high) &#8595;</option>
+                    <hr />
+                    <option value="svHf">Sort by Sell Value (high to low) &#8593;</option>
+                    <option value="svLf">Sort by Sell Value (low to high) &#8595;</option>
+                    <hr />
                 </select>
                 <button id="sellAll">Sell All</button>
             </div>
@@ -143,20 +139,14 @@
                 <h3 id="income"></h3>
                 <h4 id="invTxt"></h4>
                 <div id="XPinfo">
-                    <div class="tooltip-container">
-                        <button id="infov" class="infobtn">i</button>
-                        <span id="spaniv" class="tooltip-text-version">
-                            Gain XP from opening crates<br>
-                            Leveling up grants more inventory slots:<br>
-                            Every 1 level = 5 more slots<br>
-                            Every 5 levels = 10 more slots
-                        </span>
-                    </div>
                     <h4 id="XPTxt"></h4>
                 </div>
                 <progress id="XPPB" value="0" max="100"></progress>
             </div>
-            <h3 id="pogCount">Pogs: 0 / 0</h3>
+            <div id="collectionBinder">
+                <h3 id="pogCount">Pogs: 0 / 0</h3>
+                <button id="binder">View Collection</button>
+            </div>
         </div>
         <img id="openCratesBtn" src="../static/icons/buttons_main/crate.png" width="30" height="30" title="Pog Crates">
         <div id="cratesCont" style="display: none">
@@ -166,8 +156,8 @@
                 <div class="tooltip-chances">
                 <button id="info1" class="infobtn">i</button>
                 <span id="spani1" class="tooltip-text">
-                    Trash: 35%<br>
-                    Common: 70%<br>
+                    Trash: 49%<br>
+                    Common: 20%<br>
                     Uncommon: 15%<br>
                     Rare: 10%<br>
                     Mythic: 6%<br>

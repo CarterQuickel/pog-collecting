@@ -8,11 +8,11 @@ let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crate
         rarities: [
             {
                 name: "Trash",
-                chance: 0.35
+                chance: 0.49
             },
             {
                 name: "Common",
-                chance: 0.7
+                chance: 0.2
             },
             {
                 name: "Uncommon",

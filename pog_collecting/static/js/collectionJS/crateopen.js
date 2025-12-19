@@ -50,19 +50,20 @@ function calculatePogResult(cost, index) {
                 }
             }
 
-            return {
-                locked: false,
-                pogid: rarity.id,
-                name: pogName,
-                pogcol: rarity.color,
-                color: color,
-                income: income,
-                value: rarity.rarity,
-                rarity: rarity.rarity,
-                id: id,
-                description: rarity.description,
-                creator: rarity.creator
-            };
+            // Add result to inventory
+            if (rarity.name != "Dragon Ball") {
+                inventory.push({ locked: false, pogid: rarity.id, name: rarity.name, pogcol: rarity.color, color: color, income: income, value: rarity.rarity, id: id, description: rarity.description, creator: rarity.creator });
+            }
+
+            // XP gain
+            xp += Math.floor(income * (2 * 1 / level)); // gain XP based on income and level
+            levelup();
+
+            // Deduct cost
+            money -= cost;
+            cratesOpened++;
+            refreshInventory();
+            break;
         }
     }
     return null;

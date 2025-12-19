@@ -8,7 +8,7 @@ function update() {
     document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize} Slots`
 
     // update XP Txt
-    document.getElementById("XPTxt").innerText = `Level ${level} (${abbreviatedXP}/${abbreviatedMaxXP} XP)`;
+    document.getElementById("XPTxt").innerText = `Level ${level}`;
 
     // update income Txt
     document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;
@@ -74,4 +74,25 @@ function updatePB() {
     const XPPB = document.getElementById("XPPB")
     XPPB.value = xp;
     XPPB.max = maxXP;
+}
+
+setInterval(updatecrates, 100);
+function updatecrates() {
+    const crateButtons = document.getElementsByClassName("crate");
+    for (let i = 0; i < crateButtons.length; i++) {
+        let buym5 = document.getElementById(`crate${i+1}_b5`)
+        let buym10 = document.getElementById(`crate${i+1}_b10`)
+        // Access price from the crates array at the current index
+        let currentPrice = crates[i].price; 
+        // Disable individual button if money is less than its price
+        if (money < currentPrice || inventory.length == Isize) {
+            crateButtons[i].disabled = true;
+            buym5.disabled = true;
+            buym10.disabled = true;
+        } else {
+            crateButtons[i].disabled = false;
+            buym5.disabled = false;
+            buym10.disabled = false;
+        }
+    }
 }

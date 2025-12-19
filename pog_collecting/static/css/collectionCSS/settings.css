@@ -8,10 +8,20 @@
     padding-bottom: 10px;
     min-height: auto;
     height: auto;
+    padding-bottom: 10px;
     border-radius: 10px;
     text-align: center;
     position: static;
     flex-shrink: 1;
+}
+
+#binder {
+    background-color: rgb(240, 240, 112);
+    border-radius: 5px;
+    padding: 9px;
+    border: transparent;
+    cursor: pointer;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 #searchbtn {
@@ -45,6 +55,7 @@ option {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: bold;
     font-size: 18px;
+    border-radius: 5px;
 }
 
 /* search button */
@@ -76,14 +87,43 @@ option {
     padding: 5px;
     width: 300px;
     color: #000000;
+    border: 3px solid rgba(255, 255, 255, 0);
     background-color: #fff0f5;
-    border: transparents;
     border-radius: 30px;
     background-repeat: no-repeat;
     background-size: 12px;
     cursor: pointer;
     text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#selectSort:hover,
+#selectSort:focus {
+    border: 3px solid #a7a7a7;
+    /* Green border on interact */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow lift */
+    outline: none;
+}
+
+#selectSort,
+::picker(select) {
+    appearance: base-select;
+    /* Enables deep customization */
+}
+
+/* Style the dropdown list that pops out */
+::picker(select) {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s allow-discrete;
+    /* Allow animation to popover */
+}
+
+/* Animation state when opened */
+::picker(select):popover-open {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 #sellAll {
