@@ -42,9 +42,9 @@
         <h5>Purchase Item?</h5>
         <label>PIN</label>
         <input id="pinField" type="password"/>
-        <button id="purchaseBtn">Purchase</button>
+        <button id="purchaseBtn" class="pageButtons">Purchase</button>
         <br>
-        <button id="cancelBtn">Cancel</button>
+        <button id="cancelBtn" class="pageButtons">Cancel</button>
     </div>
     <!--How to Play-->
     <div id="helpBanner" style="display:none;">
@@ -301,5 +301,23 @@
 <script src="../static/js/achievements.js"></script>
 <!--tickupdate is last-->
 <script src="../static/js/collectionJS/tickupdate.js"></script>
+<script>
+  // ensure pogList JS array exists before this runs
+  try {
+    const pg = JSON.parse(document.getElementById('pogList').textContent || '[]');
+    pg.push({
+      id: 'unique_test_01',
+      name: 'Godly Phoenix',
+      rarity: 'Unique',
+      color: '#ff88ff',
+      pogcol: '#ff88ff',
+      income: 250,
+      description: 'Test unique pog'
+    });
+    // overwrite the global pogList used by your scripts
+    window.pogList = pg;
+    // if your code reads pogList from a different var, adapt accordingly
+  } catch(e) { console.warn('could not add test Unique pog', e); }
+</script>
 
 </html>

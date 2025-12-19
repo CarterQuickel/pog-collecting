@@ -1002,6 +1002,19 @@ async function showAllPogResults(results, pullCount) {
     const rarityOrder = { 'Unique': 6, 'Mythic': 5, 'Rare': 4, 'Uncommon': 3, 'Common': 2, 'Trash': 1 };
     const sortedResults = [...results].sort((a, b) => rarityOrder[b.rarity] - rarityOrder[a.rarity]);
     
+    // Step 1: Show each pog individually
+    for (let i = 0; i < sortedResults.length; i++) {
+        const pog = sortedResults[i];
+        const isLast = i === sortedResults.length - 1;
+        
+        await showIndividualPog(pog, i + 1, pullCount, isLast);
+    }
+    
+    // Step 2: Show summary of all results
+    await showResultsSummary(sortedResults, pullCount);
+}
+
+async function showIndividualPog(pog, currentIndex, totalCount, isLast) {
     let centerReveal = document.getElementById('centerPogReveal');
     if (!centerReveal) {
         centerReveal = document.createElement('div');
@@ -1012,69 +1025,319 @@ async function showAllPogResults(results, pullCount) {
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10003;
-            max-width: 90vw;
-            max-height: 80vh;
-            overflow-y: auto;
         `;
         document.getElementById('gachaOverlay').appendChild(centerReveal);
     }
     
-    // Create the results display
+    // Get rarity styling
+    const rarityStyles = {
+        'Unique': {
+            bg: 'linear-gradient(135deg, #ff00ff, #ff69b4, #9400d3, #ffd700)',
+            border: '#ff00ff',
+            shadow: '0 0 50px rgba(255, 0, 255, 1), 0 0 100px rgba(255, 215, 0, 0.8)',
+            textColor: 'white',
+            size: '320px',
+            effects: `
+                <div style="
+                    position: absolute;
+                    top: -50%;
+                    left: -50%;
+                    width: 200%;
+                    height: 200%;
+                    background: conic-gradient(transparent, rgba(255, 255, 255, 0.4), transparent);
+                    animation: circularShine 3s linear infinite;
+                    border-radius: 50%;
+                "></div>
+            `
+        },
+        'Mythic': {
+            bg: 'linear-gradient(135deg, #ffd700, #ffed4a)',
+            border: '#ffd700',
+            shadow: '0 0 30px rgba(255, 215, 0, 0.8)',
+            textColor: '#333',
+            size: '280px',
+            effects: ''
+        },
+        'Rare': {
+            bg: 'linear-gradient(135deg, #9b59b6, #c39bd3)',
+            border: '#9b59b6',
+            shadow: '0 0 25px rgba(155, 89, 182, 0.6)',
+            textColor: 'white',
+            size: '250px',
+            effects: ''
+        },
+        'Uncommon': {
+            bg: 'linear-gradient(135deg, #27ae60, #58d68d)',
+            border: '#27ae60',
+            shadow: '0 0 20px rgba(39, 174, 96, 0.5)',
+            textColor: 'white',
+            size: '240px',
+            effects: ''
+        },
+        'Common': {
+            bg: 'linear-gradient(135deg, #4a9eff, #7bb3ff)',
+            border: '#7bb3ff',
+            shadow: '0 0 20px rgba(123, 179, 255, 0.5)',
+            textColor: 'white',
+            size: '230px',
+            effects: ''
+        },
+        'Trash': {
+            bg: 'linear-gradient(135deg, #666, #999)',
+            border: '#999',
+            shadow: '0 0 15px rgba(153, 153, 153, 0.3)',
+            textColor: 'white',
+            size: '220px',
+            effects: ''
+        }
+    };
+    
+    const style = rarityStyles[pog.rarity] || rarityStyles['Common'];
+    const isUnique = pog.rarity === 'Unique';
+    const shape = isUnique ? '50%' : '15px'; // Circle for unique, rounded rectangle for others
+    
     centerReveal.innerHTML = `
         <div style="
-            background: rgba(0, 0, 20, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            border: 3px solid #444;
+            width: ${style.size};
+            height: ${style.size};
+            border-radius: ${shape};
+            background: ${style.bg};
+            background-size: 400% 400%;
+            border: ${isUnique ? '8px' : '5px'} solid ${style.border};
+            box-shadow: ${style.shadow};
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: ${isUnique ? 'uniquePogReveal 2s ease-out, uniqueBackgroundShimmer 2s ease-in-out infinite' : 'individualPogReveal 1.2s ease-out'};
+            color: ${style.textColor};
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
         ">
-            <h2 style="
-                color: #ffd700;
-                text-align: center;
-                margin-bottom: 20px;
-                font-size: 24px;
-            ">
-                ${pullCount} Pull Results
-            </h2>
+            ${style.effects}
             
+            <!-- Progress indicator -->
             <div style="
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                justify-content: center;
-                align-items: center;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(0,0,0,0.7);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                font-size: 14px;
+                z-index: 2;
             ">
-                ${sortedResults.map((pog, index) => createPogResultCard(pog, index)).join('')}
+                ${currentIndex}/${totalCount}
             </div>
             
-            <div style="text-align: center; margin-top: 20px;">
-                <button id="closeMultiResults" style="
-                    background: #4CAF50;
-                    color: white;
-                    border: none;
-                    padding: 12px 24px;
-                    border-radius: 8px;
-                    font-size: 16px;
-                    cursor: pointer;
-                ">Continue</button>
+            <!-- Pog Name -->
+            <div style="
+                font-size: ${pog.name.length > 12 ? (isUnique ? '28px' : '20px') : (isUnique ? '32px' : '24px')}; 
+                font-weight: bold; 
+                margin-bottom: 15px;
+                text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+                z-index: 1;
+                max-width: ${parseInt(style.size) - 40}px;
+                word-wrap: break-word;
+                line-height: 1.2;
+            ">
+                ${pog.name}
             </div>
+            
+            <!-- Rarity Label -->
+            <div style="
+                font-size: ${isUnique ? '24px' : '18px'}; 
+                font-weight: bold;
+                z-index: 1;
+                text-shadow: ${isUnique ? '0 0 15px #ff00ff, 0 0 25px #ffd700' : '2px 2px 4px rgba(0,0,0,0.8)'};
+                margin-bottom: 15px;
+            ">
+                ${isUnique ? '✨ UNIQUE ✨' : pog.rarity.toUpperCase()}
+            </div>
+            
+            <!-- Click instruction -->
+            <div style="
+                position: absolute;
+                bottom: 15px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 14px;
+                opacity: 0.8;
+                animation: pulse 1.5s infinite;
+                z-index: 1;
+            ">
+                ${isLast ? 'Click to see summary' : 'Click for next pog'}
+            </div>
+            
+            ${isUnique ? `
+                <div style="
+                    position: absolute;
+                    width: ${parseInt(style.size) + 40}px;
+                    height: ${parseInt(style.size) + 40}px;
+                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    animation: orbitRing 6s linear infinite;
+                "></div>
+            ` : ''}
         </div>
     `;
     
     centerReveal.style.display = 'block';
     
-    // Animate each pog appearing
-    const pogCards = centerReveal.querySelectorAll('.pogResultCard');
-    pogCards.forEach((card, index) => {
+    // Trigger screenshake for unique pogs
+    if (isUnique) {
+        document.body.classList.add('screenshake');
         setTimeout(() => {
-            card.style.animation = 'pogCardReveal 0.6s ease-out forwards';
-        }, index * 100);
-    });
+            document.body.classList.remove('screenshake');
+        }, 800);
+    }
     
-    // Wait for user to click continue
+    // Wait for click
     return new Promise(resolve => {
-        document.getElementById('closeMultiResults').addEventListener('click', resolve);
+        const handleClick = () => {
+            document.removeEventListener('click', handleClick);
+            resolve();
+        };
+        document.addEventListener('click', handleClick);
     });
 }
+
+async function showResultsSummary(results, pullCount) {
+    let centerReveal = document.getElementById('centerPogReveal');
+    
+    centerReveal.innerHTML = `
+        <div style="
+            background: rgba(0, 0, 20, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            border: 3px solid #444;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow-y: auto;
+        ">
+            <h2 style="
+                color: #ffd700;
+                text-align: center;
+                margin-bottom: 25px;
+                font-size: 28px;
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            ">
+                🎉 ${pullCount} Pull Summary 🎉
+            </h2>
+            
+            <div style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 25px;
+            ">
+                ${results.map((pog, index) => createSummaryPogCard(pog, index)).join('')}
+            </div>
+            
+            <!-- Rarity breakdown -->
+            <div style="
+                background: rgba(255,255,255,0.1);
+                border-radius: 10px;
+                padding: 15px;
+                margin-bottom: 20px;
+                text-align: center;
+            ">
+                <h3 style="color: white; margin-bottom: 10px;">Rarity Breakdown:</h3>
+                <div style="color: #ccc; font-size: 14px;">
+                    ${createRarityBreakdown(results)}
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button id="closeSummary" style="
+                    background: linear-gradient(135deg, #4CAF50, #45a049);
+                    color: white;
+                    border: none;
+                    padding: 15px 30px;
+                    border-radius: 10px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+                    transition: transform 0.2s;
+                ">
+                    Continue to Game
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Animate summary cards appearing
+    const summaryCards = centerReveal.querySelectorAll('.summaryPogCard');
+    summaryCards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.animation = 'pogCardReveal 0.4s ease-out forwards';
+        }, index * 50);
+    });
+    
+    // Wait for user to close
+    return new Promise(resolve => {
+        document.getElementById('closeSummary').addEventListener('click', resolve);
+    });
+}
+
+function createSummaryPogCard(pog, index) {
+    const rarityColors = {
+        'Unique': { bg: 'linear-gradient(135deg, #ff00ff, #ffd700)', border: '#ff00ff' },
+        'Mythic': { bg: 'linear-gradient(135deg, #ffd700, #ffed4a)', border: '#ffd700' },
+        'Rare': { bg: 'linear-gradient(135deg, #9b59b6, #c39bd3)', border: '#9b59b6' },
+        'Uncommon': { bg: 'linear-gradient(135deg, #27ae60, #58d68d)', border: '#27ae60' },
+        'Common': { bg: 'linear-gradient(135deg, #4a9eff, #7bb3ff)', border: '#7bb3ff' },
+        'Trash': { bg: 'linear-gradient(135deg, #666, #999)', border: '#999' }
+    };
+    
+    const colors = rarityColors[pog.rarity] || rarityColors['Common'];
+    
+    return `
+        <div class="summaryPogCard" style="
+            width: 80px;
+            height: 100px;
+            background: ${colors.bg};
+            border: 2px solid ${colors.border};
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            font-size: 10px;
+            position: relative;
+        ">
+            <div style="font-weight: bold; margin-bottom: 3px; line-height: 1.1;">
+                ${pog.name.length > 8 ? pog.name.substring(0, 8) + '...' : pog.name}
+            </div>
+            <div style="font-size: 8px; opacity: 0.9;">
+                ${pog.rarity}
+            </div>
+        </div>
+    `;
+}
+
+function createRarityBreakdown(results) {
+    const counts = {};
+    results.forEach(pog => {
+        counts[pog.rarity] = (counts[pog.rarity] || 0) + 1;
+    });
+    
+    return Object.entries(counts)
+        .sort(([,a], [,b]) => b - a)
+        .map(([rarity, count]) => `${rarity}: ${count}`)
+        .join(' • ');
+}
+
 
 function createPogResultCard(pog, index) {
     // Get rarity colors

@@ -26,6 +26,10 @@ let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crate
                 name: "Mythic",
                 chance: 0.06
             },
+            {
+                name: "Unique",
+                chance: 0.00
+            }
         ]
     },
     {
@@ -52,6 +56,10 @@ let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crate
                 name: "Mythic",
                 chance: 0.11
             },
+            {
+                name: "Unique",
+                chance: 0.00
+            }
         ]
     },
     {
@@ -78,6 +86,10 @@ let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crate
                 name: "Mythic",
                 chance: 0.12
             },
+            {
+                name: "Unique",
+                chance: 0.00
+            }
         ]
     },
     {
@@ -103,6 +115,10 @@ let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crate
             {
                 name: "Mythic",
                 chance: 0.0
+            },
+            {
+                name: "Unique",
+                chance: 0.0
             }
         ]
     },
@@ -116,7 +132,7 @@ let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crate
             },
             {
                 name: "Common",
-                chance: 0.4
+                chance: 0.38    // lowered a bit
             },
             {
                 name: "Uncommon",
@@ -128,7 +144,11 @@ let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crate
             },
             {
                 name: "Mythic",
-                chance: 0.6
+                chance: 0.61    // adjusted
+            },
+            {
+                name: "Unique",
+                chance: 0.01    // new tiny chance for Unique
             }
         ]
     }
