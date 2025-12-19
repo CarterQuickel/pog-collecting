@@ -12,7 +12,7 @@ const io = new Server(http);
 const digio = require('socket.io-client');
 require('dotenv').config() 
 
-const randomthing = require("./modules/backend_js/randomthinig.js")
+const randomthing = require("./modules/backend_js/randomthing.js")
 console.log(randomthing.goon)
 
 // API key for Formbar API access
