@@ -18,6 +18,7 @@
     flex: 1;
     width: 100%;
     overflow-x: hidden;
+    transition: all 0.1s ease;
 }
 
 #stats {
@@ -47,10 +48,8 @@
 }
 
 #sellbtn {
-    position: absolute;
     background-color: #79c761;
     border: transparent;
-    margin-top: 290px;
     border-radius: 45px;
     width: 120px;
     padding: 8px;
@@ -62,7 +61,11 @@
     scale: 0.8;
     transition: all 0.1s ease-in-out;
     outline: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+}
+
+#sellbtn:hover {
+    background-color: #4a7e3a;
 }
 
 /* Scrollbar track (background) */
@@ -91,22 +94,20 @@
 /* inventory items */
 .item {
     border: 4px solid black;
-    box-shadow: 
+    box-shadow:
         /* 1. Outer shadow to ground the object on the page */
-        0 10px 20px rgba(0, 0, 0, 0.3), 
+        0 10px 20px rgba(0, 0, 0, 0.3),
         /* 2. Inner dark shadow: creates the 'drop' from the border rim */
         inset 0 6px 12px rgba(0, 0, 0, 0.5),
         /* 3. Inner light highlight: creates a 'lip' on the opposite edge */
         inset 0 -2px 8px rgba(255, 255, 255, 0.2);
-    background: 
+    background:
         /* The "3D Printed" Streaks Layer */
-        repeating-radial-gradient(
-            circle at 50% 50%,
+        repeating-radial-gradient(circle at 50% 50%,
             rgba(0, 0, 0, 0.08) 0px,
             rgba(0, 0, 0, 0.08) 1px,
             transparent 1px,
-            transparent 3px
-        );
+            transparent 3px);
     border-radius: 300px;
     padding: 10px;
     display: flex;
@@ -119,6 +120,16 @@
     min-width: 220px;
     min-height: 220px;
     max-height: 260px;
+    cursor: pointer;
+    scale: 0.8;
+}
+
+.item:hover {
+    scale: 0.9;
+}
+
+.item:hover #lock {
+    opacity: 1;
 }
 
 .item.highlight {
@@ -139,6 +150,8 @@ hr {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.1s ease;
+    opacity: 0;
+    scale: 1.1;
 }
 
 #lock:hover {
@@ -146,6 +159,49 @@ hr {
     transform: translateY(2px);
 }
 
+#descPanel {
+    margin: 8px auto;
+    border-radius: 5px;
+    background-color: gray;
+    padding: 10px;
+    transition: ease-in-out 0.3s;
+    min-height: 300px;
+    text-align: left;
+    width: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#headerName {
+    background-color: rgb(43, 41, 41);
+    width: 90%;
+    padding: 5px;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
 .name {
-    text-shadow: 0 5px 10px rgba(0,0,0,0.4); /* Bottom floor shadow */
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    /* Bottom floor shadow */
+}
+
+#money-info {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding: 3px;
+    width: 90%;
+    background-color: rgb(43, 41, 41);
+    border-radius: 5px;
+}
+
+.moneytxt {
+    background-color: #4a7e3a;
+    border-radius: 5px;
+    padding: 4px;
+    scale: 0.8;
 }
