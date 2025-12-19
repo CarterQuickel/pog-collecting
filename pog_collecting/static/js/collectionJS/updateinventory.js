@@ -44,9 +44,6 @@ function refreshInventory() {
     inventoryDiv.innerHTML = inventory.filter(item => item.name.toLowerCase().includes(itemSearched)).map((item, index) => {
         return hasBonus = highlightColors.includes(item.name),
             namelength = item.name.length,
-            desclength = item.description.length,
-            descFontSize = desclength >= 120 ? '12px' : desclength >= 80 ? '14px' : '16px',
-            nameFontSize = namelength >= 19 ? '9px' : namelength >= 12 ? '12px' : '16px',
             sellvalue = Math.round((item.income * 2.94 * (level / 1.6))**((level / 100) + 1)),
             // refernce this inside the map function, for item is only defined in here
             isBronze = item.name === "Bronze Pog",
@@ -71,27 +68,10 @@ function refreshInventory() {
             // show trade button
             canTrade = item.name === "Dragon Ball 7",
             // return html
-            `<div class="item ${hasBonus ? 'highlight' : ''}" style="scale: ${item.locked ? 0.9 : 1}">
-            <img id="lock" style="background-color: ${item.locked ? "white" : "rgba(255, 255, 255, 0.5)"}" src="../static/icons/buttons_main/lock.png" onclick="lock(${item.id})" width="11" height="12" title="Lock (can't be sold when locked)">
+            `<div data-index=${index} class="item ${hasBonus ? 'highlight' : ''}" style="background-color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'black' : 'rgb(66, 51, 66)'};">
+            <img id="lock" style="background-color: ${item.locked ? "white" : "rgba(200, 200, 200, 1)"}" src="../static/icons/buttons_main/lock.png" onclick="lock(${item.id})" width="11" height="12" title="Lock (can't be sold when locked)">
+            <h1 class="name" style="color: ${item.color};">${item.name}</h1>
             <br>
-            <strong class ="name" style="color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'black' : 'white'}; font-size: ${nameFontSize};">${item.name}</strong>
-            <br>
-            <div class="tooltip-descCont">
-            <button id="desc" class="infobtn">Details</button>
-            <span id="descSpan" class="tooltip-desc" style="font-size: ${descFontSize}">
-                Id: ${item.pogid} <br><br>
-                Color: ${item.pogcol} <br><br>
-                Creator: ${item.creator} <br><br>
-                Description: ${item.description}
-            </span>
-            </div>
-            <br>
-            <hr>
-            <ul>
-                <li class='list' style="color: ${item.color}">${item.value}</li>
-                <li class='list' style="color: green">$${Math.round(item.income * ((window.perNameBonus && window.perNameBonus[item.name]) || 1))}/s</li>
-            </ul>
-            <button id="sellbtn" onclick="sellItem(${item.id}, ${sellvalue}, ${item.locked})">Sell for <br>$${sellvalue}</button>
             ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
             ${canTrade ? `<button class="mergebtn" onclick="trade()">Trade (7)</button>` : ""}
         </div>`;

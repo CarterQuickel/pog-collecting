@@ -44,7 +44,8 @@ let userIncome = userdata.income || 0;
 let totalSold = userdata.totalSold || 0;
 
 // pogAmount
-let pogAmount = userdata.pogamount || 0;
+let pogAmount = userdata.pogamount || [];
+let maxBinder = 0;
 
 // XP
 let xp = userdata.xp || 0;

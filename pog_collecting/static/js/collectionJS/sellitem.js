@@ -9,6 +9,7 @@ function sellItem(id, sellvalue, locked) {
         // recalc income and refresh UI
         userIncome = getTotalIncome();
         refreshInventory();
+        save();
         if (window.checkAllAchievements) window.checkAllAchievements();
     }
 }

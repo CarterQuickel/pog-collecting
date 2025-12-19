@@ -55,6 +55,11 @@ function calculatePogResult(cost, index) {
                 inventory.push({ locked: false, pogid: rarity.id, name: rarity.name, pogcol: rarity.color, color: color, income: income, value: rarity.rarity, id: id, description: rarity.description, creator: rarity.creator });
             }
 
+            let ownedQueue = { name: rarity.name, rarity: rarity.rarity, pogcol: rarity.color }
+            if (!(pogAmount.find(n => n.name === ownedQueue.name) && pogAmount.find(n => n.rarity === ownedQueue.rarity) && pogAmount.find(n => n.pogcol === ownedQueue.pogcol))) {
+                pogAmount.push(ownedQueue)
+            }
+
             // XP gain
             xp += Math.floor(income * (2 * 1 / level)); // gain XP based on income and level
             levelup();
@@ -63,6 +68,7 @@ function calculatePogResult(cost, index) {
             money -= cost;
             cratesOpened++;
             refreshInventory();
+            save()
             break;
         }
     }

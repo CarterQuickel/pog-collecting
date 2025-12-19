@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../static/css/collectionCSS/tooltip.css">
     <link rel="stylesheet" href="../static/css/collectionCSS/banner.css">
     <link rel="stylesheet" href="../static/css/collectionCSS/help.css">
+    <link rel="stylesheet" href="../static/css/collectionCSS/binder.css">
 </head>
 
 <body>
@@ -45,6 +46,15 @@
         <button id="purchaseBtn">Purchase</button>
         <br>
         <button id="cancelBtn">Cancel</button>
+    </div>
+    <!--Binder-->
+    <div id="binderBanner" style="display:none;">
+        <div class="binderCont">
+            <h1 style="font-size: 60px; margin-top: -10px;">Collection</h1>
+            <h3 id="pogCount" style="margin-top: -45px;">Pogs: 0 / 0</h3>
+            <div id="binderItems"></div>
+            <button id="closeBinder">Close</button>
+        </div>
     </div>
     <!--How to Play-->
     <div id="helpBanner" style="display:none;">
@@ -88,20 +98,10 @@
             <button id="useWish" style="display: none;">Use Wish</button>
             <img id="shopBtn" class="imgbtn" title="Shop" src="../static/icons/buttons_main/shop.png" width="40" height="40"></img>
             <img src="../static/icons/buttons_main/chat.png" title="Chatroom" width="40" height="40" id="chatRoomButton" class="imgbtn">
-                <a href="/chatroom"></a>
-            </img>
             <img src="../static/icons/buttons_main/patches.png" title="Patch Notes" width="40" height="40" id="patchNotesButton" class="imgbtn">
-                <a href="/patch"></a>
-            </img>
             <img src="../static/icons/buttons_main/trophy.png" title="Achievements" width="40" height="40" id="achievementsButton" class="imgbtn">
-                <a href="/achievements"></a>
-        </img>
-            <img src="../static/icons/buttons_main/board.png" title="leaderboard" width="40" height="40" id="leaderboardButton" class="imgbtn">
-                <a href="/leaderboard"></a>
-            </button>
+            <img src="../static/icons/buttons_main/board.png" title="Leaderboard" width="40" height="40" id="leaderboardButton" class="imgbtn">
             <div class="verticalL"></div>
-            <img id="save" class="imgbtn" src="../static/icons/buttons_main/save.png" width="40" height="40"
-                title="Save Game">
             <img id="darkmode" class="imgbtn" src="../static/icons/buttons_main/sun.png" width="40" height="40"
                 title="Mode">
             <img id="help" class="imgbtn" src="../static/icons/buttons_main/help.png" width="40" height="40"
@@ -109,6 +109,12 @@
         </div>
     </div>
     <div id="centerlayout" style="text-align: center;">
+        <!--Description-->
+    <div id="descPanel">
+        <span>
+            Click on a Pog's details to see its stats
+        </span>
+    </div>
         <div id="inventory"></div>
         <div id="settings">
             <div id="sortcont">
@@ -144,7 +150,6 @@
                 <progress id="XPPB" value="0" max="100"></progress>
             </div>
             <div id="collectionBinder">
-                <h3 id="pogCount">Pogs: 0 / 0</h3>
                 <button id="binder">View Collection</button>
             </div>
         </div>
@@ -156,10 +161,10 @@
                 <div class="tooltip-chances">
                 <button id="info1" class="infobtn">i</button>
                 <span id="spani1" class="tooltip-text">
-                    Trash: 49%<br>
+                    Trash: 59%<br>
                     Common: 20%<br>
                     Uncommon: 15%<br>
-                    Rare: 10%<br>
+                    Rare: 0%<br>
                     Mythic: 6%<br>
                 </span>
                 </div>
@@ -258,7 +263,7 @@
 </div>
 
 </body>
-<!--updateinventory.js and searchsort.js must always come first in the js lineup-->
+<!--updateinventory.js and searchsort.js and viewDesc.js must always come first in the js lineup-->
 <script src="../static/js/collectionJS/searchsort.js"></script>
 <script src="../static/js/collectionJS/updateinventory.js"></script>
 <!--crates, shop, combo, lightmode, sellitem, stuffWork next-->
@@ -271,6 +276,7 @@
     stuffwork uses userData to define global parameters-->
 <script src="../static/js/crates.js"></script>
 <script src="../static/js/shop.js"></script>
+<script src="../static/js/collectionJS/saving.js"></script>
 <script src="../static/js/collectionJS/combo.js"></script>
 <script src="../static/js/collectionJS/lightmode.js"></script>
 <script src="../static/js/collectionJS/sellitem.js"></script>
@@ -281,10 +287,11 @@
 <script src="../static/js/collectionJS/income.js"></script>
 <script src="../static/js/collectionJS/trade.js"></script>
 <script src="../static/js/collectionJS/merge.js"></script>
+<script src="../static/js/collectionJS/viewDesc.js"></script>
 <script src="../static/js/collectionJS/sellall.js"></script>
 <script src="../static/js/collectionJS/crateopen.js"></script>
-<script src="../static/js/collectionJS/saving.js"></script>
 <script src="../static/js/collectionJS/shopint.js"></script>
+<script src="../static/js/collectionJS/binderint.js"></script>
 <script src="../static/js/collectionJS/wish.js"></script>
 <script src="../static/js/collectionJS/pfp.js"></script>
 <!--don't put anything here-->
