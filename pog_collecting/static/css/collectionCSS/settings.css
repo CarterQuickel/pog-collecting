@@ -1,5 +1,6 @@
 /* settings */
 #settings {
+    transition: ease-in-out 0.3s;
     margin-top: 8px;
     top: 100px;
     right: 20px;
@@ -17,11 +18,18 @@
 
 #binder {
     background-color: rgb(240, 240, 112);
-    border-radius: 5px;
+    border-radius: 20px;
+    width: 200px;
     padding: 9px;
-    border: transparent;
+    border: 3px solid transparent;
     cursor: pointer;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    transition: all 0.1s ease;
+}
+
+#binder:hover {
+    border: 3px solid white;
+    box-shadow: 0 0 5px white;
 }
 
 #searchbtn {

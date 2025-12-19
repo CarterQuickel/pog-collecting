@@ -10,11 +10,13 @@ const http = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(http);
 const digio = require('socket.io-client');
-const dotenv = require('dotenv');
-dotenv.config({ path: './static/env/.env' });
+require('dotenv').config() 
+
+const randomthing = require("./modules/backend_js/randomthing.js")
+console.log(randomthing.goon)
 
 // API key for Formbar API access
-const API_KEY = process.env.API_KEY; // carter's API key -> this is found in the formbeta profile settings page
+const API_KEY = process.env.API_KEY;
 
 // URL to take user to Formbar for authentication
 const AUTH_URL = process.env.AUTH_URL; // ... or the address to the instance of fbjs you wish to connect to
@@ -34,7 +36,7 @@ crateRef = [
         rarities: [
             {
                 name: "Trash",
-                chance: 0.49
+                chance: 0.59
             },
             {
                 name: "Common",
@@ -46,7 +48,7 @@ crateRef = [
             },
             {
                 name: "Rare",
-                chance: 0.1
+                chance: 0.0
             },
             {
                 name: "Mythic",
@@ -249,7 +251,7 @@ usdb.run(`CREATE TABLE IF NOT EXISTS userSettings (
     income INTEGER,
     totalSold INTEGER,
     cratesOpened INTEGER,
-    pogamount INTEGER,
+    pogamount TEXT,
     achievements TEXT,
     mergeCount INTEGER,
     highestCombo INTEGER,
@@ -327,7 +329,7 @@ app.get('/', isAuthenticated, (req, res) => {
                             req.session.user.income,
                             req.session.user.totalSold,
                             req.session.user.cratesOpened,
-                            req.session.user.pogamount,
+                            JSON.stringify(req.session.user.pogamount),
                             JSON.stringify(req.session.user.achievements),
                             req.session.user.mergeCount,
                             req.session.user.highestCombo,
@@ -360,7 +362,7 @@ app.get('/', isAuthenticated, (req, res) => {
             income: req.session.user.income || 0,
             totalSold: req.session.user.totalSold || 0,
             cratesOpened: req.session.user.cratesOpened || 0,
-            pogamount: req.session.user.pogamount || 0,
+            pogamount: req.session.user.pogamount || [],
             achievements: req.session.user.achievements || achievements,
             mergeCount: req.session.user.mergeCount || 0,
             highestCombo: req.session.user.highestCombo || 0,
@@ -390,7 +392,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     income: row.income,
                     totalSold: row.totalSold,
                     cratesOpened: row.cratesOpened,
-                    pogamount: row.pogamount,
+                    pogamount: JSON.parse(row.pogamount),
                     achievements: JSON.parse(row.achievements),
                     mergeCount: row.mergeCount,
                     highestCombo: row.comboHigh,
@@ -414,7 +416,7 @@ app.get('/', isAuthenticated, (req, res) => {
                     income: 0,
                     totalSold: 0,
                     cratesOpened: 0,
-                    pogamount: 0,
+                    pogamount: [],
                     achievements: achievements,
                     mergeCount: 0,
                     highestCombo: 0,
@@ -455,7 +457,6 @@ app.get('/leaderboard', (req, res) => {
             if (err) {
                 console.error('DB select error:', err);
             }
-            console.log('Leaderboard data retrieved:', rows);
             res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results, scores: rows });
         }
     );
@@ -512,7 +513,7 @@ app.post('/datasave', (req, res) => {
                 userSave.income,
                 userSave.totalSold,
                 userSave.cratesOpened,
-                userSave.pogamount,
+                JSON.stringify(userSave.pogamount),
                 JSON.stringify(userSave.achievements),
                 userSave.mergeCount,
                 req.session.user.highestCombo,
@@ -526,7 +527,6 @@ app.post('/datasave', (req, res) => {
                     console.error('Error updating user settings:', err);
                     return res.status(500).json({ message: 'Error updating user settings' });
                 }
-                console.log(`User settings updated for ${req.session.user.displayName} with fid ${req.session.user.fid}`);
                 req.session.user = { ...req.session.user, ...userSave };
                 return res.json({ message: 'Data saved successfully' });
             });
@@ -590,7 +590,7 @@ app.get('/login', (req, res) => {
             income: tokenData.income || 0,
             totalSold: tokenData.totalSold || 0,
             cratesOpened: tokenData.cratesOpened || 0,
-            pogamount: tokenData.pogamount || 0,
+            pogamount: tokenData.pogamount || [],
             achievements: tokenData.achievements || achievements,
             mergeCount: tokenData.mergeCount || 0,
             highestCombo: tokenData.highestCombo || 0,

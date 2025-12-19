@@ -14,10 +14,10 @@ function update() {
     document.getElementById("income").innerText = `($${abbreviateNumber(getTotalIncome())}/s)`;
 
     //update pog / pog
-    document.getElementById("pogCount").innerText = `Pogs Discovered: ${pogAmount} / ${maxPogs}`;
+    document.getElementById("pogCount").innerText = `Pogs Discovered: ${pogAmount.length} / ${maxBinder}`;
 
     //update pogs color
-    document.getElementById("pogCount").style.color = pogAmount >= maxPogs ? "gold" : lightMode ? "black" : "white";
+    document.getElementById("pogCount").style.color = pogAmount.length >= maxBinder ? "gold" : "white";
 
     //update wish text
     document.getElementById("useWish").innerText = `Wish (${wish})`;
@@ -85,7 +85,7 @@ function updatecrates() {
         // Access price from the crates array at the current index
         let currentPrice = crates[i].price; 
         // Disable individual button if money is less than its price
-        if (money < currentPrice || inventory.length == Isize) {
+        if (money < currentPrice || inventory.length == Isize || inventory.length >= 999) {
             crateButtons[i].disabled = true;
             buym5.disabled = true;
             buym10.disabled = true;

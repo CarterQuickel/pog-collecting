@@ -41,5 +41,6 @@ function merge(bronze, silver, gold, diamond, astral) {
             i--;
         }
     }
+    save();
     if (window.checkAllAchievements) window.checkAllAchievements();
 }

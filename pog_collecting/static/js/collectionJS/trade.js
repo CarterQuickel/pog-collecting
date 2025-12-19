@@ -22,5 +22,6 @@ function trade() {
         // add wish
         wish++;
         refreshInventory();
+        save();
     }
 }

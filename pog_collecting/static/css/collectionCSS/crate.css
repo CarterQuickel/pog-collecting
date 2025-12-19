@@ -4,14 +4,11 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     padding: 15px 30px;
     font-size: 20px;
-    background-color: #130f0c;
-    border: 4px solid #130f0c;
+    border: transparent;
     color: black;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.1s ease;
-    /* For smooth hover */
-    box-shadow: 0 8px #130f0c;
     /* Thick bottom border shadow for weight */
     position: relative;
     top: 0;
@@ -48,7 +45,7 @@
     scale: 0.8;
     transition: all 0.1s ease;
     color: black;
-    border: 3px solid #130f0c;
+    border: transparent;
 }
 
 .buym:disabled {

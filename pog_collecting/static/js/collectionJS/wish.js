@@ -27,6 +27,7 @@ document.getElementById("useWish").addEventListener("click", async () => {
     if (wealth) {
         money += Math.floor(money * 3.5);
         wish--;
+        save();
     } else {
         let power = await customConfirm("Wish of Power: Use wish to gain decreased crate costs?");
         if (power) {
@@ -34,12 +35,14 @@ document.getElementById("useWish").addEventListener("click", async () => {
                 crates[crate].price = Math.floor(crates[crate].price * 0.95);
             }
             wish--;
+            save();
         } else {
             let wisdom = await customConfirm("Wish of Wisdom: Use wish to gain a large amount of XP?");
             if (wisdom) {
                 xp += Math.floor(maxXP * 1.5);
                 levelup();
                 wish--;
+                save();
             } else {
                 await customConfirm("No wish was used.");
             }
