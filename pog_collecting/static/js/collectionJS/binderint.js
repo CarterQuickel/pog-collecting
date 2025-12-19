@@ -32,7 +32,7 @@ const itemView = pogList.map((item) => {
     // rarity color
     color = match ? match.color : "white";
     return `
-        <div class="singleI" style="${owned ? "background-image: radial-gradient(circle, rgb(66, 51, 66), rgb(80, 70, 74)" : "background-color: black"}">
+        <div class="singleI" style="${owned ? "background-color: rgb(66, 51, 66)" : "background-color: black"}">
             <h4 style="color: ${owned ? color : "white"}">${owned ? name : "???"}</h4>
             <p style="font-size: 12px; margin-top: -10px">${owned ? pogcol + " variant" : "???"}</p>
         </div>

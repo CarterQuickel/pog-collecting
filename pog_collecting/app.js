@@ -454,7 +454,6 @@ app.get('/leaderboard', (req, res) => {
             if (err) {
                 console.error('DB select error:', err);
             }
-            console.log('Leaderboard data retrieved:', rows);
             res.render('leaderboard', { userdata: req.session.user, maxPogs: pogCount, pogList: results, scores: rows });
         }
     );
