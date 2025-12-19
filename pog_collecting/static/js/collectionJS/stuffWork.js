@@ -14,6 +14,7 @@ rarityColor = [
     { name: "Uncommon", color: "lime", income: 27 }, //uncommon
     { name: "Rare", color: "aqua", income: 49 }, //rare
     { name: "Mythic", color: "fuchsia", income: 63 }, //mythic
+    { name: "Unique", color: "orange", income: 134 }, //unique
 ]
 
 // used for crate display

@@ -161,7 +161,7 @@ button:hover {
 }
 
 #submitBtn:hover {
-     background-color: rgb(137, 73, 137); 
+     background-color: rgb(137, 73, 137);
 }
 
 .chat-line { margin-bottom: 8px; line-height: 1.3; word-break: break-word; }

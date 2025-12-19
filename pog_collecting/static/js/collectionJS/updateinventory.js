@@ -1,12 +1,20 @@
 //update inventory
 function refreshInventory() {
-    // get inventory div
+    console.log("refreshInventory called, current inventory:", inventory.length);
+    console.log("Last 3 pogs:", inventory.slice(-3).map(p => p.name));
+
+    // Make sure itemSearched is defined
+    if (typeof itemSearched === 'undefined') {
+        window.itemSearched = '';
+    }
+    console.log("itemSearched:", itemSearched);
+
     const inventoryDiv = document.getElementById("inventory");
+    console.log("inventoryDiv found:", inventoryDiv ? "YES" : "NO");
 
     // count how many of each rarity in inventory
     const rarityCounts = {};
     inventory.forEach(item => {
-        // rarityCounts is an object where the KEY is the rarity name [] and the VALUE is the count of that rarity in the inventory; use the || operator to initialize the count to 0 if it doesn't exist yet; +1 to increment the count
         rarityCounts[item.name] = (rarityCounts[item.name] || 0) + 1;
     });
 
@@ -18,20 +26,18 @@ function refreshInventory() {
         money = 200;
     }
 
-    // create bonus outline for items with more than one of the same rarity
-    // Object.keys get the KEY (rarity name) of the rarityCounts object ; filter to only get rarities with 3 or more items
     const highlightColors = Object.keys(rarityCounts).filter(rarity => rarityCounts[rarity] >= 3);
 
-    //see if there is mergeAmount bronze pogs for merge button
     const bronzeCount = inventory.filter(item => item.name === "Bronze Pog").length;
-    // see if there is mergeAmount silver pogs for merge button
     const silverCount = inventory.filter(item => item.name === "Silver Pog").length;
-    // see if there is mergeAmount gold pogs for merge button
     const goldCount = inventory.filter(item => item.name === "Gold Pog").length;
-    // see if there is mergeAmount diamond pogs for merge button
     const diamondCount = inventory.filter(item => item.name === "Diamond Pog").length;
-    // see if there is mergeAmount astral pogs for merge button
     const astralCount = inventory.filter(item => item.name === "Astral Pog").length;
+
+    // DEBUG: Check filtering
+    const filteredInventory = inventory.filter(item => item.name.toLowerCase().includes(itemSearched));
+    console.log("Filtered inventory length:", filteredInventory.length);
+    console.log("First few filtered items:", filteredInventory.slice(0, 3).map(i => i.name));
 
     // set inventory html
     // .filter is used to get the search and .includes to check if the item name includes the searched text
@@ -88,6 +94,14 @@ function refreshInventory() {
             <button id="sellbtn" onclick="sellItem(${item.id}, ${sellvalue}, ${item.locked})">Sell for <br>$${sellvalue}</button>
             ${canMerge ? `<button class="mergebtn" onclick="merge(${isBronze}, ${isSilver}, ${isGold}, ${isDiamond}, ${isAstral})">Merge (${mergeAmount})</button>` : ""}
             ${canTrade ? `<button class="mergebtn" onclick="trade()">Trade (7)</button>` : ""}
-        </div>
-    `}).join("");
+        </div>`;
+    }).join("");
+
+    console.log("Generated HTML length:", htmlResult.length);
+    console.log("HTML preview:", htmlResult.substring(0, 200));
+
+    inventoryDiv.innerHTML = htmlResult;
+    
+    console.log("DOM update complete - inventoryDiv.innerHTML set");
+    console.log("inventoryDiv.children.length:", inventoryDiv.children.length);
 }

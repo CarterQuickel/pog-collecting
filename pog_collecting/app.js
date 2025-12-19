@@ -10,15 +10,17 @@ const http = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(http);
 const digio = require('socket.io-client');
+const dotenv = require('dotenv');
+dotenv.config({ path: './static/env/.env' });
 
 // API key for Formbar API access
-const API_KEY = 'c44f8bc4bb6acef2b313cdb70ddae3228bf0cb73015831fe9133b1dd2c758f95' // carter's API key -> this is found in the formbeta profile settings page
+const API_KEY = process.env.API_KEY; // carter's API key -> this is found in the formbeta profile settings page
 
 // URL to take user to Formbar for authentication
-const AUTH_URL = 'https://formbeta.yorktechapps.com'; // ... or the address to the instance of fbjs you wish to connect to
+const AUTH_URL = process.env.AUTH_URL; // ... or the address to the instance of fbjs you wish to connect to
 
 //URL to take user back to after authentication
-const THIS_URL = 'http://192.168.0.111:3000/login'; // ... or whatever the address to your application is
+const THIS_URL = process.env.THIS_URL; // ... or whatever the address to your application is
 
 const headers = [
     'id', 'name', 'color', 'code', 'number', 'code2',
@@ -610,28 +612,32 @@ http.listen(3000, () => {
 //chat room stuff
 io.on('connection', (socket) => {
     // send recent history to the connecting client (oldest -> newest)
-    usdb.all('SELECT id, name, msg, time, pfp FROM chat ORDER BY id DESC LIMIT 500', [], (err, rows) => {
-        if (!err && Array.isArray(rows)) {
-            socket.emit('chat history', rows.reverse());
+usdb.all('SELECT id, name, msg, time, pfp, userId FROM chat ORDER BY id DESC LIMIT 500', [], (err, rows) => {
+    if (!err && Array.isArray(rows)) {
+        socket.emit('chat history', rows.reverse());
+    }
+});
+
+   // incoming chat messages: sanitize, persist, then broadcast saved record (with server timestamp)
+socket.on('chat message', (data) => {
+    const name = data && data.name ? String(data.name).slice(0, 100) : 'Anonymous';
+    const msg = data && data.msg ? String(data.msg).slice(0, 2000) : '';
+    const pfp = data && data.pfp ? String(data.pfp) : null; // Remove the .slice(0, 200) limit
+    const userId = data && data.userId ? String(data.userId).slice(0, 100) : null; // Add userId
+    const time = Date.now();
+
+    // Update the SQL query to include userId
+    usdb.run('INSERT INTO chat (name, msg, time, pfp, userId) VALUES (?, ?, ?, ?, ?)', 
+        [name, msg, time, pfp, userId], function (err) {
+        if (err) {
+            console.error('Error saving chat message:', err);
+            return;
         }
+        const saved = { id: this.lastID, name, msg, time, pfp, userId };
+        io.emit('chat message', saved);
     });
+});
 
-    // incoming chat messages: sanitize, persist, then broadcast saved record (with server timestamp)
-    socket.on('chat message', (data) => {
-        const name = data && data.name ? String(data.name).slice(0, 100) : 'Anonymous';
-        const msg = data && data.msg ? String(data.msg).slice(0, 2000) : '';
-        const pfp = data && data.pfp ? String(data.pfp) : null;
-        const time = Date.now();
-
-        usdb.run('INSERT INTO chat (name, msg, time, pfp) VALUES (?, ?, ?, ?)', [name, msg, time, pfp], function (err) {
-            if (err) {
-                console.error('Error saving chat message:', err);
-                return;
-            }
-            const saved = { id: this.lastID, name, msg, time, pfp };
-            io.emit('chat message', saved);
-        });
-    });
 });
 
 //achievements list
