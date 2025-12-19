@@ -18,6 +18,13 @@
     flex: 1;
     width: 100%;
     overflow-x: hidden;
+    box-shadow: 
+        /* 1. Outer shadow to ground the object on the page */
+        0 10px 20px rgba(0, 0, 0, 0.3), 
+        /* 2. Inner dark shadow: creates the 'drop' from the border rim */
+        inset 0 6px 12px rgba(0, 0, 0, 0.5),
+        /* 3. Inner light highlight: creates a 'lip' on the opposite edge */
+        inset 0 -2px 8px rgba(0, 0, 0, 0.2);
 }
 
 #stats {
