@@ -16,110 +16,99 @@ function validateCrateOpening(cost, count = 1) {
     return true;
 }
 
+// Replace the calculate/add/open functions with the cleaned versions below
+
 function calculatePogResult(cost, index) {
+    const crateKeys = Object.keys(crates || {});
+    const key = crateKeys[index];
+    if (!key) return null;
+    const crate = crates[key];
+    if (!crate || !Array.isArray(crate.rarities)) return null;
+
     let rand = Math.random();
     let cumulativeChance = 0;
-    let color = "white";
-    let income = 5;
 
-    for (let item of crates[Object.keys(crates)[index]].rarities) {
-        cumulativeChance += item.chance;
+    for (const item of crate.rarities) {
+        cumulativeChance += Number(item.chance) || 0;
         if (rand < cumulativeChance) {
-            // find all pogs with that rarity
-            const matchingRarities = pogList.filter(r => r.rarity === item.name);
-            if (matchingRarities.length === 0) continue;
+            const candidates = (pogList || []).filter(p => p.rarity === item.name);
+            if (candidates.length === 0) return null;
+            const chosen = candidates[Math.floor(Math.random() * candidates.length)];
 
-            // Pick one at random
-            const rarity = matchingRarities[Math.floor(Math.random() * matchingRarities.length)];
-
-            // find rarity color details
-            const match = rarityColor.find(r => r.name === rarity.rarity);
-            const id = Math.random() * 100000;
-
-            // rarity color and income
-            color = match ? match.color : "white";
-            income = match ? match.income : 5;
-
-            // dragon pog stuff
-            let pogName = rarity.name;
-            if (rarity.name === "Dragon Ball") {
-                const inv = inventory.map(i => (i?.name).toLowerCase());
-                const missing = [1, 2, 3, 4, 5, 6, 7].find(num => !inv.includes(`dragon ball ${num}`));
-                if (missing) {
-                    pogName = `Dragon Ball ${missing}`;
-                }
+            // prepare pog object (do NOT mutate inventory or money here)
+            let name = chosen.name;
+            if (name === "Dragon Ball") {
+                const invNames = (inventory || []).map(i => (i && i.name || '').toLowerCase());
+                const missing = [1,2,3,4,5,6,7].find(n => !invNames.includes(`dragon ball ${n}`));
+                if (missing) name = `Dragon Ball ${missing}`;
             }
 
-            // Add result to inventory
-            if (rarity.name != "Dragon Ball") {
-                inventory.push({ locked: false, pogid: rarity.id, name: rarity.name, pogcol: rarity.color, color: color, income: income, value: rarity.rarity, id: id, description: rarity.description, creator: rarity.creator });
-            }
-
-            // XP gain
-            xp += Math.floor(income * (2 * 1 / level)); // gain XP based on income and level
-            levelup();
-
-            // Deduct cost
-            money -= cost;
-            cratesOpened++;
-            refreshInventory();
-            break;
+            const meta = (rarityColor || []).find(r => r.name === chosen.rarity) || {};
+            return {
+                pogid: chosen.id || null,
+                baseName: chosen.name,
+                name,
+                rarity: chosen.rarity,
+                pogcol: chosen.color || meta.color || 'white',
+                color: chosen.color || meta.color || 'white',
+                income: chosen.income || meta.income || 5,
+                description: chosen.description || '',
+                creator: chosen.creator || ''
+            };
         }
     }
     return null;
 }
 
-function addPogToInventory(pogResult) {
-    if (!pogResult) return;
-    
-    // add to pog amount if new pog
-    const exists = inventory.find(i => i.name === pogResult.name);
-    if (!exists && pogAmount < maxPogs) {
-        pogAmount++;
-    }
+function addPogToInventory(pog) {
+    if (!pog) return false;
+    if (!Array.isArray(inventory)) inventory = [];
+    if (inventory.length >= Isize || inventory.length >= 999) return false;
 
-    // Add result to inventory (skip Dragon Ball check since it's handled in calculation)
-    if (pogResult.name !== "Dragon Ball") {
-        inventory.push(pogResult);
-    }
+    const exists = inventory.some(i => i && i.name === pog.name);
+    if (!exists && typeof pogAmount === 'number' && pogAmount < maxPogs) pogAmount++;
 
-    // XP gain
-    xp += Math.floor(pogResult.income * (15 * level / 15));
-    levelup();
+    inventory.push({
+        locked: false,
+        pogid: pog.pogid,
+        name: pog.name,
+        pogcol: pog.pogcol,
+        color: pog.color,
+        income: pog.income,
+        value: pog.rarity,
+        id: Date.now() + Math.floor(Math.random() * 10000),
+        description: pog.description,
+        creator: pog.creator
+    });
+
+    xp = (typeof xp === 'number' ? xp : 0) + Math.floor(pog.income * (15 * (level || 1) / 15));
+    if (typeof levelup === 'function') levelup();
+    if (typeof refreshInventory === 'function') refreshInventory();
+    return true;
 }
-
-// ===== MAIN CRATE OPENING FUNCTIONS =====
 
 function openCrate(cost, index) {
     if (!validateCrateOpening(cost, 1)) return;
-
     const result = calculatePogResult(cost, index);
     if (!result) return;
-
+    // play animation path here if desired, then add
     addPogToInventory(result);
-
-    // Deduct cost and update
-    money -= cost;
-    cratesOpened++;
+    money = (typeof money === 'number' ? money : 0) - cost;
+    cratesOpened = (typeof cratesOpened === 'number' ? cratesOpened : 0) + 1;
     refreshInventory();
 }
 
 function openMultipleCrates(cost, index, count) {
     if (!validateCrateOpening(cost, count)) return;
-
-    // Calculate all results
     const results = [];
     for (let i = 0; i < count; i++) {
-        const result = calculatePogResult(cost, index);
-        if (result) results.push(result);
+        const res = calculatePogResult(cost, index);
+        if (res) results.push(res);
     }
-
-    // Add all to inventory
-    results.forEach(result => addPogToInventory(result));
-
-    // Deduct money and update
-    money -= cost * count;
-    cratesOpened += count;
+    // Optionally animate sequential reveals here
+    results.forEach(r => addPogToInventory(r));
+    money = (typeof money === 'number' ? money : 0) - cost * results.length;
+    cratesOpened = (typeof cratesOpened === 'number' ? cratesOpened : 0) + results.length;
     refreshInventory();
 }
 
@@ -1033,12 +1022,7 @@ async function showIndividualPog(pog, currentIndex, totalCount, isLast) {
     // Get rarity styling
     const rarityStyles = {
         'Unique': {
-            bg: 'linear-gradient(135deg, #ff00ff, #ff69b4, #9400d3, #ffd700)',
-            border: '#ff00ff',
-            shadow: '0 0 50px rgba(255, 0, 255, 1), 0 0 100px rgba(255, 215, 0, 0.8)',
-            textColor: 'white',
-            size: '320px',
-            effects: `
+            bg: 'linear-gradient(135deg, #ff00ff, #ffd700)', border: '#ff00ff', shadow: 'rgba(255, 0, 255, 0.8)', textColor: 'white', size: '320px', effects: `
                 <div style="
                     position: absolute;
                     top: -50%;
@@ -1052,44 +1036,19 @@ async function showIndividualPog(pog, currentIndex, totalCount, isLast) {
             `
         },
         'Mythic': {
-            bg: 'linear-gradient(135deg, #ffd700, #ffed4a)',
-            border: '#ffd700',
-            shadow: '0 0 30px rgba(255, 215, 0, 0.8)',
-            textColor: '#333',
-            size: '280px',
-            effects: ''
+            bg: 'linear-gradient(135deg, #ffd700, #ffed4a)', border: '#ffd700', shadow: 'rgba(255, 215, 0, 0.8)', textColor: '#333', size: '280px', effects: ''
         },
         'Rare': {
-            bg: 'linear-gradient(135deg, #9b59b6, #c39bd3)',
-            border: '#9b59b6',
-            shadow: '0 0 25px rgba(155, 89, 182, 0.6)',
-            textColor: 'white',
-            size: '250px',
-            effects: ''
+            bg: 'linear-gradient(135deg, #9b59b6, #c39bd3)', border: '#9b59b6', shadow: 'rgba(155, 89, 182, 0.6)', textColor: 'white', size: '250px', effects: ''
         },
         'Uncommon': {
-            bg: 'linear-gradient(135deg, #27ae60, #58d68d)',
-            border: '#27ae60',
-            shadow: '0 0 20px rgba(39, 174, 96, 0.5)',
-            textColor: 'white',
-            size: '240px',
-            effects: ''
+            bg: 'linear-gradient(135deg, #27ae60, #58d68d)', border: '#27ae60', shadow: 'rgba(39, 174, 96, 0.5)', textColor: 'white', size: '240px', effects: ''
         },
         'Common': {
-            bg: 'linear-gradient(135deg, #4a9eff, #7bb3ff)',
-            border: '#7bb3ff',
-            shadow: '0 0 20px rgba(123, 179, 255, 0.5)',
-            textColor: 'white',
-            size: '230px',
-            effects: ''
+            bg: 'linear-gradient(135deg, #4a9eff, #7bb3ff)', border: '#7bb3ff', shadow: 'rgba(123, 179, 255, 0.5)', textColor: 'white', size: '230px', effects: ''
         },
         'Trash': {
-            bg: 'linear-gradient(135deg, #666, #999)',
-            border: '#999',
-            shadow: '0 0 15px rgba(153, 153, 153, 0.3)',
-            textColor: 'white',
-            size: '220px',
-            effects: ''
+            bg: 'linear-gradient(135deg, #666, #999)', border: '#999', shadow: 'rgba(153, 153, 153, 0.3)', textColor: 'white', size: '220px', effects: ''
         }
     };
     
