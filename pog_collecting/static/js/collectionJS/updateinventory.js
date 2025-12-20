@@ -76,12 +76,4 @@ function refreshInventory() {
             ${canTrade ? `<button class="mergebtn" onclick="trade()">Trade (7)</button>` : ""}
         </div>`;
     }).join("");
-
-    console.log("Generated HTML length:", htmlResult.length);
-    console.log("HTML preview:", htmlResult.substring(0, 200));
-
-    inventoryDiv.innerHTML = htmlResult;
-    
-    console.log("DOM update complete - inventoryDiv.innerHTML set");
-    console.log("inventoryDiv.children.length:", inventoryDiv.children.length);
 }

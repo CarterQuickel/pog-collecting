@@ -36,6 +36,7 @@ function calculatePogResult(cost, index) {
             const chosen = candidates[Math.floor(Math.random() * candidates.length)];
 
             // prepare pog object (do NOT mutate inventory or money here)
+            // name of pog
             let name = chosen.name;
             if (name === "Dragon Ball") {
                 const invNames = (inventory || []).map(i => (i && i.name || '').toLowerCase());
@@ -49,9 +50,9 @@ function calculatePogResult(cost, index) {
                 baseName: chosen.name,
                 name,
                 rarity: chosen.rarity,
-                pogcol: chosen.color || meta.color || 'white',
-                color: chosen.color || meta.color || 'white',
-                income: chosen.income || meta.income || 5,
+                pogcol: chosen.color || 'white',
+                color: meta.color || 'white',
+                income: meta.income || 5,
                 description: chosen.description || '',
                 creator: chosen.creator || ''
             };
@@ -64,9 +65,11 @@ function addPogToInventory(pog) {
     if (!pog) return false;
     if (!Array.isArray(inventory)) inventory = [];
     if (inventory.length >= Isize || inventory.length >= 999) return false;
-
-    const exists = inventory.some(i => i && i.name === pog.name);
-    if (!exists && typeof pogAmount === 'number' && pogAmount < maxPogs) pogAmount++;
+    //add pog to binder
+    let ownedQueue = { name: pog.name, rarity: pog.rarity, pogcol: pog.pogcol }
+        if (!(pogAmount.find(n => n.name === ownedQueue.name) && pogAmount.find(n => n.rarity === ownedQueue.rarity) && pogAmount.find(n => n.pogcol === ownedQueue.pogcol))) {
+            pogAmount.push(ownedQueue)
+        }
 
     inventory.push({
         locked: false,
@@ -84,6 +87,7 @@ function addPogToInventory(pog) {
     xp = (typeof xp === 'number' ? xp : 0) + Math.floor(pog.income * (15 * (level || 1) / 15));
     if (typeof levelup === 'function') levelup();
     if (typeof refreshInventory === 'function') refreshInventory();
+    save();
     return true;
 }
 
@@ -770,10 +774,10 @@ function addPogToInventory(pogResult) {
     console.log("Adding pog to inventory:", pogResult.name, pogResult.rarity); // DEBUG
     
     // add to pog amount if new pog
-    const exists = inventory.find(i => i.name === pogResult.name);
-    if (!exists && pogAmount < maxPogs) {
-        pogAmount++;
-    }
+    let ownedQueue = { name: pogResult.name, rarity: pogResult.rarity, pogcol: pogResult.pogcol }
+        if (!(pogAmount.find(n => n.name === ownedQueue.name) && pogAmount.find(n => n.rarity === ownedQueue.rarity) && pogAmount.find(n => n.pogcol === ownedQueue.pogcol))) {
+            pogAmount.push(ownedQueue)
+        }
 
     // Add result to inventory (skip Dragon Ball check since it's handled in calculation)
     if (pogResult.name !== "Dragon Ball") {
@@ -784,33 +788,7 @@ function addPogToInventory(pogResult) {
     // XP gain
     xp += Math.floor(pogResult.income * (15 * level / 15));
     levelup();
-}
-
-// Temporary test function - add this to test
-function testInventoryUpdate() {
-    console.log("Testing inventory update...");
-    
-    // Create a fake common pog
-    const testPog = {
-        locked: false,
-        pogid: "test123",
-        name: "Test Common Pog",
-        pogcol: "#blue",
-        color: "blue",
-        income: 10,
-        value: "Common",
-        rarity: "Common",
-        id: Math.random() * 100000,
-        description: "Test pog",
-        creator: "Test"
-    };
-    
-    console.log("Adding test pog:", testPog);
-    addPogToInventory(testPog);
-    refreshInventory();
-    
-    console.log("Current inventory length:", inventory.length);
-    console.log("Last pog in inventory:", inventory[inventory.length - 1]);
+    save();
 }
 
 // Simple reveal for common pogs
@@ -1226,7 +1204,7 @@ async function showResultsSummary(results, pullCount) {
                     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
                     transition: transform 0.2s;
                 ">
-                    Continue to Game
+                    Continue
                 </button>
             </div>
         </div>
