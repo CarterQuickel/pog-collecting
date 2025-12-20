@@ -7,15 +7,15 @@ function merge(bronze, silver, gold, diamond, astral) {
 
     // add new  pog to inventory
     if (bronze) {
-        inventory.push({ locked: false, pogid: 286, name: "Silver Pog", pogcol: "Silver", color: "lightgray", income: 620, value: "Unique", id: Date.now() + Math.floor(Math.random() * 10000), description: "A pog made from pure silver.", creator: "Silversmith" });
+        inventory.push({ locked: false, pogid: 286, name: "Silver Pog", pogcol: "Silver", color: "lightgray", income: 620, rarity: "Unique", id: Date.now() + Math.floor(Math.random() * 10000), description: "A pog made from pure silver.", creator: "Silversmith" });
     } else if (silver) {
-        inventory.push({ locked: false, pogid: 287, name: "Gold Pog", pogcol: "Gold", color: "lightgray", income: 7400, value: "Unique", id: Date.now() + Math.floor(Math.random() * 10000), description: "A pog made from pure gold.", creator: "King Midas" });
+        inventory.push({ locked: false, pogid: 287, name: "Gold Pog", pogcol: "Gold", color: "lightgray", income: 7400, rarity: "Unique", id: Date.now() + Math.floor(Math.random() * 10000), description: "A pog made from pure gold.", creator: "King Midas" });
     } else if (gold) {
-        inventory.push({ locked: false, pogid: 288, name: "Diamond Pog", pogcol: "Diamond", color: "lightgray", income: 83000, value: "Unique", id: Date.now() + Math.floor(Math.random() * 10000), description: "A pog made from the hardest material on Earth.", creator: "Gemmaster" });
+        inventory.push({ locked: false, pogid: 288, name: "Diamond Pog", pogcol: "Diamond", color: "lightgray", income: 83000, rarity: "Unique", id: Date.now() + Math.floor(Math.random() * 10000), description: "A pog made from the hardest material on Earth.", creator: "Gemmaster" });
     } else if (diamond) {
-        inventory.push({ locked: false, pogid: 289, name: "Astral Pog", pogcol: "Astral", color: "lightgray", income: 1000000, value: "Unique", id: Date.now() + Math.floor(Math.random() * 10000), description: "A pog infused with the power of the stars.", creator: "Celestial Smith" });
+        inventory.push({ locked: false, pogid: 289, name: "Astral Pog", pogcol: "Astral", color: "lightgray", income: 1000000, rarity: "Unique", id: Date.now() + Math.floor(Math.random() * 10000), description: "A pog infused with the power of the stars.", creator: "Celestial Smith" });
     } else if (astral) {
-        inventory.push({ locked: false, pogid: 290, name: "God Pog", pogcol: "White", color: "lightgray", income: 694206741, value: "Otherworldly", id: Date.now() + Math.floor(Math.random() * 10000), description: "The ultimate pog, said to be created by the gods themselves.", creator: "Ancient Deity" });
+        inventory.push({ locked: false, pogid: 290, name: "God Pog", pogcol: "White", color: "lightgray", income: 694206741, rarity: "Otherworldly", id: Date.now() + Math.floor(Math.random() * 10000), description: "The ultimate pog, said to be created by the gods themselves.", creator: "Ancient Deity" });
     }
     // only sell the amount needed
     for (let i = 0; i < inventory.length && sold < mergeAmount; i++) {

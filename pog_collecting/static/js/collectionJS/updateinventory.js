@@ -35,6 +35,7 @@ function refreshInventory() {
     const astralCount = inventory.filter(item => item.name === "Astral Pog").length;
 
     // DEBUG: Check filtering
+    console.log("Item name: ", inventory.filter(item => item.name))
     const filteredInventory = inventory.filter(item => item.name.toLowerCase().includes(itemSearched));
     console.log("Filtered inventory length:", filteredInventory.length);
     console.log("First few filtered items:", filteredInventory.slice(0, 3).map(i => i.name));
@@ -45,7 +46,7 @@ function refreshInventory() {
         return hasBonus = highlightColors.includes(item.name),
             namelength = item.name.length,
             sellvalue = Math.round((item.income * 2.94 * (level / 1.6))**((level / 100) + 1)),
-            unique = item.value === "Unique",
+            unique = item.rarity === "Unique",
             // refernce this inside the map function, for item is only defined in here
             isBronze = item.name === "Bronze Pog",
             isSilver = item.name === "Silver Pog",

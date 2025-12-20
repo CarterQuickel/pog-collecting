@@ -51,7 +51,7 @@ function calculatePogResult(cost, index) {
                 pogid: chosen.id || null,
                 name: chosen.name,
                 id: Date.now() + Math.floor(Math.random() * 10000),
-                value: chosen.rarity,
+                rarity: chosen.rarity,
                 pogcol: chosen.color || 'white',
                 color: meta.color || 'white',
                 income: meta.income || 5,
@@ -63,7 +63,7 @@ function calculatePogResult(cost, index) {
                 pogid: chosen.id || null,
                 name: chosen.name,
                 id: Date.now() + Math.floor(Math.random() * 10000),
-                value: chosen.rarity,
+                rarity: chosen.rarity,
                 pogcol: chosen.color || 'white',
                 color: meta.color || 'white',
                 income: meta.income || 5,
@@ -1218,7 +1218,7 @@ function createPogResultCard(pog, index) {
             position: relative;
             overflow: hidden;
         ">
-            ${pog.value === 'Unique' ? `
+            ${pog.rarity === 'Unique' ? `
                 <div style="
                     position: absolute;
                     top: -50%;
@@ -1249,7 +1249,7 @@ function createPogResultCard(pog, index) {
                 z-index: 1;
                 text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
             ">
-                ${pog.value}
+                ${pog.rarity}
             </div>
         </div>
     `;
