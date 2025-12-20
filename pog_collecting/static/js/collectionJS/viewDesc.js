@@ -25,12 +25,12 @@ document.getElementById("inventory").addEventListener("click", (e) => {
 function viewDesc(name, locked, rarity, id, pogid, color, creator, desc, income, value) {
     console.log(name, locked, rarity, id, pogid, color, creator, desc, income, value)
     const panel = document.getElementById("descPanel");
+    const ab_value = abbreviateNumber(value);
     panel.innerHTML = `
     <h3 id="headerName">${name}</h3>
-    ${rarity}
     <div id="money-info">
-        <strong class="moneytxt">$${Math.round(income * ((window.perNameBonus && window.perNameBonus[name]) || 1))}/s</strong><br>
-        <strong class="moneytxt">$${value}</strong><br>
+        <strong class="moneytxt">$${abbreviateNumber(Math.round(income * ((window.perNameBonus && window.perNameBonus[name])) || 1))}/s</strong><br>
+        <strong class="moneytxt">$${ab_value}</strong><br>
     </div>
     <p>${desc}</p>
     <button id="sellbtn" onclick="sellItem(${id}, ${sellvalue}, ${locked})">Sell</button>

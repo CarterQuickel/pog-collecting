@@ -1,9 +1,6 @@
 // update loop
 setInterval(update, 100);
 function update() {
-    //abbrevs
-    const abbreviatedXP = abbreviateNumber(xp);
-    const abbreviatedMaxXP = abbreviateNumber(maxXP);
     // update inventory size text
     document.getElementById("invTxt").innerHTML = `${inventory.length}/${Isize} Slots`
 
