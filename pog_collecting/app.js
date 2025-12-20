@@ -38,7 +38,7 @@ crateRef = [
         price: 100,
         rarities: [
             {
-                name: "Unique",
+                name: "Trash",
                 chance: 0.59
             },
             {
@@ -147,7 +147,7 @@ crateRef = [
             },
             {
                 name: "Common",
-                chance: 0.4
+                chance: 0.38    // lowered a bit
             },
             {
                 name: "Uncommon",
@@ -159,7 +159,11 @@ crateRef = [
             },
             {
                 name: "Mythic",
-                chance: 0.6
+                chance: 0.61    // adjusted
+            },
+            {
+                name: "Unique",
+                chance: 0.01    // new tiny chance for Unique
             }
         ]
     }

@@ -46,18 +46,6 @@ function calculatePogResult(cost, index) {
             }
 
             const meta = (rarityColor || []).find(r => r.name === chosen.rarity) || {};
-            console.log({
-                locked: false,
-                pogid: chosen.id || null,
-                name: chosen.name,
-                id: Date.now() + Math.floor(Math.random() * 10000),
-                rarity: chosen.rarity,
-                pogcol: chosen.color || 'white',
-                color: meta.color || 'white',
-                income: meta.income || 5,
-                description: chosen.description || '',
-                creator: chosen.creator || ''
-            });
             return {
                 locked: false,
                 pogid: chosen.id || null,
@@ -715,6 +703,7 @@ function addPogToInventory(pogResult) {
 
     // XP gain
     xp += Math.floor(pogResult.income * (15 * level / 15));
+    sorting();
     levelup();
     save();
 }

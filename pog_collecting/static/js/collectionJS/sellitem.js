@@ -12,4 +12,5 @@ function sellItem(id, sellvalue, locked) {
         save();
         if (window.checkAllAchievements) window.checkAllAchievements();
     }
+    document.getElementById("descPanel").innerHTML = "";
 }

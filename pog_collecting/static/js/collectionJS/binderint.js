@@ -12,7 +12,9 @@ document.getElementById("closeBinder").addEventListener("click", () => {
 function viewCollection() {
     maxBinder = 0;
     const itemsHTML = document.getElementById("binderItems")
-    const itemView = pogList.map((item) => {
+    const rarityOrder = { 'Unique': 6, 'Mythic': 5, 'Rare': 4, 'Uncommon': 3, 'Common': 2, 'Trash': 1 };
+    const sortedResults = [...pogList].sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
+    const itemView = sortedResults.map((item) => {
         const name = item.name;
         maxBinder++
         // is the name a dragon pog?

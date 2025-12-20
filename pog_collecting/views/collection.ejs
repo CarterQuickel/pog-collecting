@@ -42,7 +42,7 @@
     <div id="transConf" style="display: none;">
         <h5>Purchase Item?</h5>
         <label>PIN</label>
-        <input id="pinField" type="password"/>
+        <input id="pinField" type="password" />
         <button id="purchaseBtn" class="pageButtons">Purchase</button>
         <br>
         <button id="cancelBtn" class="pageButtons">Cancel</button>
@@ -96,11 +96,16 @@
         </div>
         <div style="right: 0; top: 0;" class="rightstuff">
             <button id="useWish" style="display: none;">Use Wish</button>
-            <img id="shopBtn" class="imgbtn" title="Shop" src="../static/icons/buttons_main/shop.png" width="40" height="40"></img>
-            <img src="../static/icons/buttons_main/chat.png" title="Chatroom" width="40" height="40" id="chatRoomButton" class="imgbtn">
-            <img src="../static/icons/buttons_main/patches.png" title="Patch Notes" width="40" height="40" id="patchNotesButton" class="imgbtn">
-            <img src="../static/icons/buttons_main/trophy.png" title="Achievements" width="40" height="40" id="achievementsButton" class="imgbtn">
-            <img src="../static/icons/buttons_main/board.png" title="Leaderboard" width="40" height="40" id="leaderboardButton" class="imgbtn">
+            <img id="shopBtn" class="imgbtn" title="Shop" src="../static/icons/buttons_main/shop.png" width="40"
+                height="40"></img>
+            <img src="../static/icons/buttons_main/chat.png" title="Chatroom" width="40" height="40" id="chatRoomButton"
+                class="imgbtn">
+            <img src="../static/icons/buttons_main/patches.png" title="Patch Notes" width="40" height="40"
+                id="patchNotesButton" class="imgbtn">
+            <img src="../static/icons/buttons_main/trophy.png" title="Achievements" width="40" height="40"
+                id="achievementsButton" class="imgbtn">
+            <img src="../static/icons/buttons_main/board.png" title="Leaderboard" width="40" height="40"
+                id="leaderboardButton" class="imgbtn">
             <div class="verticalL"></div>
             <img id="darkmode" class="imgbtn" src="../static/icons/buttons_main/sun.png" width="40" height="40"
                 title="Mode">
@@ -110,11 +115,9 @@
     </div>
     <div id="centerlayout" style="text-align: center;">
         <!--Description-->
-    <div id="descPanel">
-        <span>
-            Click on a Pog's details to see its stats
-        </span>
-    </div>
+        <div id="descPanel">
+            <span></span>
+        </div>
         <div id="inventory"></div>
         <div id="settings">
             <div id="sortcont">
@@ -128,8 +131,8 @@
                     <option value="nameAZ">Sort by Name (a-z) &#8593;</option>
                     <option value="nameZA">Sort by Name (z-a) &#8595;</option>
                     <hr />
-                    <option value="incomeHf">Sort by Income (high to low) &#8593;</option>
-                    <option value="incomeLf">Sort by Income (low to high) &#8595;</option>
+                    <option value="rarityHf">Sort by Rarity (trash to unique) &#8593;</option>
+                    <option value="rarityLf">Sort by Rarity (unique to trash) &#8595;</option>
                     <hr />
                     <option value="svHf">Sort by Sell Value (high to low) &#8593;</option>
                     <option value="svLf">Sort by Sell Value (low to high) &#8595;</option>
@@ -153,111 +156,118 @@
         <img id="openCratesBtn" src="../static/icons/buttons_main/crate.png" width="30" height="30" title="Pog Crates">
         <div id="cratesCont" style="display: none">
             <div id="crateBtns">
-            <h4>Pog Crates</h4>
-            <div class="buttonSources">
-                <div class="tooltip-chances">
-                <button id="info1" class="infobtn">i</button>
-                <span id="spani1" class="tooltip-text">
-                    Trash: 59%<br>
-                    Common: 20%<br>
-                    Uncommon: 15%<br>
-                    Rare: 0%<br>
-                    Mythic: 6%<br>
-                </span>
+                <h4>Pog Crates</h4>
+                <div class="buttonSources">
+                    <div class="tooltip-chances">
+                        <button id="info1" class="infobtn">i</button>
+                        <span id="spani1" class="tooltip-text">
+                            Trash: 59%<br>
+                            Common: 20%<br>
+                            Uncommon: 15%<br>
+                            Rare: 0%<br>
+                            Mythic: 6%<br>
+                        </span>
+                    </div>
+                    <button id="crate1" class="crate">Common Crate - $100</button>
+                    <div class="buymCont">
+                        <button id="crate1_b5" class="buym">+5</button>
+                        <button id="crate1_b10" class="buym">+10</button>
+                    </div>
                 </div>
-                <button id="crate1" class="crate">Common Crate - $100</button>
-                <div class="buymCont">
-                <button id="crate1_b5" class="buym">+5</button>
-                <button id="crate1_b10" class="buym">+10</button>
+                <div class="buttonSources">
+                    <div class="tooltip-chances">
+                        <button id="info2" class="infobtn">i</button>
+                        <span id="spani2" class="tooltip-text">
+                            Trash: 0%<br>
+                            Common: 60%<br>
+                            Uncommon: 16%<br>
+                            Rare: 13%<br>
+                            Mythic: 11%<br>
+                        </span>
+                    </div>
+                    <button id="crate2" class="crate">Rare Crate - $500</button>
+                    <div class="buymCont">
+                        <button id="crate2_b5" class="buym">+5</button>
+                        <button id="crate2_b10" class="buym">+10</button>
+                    </div>
                 </div>
-            </div>
-            <div class="buttonSources">
-                <div class="tooltip-chances">
-                <button id="info2" class="infobtn">i</button>
-                <span id="spani2" class="tooltip-text">
-                    Trash: 0%<br>
-                    Common: 60%<br>
-                    Uncommon: 16%<br>
-                    Rare: 13%<br>
-                    Mythic: 11%<br>
-                </span>
+                <div class="buttonSources">
+                    <div class="tooltip-chances">
+                        <button id="info3" class="infobtn">i</button>
+                        <span id="spani3" class="tooltip-text">
+                            Trash: 0%<br>
+                            Common: 40%<br>
+                            Uncommon: 27%<br>
+                            Rare: 21%<br>
+                            Mythic: 12%<br>
+                        </span>
+                    </div>
+                    <button id="crate3" class="crate">Epic Crate - $1000</button>
+                    <div class="buymCont">
+                        <button id="crate3_b5" class="buym">+5</button>
+                        <button id="crate3_b10" class="buym">+10</button>
+                    </div>
                 </div>
-                <button id="crate2" class="crate">Rare Crate - $500</button>
-                <div class="buymCont">
-                <button id="crate2_b5" class="buym">+5</button>
-                <button id="crate2_b10" class="buym">+10</button>
+                <div class="buttonSources">
+                    <div class="tooltip-chances">
+                        <button id="info4" class="infobtn">i</button>
+                        <span id="spani4" class="tooltip-text">
+                            Trash: 0%<br>
+                            Common: 50%<br>
+                            Uncommon: 0%<br>
+                            Rare: 50%<br>
+                            Mythic: 0%<br>
+                        </span>
+                    </div>
+                    <button id="crate4" class="crate">Legendary Crate - $5000</button>
+                    <div class="buymCont">
+                        <button id="crate4_b5" class="buym">+5</button>
+                        <button id="crate4_b10" class="buym">+10</button>
+                    </div>
                 </div>
-            </div>
-            <div class="buttonSources">
-                <div class="tooltip-chances">
-                <button id="info3" class="infobtn">i</button>
-                <span id="spani3" class="tooltip-text">
-                    Trash: 0%<br>
-                    Common: 40%<br>
-                    Uncommon: 27%<br>
-                    Rare: 21%<br>
-                    Mythic: 12%<br>
-                </span>
+                <div class="buttonSources">
+                    <div class="tooltip-chances">
+                        <button id="info5" class="infobtn">i</button>
+                        <span id="spani5" class="tooltip-text">
+                            Trash: 0%<br>
+                            Common: 40%<br>
+                            Uncommon: 0%<br>
+                            Rare: 0%<br>
+                            Mythic: 60%<br>
+                        </span>
+                    </div>
+                    <button id="crate5" class="crate">Mythical Crate - $7000</button>
+                    <div class="buymCont">
+                        <button id="crate5_b5" class="buym">+5</button>
+                        <button id="crate5_b10" class="buym">+10</button>
+                    </div>
                 </div>
-                <button id="crate3" class="crate">Epic Crate - $1000</button>
-                <div class="buymCont">
-                <button id="crate3_b5" class="buym">+5</button>
-                <button id="crate3_b10" class="buym">+10</button>
-                </div>
-            </div>
-            <div class="buttonSources">
-                <div class="tooltip-chances">
-                <button id="info4" class="infobtn">i</button>
-                <span id="spani4" class="tooltip-text">
-                    Trash: 0%<br>
-                    Common: 50%<br>
-                    Uncommon: 0%<br>
-                    Rare: 50%<br>
-                    Mythic: 0%<br>
-                </span>
-                </div>
-                <button id="crate4" class="crate">Legendary Crate - $5000</button>
-                <div class="buymCont">
-                <button id="crate4_b5" class="buym">+5</button>
-                <button id="crate4_b10" class="buym">+10</button>
-                </div>
-            </div>
-            <div class="buttonSources">
-                <div class="tooltip-chances">
-                <button id="info5" class="infobtn">i</button>
-                <span id="spani5" class="tooltip-text">
-                    Trash: 0%<br>
-                    Common: 40%<br>
-                    Uncommon: 0%<br>
-                    Rare: 0%<br>
-                    Mythic: 60%<br>
-                </span>
-                </div>
-                <button id="crate5" class="crate">Mythical Crate - $7000</button>
-                <div class="buymCont">
-                <button id="crate5_b5" class="buym">+5</button>
-                <button id="crate5_b10" class="buym">+10</button>
-                </div>
-            </div>
             </div>
         </div>
     </div>
     <div id="slider" style="position: flex"></div>
-<!-- Gacha Animation Overlay - ADD THIS IF MISSING -->
-<!-- Gacha Animation Overlay -->
-<div id="gachaOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; background: rgba(0, 0, 20, 1);">
-    
-    <button id="skipAnimation" style="display: none; position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 10px 15px; border-radius: 5px;">Skip ⏭️</button>
-    
-    <div id="shootingStarsContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
-    
-    <div id="clickToContinue" style="display: none; position: absolute; top: 80px; left: 50%; transform: translateX(-50%); color: gold; font-size: 24px; text-align: center; z-index: 10004;">
-        <p>Click anywhere to continue...</p>
+    <!-- Gacha Animation Overlay - ADD THIS IF MISSING -->
+    <!-- Gacha Animation Overlay -->
+    <div id="gachaOverlay"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; background: rgba(0, 0, 20, 1);">
+
+        <button id="skipAnimation"
+            style="display: none; position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 10px 15px; border-radius: 5px;">Skip
+            ⏭️</button>
+
+        <div id="shootingStarsContainer"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+
+        <div id="clickToContinue"
+            style="display: none; position: absolute; top: 80px; left: 50%; transform: translateX(-50%); color: gold; font-size: 24px; text-align: center; z-index: 10004;">
+            <p>Click anywhere to continue...</p>
+        </div>
+
+        <div id="centerPogReveal"
+            style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10003;">
+        </div>
+
     </div>
-    
-    <div id="centerPogReveal" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10003;"></div>
-    
-</div>
 
 </body>
 <!--updateinventory.js and searchsort.js and viewDesc.js must always come first in the js lineup-->
@@ -295,4 +305,23 @@
 <script src="../static/js/achievements.js"></script>
 <!--tickupdate is last-->
 <script src="../static/js/collectionJS/tickupdate.js"></script>
+<!--save filter-->
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const mySel = document.getElementById("selectSort");
+        const storageKey = "defaultValue";
+
+        // 1. Load saved value on page load
+        const savedValue = localStorage.getItem(storageKey);
+        if (savedValue) {
+            mySel.value = savedValue;
+        }
+
+        // 2. Save value when the selection changes
+        mySel.addEventListener("change", function () {
+            localStorage.setItem(storageKey, this.value);
+        });
+    });
+</script>
+
 </html>

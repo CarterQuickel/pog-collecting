@@ -1,5 +1,16 @@
 // reference userdata from ejs
 var userdata = JSON.parse(document.getElementById("userdata").textContent);
+/* READ THIS BEFORE MAKING CHANGES:
+
+!
+!
+!
+!
+!
+!
+!
+
+CRATE DATA UPDATED IN HERE MUST BE UPDATED IN APP.JS UNTIL MODULES ARE COMPLETED */
 let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crates || 
 [
     {
@@ -7,7 +18,7 @@ let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crate
         price: 100,
         rarities: [
             {
-                name: "Unique",
+                name: "Trash",
                 chance: 0.59
             },
             {
