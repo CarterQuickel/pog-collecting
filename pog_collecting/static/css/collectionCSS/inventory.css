@@ -30,8 +30,9 @@
 }
 
 .mergebtn {
-    background-color: rgb(230, 230, 124);
-    border: transparent;
+    background-color: transparent;
+    border: 3px solid white;
+    color: white;
     border-radius: 45px;
     padding: 8px;
     width: 100px;
@@ -41,10 +42,11 @@
     font-size: 15px;
     cursor: pointer;
     scale: 0.8;
+    transition: all 0.1s ease;
 }
 
 .mergebtn:hover {
-    background-color: rgb(134, 132, 17);
+    background-color: rgba(112, 112, 112, 0.582);
 }
 
 #sellbtn {
@@ -185,15 +187,13 @@ hr {
 
 .name {
     text-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-    /* Bottom floor shadow */
 }
 
 #money-info {
     margin-top: 8px;
     display: flex;
     justify-content: center;
-    gap: 5px;
-    padding: 3px;
+    padding: 2px;
     width: 90%;
     background-color: rgb(43, 41, 41);
     border-radius: 5px;

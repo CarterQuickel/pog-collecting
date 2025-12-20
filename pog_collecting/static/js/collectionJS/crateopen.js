@@ -34,6 +34,7 @@ function calculatePogResult(cost, index) {
             const candidates = (pogList || []).filter(p => p.rarity === item.name);
             if (candidates.length === 0) return null;
             const chosen = candidates[Math.floor(Math.random() * candidates.length)];
+            console.log(chosen)
 
             // prepare pog object (do NOT mutate inventory or money here)
             // name of pog
@@ -45,11 +46,24 @@ function calculatePogResult(cost, index) {
             }
 
             const meta = (rarityColor || []).find(r => r.name === chosen.rarity) || {};
-            return {
+            console.log({
+                locked: false,
                 pogid: chosen.id || null,
-                baseName: chosen.name,
-                name,
-                rarity: chosen.rarity,
+                name: chosen.name,
+                id: Date.now() + Math.floor(Math.random() * 10000),
+                value: chosen.rarity,
+                pogcol: chosen.color || 'white',
+                color: meta.color || 'white',
+                income: meta.income || 5,
+                description: chosen.description || '',
+                creator: chosen.creator || ''
+            });
+            return {
+                locked: false,
+                pogid: chosen.id || null,
+                name: chosen.name,
+                id: Date.now() + Math.floor(Math.random() * 10000),
+                value: chosen.rarity,
                 pogcol: chosen.color || 'white',
                 color: meta.color || 'white',
                 income: meta.income || 5,
@@ -59,36 +73,6 @@ function calculatePogResult(cost, index) {
         }
     }
     return null;
-}
-
-function addPogToInventory(pog) {
-    if (!pog) return false;
-    if (!Array.isArray(inventory)) inventory = [];
-    if (inventory.length >= Isize || inventory.length >= 999) return false;
-    //add pog to binder
-    let ownedQueue = { name: pog.name, rarity: pog.rarity, pogcol: pog.pogcol }
-        if (!(pogAmount.find(n => n.name === ownedQueue.name) && pogAmount.find(n => n.rarity === ownedQueue.rarity) && pogAmount.find(n => n.pogcol === ownedQueue.pogcol))) {
-            pogAmount.push(ownedQueue)
-        }
-
-    inventory.push({
-        locked: false,
-        pogid: pog.pogid,
-        name: pog.name,
-        pogcol: pog.pogcol,
-        color: pog.color,
-        income: pog.income,
-        value: pog.rarity,
-        id: Date.now() + Math.floor(Math.random() * 10000),
-        description: pog.description,
-        creator: pog.creator
-    });
-
-    xp = (typeof xp === 'number' ? xp : 0) + Math.floor(pog.income * (15 * (level || 1) / 15));
-    if (typeof levelup === 'function') levelup();
-    if (typeof refreshInventory === 'function') refreshInventory();
-    save();
-    return true;
 }
 
 function openCrate(cost, index) {
@@ -118,6 +102,17 @@ function openMultipleCrates(cost, index, count) {
 
 // ===== ANIMATION FUNCTIONS (for future integration) =====
 
+//reduces lag
+function cleanupGachaOverlay() {
+    document.getElementById('gachaOverlay').style.display = 'none';
+        document.getElementById('shootingStarsContainer').innerHTML = '';
+        const centerReveal = document.getElementById('centerPogReveal');
+        if (centerReveal) {
+            centerReveal.style.display = 'none';
+            centerReveal.innerHTML = '';
+        }
+}
+
 // ===== UPDATED SINGLE CRATE WITH BETTER CLEANUP =====
 
 async function openCrateWithAnimation(cost, index) {
@@ -136,14 +131,6 @@ async function openCrateWithAnimation(cost, index) {
     
     // Make sure inventory refreshes and is visible
     refreshInventory();
-    
-    // Ensure the overlay is fully hidden
-    setTimeout(() => {
-        const overlay = document.getElementById('gachaOverlay');
-        if (overlay) {
-            overlay.style.display = 'none';
-        }
-    }, 100);
 }
 
 
@@ -215,18 +202,7 @@ async function showAnimationForRarity(rarity, pogResult) {
         await showUniqueParticleExplosion();
     }
     
-    // IMMEDIATE cleanup for common pogs
-    const cleanupDelay = (rarity === 'Common' || rarity === 'Trash') ? 100 : 1000;
-    
-    setTimeout(() => {
-        document.getElementById('gachaOverlay').style.display = 'none';
-        document.getElementById('shootingStarsContainer').innerHTML = '';
-        const centerReveal = document.getElementById('centerPogReveal');
-        if (centerReveal) {
-            centerReveal.style.display = 'none';
-            centerReveal.innerHTML = '';
-        }
-    }, cleanupDelay);
+    cleanupGachaOverlay();
 }
 
 // Updated main functions with animation
@@ -236,23 +212,14 @@ async function openCrateWithAnimation(cost, index) {
     const result = calculatePogResult(cost, index);
     if (!result) return;
 
-    console.log("Opening crate with result:", result.name, result.rarity); // DEBUG
-
-    // Show animation based on rarity
-    await showAnimationForRarity(result.rarity, result);
-
-    // Add to inventory AFTER animation completes
+    // changed it so the pog is added before animation to prevent save scumming
     addPogToInventory(result);
     money -= cost;
     cratesOpened++;
+    refreshInventory();
     
-    console.log("About to refresh inventory..."); // DEBUG
-    
-    // Wait a bit longer before refreshing for common pogs
-    setTimeout(() => {
-        refreshInventory();
-        console.log("Inventory refreshed!"); // DEBUG
-    }, 500);
+    // Show animation based on rarity
+    showAnimationForRarity(result.rarity, result);
 }
 
 
@@ -265,7 +232,7 @@ crateButtons.forEach(crate => {
     const price = crates[Object.keys(crates)[crate.index]].price;
     
     // Single crate WITH animation
-    document.getElementById(crate.single).addEventListener("click", () => 
+    document.getElementById(crate.single).addEventListener("click", () =>
         openCrateWithAnimation(price, crate.index)
     );
     
@@ -361,7 +328,7 @@ async function showClickToContinue(hasSpecial = false) {
     if (hasSpecial) {
         clickDiv.innerHTML = `
             <p style="color: #ff00ff; font-size: 28px; text-shadow: 0 0 20px #ff00ff;">
-                ✨ Click anywhere to witness your special pog! ✨
+                Click anywhere to witness your special pog!
             </p>
         `;
         clickDiv.style.animation = 'uniquePulse 1s ease-in-out infinite';
@@ -506,7 +473,7 @@ async function revealUniquePogInCenter(uniquePog) {
                 font-weight: bold;
                 z-index: 1;
             ">
-                ✨ UNIQUE ✨
+                UNIQUE
             </div>
             
             <!-- Orbiting ring -->
@@ -522,12 +489,6 @@ async function revealUniquePogInCenter(uniquePog) {
     `;
     
     centerReveal.style.display = 'block';
-    
-    // Trigger screenshake
-    document.body.classList.add('screenshake');
-    setTimeout(() => {
-        document.body.classList.remove('screenshake');
-    }, 800);
 }
 
 async function showUniqueParticleExplosion() {
@@ -566,32 +527,6 @@ async function showUniqueParticleExplosion() {
         
         container.appendChild(particle);
     }
-    
-    // Screen flash
-    const flash = document.createElement('div');
-    flash.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: radial-gradient(circle, 
-            rgba(255, 255, 255, 0.9) 0%,
-            rgba(255, 215, 0, 0.6) 30%,
-            rgba(255, 0, 255, 0.4) 60%,
-            transparent 100%);
-        pointer-events: none;
-        z-index: 10001;
-        animation: uniqueFlash 0.5s ease-out;
-    `;
-    
-    document.body.appendChild(flash);
-    
-    setTimeout(() => {
-        if (flash.parentNode) {
-            flash.parentNode.removeChild(flash);
-        }
-    }, 500);
     
     await new Promise(resolve => setTimeout(resolve, 3000));
     
@@ -680,15 +615,7 @@ async function showAnimationForRarity(rarity, pogResult) {
     }
     
     // Step 4: Clean up
-    setTimeout(() => {
-        document.getElementById('gachaOverlay').style.display = 'none';
-        document.getElementById('shootingStarsContainer').innerHTML = '';
-        const centerReveal = document.getElementById('centerPogReveal');
-        if (centerReveal) {
-            centerReveal.style.display = 'none';
-            centerReveal.innerHTML = '';
-        }
-    }, 1500);
+    cleanupGachaOverlay();
 }
 
 
@@ -748,9 +675,6 @@ async function openMultipleCratesWithAnimation(cost, index, count) {
         rarityOrder[pog.rarity] > rarityOrder[highest.rarity] ? pog : highest
     );
 
-    // Show multi-pull animation
-    await showMultiPullAnimation(results, count, highestRarity);
-
     // Add all pogs to inventory AFTER animation
     results.forEach(result => addPogToInventory(result));
 
@@ -758,6 +682,10 @@ async function openMultipleCratesWithAnimation(cost, index, count) {
     money -= cost * count;
     cratesOpened += count;
     refreshInventory();
+
+    // Show multi-pull animation
+    showMultiPullAnimation(results, count, highestRarity);
+
 }
 
 
@@ -813,7 +741,7 @@ async function revealCommonPog(pogResult) {
             width: 250px;
             height: 150px;
             border-radius: 15px;
-            background: linear-gradient(135deg, #4a9eff, #7bb3ff);
+            background: linear-gradient(135deg, #919191ff, #9e9c9cff);
             border: 3px solid white;
             box-shadow: 0 0 20px rgba(123, 179, 255, 0.5);
             display: flex;
@@ -871,17 +799,17 @@ async function revealMythicPog(pogResult) {
             width: 280px;
             height: 180px;
             border-radius: 15px;
-            background: linear-gradient(135deg, #ffd700, #ffed4a);
+            background: linear-gradient(135deg, #ea00ffff, #f86de1ff);
             border: 4px solid white;
             box-shadow: 
-                0 0 30px rgba(255, 215, 0, 0.8),
-                0 0 60px rgba(255, 215, 0, 0.4);
+                0 0 30px rgba(255, 0, 212, 0.8),
+                0 0 60px rgba(255, 0, 255, 0.4);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             animation: mythicPogReveal 1.5s ease-out;
-            color: #333;
+            color: #ffd3fdff;
             text-align: center;
         ">
             <div style="
@@ -895,11 +823,11 @@ async function revealMythicPog(pogResult) {
             
             <div style="
                 font-size: 20px; 
-                color: #b8860b;
+                color: #57075aff;
                 font-weight: bold;
-                text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+                text-shadow: 0 0 10px rgba(80, 9, 76, 0.8);
             ">
-                ⭐ ${pogResult.rarity.toUpperCase()} ⭐
+                ${pogResult.rarity.toUpperCase()} 
             </div>
         </div>
     `;
@@ -950,19 +878,7 @@ async function showMultiPullAnimation(results, pullCount, highestRarity) {
     const uniquePogs = results.filter(r => r.rarity === 'Unique');
     if (uniquePogs.length > 0) {
         await new Promise(resolve => setTimeout(resolve, 1000));
-        await showUniqueParticleExplosion();
     }
-    
-    // Step 5: Clean up
-    setTimeout(() => {
-        document.getElementById('gachaOverlay').style.display = 'none';
-        document.getElementById('shootingStarsContainer').innerHTML = '';
-        const centerReveal = document.getElementById('centerPogReveal');
-        if (centerReveal) {
-            centerReveal.style.display = 'none';
-            centerReveal.innerHTML = '';
-        }
-    }, 2000);
 }
 
 async function showAllPogResults(results, pullCount) {
@@ -1014,19 +930,19 @@ async function showIndividualPog(pog, currentIndex, totalCount, isLast) {
             `
         },
         'Mythic': {
-            bg: 'linear-gradient(135deg, #ffd700, #ffed4a)', border: '#ffd700', shadow: 'rgba(255, 215, 0, 0.8)', textColor: '#333', size: '280px', effects: ''
+            bg: 'linear-gradient(135deg, #9b59b6, #c39bd3)', border: '#9b59b6', shadow: 'rgba(155, 89, 182, 0.6)', textColor: 'white', size: '280px', effects: ''
         },
         'Rare': {
-            bg: 'linear-gradient(135deg, #9b59b6, #c39bd3)', border: '#9b59b6', shadow: 'rgba(155, 89, 182, 0.6)', textColor: 'white', size: '250px', effects: ''
+            bg: 'linear-gradient(135deg, #4a9eff, #7bb3ff)', border: '#7bb3ff', shadow: 'rgba(123, 179, 255, 0.5)', textColor: 'white', size: '260px', effects: ''
         },
         'Uncommon': {
             bg: 'linear-gradient(135deg, #27ae60, #58d68d)', border: '#27ae60', shadow: 'rgba(39, 174, 96, 0.5)', textColor: 'white', size: '240px', effects: ''
         },
         'Common': {
-            bg: 'linear-gradient(135deg, #4a9eff, #7bb3ff)', border: '#7bb3ff', shadow: 'rgba(123, 179, 255, 0.5)', textColor: 'white', size: '230px', effects: ''
+            bg: 'linear-gradient(135deg, #ffd700, #ffed4a)', border: '#ffd700', shadow: 'rgba(255, 215, 0, 0.8)', textColor: 'white', size: '230px', effects: ''
         },
         'Trash': {
-            bg: 'linear-gradient(135deg, #666, #999)', border: '#999', shadow: 'rgba(153, 153, 153, 0.3)', textColor: 'white', size: '220px', effects: ''
+            bg: 'linear-gradient(135deg, #c93939ff, #c44747ff)', border: '#af2b2bff', shadow: 'rgba(153, 153, 153, 0.3)', textColor: 'white', size: '220px', effects: ''
         }
     };
     
@@ -1093,7 +1009,7 @@ async function showIndividualPog(pog, currentIndex, totalCount, isLast) {
                 text-shadow: ${isUnique ? '0 0 15px #ff00ff, 0 0 25px #ffd700' : '2px 2px 4px rgba(0,0,0,0.8)'};
                 margin-bottom: 15px;
             ">
-                ${isUnique ? '✨ UNIQUE ✨' : pog.rarity.toUpperCase()}
+                ${pog.rarity.toUpperCase()}
             </div>
             
             <!-- Click instruction -->
@@ -1125,14 +1041,6 @@ async function showIndividualPog(pog, currentIndex, totalCount, isLast) {
     
     centerReveal.style.display = 'block';
     
-    // Trigger screenshake for unique pogs
-    if (isUnique) {
-        document.body.classList.add('screenshake');
-        setTimeout(() => {
-            document.body.classList.remove('screenshake');
-        }, 800);
-    }
-    
     // Wait for click
     return new Promise(resolve => {
         const handleClick = () => {
@@ -1163,7 +1071,7 @@ async function showResultsSummary(results, pullCount) {
                 font-size: 28px;
                 text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
             ">
-                🎉 ${pullCount} Pull Summary 🎉
+                ${pullCount} Pull Summary
             </h2>
             
             <div style="
@@ -1186,7 +1094,7 @@ async function showResultsSummary(results, pullCount) {
                 text-align: center;
             ">
                 <h3 style="color: white; margin-bottom: 10px;">Rarity Breakdown:</h3>
-                <div style="color: #ccc; font-size: 14px;">
+                <div style="color: #ccc; font-size: 14px; display: flex; align-items: center; justify-content: center;">
                     ${createRarityBreakdown(results)}
                 </div>
             </div>
@@ -1218,20 +1126,20 @@ async function showResultsSummary(results, pullCount) {
         }, index * 50);
     });
     
-    // Wait for user to close
-    return new Promise(resolve => {
-        document.getElementById('closeSummary').addEventListener('click', resolve);
+    document.getElementById('closeSummary').addEventListener('click', () => {
+        cleanupGachaOverlay();
     });
+    
 }
 
 function createSummaryPogCard(pog, index) {
     const rarityColors = {
         'Unique': { bg: 'linear-gradient(135deg, #ff00ff, #ffd700)', border: '#ff00ff' },
-        'Mythic': { bg: 'linear-gradient(135deg, #ffd700, #ffed4a)', border: '#ffd700' },
-        'Rare': { bg: 'linear-gradient(135deg, #9b59b6, #c39bd3)', border: '#9b59b6' },
+        'Mythic': { bg: 'linear-gradient(135deg, #e41bffff, #eecceeff)', border: '#ffffffff' },
+        'Rare': { bg: 'linear-gradient(135deg, #40b1e6ff, #7ad9ffff)', border: '#1b94b3ff' },
         'Uncommon': { bg: 'linear-gradient(135deg, #27ae60, #58d68d)', border: '#27ae60' },
-        'Common': { bg: 'linear-gradient(135deg, #4a9eff, #7bb3ff)', border: '#7bb3ff' },
-        'Trash': { bg: 'linear-gradient(135deg, #666, #999)', border: '#999' }
+        'Common': { bg: 'linear-gradient(135deg, #e0c423ff, #dfce3aff)', border: '#c7b655ff' },
+        'Trash': { bg: 'linear-gradient(135deg, #c53d3dff, #cf4343ff)', border: '#883030ff' }
     };
     
     const colors = rarityColors[pog.rarity] || rarityColors['Common'];
@@ -1281,11 +1189,11 @@ function createPogResultCard(pog, index) {
     // Get rarity colors
     const rarityColors = {
         'Unique': { bg: 'linear-gradient(135deg, #ff00ff, #ff69b4, #9400d3, #ffd700)', border: '#ff00ff', shadow: 'rgba(255, 0, 255, 0.8)' },
-        'Mythic': { bg: 'linear-gradient(135deg, #ffd700, #ffed4a)', border: '#ffd700', shadow: 'rgba(255, 215, 0, 0.8)' },
-        'Rare': { bg: 'linear-gradient(135deg, #9b59b6, #c39bd3)', border: '#9b59b6', shadow: 'rgba(155, 89, 182, 0.6)' },
+        'Mythic': { bg: 'linear-gradient(135deg, #9b59b6, #c39bd3)', border: '#9b59b6', shadow: 'rgba(155, 89, 182, 0.6)' },
+        'Rare': { bg: 'linear-gradient(135deg, #4a9eff, #7bb3ff)', border: '#7bb3ff', shadow: 'rgba(123, 179, 255, 0.5)' },
         'Uncommon': { bg: 'linear-gradient(135deg, #27ae60, #58d68d)', border: '#27ae60', shadow: 'rgba(39, 174, 96, 0.5)' },
-        'Common': { bg: 'linear-gradient(135deg, #4a9eff, #7bb3ff)', border: '#7bb3ff', shadow: 'rgba(123, 179, 255, 0.5)' },
-        'Trash': { bg: 'linear-gradient(135deg, #666, #999)', border: '#999', shadow: 'rgba(153, 153, 153, 0.3)' }
+        'Common': { bg: 'linear-gradient(135deg, #ffd700, #ffed4a)', border: '#ffd700', shadow: 'rgba(255, 215, 0, 0.8)' },
+        'Trash': { bg: 'linear-gradient(135deg, #c93939ff, #c44747ff)', border: '#af2b2bff', shadow: 'rgba(153, 153, 153, 0.3)' }
     };
     
     const colors = rarityColors[pog.rarity] || rarityColors['Common'];
@@ -1310,7 +1218,7 @@ function createPogResultCard(pog, index) {
             position: relative;
             overflow: hidden;
         ">
-            ${pog.rarity === 'Unique' ? `
+            ${pog.value === 'Unique' ? `
                 <div style="
                     position: absolute;
                     top: -50%;
@@ -1341,7 +1249,7 @@ function createPogResultCard(pog, index) {
                 z-index: 1;
                 text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
             ">
-                ${pog.rarity}
+                ${pog.value}
             </div>
         </div>
     `;

@@ -45,6 +45,7 @@ function refreshInventory() {
         return hasBonus = highlightColors.includes(item.name),
             namelength = item.name.length,
             sellvalue = Math.round((item.income * 2.94 * (level / 1.6))**((level / 100) + 1)),
+            unique = item.value === "Unique",
             // refernce this inside the map function, for item is only defined in here
             isBronze = item.name === "Bronze Pog",
             isSilver = item.name === "Silver Pog",
@@ -68,7 +69,7 @@ function refreshInventory() {
             // show trade button
             canTrade = item.name === "Dragon Ball 7",
             // return html
-            `<div data-index=${index} class="item ${hasBonus ? 'highlight' : ''}" style="background-color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'black' : 'rgb(66, 51, 66)'};">
+            `<div data-index=${index} class="item ${hasBonus ? 'highlight' : ''}" style="border: 4px solid ${unique ? "lightgray" : "black"}; background-color: ${isBronze ? '#CD7F32' : isSilver ? '#C0C0C0' : isGold ? '#FFDF00' : isDiamond ? '#4EE2EC' : isAstral ? '#8A2BE2' : isGod ? 'white' : 'rgb(66, 51, 66)'};">
             <img id="lock" style="background-color: ${item.locked ? "white" : "rgba(200, 200, 200, 1)"}" src="../static/icons/buttons_main/lock.png" onclick="lock(${item.id})" width="11" height="12" title="Lock (can't be sold when locked)">
             <h1 class="name" style="color: ${item.color};">${item.name}</h1>
             <br>

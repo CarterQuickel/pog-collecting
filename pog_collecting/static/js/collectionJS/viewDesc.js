@@ -10,6 +10,7 @@ document.getElementById("inventory").addEventListener("click", (e) => {
     viewDesc(
         item.name,
         item.locked,
+        item.rarity,
         item.id,
         item.pogid,
         item.pogcol,
@@ -21,10 +22,12 @@ document.getElementById("inventory").addEventListener("click", (e) => {
 });
 
 //might use pogid and their color and creator down the line, unsure yet
-function viewDesc(name, locked, id, pogid, color, creator, desc, income, value) {
+function viewDesc(name, locked, rarity, id, pogid, color, creator, desc, income, value) {
+    console.log(name, locked, rarity, id, pogid, color, creator, desc, income, value)
     const panel = document.getElementById("descPanel");
     panel.innerHTML = `
     <h3 id="headerName">${name}</h3>
+    ${rarity}
     <div id="money-info">
         <strong class="moneytxt">$${Math.round(income * ((window.perNameBonus && window.perNameBonus[name]) || 1))}/s</strong><br>
         <strong class="moneytxt">$${value}</strong><br>

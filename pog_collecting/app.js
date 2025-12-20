@@ -38,7 +38,7 @@ crateRef = [
         price: 100,
         rarities: [
             {
-                name: "Trash",
+                name: "Unique",
                 chance: 0.59
             },
             {

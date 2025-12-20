@@ -125,9 +125,6 @@
                 </div>
                 <select id="selectSort">
                     <hr />
-                    <option value="rarityAZ">Sort by Rarity (a-z) &#8593;</option>
-                    <option value="rarityZA">Sort by Rarity (z-a) &#8595;</option>
-                    <hr />
                     <option value="nameAZ">Sort by Name (a-z) &#8593;</option>
                     <option value="nameZA">Sort by Name (z-a) &#8595;</option>
                     <hr />
@@ -248,7 +245,7 @@
     <div id="slider" style="position: flex"></div>
 <!-- Gacha Animation Overlay - ADD THIS IF MISSING -->
 <!-- Gacha Animation Overlay -->
-<div id="gachaOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; background: rgba(0, 0, 20, 0.95);">
+<div id="gachaOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; background: rgba(0, 0, 20, 1);">
     
     <button id="skipAnimation" style="display: none; position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 10px 15px; border-radius: 5px;">Skip ⏭️</button>
     
@@ -298,23 +295,4 @@
 <script src="../static/js/achievements.js"></script>
 <!--tickupdate is last-->
 <script src="../static/js/collectionJS/tickupdate.js"></script>
-<script>
-  // ensure pogList JS array exists before this runs
-  try {
-    const pg = JSON.parse(document.getElementById('pogList').textContent || '[]');
-    pg.push({
-      id: 'unique_test_01',
-      name: 'Godly Phoenix',
-      rarity: 'Unique',
-      color: '#ff88ff',
-      pogcol: '#ff88ff',
-      income: 250,
-      description: 'Test unique pog'
-    });
-    // overwrite the global pogList used by your scripts
-    window.pogList = pg;
-    // if your code reads pogList from a different var, adapt accordingly
-  } catch(e) { console.warn('could not add test Unique pog', e); }
-</script>
-
 </html>
