@@ -25,6 +25,9 @@ let pfpimg = userdata.pfp || ""
 document.getElementById("userPic").src = pfpimg;
 document.getElementById("bigpfp").src = pfpimg;
 
+//selected pog
+selectedID = 0;
+
 // wish
 let wish = userdata.wish || 0;
 

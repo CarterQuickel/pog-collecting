@@ -4,9 +4,11 @@ document.getElementById("inventory").addEventListener("click", (e) => {
     const itemDiv = e.target.closest(".item");
     if (!itemDiv) return;
 
-    const index = itemDiv.dataset.index
+    const index = itemDiv.dataset.index;
     const item = inventory[index];
-    let sellvalue = Math.round((item.income * 2.94 * (level / 1.6))**((level / 100) + 1))
+    let sellvalue = Math.round((item.income * 2.94 * (level / 1.6))**((level / 100) + 1));
+    selectedID = item.id;
+    refreshInventory();
     viewDesc(
         item.name,
         item.locked,
@@ -23,7 +25,6 @@ document.getElementById("inventory").addEventListener("click", (e) => {
 
 //might use pogid and their color and creator down the line, unsure yet
 function viewDesc(name, locked, rarity, id, pogid, color, creator, desc, income, value) {
-    console.log(name, locked, rarity, id, pogid, color, creator, desc, income, value)
     const panel = document.getElementById("descPanel");
     const ab_value = abbreviateNumber(value);
     panel.innerHTML = `
@@ -33,6 +34,6 @@ function viewDesc(name, locked, rarity, id, pogid, color, creator, desc, income,
         <strong class="moneytxt">$${ab_value}</strong><br>
     </div>
     <p>${desc}</p>
-    <button id="sellbtn" onclick="sellItem(${id}, ${sellvalue}, ${locked})">Sell</button>
+    <button id="sellbtn" style="filter: brightness(${locked ? 0.6 : 1}); pointer-events: ${locked ? "none" : "auto"}"onclick="sellItem(${id}, ${sellvalue}, ${locked})">${locked ? "Locked" : "Sell"}</button>
     `;
 }
