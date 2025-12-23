@@ -41,6 +41,8 @@ function merge(bronze, silver, gold, diamond, astral) {
             i--;
         }
     }
+    userIncome = getTotalIncome();
+    sorting();
     save();
     if (window.checkAllAchievements) window.checkAllAchievements();
 }

@@ -17,10 +17,6 @@ function viewCollection() {
     const itemView = sortedResults.map((item) => {
         const name = item.name;
         maxBinder++
-        // is the name a dragon pog?
-        if (item.name == "Dragon Ball") {
-
-        }
         const rarity = item.rarity;
         const pogcol = item.color;
         const unique = rarity === "Unique";

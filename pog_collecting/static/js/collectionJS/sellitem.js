@@ -1,6 +1,5 @@
 // sell item
 function sellItem(id, sellvalue, locked) {
-    console.log(locked)
     if (!locked) {
         const index = inventory.findIndex(item => item.id === id)
         money += sellvalue;

@@ -14,11 +14,13 @@ document.getElementById("searchbtn").addEventListener("click", () => {
 document.getElementById("selectSort").addEventListener("change", () => {
     sorting();
     refreshInventory();
+    save();
 });
 
 function sorting() {
     const sortBy = document.getElementById("selectSort").value;
-    const rarityOrder = { 'Unique': 6, 'Mythic': 5, 'Rare': 4, 'Uncommon': 3, 'Common': 2, 'Trash': 1 };
+    inventory = Object.values(inventory);
+    const rarityOrder = { 'Otherworldly': 7, 'Unique': 6, 'Mythic': 5, 'Rare': 4, 'Uncommon': 3, 'Common': 2, 'Trash': 1 };
     if (sortBy === "rarityHf") {
         inventory.sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
     } else if (sortBy === "rarityLf") {
@@ -44,3 +46,5 @@ setInterval(() => {
         searching = false;
     }
 }, 100);
+
+sorting();

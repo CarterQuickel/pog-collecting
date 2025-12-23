@@ -36,15 +36,6 @@ function calculatePogResult(cost, index) {
             const chosen = candidates[Math.floor(Math.random() * candidates.length)];
             console.log(chosen)
 
-            // prepare pog object (do NOT mutate inventory or money here)
-            // name of pog
-            let name = chosen.name;
-            if (name === "Dragon Ball") {
-                const invNames = (inventory || []).map(i => (i && i.name || '').toLowerCase());
-                const missing = [1,2,3,4,5,6,7].find(n => !invNames.includes(`dragon ball ${n}`));
-                if (missing) name = `Dragon Ball ${missing}`;
-            }
-
             const meta = (rarityColor || []).find(r => r.name === chosen.rarity) || {};
             return {
                 locked: false,
@@ -694,12 +685,9 @@ function addPogToInventory(pogResult) {
         if (!(pogAmount.find(n => n.name === ownedQueue.name) && pogAmount.find(n => n.rarity === ownedQueue.rarity) && pogAmount.find(n => n.pogcol === ownedQueue.pogcol))) {
             pogAmount.push(ownedQueue)
         }
-
-    // Add result to inventory (skip Dragon Ball check since it's handled in calculation)
-    if (pogResult.name !== "Dragon Ball") {
+        
         inventory.push(pogResult);
-        console.log("Pog added! New inventory length:", inventory.length); // DEBUG
-    }
+        console.log("Pog added! New inventory length:", inventory.length);
 
     // XP gain
     xp += Math.floor(pogResult.income * (15 * level / 15));

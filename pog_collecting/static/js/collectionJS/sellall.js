@@ -32,4 +32,5 @@ document.getElementById("sellAll").addEventListener("click", () => {
             }
         }
     }
+    userIncome = getTotalIncome();
 });

@@ -42,7 +42,8 @@ body {
     border-radius: 10px;
     padding: 20px; 
     margin: 20px auto;
-    width: 95vw; 
+    width: 95vw;
+    box-sizing: border-box;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 

@@ -95,6 +95,20 @@ function lock(id) {
     const index = inventory.findIndex(item => item.id === id)
     inventory[index].locked = !inventory[index].locked;
     refreshInventory();
+    save();
+}
+
+//trade for 1/7 wish
+function trade(id, locked) {
+    if (!locked) {
+        const index = inventory.findIndex(item => item.id === id);
+        inventory.splice(index, 1);
+        wish++;
+        userIncome = getTotalIncome();
+        refreshInventory();
+        save();
+    }
+    document.getElementById("descPanel").innerHTML = "";
 }
 
 // number abbreviation function

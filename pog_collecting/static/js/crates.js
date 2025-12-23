@@ -155,11 +155,11 @@ let crates = userdata?.crates && Array.isArray(userdata.crates) ? userdata.crate
             },
             {
                 name: "Mythic",
-                chance: 0.61    // adjusted
+                chance: 0.51    // adjusted
             },
             {
                 name: "Unique",
-                chance: 0.01    // new tiny chance for Unique
+                chance: 0.11    // new tiny chance for Unique
             }
         ]
     }

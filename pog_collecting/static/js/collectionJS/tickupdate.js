@@ -17,10 +17,7 @@ function update() {
     document.getElementById("pogCount").style.color = pogAmount.length >= maxBinder ? "gold" : "white";
 
     //update wish text
-    document.getElementById("useWish").innerText = `Wish (${wish})`;
-
-    //update wish visibility
-    document.getElementById("useWish").style.display = wish > 0 ? "inline-block" : "none";
+    document.getElementById("useWish").innerText = `Wish \n (${wish} / 7)`;
 
     //crate 1 text
     document.getElementById("crate1").innerHTML = `Trash Crate ($${abbreviateNumber(crates[0].price)})`;
