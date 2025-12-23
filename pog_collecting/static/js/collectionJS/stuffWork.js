@@ -111,6 +111,12 @@ function trade(id, locked) {
     document.getElementById("descPanel").innerHTML = "";
 }
 
+document.getElementById("colors").addEventListener("click", () => {
+    const colorKey = document.getElementById("colorKey")
+    const isVisible = colorKey.style.display === "flex";
+    colorKey.style.display = isVisible ? "none" : "flex";
+})
+
 // number abbreviation function
 function abbreviateNumber(value) {
     const formatter = Intl.NumberFormat('en', { notation: 'compact', compactDisplay: 'short' });

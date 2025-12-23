@@ -3,21 +3,18 @@
     border-radius: 6px;
     padding: 10px;
     width: 100%;
-    margin: 8px auto;
     font-size: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fill, 220px);
     justify-content: center;
     place-items: center;
-    gap: 0px 0px;
     overflow-y: auto;
     min-height: 175px;
     max-height: 80vh;
-    position: static;
     flex: 1;
-    width: 100%;
     overflow-x: hidden;
     transition: all 0.1s ease;
+    margin: 8px auto;
 }
 
 #stats {
@@ -181,28 +178,6 @@ hr {
     flex-direction: column;
 }
 
-#colorKey {
-    margin: 8px auto;
-    width: 170px;
-    background-color: #7d6381;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 10px;
-}
-
-.key-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.color-box {
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
-}
-
 #descPanel {
     border-radius: 5px;
     background-color: #7d6381;
@@ -214,6 +189,7 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 8px auto;
 }
 
 #headerName {
