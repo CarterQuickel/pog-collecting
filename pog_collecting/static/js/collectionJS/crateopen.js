@@ -681,13 +681,18 @@ function addPogToInventory(pogResult) {
     console.log("Adding pog to inventory:", pogResult.name, pogResult.rarity); // DEBUG
     
     // add to pog amount if new pog
-    let ownedQueue = { name: pogResult.name, rarity: pogResult.rarity, pogcol: pogResult.pogcol }
-        if (!(pogAmount.find(n => n.name === ownedQueue.name) && pogAmount.find(n => n.rarity === ownedQueue.rarity) && pogAmount.find(n => n.pogcol === ownedQueue.pogcol))) {
-            pogAmount.push(ownedQueue)
-        }
-        
-        inventory.push(pogResult);
-        console.log("Pog added! New inventory length:", inventory.length);
+    let ownedQueue = { name: pogResult.name, rarity: pogResult.rarity, pogcol: pogResult.pogcol };
+    const alreadyOwned = pogAmount.find(pog =>
+        pog.name === ownedQueue.name &&
+        pog.rarity === ownedQueue.rarity &&
+        pog.pogcol === ownedQueue.pogcol
+    );
+    if (!alreadyOwned) {
+        pogAmount.push(ownedQueue)
+    }
+
+    //add pog to inventory
+    inventory.push(pogResult);
 
     // XP gain
     xp += Math.floor(pogResult.income * (15 * level / 15));

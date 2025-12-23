@@ -10,6 +10,7 @@ function refreshInventory() {
 
     //the computer is recomputing
     computeComboStats();
+    console.log(pogAmount)
 
     // failsafe if they delete all items
     if (inventory.length === 0 && money < 200) {
